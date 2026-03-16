@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Контакты - GGPoint</title>
+    <meta name="description" content="Свяжитесь с нами. Контакты магазина GGPoint в Ташкенте.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">GGPoint</a>
+            </div>
+            
+            <nav id="mainNav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">Главная</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="catalog.html" class="nav-link">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Каталог</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="keycaps.html" class="nav-link keycaps-nav">
+                            <i class="fas fa-keyboard"></i>
+                            <span class="nav-text">Кейкапы</span>
+                            <span class="beta-badge">Новинка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="nav-text">О нас</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacts.html" class="nav-link active">
+                            <i class="fas fa-phone"></i>
+                            <span class="nav-text">Контакты</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="admin-btn" id="adminBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Контакты</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Контакты</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info-card">
+                    <h2>Свяжитесь с нами</h2>
+                    <p class="contact-description">Мы всегда готовы ответить на ваши вопросы и помочь с выбором. Работаем ежедневно с 10:00 до 22:00.</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Телефон</h3>
+                                <a href="tel:+998977470157">+998 97 747 0157</a>
+                                <span>Ежедневно с 10:00 до 22:00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-telegram"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Telegram</h3>
+                                <a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a>
+                            </div>
+                        </div>                      
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Адрес</h3>
+                                <span>Ташкент, Узбекистан</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links-large">
+                        <h3>Мы в соцсетях</h3>
+                        <div class="social-grid">
+                            <a href="https://t.me/GGPointUz" target="_blank" class="social-btn telegram">
+                                <i class="fab fa-telegram"></i>
+                                <span>Telegram</span>
+                            </a>
+                            <a href="#" target="_blank" class="social-btn instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form-card">
+                    <h2>Напишите нам</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Ваше имя *</label>
+                            <input type="text" id="name" required placeholder="Введите ваше имя">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMethod">Способ связи *</label>
+                            <select id="contactMethod" required>
+                                <option value="">Выберите способ связи</option>
+                                <option value="telegram">Telegram</option>
+                                <option value="phone">Телефон</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactValue">Контактные данные *</label>
+                            <input type="text" id="contactValue" required placeholder="@username или +998 97 747 0157">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Сообщение *</label>
+                            <textarea id="message" required placeholder="Опишите ваш вопрос или пожелание..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i>
+                            Отправить сообщение
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GGPoint</h3>
+                <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
+                <div class="social-links">
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Категории</h4>
+                <ul class="footer-links">
+                    <li><a href="catalog.html?category=мышь">Игровые мыши</a></li>
+                    <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
+                    <li><a href="catalog.html?category=наушники">Наушники</a></li>
+                    <li><a href="catalog.html?category=монитор">Мониторы</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+998 97 747 0157</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <span><a href="https://t.me/Dma12r" target="_blank">@GGPointUz</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Ташкент, Узбекистан</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Ежедневно 10:00 - 22:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 GGPoint. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Модальное окно входа в админку -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            <h2 style="color: var(--primary-blue); text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminLogin">Логин</label>
+                    <input type="text" id="adminLogin" required placeholder="Введите логин">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Пароль</label>
+                    <input type="password" id="adminPassword" required placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+        import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+            authDomain: "ggpoint-shop.firebaseapp.com",
+            databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+            projectId: "ggpoint-shop",
+            storageBucket: "ggpoint-shop.firebasestorage.app",
+            messagingSenderId: "182227173652",
+            appId: "1:182227173652:web:0949e2edae9900afd98201"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Корзина
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+        }
+        
+        updateCartCount();
+
+        // Обработка формы контактов
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const method = document.getElementById('contactMethod').value;
+            const contact = document.getElementById('contactValue').value;
+            const message = document.getElementById('message').value;
+            
+            // Сохраняем в Firebase
+            try {
+                const messagesRef = ref(database, 'messages');
+                await push(messagesRef, {
+                    name,
+                    method,
+                    contact,
+                    message,
+                    date: new Date().toISOString(),
+                    status: 'new'
+                });
+                
+                // Показываем уведомление
+                showNotification('Спасибо! Мы свяжемся с вами в ближайшее время');
+                
+                // Очищаем форму
+                e.target.reset();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showNotification('Произошла ошибка. Попробуйте позже', 'error');
+            }
+        });
+
+        // Показать уведомление
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-green)' : 'var(--sale-red)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Админка
+        const adminBtn = document.getElementById('adminBtn');
+        const adminModal = document.getElementById('adminLoginModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
+
+        adminBtn.addEventListener('click', () => {
+            adminModal.style.display = 'block';
+        });
+
+        closeAdminModal.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+            }
+        });
+
+        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const login = document.getElementById('adminLogin').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (login === 'admin' && password === 'admin') {
+                adminModal.style.display = 'none';
+                window.location.href = 'admin-panel.html';
+            } else {
+                alert('Неверный логин или пароль!');
+            }
+        });
+    </script>
+</body>
+</html>

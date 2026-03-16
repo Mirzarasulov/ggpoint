@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Кейкапы - GGPoint</title>
+    <meta name="description" content="Каталог кейкапов для механических клавиатур">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .keycaps-hero {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .keycaps-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .keycaps-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .keycaps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .keycap-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid #334155;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .keycap-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+        }
+        
+        .keycap-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .keycap-image-container {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .keycap-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        
+        .keycap-card:hover .keycap-image {
+            transform: scale(1.05);
+        }
+        
+        .keycap-info {
+            padding: 1.5rem;
+        }
+        
+        .keycap-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        
+        .keycap-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .keycap-profile {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-purple);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .keycap-material {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-green);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .keycap-price {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">GGPoint</a>
+            </div>
+            
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">Главная</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="catalog.html" class="nav-link">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Каталог</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="keycaps.html" class="nav-link active keycaps-nav">
+                            <i class="fas fa-keyboard"></i>
+                            <span class="nav-text">Кейкапы</span>
+                            <span class="beta-badge">Коллекция</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="nav-text">О нас</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacts.html" class="nav-link">
+                            <i class="fas fa-phone"></i>
+                            <span class="nav-text">Контакты</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="admin-btn" id="adminBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="keycaps-hero">
+        <h1>Кейкапы для механических клавиатур</h1>
+        <p>PBT, ABS, double-shot, и многое другое. Сделайте свою клавиатуру уникальной!</p>
+    </section>
+
+    <!-- Сетка кейкапов -->
+    <div class="keycaps-grid" id="keycapsGrid">
+        <div class="loader"></div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GGPoint</h3>
+                <p>Ваш надежный магазин игровой периферии в Узбекистане.</p>
+                <div class="social-links">
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+998 97 747 0157</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 GGPoint. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+            authDomain: "ggpoint-shop.firebaseapp.com",
+            databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+            projectId: "ggpoint-shop",
+            storageBucket: "ggpoint-shop.firebasestorage.app",
+            messagingSenderId: "182227173652",
+            appId: "1:182227173652:web:0949e2edae9900afd98201"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Тестовые кейкапы если в базе пусто
+        const defaultKeycaps = [
+            {
+                id: 1001,
+                name: "Кейкапы GMK Laser",
+                category: "keycaps",
+                price: "899,000 UZS",
+                images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
+                description: "Профиль Cherry, материал ABS double-shot, яркие неоновые цвета",
+                features: ["Профиль: Cherry", "Материал: ABS", "Технология: Double-shot", "Комплектация: 130 клавиш"],
+                profile: "Cherry",
+                material: "ABS",
+                inStock: true
+            },
+            {
+                id: 1002,
+                name: "Кейкапы PBT Olivia",
+                category: "keycaps",
+                price: "749,000 UZS",
+                images: ["https://images.unsplash.com/photo-1595225476474-87563907c212?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
+                description: "Профиль OEM, материал PBT, пастельные тона",
+                features: ["Профиль: OEM", "Материал: PBT", "Технология: Dye-sub", "Комплектация: 108 клавиш"],
+                profile: "OEM",
+                material: "PBT",
+                inStock: true
+            },
+            {
+                id: 1003,
+                name: "Кейкапы SA Carbon",
+                category: "keycaps",
+                price: "999,000 UZS",
+                images: ["https://images.unsplash.com/photo-1603048588665-791ca8aea617?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
+                description: "Профиль SA, материал ABS, оранжево-серые тона",
+                features: ["Профиль: SA", "Материал: ABS", "Технология: Double-shot", "Комплектация: 120 клавиш"],
+                profile: "SA",
+                material: "ABS",
+                inStock: true
+            },
+            {
+                id: 1004,
+                name: "Кейкапы DSA Miami",
+                category: "keycaps",
+                price: "649,000 UZS",
+                images: ["https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
+                description: "Профиль DSA, материал PBT, яркие розово-голубые тона",
+                features: ["Профиль: DSA", "Материал: PBT", "Технология: Dye-sub", "Комплектация: 125 клавиш"],
+                profile: "DSA",
+                material: "PBT",
+                inStock: true
+            },
+            {
+                id: 1005,
+                name: "Кейкапы XDA Godspeed",
+                category: "keycaps",
+                price: "849,000 UZS",
+                images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
+                description: "Профиль XDA, материал PBT, космическая тематика",
+                features: ["Профиль: XDA", "Материал: PBT", "Технология: Double-shot", "Комплектация: 140 клавиш"],
+                profile: "XDA",
+                material: "PBT",
+                inStock: true
+            }
+        ];
+
+        let keycaps = [];
+
+        // Загрузка данных
+        const productsRef = ref(database, 'products');
+        onValue(productsRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Фильтруем только кейкапы
+                keycaps = Object.values(data).filter(p => p.category === 'keycaps');
+            }
+            
+            // Если кейкапов нет, используем тестовые
+            if (keycaps.length === 0) {
+                keycaps = defaultKeycaps;
+                // Сохраняем тестовые в Firebase
+                defaultKeycaps.forEach(k => {
+                    const productRef = ref(database, 'products/' + k.id);
+                    set(productRef, k).catch(() => {});
+                });
+            }
+            
+            renderKeycaps();
+        });
+
+        // Рендер кейкапов
+        function renderKeycaps() {
+            const grid = document.getElementById('keycapsGrid');
+            grid.innerHTML = '';
+            
+            keycaps.forEach(keycap => {
+                const card = document.createElement('div');
+                card.className = 'keycap-card';
+                
+                card.innerHTML = `
+                    <div class="keycap-badge">${keycap.profile || 'Кейкапы'}</div>
+                    <div class="keycap-image-container">
+                        <img src="${keycap.images?.[0] || 'https://via.placeholder.com/300x280/ffffff/333333?text=Кейкапы'}" 
+                             alt="${keycap.name}" 
+                             class="keycap-image"
+                             onerror="this.src='https://via.placeholder.com/300x280/ffffff/333333?text=Кейкапы'">
+                    </div>
+                    <div class="keycap-info">
+                        <h3 class="keycap-name">${keycap.name}</h3>
+                        <div class="keycap-meta">
+                            <span class="keycap-profile">${keycap.profile || 'Профиль'}</span>
+                            <span class="keycap-material">${keycap.material || 'PBT'}</span>
+                        </div>
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                            ${keycap.description?.substring(0, 60)}...
+                        </p>
+                        <div class="keycap-price">${keycap.price}</div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    window.location.href = `product.html?id=${keycap.id}`;
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Корзина
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+        }
+        updateCartCount();
+
+        // Админка
+        document.getElementById('adminBtn').addEventListener('click', () => {
+            window.location.href = 'admin-panel.html';
+        });
+    </script>
+</body>
+</html>
