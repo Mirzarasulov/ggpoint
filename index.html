@@ -19,6 +19,9 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
+    <!-- Swiper CSS для карусели постеров -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
     <!-- ⚡ Критический CSS для быстрой загрузки -->
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -32,6 +35,121 @@
         .hero h1{font-size:clamp(2.5rem,8vw,5rem);margin-bottom:1rem}
         .container{max-width:1400px;margin:0 auto;padding:0 2rem}
         .btn{background:#2563eb;color:#fff;border:none;padding:0.8rem 1.5rem;border-radius:8px;cursor:pointer}
+        
+        /* Стили для постеров */
+        .posters-section {
+            padding: 4rem 0;
+            background: #0f172a;
+        }
+        
+        .poster-slide {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            height: 500px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        .poster-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .poster-slide:hover .poster-image {
+            transform: scale(1.05);
+        }
+        
+        .poster-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+        }
+        
+        .poster-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .poster-description {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #e2e8f0;
+            max-width: 600px;
+        }
+        
+        .poster-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .poster-btn:hover {
+            background: transparent;
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .swiper-pagination-bullet {
+            background: #2563eb;
+        }
+        
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: #2563eb;
+            background: rgba(255,255,255,0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        
+        .swiper-button-prev:after,
+        .swiper-button-next:after {
+            font-size: 1.5rem;
+        }
+        
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+            background: rgba(37,99,235,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .poster-slide {
+                height: 400px;
+            }
+            
+            .poster-overlay {
+                padding: 2rem;
+            }
+            
+            .poster-title {
+                font-size: 1.8rem;
+            }
+            
+            .poster-description {
+                font-size: 1rem;
+            }
+            
+            .swiper-button-prev,
+            .swiper-button-next {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -90,14 +208,13 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (оставляем как есть) -->
     <section class="hero">
         <div class="hero-content">
             <span class="hero-badge">🔥 Каталог товаров</span>
             <h1>GGPoint – <span class="gradient-text">игровая периферия</span> премиум-класса</h1>
             <p>Оригинальные товары по лучшим ценам. Быстрая доставка по Ташкенту и Узбекистану.</p>
             
-            <!-- Кнопка с сообщением о разработке -->
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="showDevelopmentMessage()">
                     <i class="fas fa-shopping-bag"></i>
@@ -105,12 +222,35 @@
                 </button>
             </div>
             
-            <!-- Сообщение о разработке -->
             <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 2px dashed #2563eb;">
                 <p style="color: #94a3b8; font-size: 1.1rem;">
                     <i class="fas fa-tools" style="color: #2563eb; margin-right: 0.5rem;"></i>
                     Каталог в разработке. Скоро здесь появятся все товары!
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция с постерами (НОВАЯ) -->
+    <section class="posters-section">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 2rem;">
+                <h2 class="section-title">Акции и новинки</h2>
+                <p class="section-subtitle">Специальные предложения для вас</p>
+            </div>
+            
+            <!-- Swiper -->
+            <div class="swiper postersSwiper">
+                <div class="swiper-wrapper" id="postersContainer">
+                    <!-- Постеры будут загружаться динамически -->
+                </div>
+                
+                <!-- Пагинация -->
+                <div class="swiper-pagination"></div>
+                
+                <!-- Навигация -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
         </div>
     </section>
@@ -186,6 +326,7 @@
             </div>
         </div>
     </section>
+    
     <!-- 4. НОВИНКИ -->
     <section class="new-products-section">
         <div class="container">
@@ -334,6 +475,109 @@
     <!-- Scripts -->
     <script type="module" src="js/main.js"></script>
     
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+            authDomain: "ggpoint-shop.firebaseapp.com",
+            databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+            projectId: "ggpoint-shop",
+            storageBucket: "ggpoint-shop.firebasestorage.app",
+            messagingSenderId: "182227173652",
+            appId: "1:182227173652:web:0949e2edae9900afd98201"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Загрузка постеров
+        const postersRef = ref(database, 'posters');
+        onValue(postersRef, (snapshot) => {
+            const data = snapshot.val();
+            const posters = data ? Object.values(data).filter(p => p.active) : [];
+            
+            // Сортируем по порядку
+            posters.sort((a, b) => (a.order || 999) - (b.order || 999));
+            
+            const container = document.getElementById('postersContainer');
+            if (!container) return;
+            
+            if (posters.length === 0) {
+                container.innerHTML = `
+                    <div class="swiper-slide">
+                        <div class="poster-slide">
+                            <img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image">
+                            <div class="poster-overlay">
+                                <h2 class="poster-title">Добро пожаловать в GGPoint!</h2>
+                                <p class="poster-description">Скоро здесь появятся акции и новинки</p>
+                                <a href="/catalog" class="poster-btn">
+                                    Перейти в каталог <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = posters.map(poster => `
+                    <div class="swiper-slide">
+                        <div class="poster-slide">
+                            <img src="${poster.imageUrl}" class="poster-image" alt="${poster.title}" onerror="this.src='https://via.placeholder.com/1400x500/1e293b/2563eb?text=Ошибка+загрузки'">
+                            <div class="poster-overlay">
+                                <h2 class="poster-title">${poster.title}</h2>
+                                ${poster.description ? `<p class="poster-description">${poster.description}</p>` : ''}
+                                <a href="${poster.link || '/catalog'}" class="poster-btn">
+                                    ${poster.buttonText || 'Подробнее'} <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Инициализация Swiper после загрузки постеров
+            setTimeout(() => {
+                new Swiper('.postersSwiper', {
+                    loop: true,
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            }, 100);
+        });
+
+        // Загрузка брендов
+        const brandsRef = ref(database, 'brands');
+        onValue(brandsRef, (snapshot) => {
+            const data = snapshot.val();
+            const brands = data ? Object.values(data) : [];
+            
+            const brandsGrid = document.getElementById('brandsGrid');
+            if (!brandsGrid) return;
+            
+            brandsGrid.innerHTML = brands.map(brand => `
+                <div class="brand-card">
+                    <img src="${brand.icon}" alt="${brand.name}" class="brand-logo">
+                    <span class="brand-name">${brand.name}</span>
+                </div>
+            `).join('');
+        });
+    </script>
+    
     <!-- Скрипт для сообщения о разработке -->
     <script>
     function showDevelopmentMessage() {
@@ -355,6 +599,11 @@
                 btn.style.display = 'none';
             }
         }
+    });
+    
+    // Кнопка админки
+    document.getElementById('adminBtn')?.addEventListener('click', function() {
+        window.location.href = 'admin.html';
     });
     </script>
 </body>
