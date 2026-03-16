@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>GGPoint – официальный сайт игровых сервисов</title>
+    <meta name="description" content="GGPoint.store – лучшие цены на игровые услуги и аккаунты.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180x180.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">GGPoint</a>
+            </div>
+            
+            <nav id="mainNav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">Главная</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="catalog.html" class="nav-link">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Каталог</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="keycaps.html" class="nav-link keycaps-nav">
+                            <i class="fas fa-keyboard"></i>
+                            <span class="nav-text">Кейкапы</span>
+                            <span class="beta-badge">Новинка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="nav-text">О нас</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacts.html" class="nav-link">
+                            <i class="fas fa-phone"></i>
+                            <span class="nav-text">Контакты</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="admin-btn" id="adminBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🔥 Официальный магазин</span>
+            <h1>GGPoint – игровая периферия <span class="gradient-text">премиум-класса</span></h1>
+            <p>Оригинальные товары по лучшим ценам. Быстрая доставка по Ташкенту и Узбекистану.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">довольных клиентов</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-box"></i>
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">товаров в наличии</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-truck"></i>
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">быстрая доставка</span>
+                </div>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="catalog.html" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i>
+                    Перейти в каталог
+                </a>
+                <a href="#categories" class="btn btn-outline">
+                    <i class="fas fa-chevron-down"></i>
+                    Узнать больше
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Категории -->
+<!-- Добавьте эту секцию после категорий или перед брендами -->
+<section class="categories">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Популярные категории</h2>
+            <p class="section-subtitle">Выберите то, что вам нужно</p>
+        </div>
+        
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Мыши -->
+            <div class="category-card" data-category="мышь">
+                <div class="category-icon">
+                    <i class="fas fa-mouse"></i>
+                </div>
+                <h3 class="category-name">Игровые мыши</h3>
+                <p class="category-count" id="mouseCount">0 товаров</p>
+                <a href="catalog.html?category=мышь" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <!-- Клавиатуры -->
+            <div class="category-card" data-category="клавиатура">
+                <div class="category-icon">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h3 class="category-name">Клавиатуры</h3>
+                <p class="category-count" id="keyboardCount">0 товаров</p>
+                <a href="catalog.html?category=клавиатура" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <!-- Наушники -->
+            <div class="category-card" data-category="наушники">
+                <div class="category-icon">
+                    <i class="fas fa-headphones"></i>
+                </div>
+                <h3 class="category-name">Наушники</h3>
+                <p class="category-count" id="headphonesCount">0 товаров</p>
+                <a href="catalog.html?category=наушники" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <!-- Мониторы -->
+            <div class="category-card" data-category="монитор">
+                <div class="category-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h3 class="category-name">Мониторы</h3>
+                <p class="category-count" id="monitorCount">0 товаров</p>
+                <a href="catalog.html?category=монитор" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <!-- Кейкапы (НОВАЯ КАТЕГОРИЯ) -->
+            <div class="category-card" data-category="keycaps">
+                <div class="category-icon">
+                    <i class="fas fa-keyboard"></i>
+                    <span style="position: absolute; top: 10px; right: 10px; background: var(--accent-purple); color: white; font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;">Коллекция</span>
+                </div>
+                <h3 class="category-name">Кейкапы</h3>
+                <p class="category-count" id="keycapsCount">0 товаров</p>
+                <a href="keycaps.html" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Популярные бренды -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Популярные бренды</h2>
+                <p class="section-subtitle">Только оригинальная продукция</p>
+            </div>
+            
+            <div class="brands-grid" id="brandsGrid">
+                <!-- Бренды загружаются динамически -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Скидки и акции -->
+    <section class="hot-prices-section">
+        <div class="container">
+            <div class="hot-prices-header">
+                <div class="hot-prices-title">
+                    <h2>Горячие скидки</h2>
+                    <span class="hot-badge">
+                        <i class="fas fa-fire"></i>
+                        -30%
+                    </span>
+                </div>
+                <a href="catalog.html?discount=true" class="btn btn-link">
+                    Все скидки <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="hot-prices-grid" id="hotPricesGrid">
+                <!-- Скидочные товары загружаются динамически -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Гарантия качества</h4>
+                    <p>Все товары оригинальные и имеют официальную гарантию</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <h4>Быстрая доставка</h4>
+                    <p>Доставляем по Ташкенту за 24 часа, по Узбекистану за 3 дня</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4>Поддержка</h4>
+                    <p>Мы всегда на связи и готовы помочь с выбором</p>
+                </div>
+
+    <!-- Новинки -->
+    <section class="new-products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Новинки</h2>
+                <p class="section-subtitle">Самые свежие поступления</p>
+            </div>
+            
+            <div class="products-grid" id="newProductsGrid">
+                <!-- Новинки загружаются динамически -->
+            </div>
+            
+            <div class="section-footer">
+                <a href="catalog.html?sort=newest" class="btn btn-primary">
+                    Все новинки <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+ <!-- <section class="reviews-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Отзывы наших клиентов</h2>
+                <p class="section-subtitle">Что говорят о нас</p>
+            </div>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Отличный магазин! Заказывал клавиатуру MCHOSE K87, пришла быстро, всё работает идеально. Рекомендую!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">А</div>
+                        <div class="author-info">
+                            <h5>Алексей</h5>
+                            <span>г. Ташкент</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Купил мышь Razer DeathAdder V2. Цена ниже чем в других магазинах, товар оригинальный. Буду заказывать ещё!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">М</div>
+                        <div class="author-info">
+                            <h5>Марат</h5>
+                            <span>г. Самарканд</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"Отличный сервис! Консультант помог выбрать наушники, ответил на все вопросы. Доставка быстрая. Спасибо!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">Д</div>
+                        <div class="author-info">
+                            <h5>Дмитрий</h5>
+                            <span>г. Ташкент</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+-->
+
+    <!-- CTA секция -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Не нашли то, что искали?</h2>
+                <p>Свяжитесь с нами, и мы поможем подобрать идеальный товар под ваш бюджет</p>
+                <a href="contacts.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-headset"></i>
+                    Связаться с нами
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GGPoint</h3>
+                <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
+                <div class="social-links">
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Категории</h4>
+                <ul class="footer-links">
+                    <li><a href="catalog.html?category=мышь">Игровые мыши</a></li>
+                    <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
+                    <li><a href="catalog.html?category=наушники">Наушники</a></li>
+                    <li><a href="catalog.html?category=монитор">Мониторы</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+998 97 747 0157</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Ташкент, Узбекистан</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Ежедневно 10:00 - 22:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 GGPoint. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
