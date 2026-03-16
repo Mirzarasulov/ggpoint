@@ -232,6 +232,7 @@
     </section>
 
     <!-- Секция с постерами (НОВАЯ) -->
+    <!-- Секция с постерами -->
     <section class="posters-section">
         <div class="container">
             <div class="section-header" style="margin-bottom: 2rem;">
@@ -241,8 +242,25 @@
             
             <!-- Swiper -->
             <div class="swiper postersSwiper">
-                <div class="swiper-wrapper" id="postersContainer">
-                    <!-- Постеры будут загружаться динамически -->
+                <div class="swiper-wrapper">
+                    <!-- Постер с товаром -->
+                    <div class="swiper-slide">
+                        <a href="https://ggpoint.store/product.html?id=1773700771257" style="text-decoration: none; display: block;">
+                            <div class="poster-slide" style="position: relative; border-radius: 24px; overflow: hidden; height: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                                <img src="https://raw.githubusercontent.com/ggpoint/ggpoint/main/mouse.jpg" 
+                                     style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;"
+                                     alt="Новинка"
+                                     onerror="this.src='https://via.placeholder.com/1400x400/1e293b/2563eb?text=Новинка'">
+                                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: white;">
+                                    <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Новое поступление!</h2>
+                                    <p style="font-size: 1.1rem; margin-bottom: 1rem; color: #e2e8f0; max-width: 600px;">Ультралегкая игровая мышь. Вес всего 49 грамм. Идеально для киберспорта!</p>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 2rem; background: #2563eb; color: white; border-radius: 8px; font-weight: 600; transition: all 0.3s ease;">
+                                        Подробнее <i class="fas fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
                 
                 <!-- Пагинация -->
@@ -318,7 +336,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Популярные бренды</h2>
-                <p class="section-subtitle">Только оригинальная продукция</p>
+                <p class="section-subtitle">пока что разработке</p>
             </div>
             
             <div class="brands-grid" id="brandsGrid">
@@ -479,132 +497,354 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <!-- Firebase -->
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+<script type="module">
+    // Импортируем Firebase
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
-            authDomain: "ggpoint-shop.firebaseapp.com",
-            databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
-            projectId: "ggpoint-shop",
-            storageBucket: "ggpoint-shop.firebasestorage.app",
-            messagingSenderId: "182227173652",
-            appId: "1:182227173652:web:0949e2edae9900afd98201"
-        };
+    // Конфигурация Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+        authDomain: "ggpoint-shop.firebaseapp.com",
+        databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+        projectId: "ggpoint-shop",
+        storageBucket: "ggpoint-shop.firebasestorage.app",
+        messagingSenderId: "182227173652",
+        appId: "1:182227173652:web:0949e2edae9900afd98201"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+    // Инициализация
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
 
-        // Загрузка постеров
-        const postersRef = ref(database, 'posters');
-        onValue(postersRef, (snapshot) => {
+    // Глобальные переменные
+    let products = [];
+    let hotPrices = {};
+    let brands = [];
+    let activeBrand = 'all';
+
+    // Загрузка данных
+    function loadData() {
+        // Товары
+        const productsRef = ref(database, 'products');
+        onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
-            const posters = data ? Object.values(data).filter(p => p.active) : [];
-            
-            // Сортируем по порядку
-            posters.sort((a, b) => (a.order || 999) - (b.order || 999));
-            
-            const container = document.getElementById('postersContainer');
-            if (!container) return;
-            
-            if (posters.length === 0) {
-                container.innerHTML = `
-                    <div class="swiper-slide">
-                        <div class="poster-slide">
-                            <img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image">
-                            <div class="poster-overlay">
-                                <h2 class="poster-title">Добро пожаловать в GGPoint!</h2>
-                                <p class="poster-description">Скоро здесь появятся акции и новинки</p>
-                                <a href="/catalog" class="poster-btn">
-                                    Перейти в каталог <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = posters.map(poster => `
-                    <div class="swiper-slide">
-                        <div class="poster-slide">
-                            <img src="${poster.imageUrl}" class="poster-image" alt="${poster.title}" onerror="this.src='https://via.placeholder.com/1400x500/1e293b/2563eb?text=Ошибка+загрузки'">
-                            <div class="poster-overlay">
-                                <h2 class="poster-title">${poster.title}</h2>
-                                ${poster.description ? `<p class="poster-description">${poster.description}</p>` : ''}
-                                <a href="${poster.link || '/catalog'}" class="poster-btn">
-                                    ${poster.buttonText || 'Подробнее'} <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            // Инициализация Swiper после загрузки постеров
-            setTimeout(() => {
-                new Swiper('.postersSwiper', {
-                    loop: true,
-                    autoplay: {
-                        delay: 5000,
-                        disableOnInteraction: false,
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                });
-            }, 100);
+            products = data ? Object.values(data) : [];
+            updateUI();
         });
 
-        // Загрузка брендов
+        // Скидки
+        const hotPricesRef = ref(database, 'hotPrices');
+        onValue(hotPricesRef, (snapshot) => {
+            hotPrices = snapshot.val() || {};
+            updateUI();
+        });
+
+        // Бренды
         const brandsRef = ref(database, 'brands');
         onValue(brandsRef, (snapshot) => {
             const data = snapshot.val();
-            const brands = data ? Object.values(data) : [];
-            
-            const brandsGrid = document.getElementById('brandsGrid');
-            if (!brandsGrid) return;
-            
-            brandsGrid.innerHTML = brands.map(brand => `
-                <div class="brand-card">
-                    <img src="${brand.icon}" alt="${brand.name}" class="brand-logo">
-                    <span class="brand-name">${brand.name}</span>
-                </div>
-            `).join('');
+            if (data) {
+                // Преобразуем объект брендов в массив
+                brands = Object.keys(data).map(key => ({
+                    id: key,
+                    name: data[key].name || key
+                }));
+            } else {
+                // Бренды по умолчанию
+                brands = [
+                    { id: 'RAZER', name: 'RAZER' },
+                    { id: 'HYPERX', name: 'HYPERX' },
+                    { id: 'LOGITECH', name: 'LOGITECH' },
+                    { id: 'ROG', name: 'ROG' },
+                    { id: 'SAMSUNG', name: 'SAMSUNG' },
+                    { id: 'AOC', name: 'AOC' },
+                    { id: 'MCHOSE', name: 'MCHOSE' },
+                    { id: 'AJAZZ', name: 'AJAZZ' },
+                    { id: 'AULA', name: 'AULA' },
+                    { id: 'VXE', name: 'VXE' },
+                    { id: 'VGN', name: 'VGN' },
+                    { id: 'ATK', name: 'ATK' }
+                ];
+            }
+            renderBrands();
         });
-    </script>
+    }
+
+    // Обновление UI
+    function updateUI() {
+        updateCategoryCounts();
+        renderNewProducts();
+        renderHotPrices();
+    }
+
+    // Обновление счетчиков категорий
+    function updateCategoryCounts() {
+        const categories = {
+            'мышь': 'mouseCount',
+            'клавиатура': 'keyboardCount',
+            'наушники': 'headphonesCount',
+            'монитор': 'monitorCount'
+        };
+        
+        Object.entries(categories).forEach(([category, elementId]) => {
+            const count = products.filter(p => p.category === category).length;
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = `${count} товаров`;
+            }
+        });
+    }
+
+    // Рендер брендов
+    function renderBrands() {
+        const brandsGrid = document.getElementById('brandsGrid');
+        if (!brandsGrid) return;
+        
+        brandsGrid.innerHTML = '';
+        
+        // Карточка "Все бренды"
+        const allBrandCard = document.createElement('div');
+        allBrandCard.className = `brand-card ${activeBrand === 'all' ? 'active' : ''}`;
+        allBrandCard.dataset.brand = 'all';
+        allBrandCard.innerHTML = `
+            <div class="brand-name">
+                <i class="fas fa-layer-group" style="margin-right: 0.5rem;"></i>
+                Все бренды
+            </div>
+        `;
+        allBrandCard.addEventListener('click', () => {
+            setActiveBrand('all');
+        });
+        brandsGrid.appendChild(allBrandCard);
+        
+        // Сортируем бренды по алфавиту
+        const sortedBrands = [...brands].sort((a, b) => a.name.localeCompare(b.name));
+        
+        // Карточки брендов
+        sortedBrands.forEach(brand => {
+            const brandCard = document.createElement('div');
+            brandCard.className = `brand-card ${activeBrand === brand.name ? 'active' : ''}`;
+            brandCard.dataset.brand = brand.name;
+            brandCard.innerHTML = `
+                <div class="brand-name">${brand.name}</div>
+            `;
+            brandCard.addEventListener('click', () => {
+                setActiveBrand(brand.name);
+            });
+            brandsGrid.appendChild(brandCard);
+        });
+    }
+
+    // Установка активного бренда
+    function setActiveBrand(brand) {
+        activeBrand = brand;
+        
+        document.querySelectorAll('.brand-card').forEach(card => {
+            if (card.dataset.brand === brand) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+        
+        console.log('Выбран бренд:', brand);
+    }
+
+    // Рендер новинок
+    function renderNewProducts() {
+        const grid = document.getElementById('newProductsGrid');
+        if (!grid) return;
+        
+        const newProducts = [...products]
+            .filter(p => p.category !== 'keycaps')
+            .sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0))
+            .slice(0, 4);
+        
+        grid.innerHTML = '';
+        
+        if (newProducts.length === 0) {
+            grid.innerHTML = '<div class="no-products"><p>Новинки скоро появятся</p></div>';
+            return;
+        }
+        
+        newProducts.forEach(product => {
+            const card = createProductCard(product);
+            grid.appendChild(card);
+        });
+    }
+
+    // Рендер скидок
+    function renderHotPrices() {
+        const grid = document.getElementById('hotPricesGrid');
+        if (!grid) return;
+        
+        const hotProducts = Object.keys(hotPrices)
+            .map(id => products.find(p => p.id == id))
+            .filter(p => p && p.category !== 'keycaps')
+            .slice(0, 4);
+        
+        grid.innerHTML = '';
+        
+        if (hotProducts.length === 0) {
+            grid.innerHTML = '<div class="no-products"><p>Скидки скоро появятся</p></div>';
+            return;
+        }
+        
+        hotProducts.forEach(product => {
+            const card = createHotPriceCard(product);
+            grid.appendChild(card);
+        });
+    }
+
+    // Создание карточки товара
+    function createProductCard(product) {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        const isHot = hotPrices[product.id];
+        const isNew = isProductNew(product);
+        
+        let badges = '';
+        if (isHot) badges += '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>';
+        if (isNew) badges += '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>';
+        
+        card.innerHTML = `
+            ${badges}
+            <div class="product-image-container">
+                <img src="${product.images?.[0] || 'https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото'}" 
+                     alt="${product.name}" 
+                     class="product-image">
+            </div>
+            <div class="product-info">
+                <div class="product-category">${getCategoryName(product.category)}</div>
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description-short">${product.description?.substring(0, 80)}...</p>
+                <p class="product-price">${product.price}</p>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => {
+            window.location.href = `product.html?id=${product.id}`;
+        });
+        
+        return card;
+    }
+
+    // Создание карточки скидки
+    function createHotPriceCard(product) {
+        const card = document.createElement('div');
+        card.className = 'hot-price-card';
+        
+        card.innerHTML = `
+            <div class="hot-price-badge">
+                <i class="fas fa-fire"></i>
+                СКИДКА
+            </div>
+            <div class="hot-price-image-container">
+                <img src="${product.images?.[0] || 'https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото'}" 
+                     alt="${product.name}" 
+                     class="hot-price-image">
+            </div>
+            <div class="hot-price-info">
+                <h3 class="hot-price-name">${product.name}</h3>
+                <p class="hot-price-description">${product.description?.substring(0, 60)}...</p>
+                <div class="hot-price-prices">
+                    <span class="new-price">${product.price}</span>
+                    <span class="discount-percent">-30%</span>
+                </div>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => {
+            window.location.href = `product.html?id=${product.id}`;
+        });
+        
+        return card;
+    }
+
+    // Проверка нового товара
+    function isProductNew(product) {
+        if (!product.dateAdded) return false;
+        const added = new Date(product.dateAdded);
+        const now = new Date();
+        const diffDays = Math.floor((now - added) / (1000 * 60 * 60 * 24));
+        return diffDays <= 30;
+    }
+
+    // Получение названия категории
+    function getCategoryName(key) {
+        const categories = {
+            'мышь': 'Мышь',
+            'клавиатура': 'Клавиатура',
+            'наушники': 'Наушники',
+            'монитор': 'Монитор',
+            'keycaps': 'Кейкапы'
+        };
+        return categories[key] || key;
+    }
+
+    // Корзина
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-    <!-- Скрипт для сообщения о разработке -->
-    <script>
-    function showDevelopmentMessage() {
-        alert('Каталог находится в разработке. Скоро здесь появятся все товары! Следите за обновлениями.');
+    function updateCartCount() {
+        const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        document.querySelectorAll('.cart-count').forEach(el => {
+            el.textContent = count;
+        });
     }
     
+    updateCartCount();
+
     // Кнопка "Наверх"
-    document.getElementById('backToTop')?.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    // Показывать/скрывать кнопку "Наверх"
-    window.addEventListener('scroll', function() {
-        const btn = document.getElementById('backToTop');
-        if (btn) {
-            if (window.scrollY > 500) {
-                btn.style.display = 'flex';
-            } else {
-                btn.style.display = 'none';
-            }
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
         }
     });
-    
-    // Кнопка админки
-    document.getElementById('adminBtn')?.addEventListener('click', function() {
-        window.location.href = 'admin.html';
+
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    </script>
+
+    // Админка
+    const adminBtn = document.getElementById('adminBtn');
+    const adminModal = document.getElementById('adminLoginModal');
+    const closeAdminModal = document.getElementById('closeAdminModal');
+
+    adminBtn.addEventListener('click', () => {
+        adminModal.style.display = 'block';
+    });
+
+    closeAdminModal.addEventListener('click', () => {
+        adminModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === adminModal) {
+            adminModal.style.display = 'none';
+        }
+    });
+
+    // Форма входа
+    document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const login = document.getElementById('adminLogin').value;
+        const password = document.getElementById('adminPassword').value;
+        
+        if (login === 'admin' && password === 'admin') {
+            adminModal.style.display = 'none';
+            window.location.href = 'admin-panel.html';
+        } else {
+            alert('Неверный логин или пароль!');
+        }
+    });
+
+    // Загрузка данных при старте
+    loadData();
+</script>
 </body>
 </html>
