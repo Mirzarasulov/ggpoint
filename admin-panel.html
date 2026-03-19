@@ -271,13 +271,6 @@
             border-color: var(--primary-blue);
         }
         
-        .form-group small {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
-            display: block;
-        }
-        
         /* Поля для характеристик и фото */
         .features-list,
         .images-list {
@@ -966,7 +959,6 @@
                             <th>Бренд</th>
                             <th>Цена</th>
                             <th>Скидка</th>
-                            <th>Видео</th>
                             <th>Действия</th>
                         </tr>
                     </thead>
@@ -974,101 +966,91 @@
                 </table>
             </div>
             
- <!-- ===== ДОБАВЛЕНИЕ ТОВАРА ===== -->
-<div class="admin-section" id="add-product">
-    <h2 style="margin-bottom: 2rem;">Добавить новый товар</h2>
-    
-    <form id="addProductForm" class="admin-form">
-        <div class="form-group">
-            <label>Название товара *</label>
-            <input type="text" id="productName" required placeholder="Например: Игровая мышь Razer DeathAdder V2">
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>Категория *</label>
-                <select id="productCategory" required>
-                    <option value="">Выберите категорию</option>
-                    <option value="мышь">🖱️ Игровая мышь</option>
-                    <option value="клавиатура">⌨️ Клавиатура</option>
-                    <option value="наушники">🎧 Наушники</option>
-                    <option value="монитор">🖥️ Монитор</option>
-                    <option value="keycaps">🎨 Кейкапы</option>
-                </select>
+            <!-- ===== ДОБАВЛЕНИЕ ТОВАРА ===== -->
+            <div class="admin-section" id="add-product">
+                <h2 style="margin-bottom: 2rem;">Добавить новый товар</h2>
+                
+                <form id="addProductForm" class="admin-form">
+                    <div class="form-group">
+                        <label>Название товара *</label>
+                        <input type="text" id="productName" required placeholder="Например: Игровая мышь Razer DeathAdder V2">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Категория *</label>
+                            <select id="productCategory" required>
+                                <option value="">Выберите категорию</option>
+                                <option value="мышь">🖱️ Игровая мышь</option>
+                                <option value="клавиатура">⌨️ Клавиатура</option>
+                                <option value="наушники">🎧 Наушники</option>
+                                <option value="монитор">🖥️ Монитор</option>
+                                <option value="keycaps">🎨 Кейкапы</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Бренд *</label>
+                            <select id="productBrand" required>
+                                <option value="">Выберите бренд</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Цена *</label>
+                            <input type="text" id="productPrice" required placeholder="Например: 799,000 UZS">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Количество</label>
+                            <input type="number" id="productStock" value="10" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Описание товара *</label>
+                        <textarea id="productDescription" required rows="4" placeholder="Подробное описание товара..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Характеристики</label>
+                        <div id="featuresContainer" class="features-list"></div>
+                        <button type="button" class="add-btn" onclick="addFeature()">
+                            <i class="fas fa-plus"></i> Добавить характеристику
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Фотографии товара *</label>
+                        <div id="imagesContainer" class="images-list"></div>
+                        <button type="button" class="add-btn" onclick="addImage()">
+                            <i class="fas fa-plus"></i> Добавить фото
+                        </button>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isHotPrice">
+                            <i class="fas fa-fire" style="color: #ff6b00; margin-left: 0.5rem;"></i>
+                            Товар со скидкой
+                        </label>
+                    </div>
+                    
+                    <div id="hotPriceFields" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
+                        <div class="form-group">
+                            <label>Причина скидки</label>
+                            <input type="text" id="hotPriceReason" placeholder="Например: Акция недели, -30%">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;">
+                        <i class="fas fa-save"></i> Сохранить товар
+                    </button>
+                </form>
             </div>
-            
-            <div class="form-group">
-                <label>Бренд *</label>
-                <select id="productBrand" required>
-                    <option value="">Выберите бренд</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label>Цена *</label>
-                <input type="text" id="productPrice" required placeholder="Например: 799,000 UZS">
-            </div>
-            
-            <div class="form-group">
-                <label>Количество</label>
-                <input type="number" id="productStock" value="10" min="0">
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Описание товара *</label>
-            <textarea id="productDescription" required rows="4" placeholder="Подробное описание товара..."></textarea>
-        </div>
-        
-        <!-- ⚡ НОВОЕ ПОЛЕ ДЛЯ YOUTUBE -->
-// В editProduct, после изображений добавьте:
-<div class="form-group">
-    <label>
-        <i class="fab fa-youtube" style="color: #ff0000;"></i>
-        YouTube видео
-    </label>
-    <input type="url" id="editProductVideo" value="${product.video || ''}" placeholder="https://youtu.be/...">
-</div>
-        
-        <div class="form-group">
-            <label>Характеристики</label>
-            <div id="featuresContainer" class="features-list"></div>
-            <button type="button" class="add-btn" onclick="addFeature()">
-                <i class="fas fa-plus"></i> Добавить характеристику
-            </button>
-        </div>
-        
-        <div class="form-group">
-            <label>Фотографии товара *</label>
-            <div id="imagesContainer" class="images-list"></div>
-            <button type="button" class="add-btn" onclick="addImage()">
-                <i class="fas fa-plus"></i> Добавить фото
-            </button>
-            <div class="image-preview" id="imagePreview"></div>
-        </div>
-        
-        <div class="form-group">
-            <label>
-                <input type="checkbox" id="isHotPrice">
-                <i class="fas fa-fire" style="color: #ff6b00; margin-left: 0.5rem;"></i>
-                Товар со скидкой
-            </label>
-        </div>
-        
-        <div id="hotPriceFields" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
-            <div class="form-group">
-                <label>Причина скидки</label>
-                <input type="text" id="hotPriceReason" placeholder="Например: Акция недели, -30%">
-            </div>
-        </div>
-        
-        <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;">
-            <i class="fas fa-save"></i> Сохранить товар
-        </button>
-    </form>
-</div>
             
             <!-- ===== УПРАВЛЕНИЕ БРЕНДАМИ ===== -->
             <div class="admin-section" id="brands">
@@ -1204,8 +1186,6 @@
                 if (typeof loadData === 'function') {
                     loadData();
                 }
-                // Сохраняем состояние входа
-                sessionStorage.setItem('adminLoggedIn', 'true');
             } else {
                 errorDiv.textContent = '❌ Неверный пароль';
                 document.getElementById('passwordInput').value = '';
@@ -1251,13 +1231,9 @@
         const database = getDatabase(app);
         const storage = getStorage(app);
         
-        // GitHub конфигурация с защитой от сканирования
+        // GitHub конфигурация
         const GITHUB_CONFIG = {
-            token: (() => {
-                // Токен разбит на части и зашифрован в массиве кодов символов
-                const codes = [103, 104, 112, 95, 113, 121, 67, 79, 71, 74, 119, 68, 80, 81, 104, 121, 69, 81, 82, 80, 99, 48, 118, 48, 90, 50, 54, 117, 69, 76, 89, 105, 54, 109, 51, 88, 52, 116, 75, 101];
-                return String.fromCharCode(...codes);
-            })(),
+            token: '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',
             owner: 'loading1234t',
             repo: 'ggpoint',
             branch: 'main',
@@ -1470,7 +1446,6 @@
                     <td>${p.brand || '-'}</td>
                     <td>${p.price}</td>
                     <td>${hotPrices[p.id] ? '🔥 Да' : 'Нет'}</td>
-                    <td>${p.videoUrl ? '✅' : '❌'}</td>
                     <td class="admin-actions">
                         <button class="admin-btn-small edit" onclick="editProduct('${p.id}')">
                             <i class="fas fa-edit"></i>
@@ -1711,75 +1686,71 @@
         };
 
         // Добавление товара
- // Добавление товара
-document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('productName').value;
-    const category = document.getElementById('productCategory').value;
-    const brand = document.getElementById('productBrand').value;
-    const price = document.getElementById('productPrice').value;
-    const description = document.getElementById('productDescription').value;
-    const video = document.getElementById('productVideo')?.value || ''; // ⚡ НОВОЕ ПОЛЕ
-    const isHot = document.getElementById('isHotPrice').checked;
-    const hotReason = document.getElementById('hotPriceReason').value;
-    
-    const features = [];
-    document.querySelectorAll('.feature-input').forEach(input => {
-        if (input.value.trim()) features.push(input.value.trim());
-    });
-    
-    const images = [];
-    document.querySelectorAll('.image-input').forEach(input => {
-        if (input.value.trim()) images.push(input.value.trim());
-    });
-    
-    if (!name || !category || !brand || !price || !description || images.length === 0) {
-        alert('❌ Заполните все обязательные поля!');
-        return;
-    }
-    
-    const newId = Date.now();
-    const newProduct = {
-        id: newId,
-        name,
-        category,
-        brand,
-        price,
-        description,
-        features,
-        images,
-        video: video || null, // ⚡ СОХРАНЯЕМ ВИДЕО
-        dateAdded: new Date().toISOString()
-    };
-    
-    try {
-        const productRef = ref(database, 'products/' + newId);
-        await set(productRef, newProduct);
-        
-        if (isHot && hotReason) {
-            const hotRef = ref(database, 'hotPrices/' + newId);
-            await set(hotRef, {
-                reason: hotReason,
-                added: new Date().toISOString()
+        document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const brand = document.getElementById('productBrand').value;
+            const price = document.getElementById('productPrice').value;
+            const description = document.getElementById('productDescription').value;
+            const isHot = document.getElementById('isHotPrice').checked;
+            const hotReason = document.getElementById('hotPriceReason').value;
+            
+            const features = [];
+            document.querySelectorAll('.feature-input').forEach(input => {
+                if (input.value.trim()) features.push(input.value.trim());
             });
-        }
-        
-        alert('✅ Товар успешно добавлен!');
-        e.target.reset();
-        document.getElementById('imagesContainer').innerHTML = '';
-        document.getElementById('featuresContainer').innerHTML = '';
-        document.getElementById('imagePreview').innerHTML = '';
-        document.getElementById('productVideo').value = ''; // Очищаем поле видео
-        
-        addFeature();
-        addImage();
-        switchToProducts();
-    } catch (error) {
-        console.error('Ошибка:', error);
-        alert('❌ Ошибка при добавлении товара');
-    }
-});
+            
+            const images = [];
+            document.querySelectorAll('.image-input').forEach(input => {
+                if (input.value.trim()) images.push(input.value.trim());
+            });
+            
+            if (!name || !category || !brand || !price || !description || images.length === 0) {
+                alert('❌ Заполните все обязательные поля!');
+                return;
+            }
+            
+            const newId = Date.now();
+            const newProduct = {
+                id: newId,
+                name,
+                category,
+                brand,
+                price,
+                description,
+                features,
+                images,
+                dateAdded: new Date().toISOString()
+            };
+            
+            try {
+                const productRef = ref(database, 'products/' + newId);
+                await set(productRef, newProduct);
+                
+                if (isHot && hotReason) {
+                    const hotRef = ref(database, 'hotPrices/' + newId);
+                    await set(hotRef, {
+                        reason: hotReason,
+                        added: new Date().toISOString()
+                    });
+                }
+                
+                alert('✅ Товар успешно добавлен!');
+                e.target.reset();
+                document.getElementById('imagesContainer').innerHTML = '';
+                document.getElementById('featuresContainer').innerHTML = '';
+                document.getElementById('imagePreview').innerHTML = '';
+                
+                addFeature();
+                addImage();
+                switchToProducts();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('❌ Ошибка при добавлении товара');
+            }
+        });
 
         // Добавление бренда
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
@@ -1865,13 +1836,6 @@ document.getElementById('addProductForm')?.addEventListener('submit', async (e) 
                         <textarea id="editProductDescription" required rows="4">${product.description}</textarea>
                     </div>
                     
-                    <!-- НОВОЕ ПОЛЕ ДЛЯ YOUTUBE В РЕДАКТИРОВАНИИ -->
-                    <div class="form-group">
-                        <label>YouTube видео (необязательно)</label>
-                        <input type="url" id="editProductVideo" value="${product.videoUrl || ''}" placeholder="https://www.youtube.com/watch?v=...">
-                        <small style="color: var(--text-gray);">📹 Ссылка на YouTube обзор</small>
-                    </div>
-                    
                     <div class="form-group">
                         <label>Характеристики</label>
                         <div id="editFeaturesContainer">
@@ -1944,11 +1908,9 @@ document.getElementById('addProductForm')?.addEventListener('submit', async (e) 
                     brand: document.getElementById('editProductBrand').value,
                     price: document.getElementById('editProductPrice').value,
                     description: document.getElementById('editProductDescription').value,
-                    videoUrl: document.getElementById('editProductVideo').value || '', // НОВОЕ
                     features: Array.from(document.querySelectorAll('#editFeaturesContainer .feature-input')).map(i => i.value).filter(v => v),
                     images: Array.from(document.querySelectorAll('#editImagesContainer .image-input')).map(i => i.value).filter(v => v),
                     lastUpdated: new Date().toISOString()
-                    video: document.getElementById('editProductVideo')?.value || null,
                 };
                 
                 try {
