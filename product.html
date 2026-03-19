@@ -1325,18 +1325,23 @@
     let isFullscreenZoomed = false;
 
     // Загрузка данных
-    function loadData() {
-        const productRef = ref(database, 'products/' + productId);
-        onValue(productRef, (snapshot) => {
-            product = snapshot.val();
-            if (!product) {
-                window.location.href = 'catalog.html';
-                return;
-            }
-            
-            document.title = `${product.name} - GGPoint`;
-            renderProduct();
-        });
+function loadData() {
+    const productRef = ref(database, 'products/' + productId);
+    onValue(productRef, (snapshot) => {
+        product = snapshot.val();
+        if (!product) {
+            window.location.href = 'catalog.html';
+            return;
+        }
+        
+        // ⚡ ВОТ СЮДА ВСТАВЬТЕ ЭТОТ КОД ⚡
+        console.log('🔥 PRODUCT LOADED:', product);
+        console.log('🔥 VIDEO FIELD:', product.video);
+        console.log('🔥 VIDEO TYPE:', typeof product.video);
+        
+        document.title = `${product.name} - GGPoint`;
+        renderProduct();
+    });
 
         const productsRef = ref(database, 'products');
         onValue(productsRef, (snapshot) => {
@@ -1360,11 +1365,14 @@
 
     // Функция для получения YouTube ID
  // Функция для получения YouTube ID
+// Функция для получения YouTube ID
 function getYouTubeId(url) {
     if (!url) return null;
     
+    console.log('Getting ID from URL:', url); // Для отладки
+    
     // Если это просто ID (11 символов)
-    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
+    if (typeof url === 'string' && url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) {
         return url;
     }
     
@@ -1374,19 +1382,27 @@ function getYouTubeId(url) {
         /youtube\.com\/watch\?.*v=([^&]+)/i,
         /youtu\.be\/([^?]+)/i,
         /youtube\.com\/shorts\/([^?]+)/i,
-        /youtube\.com\/live\/([^?]+)/i
+        /youtube\.com\/live\/([^?]+)/i,
+        /youtube\.com\/v\/([^?]+)/i
     ];
     
     for (let pattern of patterns) {
         const match = url.match(pattern);
         if (match && match[1]) {
+            console.log('Found ID:', match[1]);
             return match[1]; // Возвращаем ID видео
         }
     }
     
     // Если ничего не нашли, но ссылка похожа на YouTube
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        console.log('YouTube URL found but ID extraction failed:', url);
+        console.log('YouTube URL found but ID extraction failed');
+        // Пробуем достать ID из конца ссылки
+        const parts = url.split('/');
+        const lastPart = parts[parts.length - 1].split('?')[0];
+        if (lastPart.length === 11) {
+            return lastPart;
+        }
     }
     
     return null;
@@ -1488,12 +1504,16 @@ function getYouTubeId(url) {
 
     // Рендер YouTube видео внизу
 // Рендер YouTube видео внизу
+// Рендер YouTube видео внизу
 function renderYouTubeVideoBottom() {
     const videoContainer = document.getElementById('videoContainerBottom');
     
-    console.log('Video URL from Firebase:', product.video); // Для отладки
+    console.log('Product object:', product); // Для отладки
+    console.log('Video URL from product:', product.video); // Для отладки
     
-    if (!product.video) {
+    // ⚡ ПРОВЕРЯЕМ ЕСТЬ ЛИ ВИДЕО
+    if (!product || !product.video) {
+        console.log('No video for this product');
         videoContainer.innerHTML = `
             <div class="no-video-bottom">
                 <i class="fab fa-youtube"></i>
@@ -1517,12 +1537,12 @@ function renderYouTubeVideoBottom() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen
                 loading="lazy"
-                style="width: 100%; height: 450px; border-radius: 16px;">
+                style="width: 100%; height: 450px; border-radius: 16px; border: 2px solid #ff0000;">
             </iframe>
         `;
         
-        // Добавляем статистику просмотров (если есть)
-        const statsHtml = `
+        // Добавляем статистику просмотров
+        videoContainer.innerHTML += `
             <div class="video-stats">
                 <span class="video-stats-item">
                     <i class="fas fa-eye"></i> Смотрим на YouTube
@@ -1532,6 +1552,21 @@ function renderYouTubeVideoBottom() {
                 </a>
             </div>
         `;
+        
+    } else {
+        // Если ID не найден, но ссылка есть - показываем кнопку
+        videoContainer.innerHTML = `
+            <div class="no-video-bottom">
+                <i class="fab fa-youtube"></i>
+                <h4>Видео доступно на YouTube</h4>
+                <p>Нажмите кнопку ниже чтобы посмотреть обзор</p>
+                <a href="${product.video}" target="_blank" class="watch-on-youtube" style="margin-top: 1rem; display: inline-block;">
+                    <i class="fab fa-youtube"></i> Смотреть на YouTube
+                </a>
+            </div>
+        `;
+    }
+}
         
         // Добавляем статистику после видео
         videoContainer.innerHTML += statsHtml;
