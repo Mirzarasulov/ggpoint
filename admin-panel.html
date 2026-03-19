@@ -974,98 +974,101 @@
                 </table>
             </div>
             
-            <!-- ===== ДОБАВЛЕНИЕ ТОВАРА ===== -->
-            <div class="admin-section" id="add-product">
-                <h2 style="margin-bottom: 2rem;">Добавить новый товар</h2>
-                
-                <form id="addProductForm" class="admin-form">
-                    <div class="form-group">
-                        <label>Название товара *</label>
-                        <input type="text" id="productName" required placeholder="Например: Игровая мышь Razer DeathAdder V2">
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Категория *</label>
-                            <select id="productCategory" required>
-                                <option value="">Выберите категорию</option>
-                                <option value="мышь">🖱️ Игровая мышь</option>
-                                <option value="клавиатура">⌨️ Клавиатура</option>
-                                <option value="наушники">🎧 Наушники</option>
-                                <option value="монитор">🖥️ Монитор</option>
-                                <option value="keycaps">🎨 Кейкапы</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Бренд *</label>
-                            <select id="productBrand" required>
-                                <option value="">Выберите бренд</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Цена *</label>
-                            <input type="text" id="productPrice" required placeholder="Например: 799,000 UZS">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Количество</label>
-                            <input type="number" id="productStock" value="10" min="0">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Описание товара *</label>
-                        <textarea id="productDescription" required rows="4" placeholder="Подробное описание товара..."></textarea>
-                    </div>
-                    
-                    <!-- НОВОЕ ПОЛЕ ДЛЯ YOUTUBE -->
-                    <div class="form-group">
-                        <label>YouTube видео (необязательно)</label>
-                        <input type="url" id="productVideo" placeholder="https://www.youtube.com/watch?v=... или https://youtu.be/...">
-                        <small style="color: var(--text-gray); display: block; margin-top: 0.3rem;">📹 Вставьте ссылку на YouTube обзор товара</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Характеристики</label>
-                        <div id="featuresContainer" class="features-list"></div>
-                        <button type="button" class="add-btn" onclick="addFeature()">
-                            <i class="fas fa-plus"></i> Добавить характеристику
-                        </button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Фотографии товара *</label>
-                        <div id="imagesContainer" class="images-list"></div>
-                        <button type="button" class="add-btn" onclick="addImage()">
-                            <i class="fas fa-plus"></i> Добавить фото
-                        </button>
-                        <div class="image-preview" id="imagePreview"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="isHotPrice">
-                            <i class="fas fa-fire" style="color: #ff6b00; margin-left: 0.5rem;"></i>
-                            Товар со скидкой
-                        </label>
-                    </div>
-                    
-                    <div id="hotPriceFields" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
-                        <div class="form-group">
-                            <label>Причина скидки</label>
-                            <input type="text" id="hotPriceReason" placeholder="Например: Акция недели, -30%">
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;">
-                        <i class="fas fa-save"></i> Сохранить товар
-                    </button>
-                </form>
+ <!-- ===== ДОБАВЛЕНИЕ ТОВАРА ===== -->
+<div class="admin-section" id="add-product">
+    <h2 style="margin-bottom: 2rem;">Добавить новый товар</h2>
+    
+    <form id="addProductForm" class="admin-form">
+        <div class="form-group">
+            <label>Название товара *</label>
+            <input type="text" id="productName" required placeholder="Например: Игровая мышь Razer DeathAdder V2">
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Категория *</label>
+                <select id="productCategory" required>
+                    <option value="">Выберите категорию</option>
+                    <option value="мышь">🖱️ Игровая мышь</option>
+                    <option value="клавиатура">⌨️ Клавиатура</option>
+                    <option value="наушники">🎧 Наушники</option>
+                    <option value="монитор">🖥️ Монитор</option>
+                    <option value="keycaps">🎨 Кейкапы</option>
+                </select>
             </div>
+            
+            <div class="form-group">
+                <label>Бренд *</label>
+                <select id="productBrand" required>
+                    <option value="">Выберите бренд</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Цена *</label>
+                <input type="text" id="productPrice" required placeholder="Например: 799,000 UZS">
+            </div>
+            
+            <div class="form-group">
+                <label>Количество</label>
+                <input type="number" id="productStock" value="10" min="0">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Описание товара *</label>
+            <textarea id="productDescription" required rows="4" placeholder="Подробное описание товара..."></textarea>
+        </div>
+        
+        <!-- ⚡ НОВОЕ ПОЛЕ ДЛЯ YOUTUBE -->
+// В editProduct, после изображений добавьте:
+<div class="form-group">
+    <label>
+        <i class="fab fa-youtube" style="color: #ff0000;"></i>
+        YouTube видео
+    </label>
+    <input type="url" id="editProductVideo" value="${product.video || ''}" placeholder="https://youtu.be/...">
+</div>
+        
+        <div class="form-group">
+            <label>Характеристики</label>
+            <div id="featuresContainer" class="features-list"></div>
+            <button type="button" class="add-btn" onclick="addFeature()">
+                <i class="fas fa-plus"></i> Добавить характеристику
+            </button>
+        </div>
+        
+        <div class="form-group">
+            <label>Фотографии товара *</label>
+            <div id="imagesContainer" class="images-list"></div>
+            <button type="button" class="add-btn" onclick="addImage()">
+                <i class="fas fa-plus"></i> Добавить фото
+            </button>
+            <div class="image-preview" id="imagePreview"></div>
+        </div>
+        
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="isHotPrice">
+                <i class="fas fa-fire" style="color: #ff6b00; margin-left: 0.5rem;"></i>
+                Товар со скидкой
+            </label>
+        </div>
+        
+        <div id="hotPriceFields" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
+            <div class="form-group">
+                <label>Причина скидки</label>
+                <input type="text" id="hotPriceReason" placeholder="Например: Акция недели, -30%">
+            </div>
+        </div>
+        
+        <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;">
+            <i class="fas fa-save"></i> Сохранить товар
+        </button>
+    </form>
+</div>
             
             <!-- ===== УПРАВЛЕНИЕ БРЕНДАМИ ===== -->
             <div class="admin-section" id="brands">
@@ -1708,73 +1711,75 @@
         };
 
         // Добавление товара
-        document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('productName').value;
-            const category = document.getElementById('productCategory').value;
-            const brand = document.getElementById('productBrand').value;
-            const price = document.getElementById('productPrice').value;
-            const description = document.getElementById('productDescription').value;
-            const videoUrl = document.getElementById('productVideo').value; // НОВОЕ
-            const isHot = document.getElementById('isHotPrice').checked;
-            const hotReason = document.getElementById('hotPriceReason').value;
-            
-            const features = [];
-            document.querySelectorAll('.feature-input').forEach(input => {
-                if (input.value.trim()) features.push(input.value.trim());
+ // Добавление товара
+document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('productName').value;
+    const category = document.getElementById('productCategory').value;
+    const brand = document.getElementById('productBrand').value;
+    const price = document.getElementById('productPrice').value;
+    const description = document.getElementById('productDescription').value;
+    const video = document.getElementById('productVideo')?.value || ''; // ⚡ НОВОЕ ПОЛЕ
+    const isHot = document.getElementById('isHotPrice').checked;
+    const hotReason = document.getElementById('hotPriceReason').value;
+    
+    const features = [];
+    document.querySelectorAll('.feature-input').forEach(input => {
+        if (input.value.trim()) features.push(input.value.trim());
+    });
+    
+    const images = [];
+    document.querySelectorAll('.image-input').forEach(input => {
+        if (input.value.trim()) images.push(input.value.trim());
+    });
+    
+    if (!name || !category || !brand || !price || !description || images.length === 0) {
+        alert('❌ Заполните все обязательные поля!');
+        return;
+    }
+    
+    const newId = Date.now();
+    const newProduct = {
+        id: newId,
+        name,
+        category,
+        brand,
+        price,
+        description,
+        features,
+        images,
+        video: video || null, // ⚡ СОХРАНЯЕМ ВИДЕО
+        dateAdded: new Date().toISOString()
+    };
+    
+    try {
+        const productRef = ref(database, 'products/' + newId);
+        await set(productRef, newProduct);
+        
+        if (isHot && hotReason) {
+            const hotRef = ref(database, 'hotPrices/' + newId);
+            await set(hotRef, {
+                reason: hotReason,
+                added: new Date().toISOString()
             });
-            
-            const images = [];
-            document.querySelectorAll('.image-input').forEach(input => {
-                if (input.value.trim()) images.push(input.value.trim());
-            });
-            
-            if (!name || !category || !brand || !price || !description || images.length === 0) {
-                alert('❌ Заполните все обязательные поля!');
-                return;
-            }
-            
-            const newId = Date.now();
-            const newProduct = {
-                id: newId,
-                name,
-                category,
-                brand,
-                price,
-                description,
-                videoUrl: videoUrl || '', // НОВОЕ
-                features,
-                images,
-                dateAdded: new Date().toISOString()
-            };
-            
-            try {
-                const productRef = ref(database, 'products/' + newId);
-                await set(productRef, newProduct);
-                
-                if (isHot && hotReason) {
-                    const hotRef = ref(database, 'hotPrices/' + newId);
-                    await set(hotRef, {
-                        reason: hotReason,
-                        added: new Date().toISOString()
-                    });
-                }
-                
-                alert('✅ Товар успешно добавлен!');
-                e.target.reset();
-                document.getElementById('imagesContainer').innerHTML = '';
-                document.getElementById('featuresContainer').innerHTML = '';
-                document.getElementById('imagePreview').innerHTML = '';
-                
-                addFeature();
-                addImage();
-                switchToProducts();
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('❌ Ошибка при добавлении товара');
-            }
-        });
+        }
+        
+        alert('✅ Товар успешно добавлен!');
+        e.target.reset();
+        document.getElementById('imagesContainer').innerHTML = '';
+        document.getElementById('featuresContainer').innerHTML = '';
+        document.getElementById('imagePreview').innerHTML = '';
+        document.getElementById('productVideo').value = ''; // Очищаем поле видео
+        
+        addFeature();
+        addImage();
+        switchToProducts();
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('❌ Ошибка при добавлении товара');
+    }
+});
 
         // Добавление бренда
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
@@ -1943,6 +1948,7 @@
                     features: Array.from(document.querySelectorAll('#editFeaturesContainer .feature-input')).map(i => i.value).filter(v => v),
                     images: Array.from(document.querySelectorAll('#editImagesContainer .image-input')).map(i => i.value).filter(v => v),
                     lastUpdated: new Date().toISOString()
+                    video: document.getElementById('editProductVideo')?.value || null,
                 };
                 
                 try {
