@@ -153,6 +153,276 @@
             height: 150px;
         }
         
+        /* Кнопка СКОРО в хедере */
+        .soon-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .soon-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
+        }
+
+        .soon-btn i {
+            font-size: 1.1rem;
+        }
+
+        .soon-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .soon-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+            animation: pulse-light 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes pulse-light {
+            0% {
+                transform: translateX(-100%);
+            }
+            50%, 100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Модальное окно СКОРО */
+        .soon-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .soon-modal.active {
+            display: flex;
+        }
+
+        .soon-modal-content {
+            width: 90%;
+            max-width: 1200px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid var(--primary-blue);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .soon-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.3s ease;
+        }
+
+        .soon-close:hover {
+            background: var(--sale-red);
+            transform: rotate(90deg);
+        }
+
+        .soon-gallery {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .soon-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .soon-slide.active {
+            opacity: 1;
+        }
+
+        .soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(124, 58, 237, 0.8));
+        }
+
+        .soon-text-content {
+            position: relative;
+            z-index: 1;
+            padding: 4rem;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .soon-text-content h2 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.5s ease;
+        }
+
+        .soon-text-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.5s ease 0.2s both;
+        }
+
+        .soon-text-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.5s ease 0.4s both;
+        }
+
+        .soon-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: white;
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease 0.6s both;
+        }
+
+        .soon-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .soon-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 10001;
+        }
+
+        .soon-dot {
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .soon-dot:hover {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .soon-dot.active {
+            background: white;
+            transform: scale(1.2);
+            border-color: var(--primary-blue);
+        }
+
+        .soon-counter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            z-index: 10001;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Анимации */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Для мобильных */
         @media (max-width: 768px) {
             .catalog-toolbar {
                 flex-direction: column;
@@ -166,6 +436,57 @@
             .products-grid.list-view .product-card {
                 grid-template-columns: 1fr;
             }
+            
+            .soon-btn {
+                padding: 0.6rem 1rem;
+            }
+            
+            .soon-text {
+                display: none;
+            }
+            
+            .soon-modal-content {
+                width: 95%;
+            }
+            
+            .soon-gallery {
+                height: 500px;
+            }
+            
+            .soon-text-content {
+                padding: 2rem;
+            }
+            
+            .soon-text-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .soon-text-content h3 {
+                font-size: 1.8rem;
+            }
+            
+            .soon-text-content p {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Стили для Telegram ссылки */
+        .tg-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .tg-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .tg-link i {
+            font-size: 1.2rem;
+            color: #0088cc;
         }
     </style>
 </head>
@@ -217,6 +538,11 @@
                 <button class="cart-btn" id="cartBtn">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
+                </button>
+                <button class="soon-btn" id="soonBtn" onclick="openSoonModal()">
+                    <i class="fas fa-clock"></i>
+                    <span class="soon-text">СКОРО</span>
+                    <span class="soon-pulse"></span>
                 </button>
                 <button class="admin-btn" id="adminBtn">
                     <i class="fas fa-cog"></i>
@@ -396,6 +722,16 @@
         </div>
     </section>
 
+    <!-- Модальное окно СКОРО -->
+    <div class="soon-modal" id="soonModal">
+        <div class="soon-modal-content">
+            <button class="soon-close" onclick="closeSoonModal()">×</button>
+            <div class="soon-gallery" id="soonGallery"></div>
+            <div class="soon-nav" id="soonNav"></div>
+            <div class="soon-counter" id="soonCounter">1 / 1</div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -446,7 +782,7 @@
                     </div>
                     <div class="contact-item">
                         <i class="fab fa-telegram"></i>
-                        <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
+                        <span><a href="https://t.me/GGPointUz" target="_blank" class="tg-link">@GGPointUz</a></span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
@@ -508,7 +844,169 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Состояние
+        // ========== КНОПКА СКОРО ==========
+        let soonBanner = null;
+        let currentSoonSlide = 0;
+        let soonInterval;
+
+        // Загрузка данных баннера из Firebase
+        function loadSoonBanner() {
+            const bannerRef = ref(database, 'banners/soon');
+            onValue(bannerRef, (snapshot) => {
+                soonBanner = snapshot.val();
+                if (soonBanner && soonBanner.images && soonBanner.images.length > 0) {
+                    preloadSoonImages(soonBanner.images);
+                }
+            });
+        }
+
+        // Предзагрузка изображений
+        function preloadSoonImages(images) {
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+
+        // Открыть модальное окно
+        window.openSoonModal = () => {
+            if (!soonBanner || !soonBanner.images || soonBanner.images.length === 0) {
+                showTestSoonModal();
+                return;
+            }
+            
+            const modal = document.getElementById('soonModal');
+            const gallery = document.getElementById('soonGallery');
+            const nav = document.getElementById('soonNav');
+            const counter = document.getElementById('soonCounter');
+            
+            gallery.innerHTML = soonBanner.images.map((img, index) => `
+                <div class="soon-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${img}')">
+                    <div class="soon-overlay"></div>
+                    <div class="soon-text-content">
+                        <h2>${soonBanner.title || 'СКОРО!'}</h2>
+                        <h3>${soonBanner.subtitle || ''}</h3>
+                        <p>${soonBanner.description || ''}</p>
+                        <a href="${soonBanner.buttonLink || 'https://t.me/GGPointUz'}" class="soon-button" target="_blank">
+                            ${soonBanner.buttonText || 'Подписаться в Telegram'}
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            
+            nav.innerHTML = soonBanner.images.map((_, index) => `
+                <div class="soon-dot ${index === 0 ? 'active' : ''}" onclick="goToSoonSlide(${index})"></div>
+            `).join('');
+            
+            counter.textContent = `1 / ${soonBanner.images.length}`;
+            currentSoonSlide = 0;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            startSoonAutoPlay();
+        };
+
+        // Тестовый баннер с Telegram ссылкой
+        function showTestSoonModal() {
+            const modal = document.getElementById('soonModal');
+            const gallery = document.getElementById('soonGallery');
+            const nav = document.getElementById('soonNav');
+            const counter = document.getElementById('soonCounter');
+            
+            const testImages = [
+                'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1595225476474-87563907c212?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1603048588665-791ca8aea617?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+            ];
+            
+            gallery.innerHTML = testImages.map((img, index) => `
+                <div class="soon-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${img}')">
+                    <div class="soon-overlay"></div>
+                    <div class="soon-text-content">
+                        <h2>СКОРО!</h2>
+                        <h3>Мы готовим для вас кое-что особенное</h3>
+                        <p>Следите за обновлениями в нашем Telegram канале</p>
+                        <a href="https://t.me/GGPointUz" class="soon-button" target="_blank">
+                            <i class="fab fa-telegram"></i> Подписаться
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            
+            nav.innerHTML = testImages.map((_, index) => `
+                <div class="soon-dot ${index === 0 ? 'active' : ''}" onclick="goToSoonSlide(${index})"></div>
+            `).join('');
+            
+            counter.textContent = `1 / ${testImages.length}`;
+            currentSoonSlide = 0;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            startSoonAutoPlay();
+        }
+
+        // Закрыть модальное окно
+        window.closeSoonModal = () => {
+            document.getElementById('soonModal').classList.remove('active');
+            document.body.style.overflow = '';
+            stopSoonAutoPlay();
+        };
+
+        // Переключение слайдов
+        window.changeSoonSlide = (direction) => {
+            const slides = document.querySelectorAll('.soon-slide');
+            const dots = document.querySelectorAll('.soon-dot');
+            const counter = document.getElementById('soonCounter');
+            
+            if (!slides.length) return;
+            
+            slides[currentSoonSlide].classList.remove('active');
+            dots[currentSoonSlide].classList.remove('active');
+            
+            currentSoonSlide = (currentSoonSlide + direction + slides.length) % slides.length;
+            
+            slides[currentSoonSlide].classList.add('active');
+            dots[currentSoonSlide].classList.add('active');
+            counter.textContent = `${currentSoonSlide + 1} / ${slides.length}`;
+        };
+
+        window.goToSoonSlide = (index) => {
+            const slides = document.querySelectorAll('.soon-slide');
+            const dots = document.querySelectorAll('.soon-dot');
+            const counter = document.getElementById('soonCounter');
+            
+            if (!slides.length) return;
+            
+            slides[currentSoonSlide].classList.remove('active');
+            dots[currentSoonSlide].classList.remove('active');
+            
+            currentSoonSlide = index;
+            
+            slides[currentSoonSlide].classList.add('active');
+            dots[currentSoonSlide].classList.add('active');
+            counter.textContent = `${currentSoonSlide + 1} / ${slides.length}`;
+        };
+
+        function startSoonAutoPlay() {
+            stopSoonAutoPlay();
+            soonInterval = setInterval(() => changeSoonSlide(1), 5000);
+        }
+
+        function stopSoonAutoPlay() {
+            if (soonInterval) clearInterval(soonInterval);
+        }
+
+        // Клавиши для навигации
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('soonModal').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') changeSoonSlide(-1);
+                if (e.key === 'ArrowRight') changeSoonSlide(1);
+                if (e.key === 'Escape') closeSoonModal();
+            }
+        });
+
+        // Состояние каталога
         let products = [];
         let filteredProducts = [];
         let hotPrices = {};
@@ -544,6 +1042,9 @@
                 brands = snapshot.val() || {};
                 updateBrandFilter();
             });
+
+            // Загружаем баннер СКОРО
+            loadSoonBanner();
         }
 
         // Обновление фильтра брендов
