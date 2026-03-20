@@ -273,14 +273,12 @@
         
         /* Поля для характеристик и фото */
         .features-list,
-        .images-list,
-        .sizes-list {
+        .images-list {
             margin-bottom: 1rem;
         }
         
         .feature-item,
-        .image-item,
-        .size-item {
+        .image-item {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 0.5rem;
@@ -288,17 +286,8 @@
         }
         
         .feature-item input,
-        .image-item input,
-        .size-item input {
+        .image-item input {
             flex: 1;
-        }
-        
-        .size-item .size-dimensions {
-            width: 120px;
-        }
-        
-        .size-item .size-price {
-            width: 150px;
         }
         
         .remove-btn {
@@ -494,7 +483,7 @@
             background: var(--card-bg);
             border-radius: 20px;
             padding: 2rem;
-            max-width: 800px;
+            max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -582,7 +571,6 @@
         .file-upload {
             position: relative;
             display: inline-block;
-            width: 100%;
         }
         
         .file-upload input {
@@ -617,26 +605,6 @@
             color: var(--text-gray);
         }
         
-        .upload-progress {
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #334155;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--primary-blue);
-            transition: width 0.3s ease;
-        }
-        
         .poster-order {
             display: flex;
             align-items: center;
@@ -647,25 +615,6 @@
         .poster-order input {
             width: 80px;
             text-align: center;
-        }
-
-        /* Стили для размеров ковриков */
-        .size-card {
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .size-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .size-header h4 {
-            color: var(--text-light);
         }
 
         /* Стили для модалки входа */
@@ -755,16 +704,6 @@
             .search-box select {
                 width: 100%;
             }
-            
-            .size-item {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .size-item .size-dimensions,
-            .size-item .size-price {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -817,14 +756,8 @@
                 <button class="admin-tab" data-tab="products">
                     <i class="fas fa-box"></i> Товары
                 </button>
-                <button class="admin-tab" data-tab="pads">
-                    <i class="fas fa-mouse-pointer"></i> Коврики
-                </button>
                 <button class="admin-tab" data-tab="add-product">
-                    <i class="fas fa-plus-circle"></i> Добавить товар
-                </button>
-                <button class="admin-tab" data-tab="add-pad">
-                    <i class="fas fa-plus-circle"></i> Добавить коврик
+                    <i class="fas fa-plus-circle"></i> Добавить
                 </button>
                 <button class="admin-tab" data-tab="brands">
                     <i class="fas fa-tags"></i> Бренды
@@ -848,12 +781,6 @@
                         <i class="fas fa-box"></i>
                         <div class="stat-value" id="totalProducts">0</div>
                         <div class="stat-label">Всего товаров</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <i class="fas fa-mouse-pointer"></i>
-                        <div class="stat-value" id="totalPads">0</div>
-                        <div class="stat-label">Ковриков</div>
                     </div>
                     
                     <div class="stat-card">
@@ -932,7 +859,7 @@
                             <form id="addPosterForm">
                                 <div class="form-group">
                                     <label>Заголовок постера</label>
-                                    <input type="text" id="posterTitle" required placeholder="Например: Новые игровые коврики">
+                                    <input type="text" id="posterTitle" required placeholder="Например: Razer DeathAdder V2">
                                 </div>
                                 
                                 <div class="form-group">
@@ -942,7 +869,7 @@
                                 
                                 <div class="form-group">
                                     <label>Ссылка (URL)</label>
-                                    <input type="text" id="posterLink" placeholder="/catalog или https://...">
+                                    <input type="text" id="posterLink" placeholder="/catalog?category=мышь или https://...">
                                 </div>
                                 
                                 <div class="form-group">
@@ -976,11 +903,6 @@
                                     <div id="posterPreview" style="margin-top: 1rem; display: none;">
                                         <img src="" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
                                     </div>
-                                    <div class="upload-progress" id="posterUploadProgress">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill"></div>
-                                        </div>
-                                    </div>
                                 </div>
                                 
                                 <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white;">
@@ -994,6 +916,14 @@
                     <div>
                         <h3 style="margin-bottom: 1rem;">Существующие постеры</h3>
                         <div id="postersList"></div>
+                        
+                        <!-- Кнопка просмотра постеров на GitHub -->
+                        <div style="margin-top: 2rem;">
+                            <button class="admin-tab" onclick="viewGitHubPosters()">
+                                <i class="fab fa-github"></i> Просмотр постеров на GitHub
+                            </button>
+                            <div id="githubPostersList" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1029,42 +959,6 @@
                             <th>Бренд</th>
                             <th>Цена</th>
                             <th>Скидка</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            
-            <!-- ===== УПРАВЛЕНИЕ КОВРИКАМИ ===== -->
-            <div class="admin-section" id="pads">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2>Управление ковриками</h2>
-                    <button class="admin-tab" onclick="switchToAddPad()" style="background: var(--success-green); border-color: var(--success-green); color: white;">
-                        <i class="fas fa-plus"></i> Добавить коврик
-                    </button>
-                </div>
-                
-                <div class="search-box">
-                    <input type="text" id="searchPads" placeholder="🔍 Поиск по названию...">
-                    <select id="filterPadMaterial">
-                        <option value="all">Все материалы</option>
-                        <option value="cloth">Тканевый</option>
-                        <option value="hybrid">Гибридный</option>
-                        <option value="hard">Жесткий</option>
-                    </select>
-                </div>
-                
-                <table class="admin-table" id="padsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Фото</th>
-                            <th>Название</th>
-                            <th>Бренд</th>
-                            <th>Материал</th>
-                            <th>Размеры</th>
-                            <th>Цена от</th>
                             <th>Действия</th>
                         </tr>
                     </thead>
@@ -1134,11 +1028,6 @@
                         <button type="button" class="add-btn" onclick="addImage()">
                             <i class="fas fa-plus"></i> Добавить фото
                         </button>
-                        <div id="imageUploadProgress" class="upload-progress" style="display: none;">
-                            <div class="progress-bar">
-                                <div class="progress-fill"></div>
-                            </div>
-                        </div>
                         <div class="image-preview" id="imagePreview"></div>
                     </div>
                     
@@ -1159,82 +1048,6 @@
                     
                     <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;">
                         <i class="fas fa-save"></i> Сохранить товар
-                    </button>
-                </form>
-            </div>
-            
-            <!-- ===== ДОБАВЛЕНИЕ КОВРИКА ===== -->
-            <div class="admin-section" id="add-pad">
-                <h2 style="margin-bottom: 2rem;">Добавить новый коврик</h2>
-                
-                <form id="addPadForm" class="admin-form">
-                    <div class="form-group">
-                        <label>Название коврика *</label>
-                        <input type="text" id="padName" required placeholder="Например: SteelSeries QcK">
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Бренд *</label>
-                            <select id="padBrand" required>
-                                <option value="">Выберите бренд</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Материал *</label>
-                            <select id="padMaterial" required>
-                                <option value="cloth">Тканевый (Cloth)</option>
-                                <option value="hybrid">Гибридный (Hybrid)</option>
-                                <option value="hard">Жесткий (Hard)</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Описание коврика *</label>
-                        <textarea id="padDescription" required rows="4" placeholder="Подробное описание коврика..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Размеры и цены *</label>
-                        <div id="sizesContainer" class="sizes-list"></div>
-                        <button type="button" class="add-btn" onclick="addSize()">
-                            <i class="fas fa-plus"></i> Добавить размер
-                        </button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Фотографии коврика *</label>
-                        <div id="padImagesContainer" class="images-list"></div>
-                        <button type="button" class="add-btn" onclick="addPadImage()">
-                            <i class="fas fa-plus"></i> Добавить фото
-                        </button>
-                        <div id="padImageUploadProgress" class="upload-progress" style="display: none;">
-                            <div class="progress-bar">
-                                <div class="progress-fill"></div>
-                            </div>
-                        </div>
-                        <div class="image-preview" id="padImagePreview"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="padIsHotPrice">
-                            <i class="fas fa-fire" style="color: #ff6b00; margin-left: 0.5rem;"></i>
-                            Коврик со скидкой
-                        </label>
-                    </div>
-                    
-                    <div id="padHotPriceFields" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
-                        <div class="form-group">
-                            <label>Причина скидки</label>
-                            <input type="text" id="padHotPriceReason" placeholder="Например: Акция недели, -30%">
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;">
-                        <i class="fas fa-save"></i> Сохранить коврик
                     </button>
                 </form>
             </div>
@@ -1272,7 +1085,7 @@
                                     <th>Название</th>
                                     <th>Товаров</th>
                                     <th>Действия</th>
-                                 </tr>
+                                </tr>
                             </thead>
                             <tbody id="brandsTable"></tbody>
                         </table>
@@ -1311,7 +1124,7 @@
                             <th>Сообщение</th>
                             <th>Статус</th>
                             <th>Действия</th>
-                         </tr>
+                        </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -1326,18 +1139,9 @@
                 <h2>Редактирование товара</h2>
                 <span class="modal-close" onclick="closeEditModal()">&times;</span>
             </div>
-            <div id="editFormContainer"></div>
-        </div>
-    </div>
-
-    <!-- Модальное окно редактирования коврика -->
-    <div class="modal" id="editPadModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Редактирование коврика</h2>
-                <span class="modal-close" onclick="closeEditPadModal()">&times;</span>
+            <div id="editFormContainer">
+                <!-- Форма загружается динамически -->
             </div>
-            <div id="editPadFormContainer"></div>
         </div>
     </div>
 
@@ -1359,38 +1163,15 @@
                 <h2>Редактирование постера</h2>
                 <span class="modal-close" onclick="closeEditPosterModal()">&times;</span>
             </div>
-            <div id="editPosterFormContainer"></div>
+            <div id="editPosterFormContainer">
+                <!-- Форма загружается динамически -->
+            </div>
         </div>
     </div>
 
     <script>
-        // Пароль для входа
+        // Пароль для входа (можно изменить на любой)
         const ADMIN_PASSWORD = "admin123";
-        
-        // Функция загрузки фото на ImgBB
-        async function uploadToImgBB(file) {
-            return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append('image', file);
-                
-                // Используем публичный API ImgBB
-                const apiKey = '6d207e02198a847aa98d0a2a901485a5';
-                
-                fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        resolve(data.data.url);
-                    } else {
-                        reject(new Error(data.error?.message || 'Ошибка загрузки'));
-                    }
-                })
-                .catch(reject);
-            });
-        }
         
         // Проверка пароля
         function checkPassword() {
@@ -1401,7 +1182,7 @@
                 document.getElementById('loginModal').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
                 document.getElementById('logoutBtn').style.display = 'flex';
-                sessionStorage.setItem('adminLoggedIn', 'true');
+                // Запускаем загрузку данных после входа
                 if (typeof loadData === 'function') {
                     loadData();
                 }
@@ -1411,8 +1192,9 @@
             }
         }
         
-        // Проверка при загрузке
+        // Проверка при загрузке страницы
         window.onload = function() {
+            // Проверяем, не заходил ли уже пользователь
             const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
             if (isLoggedIn === 'true') {
                 document.getElementById('loginModal').style.display = 'none';
@@ -1433,6 +1215,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
         import { getDatabase, ref, onValue, set, remove, update, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
@@ -1446,57 +1229,113 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const storage = getStorage(app);
         
+        // GitHub конфигурация
+        const GITHUB_CONFIG = {
+            token: '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',
+            owner: 'loading1234t',
+            repo: 'ggpoint',
+            branch: 'main',
+            path: 'images/posters/'
+        };
+
         // Состояние
         let products = [];
-        let pads = [];
         let hotPrices = {};
         let brands = {};
         let messages = [];
         let reviews = [];
         let posters = [];
 
-        // Функция загрузки фото на ImgBB (доступна глобально)
-        window.uploadToImgBB = async function(file, onProgress) {
+        // Функция для загрузки изображения на GitHub
+        async function uploadImageToGitHub(file) {
             return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append('image', file);
+                const reader = new FileReader();
                 
-                const apiKey = '6d207e02198a847aa98d0a2a901485a5';
-                
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', `https://api.imgbb.com/1/upload?key=${apiKey}`);
-                
-                if (onProgress) {
-                    xhr.upload.onprogress = (event) => {
-                        if (event.lengthComputable) {
-                            const percent = (event.loaded / event.total) * 100;
-                            onProgress(percent);
-                        }
-                    };
-                }
-                
-                xhr.onload = () => {
-                    if (xhr.status === 200) {
+                reader.onload = async function(e) {
+                    try {
+                        const base64Content = e.target.result.split(',')[1];
+                        const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+                        const filePath = `images/posters/${fileName}`;
+                        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${filePath}`;
+                        
+                        let sha = null;
                         try {
-                            const data = JSON.parse(xhr.responseText);
-                            if (data.success) {
-                                resolve(data.data.url);
-                            } else {
-                                reject(new Error(data.error?.message || 'Ошибка загрузки'));
+                            const checkResponse = await fetch(url);
+                            if (checkResponse.ok) {
+                                const checkData = await checkResponse.json();
+                                sha = checkData.sha;
                             }
-                        } catch (e) {
-                            reject(e);
+                        } catch (e) {}
+                        
+                        const data = {
+                            message: `Add poster: ${fileName}`,
+                            content: base64Content,
+                            branch: GITHUB_CONFIG.branch
+                        };
+                        
+                        if (sha) data.sha = sha;
+                        
+                        const response = await fetch(url, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${GITHUB_CONFIG.token}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        });
+                        
+                        if (!response.ok) {
+                            const error = await response.json();
+                            throw new Error(error.message || 'Ошибка загрузки на GitHub');
                         }
-                    } else {
-                        reject(new Error('Ошибка загрузки: ' + xhr.status));
+                        
+                        const rawUrl = `https://raw.githubusercontent.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${filePath}`;
+                        resolve(rawUrl);
+                        
+                    } catch (error) {
+                        console.error('GitHub upload error:', error);
+                        reject(error);
                     }
                 };
                 
-                xhr.onerror = () => reject(new Error('Ошибка сети'));
-                xhr.send(formData);
+                reader.onerror = function(error) {
+                    reject(error);
+                };
+                
+                reader.readAsDataURL(file);
             });
-        };
+        }
+
+        // Функция для получения списка изображений с GitHub
+        async function getPostersFromGitHub() {
+            const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/images/posters?ref=${GITHUB_CONFIG.branch}`;
+            
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_CONFIG.token}`
+                    }
+                });
+                
+                if (!response.ok) return [];
+                
+                const files = await response.json();
+                return files
+                    .filter(file => file.type === 'file' && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
+                    .map(file => ({
+                        name: file.name,
+                        url: file.download_url,
+                        path: file.path,
+                        sha: file.sha
+                    }));
+                    
+            } catch (error) {
+                console.error('Error getting posters:', error);
+                return [];
+            }
+        }
 
         // Загрузка данных
         function loadData() {
@@ -1508,15 +1347,6 @@
                 updateDashboard();
                 renderProducts();
                 renderRecentProducts();
-            });
-
-            // Коврики
-            const padsRef = ref(database, 'pads');
-            onValue(padsRef, (snapshot) => {
-                const data = snapshot.val();
-                pads = data ? Object.values(data) : [];
-                updateDashboard();
-                renderPads();
             });
 
             // Скидки
@@ -1533,7 +1363,6 @@
                 updateDashboard();
                 renderBrands();
                 updateBrandSelect();
-                updatePadBrandSelect();
             });
 
             // Сообщения
@@ -1566,7 +1395,6 @@
         // Обновление дашборда
         function updateDashboard() {
             document.getElementById('totalProducts').textContent = products.length;
-            document.getElementById('totalPads').textContent = pads.length;
             document.getElementById('totalMice').textContent = products.filter(p => p.category === 'мышь').length;
             document.getElementById('totalKeyboards').textContent = products.filter(p => p.category === 'клавиатура').length;
             document.getElementById('totalHeadphones').textContent = products.filter(p => p.category === 'наушники').length;
@@ -1595,7 +1423,7 @@
             `).join('');
         }
 
-        // Рендер товаров
+        // Рендер товаров в таблице
         function renderProducts() {
             const tbody = document.querySelector('#productsTable tbody');
             if (!tbody) return;
@@ -1611,7 +1439,7 @@
             
             tbody.innerHTML = filtered.map(p => `
                 <tr>
-                    <td>${p.id?.slice(-6) || '-'}</td>
+                    <td>${p.id}</td>
                     <td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'"></td>
                     <td>${p.name}</td>
                     <td>${getCategoryName(p.category)}</td>
@@ -1633,53 +1461,6 @@
             `).join('');
         }
 
-        // Рендер ковриков
-        function renderPads() {
-            const tbody = document.querySelector('#padsTable tbody');
-            if (!tbody) return;
-            
-            const searchTerm = document.getElementById('searchPads')?.value.toLowerCase() || '';
-            const materialFilter = document.getElementById('filterPadMaterial')?.value || 'all';
-            
-            const filtered = pads.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
-                const matchesMaterial = materialFilter === 'all' || p.material === materialFilter;
-                return matchesSearch && matchesMaterial;
-            });
-            
-            const getMaterialName = (mat) => {
-                const names = { cloth: 'Тканевый', hybrid: 'Гибридный', hard: 'Жесткий' };
-                return names[mat] || mat;
-            };
-            
-            tbody.innerHTML = filtered.map(p => {
-                const minPrice = Math.min(...(p.sizes?.map(s => parseInt(s.price?.replace(/[^\d]/g, '')) || 0) || [0]));
-                const sizesList = p.sizes?.map(s => s.mm).join(', ') || '-';
-                return `
-                    <tr>
-                        <td>${p.id?.slice(-6) || '-'}</td>
-                        <td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'"></td>
-                        <td>${p.name}</td>
-                        <td>${p.brand || '-'}</td>
-                        <td>${getMaterialName(p.material)}</td>
-                        <td>${sizesList}</td>
-                        <td>от ${minPrice.toLocaleString()} UZS</td>
-                        <td class="admin-actions">
-                            <button class="admin-btn-small edit" onclick="editPad('${p.id}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="admin-btn-small delete" onclick="deletePad('${p.id}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                            <button class="admin-btn-small view" onclick="window.open('pad-detail.html?id=${p.id}', '_blank')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
         // Рендер брендов
         function renderBrands() {
             const tbody = document.getElementById('brandsTable');
@@ -1687,12 +1468,11 @@
             
             tbody.innerHTML = Object.values(brands).map(brand => {
                 const productCount = products.filter(p => p.brand === brand.name).length;
-                const padCount = pads.filter(p => p.brand === brand.name).length;
                 return `
                     <tr>
-                        <td><img src="${brand.icon}" style="width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1);" onerror="this.style.display='none'"></td>
+                        <td><img src="${brand.icon}" style="width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1);"></td>
                         <td>${brand.name}</td>
-                        <td>${productCount + padCount}</td>
+                        <td>${productCount}</td>
                         <td class="admin-actions">
                             <button class="admin-btn-small edit" onclick="editBrand('${brand.id}')">
                                 <i class="fas fa-edit"></i>
@@ -1727,8 +1507,6 @@
             
             container.innerHTML = filtered.map(review => {
                 const product = products.find(p => p.id == review.productId);
-                const pad = pads.find(p => p.id == review.productId);
-                const item = product || pad;
                 return `
                     <div class="review-card">
                         <div class="review-header">
@@ -1747,7 +1525,7 @@
                         </div>
                         
                         <div class="review-product">
-                            <i class="fas fa-box"></i> ${item?.name || 'Неизвестный товар'}
+                            <i class="fas fa-box"></i> Товар: ${product?.name || 'Неизвестный товар'}
                         </div>
                         
                         <div class="review-text">
@@ -1843,19 +1621,9 @@
             `).join('');
         }
 
-        // Обновление селектов брендов
+        // Обновление селекта брендов
         function updateBrandSelect() {
             const brandSelect = document.getElementById('productBrand');
-            if (!brandSelect) return;
-            
-            brandSelect.innerHTML = '<option value="">Выберите бренд</option>';
-            Object.values(brands).sort((a, b) => a.name.localeCompare(b.name)).forEach(brand => {
-                brandSelect.innerHTML += `<option value="${brand.name}">${brand.name}</option>`;
-            });
-        }
-
-        function updatePadBrandSelect() {
-            const brandSelect = document.getElementById('padBrand');
             if (!brandSelect) return;
             
             brandSelect.innerHTML = '<option value="">Выберите бренд</option>';
@@ -1876,7 +1644,7 @@
             return categories[key] || key;
         }
 
-        // Функции для характеристик и фото
+        // Функции для работы с характеристиками и фото
         window.addFeature = () => {
             const container = document.getElementById('featuresContainer');
             const div = document.createElement('div');
@@ -1895,103 +1663,8 @@
             const div = document.createElement('div');
             div.className = 'image-item';
             div.innerHTML = `
-                <div style="flex: 1; display: flex; gap: 0.5rem;">
-                    <input type="url" class="image-input" placeholder="URL изображения или загрузите файл">
-                    <input type="file" class="image-file-input" accept="image/*" style="display: none;">
-                    <button type="button" class="add-btn" style="margin: 0; padding: 0.3rem 0.8rem;" onclick="uploadImageForItem(this)">📁 Загрузить</button>
-                </div>
+                <input type="url" class="image-input" placeholder="https://example.com/image.jpg" onchange="updatePreview()">
                 <button type="button" class="remove-btn" onclick="this.parentElement.remove(); updatePreview()">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            container.appendChild(div);
-        };
-        
-        window.uploadImageForItem = async function(btn) {
-            const itemDiv = btn.closest('.image-item');
-            const fileInput = itemDiv.querySelector('.image-file-input');
-            const urlInput = itemDiv.querySelector('.image-input');
-            
-            fileInput.click();
-            fileInput.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                btn.disabled = true;
-                
-                try {
-                    const url = await window.uploadToImgBB(file);
-                    urlInput.value = url;
-                    updatePreview();
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                } catch (error) {
-                    alert('Ошибка загрузки: ' + error.message);
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }
-            };
-        };
-
-        window.addPadImage = () => {
-            const container = document.getElementById('padImagesContainer');
-            const div = document.createElement('div');
-            div.className = 'image-item';
-            div.innerHTML = `
-                <div style="flex: 1; display: flex; gap: 0.5rem;">
-                    <input type="url" class="image-input" placeholder="URL изображения или загрузите файл">
-                    <input type="file" class="image-file-input" accept="image/*" style="display: none;">
-                    <button type="button" class="add-btn" style="margin: 0; padding: 0.3rem 0.8rem;" onclick="uploadPadImageForItem(this)">📁 Загрузить</button>
-                </div>
-                <button type="button" class="remove-btn" onclick="this.parentElement.remove(); updatePadPreview()">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            container.appendChild(div);
-        };
-        
-        window.uploadPadImageForItem = async function(btn) {
-            const itemDiv = btn.closest('.image-item');
-            const fileInput = itemDiv.querySelector('.image-file-input');
-            const urlInput = itemDiv.querySelector('.image-input');
-            
-            fileInput.click();
-            fileInput.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                btn.disabled = true;
-                
-                try {
-                    const url = await window.uploadToImgBB(file);
-                    urlInput.value = url;
-                    updatePadPreview();
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                } catch (error) {
-                    alert('Ошибка загрузки: ' + error.message);
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }
-            };
-        };
-
-        window.addSize = () => {
-            const container = document.getElementById('sizesContainer');
-            const div = document.createElement('div');
-            div.className = 'size-item';
-            div.innerHTML = `
-                <input type="text" class="size-name" placeholder="Название (S/M/L/XL)" style="width: 100px;">
-                <input type="text" class="size-dimensions" placeholder="Размер мм (250x210)" style="width: 120px;">
-                <input type="text" class="size-price" placeholder="Цена (150 000 UZS)" style="width: 150px;">
-                <input type="number" class="size-width" placeholder="Ширина мм" style="width: 100px;">
-                <input type="number" class="size-height" placeholder="Высота мм" style="width: 100px;">
-                <input type="number" class="size-thickness" placeholder="Толщина мм" style="width: 100px;">
-                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">
                     <i class="fas fa-times"></i>
                 </button>
             `;
@@ -2000,24 +1673,8 @@
 
         window.updatePreview = () => {
             const preview = document.getElementById('imagePreview');
-            if (!preview) return;
             preview.innerHTML = '';
-            document.querySelectorAll('#imagesContainer .image-input').forEach(input => {
-                if (input.value) {
-                    const img = document.createElement('img');
-                    img.src = input.value;
-                    img.className = 'preview-img';
-                    img.onerror = () => img.src = 'https://via.placeholder.com/80x80/ffffff/333333?text=Ошибка';
-                    preview.appendChild(img);
-                }
-            });
-        };
-
-        window.updatePadPreview = () => {
-            const preview = document.getElementById('padImagePreview');
-            if (!preview) return;
-            preview.innerHTML = '';
-            document.querySelectorAll('#padImagesContainer .image-input').forEach(input => {
+            document.querySelectorAll('.image-input').forEach(input => {
                 if (input.value) {
                     const img = document.createElement('img');
                     img.src = input.value;
@@ -2041,12 +1698,12 @@
             const hotReason = document.getElementById('hotPriceReason').value;
             
             const features = [];
-            document.querySelectorAll('#featuresContainer .feature-input').forEach(input => {
+            document.querySelectorAll('.feature-input').forEach(input => {
                 if (input.value.trim()) features.push(input.value.trim());
             });
             
             const images = [];
-            document.querySelectorAll('#imagesContainer .image-input').forEach(input => {
+            document.querySelectorAll('.image-input').forEach(input => {
                 if (input.value.trim()) images.push(input.value.trim());
             });
             
@@ -2055,7 +1712,7 @@
                 return;
             }
             
-            const newId = Date.now().toString();
+            const newId = Date.now();
             const newProduct = {
                 id: newId,
                 name,
@@ -2095,88 +1752,6 @@
             }
         });
 
-        // Добавление коврика
-        document.getElementById('addPadForm')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('padName').value;
-            const brand = document.getElementById('padBrand').value;
-            const material = document.getElementById('padMaterial').value;
-            const description = document.getElementById('padDescription').value;
-            const isHot = document.getElementById('padIsHotPrice').checked;
-            const hotReason = document.getElementById('padHotPriceReason').value;
-            
-            const sizes = [];
-            document.querySelectorAll('#sizesContainer .size-item').forEach(item => {
-                const sizeName = item.querySelector('.size-name')?.value;
-                const dimensions = item.querySelector('.size-dimensions')?.value;
-                const price = item.querySelector('.size-price')?.value;
-                const width = item.querySelector('.size-width')?.value;
-                const height = item.querySelector('.size-height')?.value;
-                const thickness = item.querySelector('.size-thickness')?.value;
-                
-                if (sizeName && dimensions && price) {
-                    sizes.push({
-                        name: sizeName,
-                        mm: dimensions,
-                        price: price,
-                        width: parseInt(width) || 0,
-                        height: parseInt(height) || 0,
-                        thickness: parseInt(thickness) || 3
-                    });
-                }
-            });
-            
-            const images = [];
-            document.querySelectorAll('#padImagesContainer .image-input').forEach(input => {
-                if (input.value.trim()) images.push(input.value.trim());
-            });
-            
-            if (!name || !brand || !material || !description || sizes.length === 0 || images.length === 0) {
-                alert('❌ Заполните все обязательные поля!');
-                return;
-            }
-            
-            const newId = Date.now().toString();
-            const newPad = {
-                id: newId,
-                name,
-                brand,
-                material,
-                description,
-                sizes,
-                images,
-                dateAdded: new Date().toISOString()
-            };
-            
-            try {
-                const padRef = ref(database, 'pads/' + newId);
-                await set(padRef, newPad);
-                
-                if (isHot && hotReason) {
-                    const hotRef = ref(database, 'hotPrices/' + newId);
-                    await set(hotRef, {
-                        reason: hotReason,
-                        added: new Date().toISOString(),
-                        type: 'pad'
-                    });
-                }
-                
-                alert('✅ Коврик успешно добавлен!');
-                e.target.reset();
-                document.getElementById('sizesContainer').innerHTML = '';
-                document.getElementById('padImagesContainer').innerHTML = '';
-                document.getElementById('padImagePreview').innerHTML = '';
-                
-                addSize();
-                addPadImage();
-                switchToPads();
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('❌ Ошибка при добавлении коврика');
-            }
-        });
-
         // Добавление бренда
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -2210,72 +1785,6 @@
                 console.error('Ошибка:', error);
                 alert('❌ Ошибка при удалении');
             }
-        };
-
-        // Удаление коврика
-        window.deletePad = async (id) => {
-            if (!confirm('❌ Вы уверены, что хотите удалить этот коврик?')) return;
-            
-            try {
-                await remove(ref(database, 'pads/' + id));
-                if (hotPrices[id]) {
-                    await remove(ref(database, 'hotPrices/' + id));
-                }
-                alert('✅ Коврик удален');
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('❌ Ошибка при удалении');
-            }
-        };
-
-        // Удаление бренда
-        window.deleteBrand = async (id) => {
-            if (!confirm('❌ Удалить бренд? Товары и коврики этого бренда останутся без бренда.')) return;
-            
-            try {
-                await remove(ref(database, 'brands/' + id));
-                alert('✅ Бренд удален');
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('❌ Ошибка при удалении');
-            }
-        };
-
-        // Редактирование бренда
-        window.editBrand = (id) => {
-            const brand = brands[id];
-            if (!brand) return;
-            
-            document.getElementById('brandName').value = brand.name;
-            document.getElementById('brandLogo').value = brand.icon;
-            
-            const originalForm = document.getElementById('addBrandForm').onsubmit;
-            document.getElementById('addBrandForm').onsubmit = async (e) => {
-                e.preventDefault();
-                
-                const newName = document.getElementById('brandName').value;
-                const newIcon = document.getElementById('brandLogo').value;
-                const newId = newName.toUpperCase().replace(/\s+/g, '_');
-                
-                try {
-                    await set(ref(database, 'brands/' + newId), {
-                        name: newName,
-                        icon: newIcon,
-                        id: newId
-                    });
-                    
-                    if (newId !== id) {
-                        await remove(ref(database, 'brands/' + id));
-                    }
-                    
-                    alert('✅ Бренд обновлен');
-                    document.getElementById('addBrandForm').reset();
-                    document.getElementById('addBrandForm').onsubmit = originalForm;
-                } catch (error) {
-                    console.error('Ошибка:', error);
-                    alert('❌ Ошибка при обновлении');
-                }
-            };
         };
 
         // Редактирование товара
@@ -2431,272 +1940,97 @@
                 document.getElementById('editHotPriceFields').style.display = this.checked ? 'block' : 'none';
             });
             
-            window.updateEditPreview = () => {
-                const preview = document.getElementById('editImagePreview');
-                preview.innerHTML = '';
-                document.querySelectorAll('#editImagesContainer .image-input').forEach(input => {
-                    if (input.value) {
-                        const img = document.createElement('img');
-                        img.src = input.value;
-                        img.className = 'preview-img';
-                        img.onerror = () => img.src = 'https://via.placeholder.com/80x80/ffffff/333333?text=Ошибка';
-                        preview.appendChild(img);
-                    }
-                });
-            };
-            
-            window.addEditFeature = () => {
-                const container = document.getElementById('editFeaturesContainer');
-                const div = document.createElement('div');
-                div.className = 'feature-item';
-                div.innerHTML = `
-                    <input type="text" class="feature-input" placeholder="Характеристика">
-                    <button type="button" class="remove-btn" onclick="this.parentElement.remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                container.appendChild(div);
-            };
-            
-            window.addEditImage = () => {
-                const container = document.getElementById('editImagesContainer');
-                const div = document.createElement('div');
-                div.className = 'image-item';
-                div.innerHTML = `
-                    <input type="url" class="image-input" placeholder="https://example.com/image.jpg" onchange="updateEditPreview()">
-                    <button type="button" class="remove-btn" onclick="this.parentElement.remove(); updateEditPreview()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                container.appendChild(div);
-            };
-            
             updateEditPreview();
         };
 
-        // Редактирование коврика
-        window.editPad = (id) => {
-            const pad = pads.find(p => p.id == id);
-            if (!pad) return;
-            
-            const modal = document.getElementById('editPadModal');
-            const container = document.getElementById('editPadFormContainer');
-            
-            container.innerHTML = `
-                <form id="editPadForm">
-                    <input type="hidden" id="editPadId" value="${pad.id}">
-                    
-                    <div class="form-group">
-                        <label>Название коврика</label>
-                        <input type="text" id="editPadName" value="${pad.name.replace(/"/g, '&quot;')}" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Бренд</label>
-                            <select id="editPadBrand" required>
-                                ${Object.values(brands).map(b => 
-                                    `<option value="${b.name}" ${pad.brand === b.name ? 'selected' : ''}>${b.name}</option>`
-                                ).join('')}
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Материал</label>
-                            <select id="editPadMaterial" required>
-                                <option value="cloth" ${pad.material === 'cloth' ? 'selected' : ''}>Тканевый</option>
-                                <option value="hybrid" ${pad.material === 'hybrid' ? 'selected' : ''}>Гибридный</option>
-                                <option value="hard" ${pad.material === 'hard' ? 'selected' : ''}>Жесткий</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Описание</label>
-                        <textarea id="editPadDescription" required rows="4">${pad.description}</textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Размеры и цены</label>
-                        <div id="editSizesContainer">
-                            ${pad.sizes?.map((size, idx) => `
-                                <div class="size-item">
-                                    <input type="text" class="size-name" value="${size.name}" placeholder="Название" style="width: 100px;">
-                                    <input type="text" class="size-dimensions" value="${size.mm}" placeholder="Размер мм" style="width: 120px;">
-                                    <input type="text" class="size-price" value="${size.price}" placeholder="Цена" style="width: 150px;">
-                                    <input type="number" class="size-width" value="${size.width || 0}" placeholder="Ширина" style="width: 100px;">
-                                    <input type="number" class="size-height" value="${size.height || 0}" placeholder="Высота" style="width: 100px;">
-                                    <input type="number" class="size-thickness" value="${size.thickness || 3}" placeholder="Толщина" style="width: 100px;">
-                                    <button type="button" class="remove-btn" onclick="this.parentElement.remove()">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            `).join('') || ''}
-                        </div>
-                        <button type="button" class="add-btn" onclick="addEditSize()">
-                            <i class="fas fa-plus"></i> Добавить размер
-                        </button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Изображения</label>
-                        <div id="editPadImagesContainer">
-                            ${pad.images?.map(img => `
-                                <div class="image-item">
-                                    <input type="url" class="image-input" value="${img}">
-                                    <button type="button" class="remove-btn" onclick="this.parentElement.remove(); updateEditPadPreview()">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            `).join('') || ''}
-                        </div>
-                        <button type="button" class="add-btn" onclick="addEditPadImage()">
-                            <i class="fas fa-plus"></i> Добавить фото
-                        </button>
-                        <div class="image-preview" id="editPadImagePreview"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="editPadIsHotPrice" ${hotPrices[pad.id] ? 'checked' : ''}>
-                            Коврик со скидкой
-                        </label>
-                    </div>
-                    
-                    <div id="editPadHotPriceFields" style="display: ${hotPrices[pad.id] ? 'block' : 'none'};">
-                        <div class="form-group">
-                            <label>Причина скидки</label>
-                            <input type="text" id="editPadHotPriceReason" value="${hotPrices[pad.id]?.reason || ''}">
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="submit" class="admin-tab" style="flex: 1; background: var(--success-green); border-color: var(--success-green); color: white;">
-                            <i class="fas fa-save"></i> Сохранить
-                        </button>
-                        <button type="button" class="admin-tab" onclick="closeEditPadModal()" style="flex: 1; background: var(--text-gray); border-color: var(--text-gray); color: white;">
-                            Отмена
-                        </button>
-                    </div>
-                </form>
+        window.addEditFeature = () => {
+            const container = document.getElementById('editFeaturesContainer');
+            const div = document.createElement('div');
+            div.className = 'feature-item';
+            div.innerHTML = `
+                <input type="text" class="feature-input" placeholder="Характеристика">
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
             `;
+            container.appendChild(div);
+        };
+
+        window.addEditImage = () => {
+            const container = document.getElementById('editImagesContainer');
+            const div = document.createElement('div');
+            div.className = 'image-item';
+            div.innerHTML = `
+                <input type="url" class="image-input" placeholder="https://example.com/image.jpg" onchange="updateEditPreview()">
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove(); updateEditPreview()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        };
+
+        window.updateEditPreview = () => {
+            const preview = document.getElementById('editImagePreview');
+            preview.innerHTML = '';
+            document.querySelectorAll('#editImagesContainer .image-input').forEach(input => {
+                if (input.value) {
+                    const img = document.createElement('img');
+                    img.src = input.value;
+                    img.className = 'preview-img';
+                    img.onerror = () => img.src = 'https://via.placeholder.com/80x80/ffffff/333333?text=Ошибка';
+                    preview.appendChild(img);
+                }
+            });
+        };
+
+        // Удаление бренда
+        window.deleteBrand = async (id) => {
+            if (!confirm('❌ Удалить бренд? Товары этого бренда останутся без бренда.')) return;
             
-            modal.classList.add('active');
+            try {
+                await remove(ref(database, 'brands/' + id));
+                alert('✅ Бренд удален');
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('❌ Ошибка при удалении');
+            }
+        };
+
+        // Редактирование бренда
+        window.editBrand = (id) => {
+            const brand = brands[id];
+            if (!brand) return;
             
-            window.addEditSize = () => {
-                const container = document.getElementById('editSizesContainer');
-                const div = document.createElement('div');
-                div.className = 'size-item';
-                div.innerHTML = `
-                    <input type="text" class="size-name" placeholder="Название" style="width: 100px;">
-                    <input type="text" class="size-dimensions" placeholder="Размер мм" style="width: 120px;">
-                    <input type="text" class="size-price" placeholder="Цена" style="width: 150px;">
-                    <input type="number" class="size-width" placeholder="Ширина" style="width: 100px;">
-                    <input type="number" class="size-height" placeholder="Высота" style="width: 100px;">
-                    <input type="number" class="size-thickness" placeholder="Толщина" style="width: 100px;">
-                    <button type="button" class="remove-btn" onclick="this.parentElement.remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                container.appendChild(div);
-            };
+            document.getElementById('brandName').value = brand.name;
+            document.getElementById('brandLogo').value = brand.icon;
             
-            window.addEditPadImage = () => {
-                const container = document.getElementById('editPadImagesContainer');
-                const div = document.createElement('div');
-                div.className = 'image-item';
-                div.innerHTML = `
-                    <input type="url" class="image-input" placeholder="https://example.com/image.jpg" onchange="updateEditPadPreview()">
-                    <button type="button" class="remove-btn" onclick="this.parentElement.remove(); updateEditPadPreview()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                container.appendChild(div);
-            };
-            
-            window.updateEditPadPreview = () => {
-                const preview = document.getElementById('editPadImagePreview');
-                preview.innerHTML = '';
-                document.querySelectorAll('#editPadImagesContainer .image-input').forEach(input => {
-                    if (input.value) {
-                        const img = document.createElement('img');
-                        img.src = input.value;
-                        img.className = 'preview-img';
-                        img.onerror = () => img.src = 'https://via.placeholder.com/80x80/ffffff/333333?text=Ошибка';
-                        preview.appendChild(img);
-                    }
-                });
-            };
-            
-            document.getElementById('editPadForm').addEventListener('submit', async (e) => {
+            const originalForm = document.getElementById('addBrandForm').onsubmit;
+            document.getElementById('addBrandForm').onsubmit = async (e) => {
                 e.preventDefault();
                 
-                const sizes = [];
-                document.querySelectorAll('#editSizesContainer .size-item').forEach(item => {
-                    const sizeName = item.querySelector('.size-name')?.value;
-                    const dimensions = item.querySelector('.size-dimensions')?.value;
-                    const price = item.querySelector('.size-price')?.value;
-                    const width = item.querySelector('.size-width')?.value;
-                    const height = item.querySelector('.size-height')?.value;
-                    const thickness = item.querySelector('.size-thickness')?.value;
-                    
-                    if (sizeName && dimensions && price) {
-                        sizes.push({
-                            name: sizeName,
-                            mm: dimensions,
-                            price: price,
-                            width: parseInt(width) || 0,
-                            height: parseInt(height) || 0,
-                            thickness: parseInt(thickness) || 3
-                        });
-                    }
-                });
-                
-                const images = [];
-                document.querySelectorAll('#editPadImagesContainer .image-input').forEach(input => {
-                    if (input.value.trim()) images.push(input.value.trim());
-                });
-                
-                const updatedPad = {
-                    ...pad,
-                    name: document.getElementById('editPadName').value,
-                    brand: document.getElementById('editPadBrand').value,
-                    material: document.getElementById('editPadMaterial').value,
-                    description: document.getElementById('editPadDescription').value,
-                    sizes: sizes,
-                    images: images,
-                    lastUpdated: new Date().toISOString()
-                };
+                const newName = document.getElementById('brandName').value;
+                const newIcon = document.getElementById('brandLogo').value;
+                const newId = newName.toUpperCase().replace(/\s+/g, '_');
                 
                 try {
-                    await update(ref(database, 'pads/' + pad.id), updatedPad);
+                    await set(ref(database, 'brands/' + newId), {
+                        name: newName,
+                        icon: newIcon,
+                        id: newId
+                    });
                     
-                    const isHot = document.getElementById('editPadIsHotPrice').checked;
-                    const hotReason = document.getElementById('editPadHotPriceReason').value;
-                    
-                    if (isHot && hotReason) {
-                        await set(ref(database, 'hotPrices/' + pad.id), {
-                            reason: hotReason,
-                            added: hotPrices[pad.id]?.added || new Date().toISOString(),
-                            type: 'pad'
-                        });
-                    } else if (!isHot && hotPrices[pad.id]) {
-                        await remove(ref(database, 'hotPrices/' + pad.id));
+                    if (newId !== id) {
+                        await remove(ref(database, 'brands/' + id));
                     }
                     
-                    alert('✅ Коврик обновлен');
-                    closeEditPadModal();
+                    alert('✅ Бренд обновлен');
+                    document.getElementById('addBrandForm').reset();
+                    document.getElementById('addBrandForm').onsubmit = originalForm;
                 } catch (error) {
                     console.error('Ошибка:', error);
                     alert('❌ Ошибка при обновлении');
                 }
-            });
-            
-            document.getElementById('editPadIsHotPrice').addEventListener('change', function() {
-                document.getElementById('editPadHotPriceFields').style.display = this.checked ? 'block' : 'none';
-            });
-            
-            updateEditPadPreview();
+            };
         };
 
         // Работа с отзывами
@@ -2754,7 +2088,9 @@
             }
         };
 
-        // Постеры
+        // ===== ФУНКЦИИ ДЛЯ РАБОТЫ С ПОСТЕРАМИ =====
+
+        // Предпросмотр изображения
         document.getElementById('posterImage')?.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -2768,6 +2104,7 @@
             }
         });
 
+        // Добавление постера
         document.getElementById('addPosterForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -2787,10 +2124,10 @@
             try {
                 const submitBtn = e.target.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка на GitHub...';
                 submitBtn.disabled = true;
                 
-                const imageUrl = await window.uploadToImgBB(fileInput.files[0]);
+                const imageUrl = await uploadImageToGitHub(fileInput.files[0]);
                 const posterId = Date.now().toString();
                 
                 const posterRef = ref(database, 'posters/' + posterId);
@@ -2823,6 +2160,31 @@
             }
         });
 
+        // Функция для просмотра постеров на GitHub
+        window.viewGitHubPosters = async function() {
+            const posters = await getPostersFromGitHub();
+            console.log('Постеры на GitHub:', posters);
+            
+            const container = document.getElementById('githubPostersList');
+            if (container) {
+                if (posters.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-gray);">На GitHub нет постеров</p>';
+                    return;
+                }
+                
+                container.innerHTML = posters.map(p => `
+                    <div class="poster-card" style="padding: 1rem;">
+                        <img src="${p.url}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px;">
+                        <p style="margin: 0.5rem 0; font-size: 0.9rem;">${p.name}</p>
+                        <button class="admin-btn-small" onclick="navigator.clipboard.writeText('${p.url}'); alert('URL скопирован!')">
+                            <i class="fas fa-copy"></i> Копировать URL
+                        </button>
+                    </div>
+                `).join('');
+            }
+        };
+
+        // Редактирование постера
         window.editPoster = (id) => {
             const poster = posters.find(p => p.id === id);
             if (!poster) return;
@@ -2946,7 +2308,7 @@
                     };
                     
                     if (fileInput.files[0]) {
-                        const imageUrl = await window.uploadToImgBB(fileInput.files[0]);
+                        const imageUrl = await uploadImageToGitHub(fileInput.files[0]);
                         updatedPoster.imageUrl = imageUrl;
                     }
                     
@@ -2965,6 +2327,7 @@
             });
         };
 
+        // Удаление постера
         window.deletePoster = async (id) => {
             if (!confirm('❌ Удалить постер?')) return;
             
@@ -2977,21 +2340,17 @@
             }
         };
 
+        window.closeEditPosterModal = () => {
+            document.getElementById('editPosterModal').classList.remove('active');
+        };
+
         // Модальные окна
         window.closeEditModal = () => {
             document.getElementById('editModal').classList.remove('active');
         };
-        
-        window.closeEditPadModal = () => {
-            document.getElementById('editPadModal').classList.remove('active');
-        };
-        
+
         window.closeReviewModal = () => {
             document.getElementById('reviewModal').classList.remove('active');
-        };
-        
-        window.closeEditPosterModal = () => {
-            document.getElementById('editPosterModal').classList.remove('active');
         };
 
         // Переключение вкладок
@@ -3002,29 +2361,13 @@
             document.querySelector('[data-tab="add-product"]').classList.add('active');
             document.getElementById('add-product').classList.add('active');
         };
-        
-        window.switchToAddPad = () => {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-            
-            document.querySelector('[data-tab="add-pad"]').classList.add('active');
-            document.getElementById('add-pad').classList.add('active');
-        };
-        
+
         window.switchToProducts = () => {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
             
             document.querySelector('[data-tab="products"]').classList.add('active');
             document.getElementById('products').classList.add('active');
-        };
-        
-        window.switchToPads = () => {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-            
-            document.querySelector('[data-tab="pads"]').classList.add('active');
-            document.getElementById('pads').classList.add('active');
         };
 
         // Переключение вкладок по клику
@@ -3042,20 +2385,15 @@
         document.getElementById('isHotPrice')?.addEventListener('change', function() {
             document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none';
         });
-        
-        document.getElementById('padIsHotPrice')?.addEventListener('change', function() {
-            document.getElementById('padHotPriceFields').style.display = this.checked ? 'block' : 'none';
-        });
 
         // Поиск и фильтры
         document.getElementById('searchProducts')?.addEventListener('input', renderProducts);
         document.getElementById('filterCategory')?.addEventListener('change', renderProducts);
-        document.getElementById('searchPads')?.addEventListener('input', renderPads);
-        document.getElementById('filterPadMaterial')?.addEventListener('change', renderPads);
+        
         document.getElementById('searchReviews')?.addEventListener('input', renderReviews);
         document.getElementById('reviewStatus')?.addEventListener('change', renderReviews);
 
-        // Добавляем начальные элементы
+        // Добавляем первую характеристику и фото по умолчанию
         setTimeout(() => {
             if (document.getElementById('featuresContainer')?.children.length === 0) {
                 addFeature();
@@ -3063,14 +2401,9 @@
             if (document.getElementById('imagesContainer')?.children.length === 0) {
                 addImage();
             }
-            if (document.getElementById('sizesContainer')?.children.length === 0) {
-                addSize();
-            }
-            if (document.getElementById('padImagesContainer')?.children.length === 0) {
-                addPadImage();
-            }
         }, 500);
 
+        // Делаем функцию loadData доступной глобально
         window.loadData = loadData;
     </script>
 </body>
