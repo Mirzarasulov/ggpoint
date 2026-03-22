@@ -319,20 +319,6 @@
             </div>
         </div>
     </section>
-
-    <!-- 2. ПОПУЛЯРНЫЕ БРЕНДЫ -->
-    <section class="brands-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Популярные бренды</h2>
-                <p class="section-subtitle">Только оригинальная продукция</p>
-            </div>
-            
-            <div class="brands-grid" id="brandsGrid">
-                <!-- Бренды загружаются динамически -->
-            </div>
-        </div>
-    </section>
     
     <!-- 4. НОВИНКИ -->
     <section class="new-products-section">
@@ -567,23 +553,6 @@
             }, 100);
         });
 
-        // Загрузка брендов
-        const brandsRef = ref(database, 'brands');
-        onValue(brandsRef, (snapshot) => {
-            const data = snapshot.val();
-            const brands = data ? Object.values(data) : [];
-            
-            const brandsGrid = document.getElementById('brandsGrid');
-            if (!brandsGrid) return;
-            
-            brandsGrid.innerHTML = brands.map(brand => `
-                <div class="brand-card">
-                    <img src="${brand.icon}" alt="${brand.name}" class="brand-logo">
-                    <span class="brand-name">${brand.name}</span>
-                </div>
-            `).join('');
-        });
-    </script>
     
     <!-- Скрипт для сообщения о разработке -->
     <script>
