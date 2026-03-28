@@ -1,16 +1,1 @@
-RewriteEngine On
-RewriteRule ^главная$ index.html [L]
-RewriteRule ^каталог$ catalog.html [L]
-RewriteRule ^коврики$ pads.html [L]
-RewriteRule ^кейкапы$ keycaps.html [L]
-RewriteRule ^о-нас$ about.html [L]
-RewriteRule ^контакты$ contacts.html [L]
-RewriteRule ^товар/(.*)$ product.html?id=$1 [L]
 
-# Перенаправление со старых ссылок
-RewriteRule ^index\.html$ /главная [R=301,L]
-RewriteRule ^catalog\.html$ /каталог [R=301,L]
-RewriteRule ^pads\.html$ /коврики [R=301,L]
-RewriteRule ^keycaps\.html$ /кейкапы [R=301,L]
-RewriteRule ^about\.html$ /о-нас [R=301,L]
-RewriteRule ^contacts\.html$ /контакты [R=301,L]
