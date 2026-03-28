@@ -444,6 +444,28 @@
             color: white;
         }
         
+        /* Кнопка "Скоро" вместо корзины */
+        .pad-btn-disabled {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .pad-btn-disabled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+        
         /* Модальное окно выбора размера */
         .size-modal {
             position: fixed;
@@ -787,6 +809,9 @@
         <div class="container">
             <h1>Игровые коврики</h1>
             <p>Выберите идеальный коврик для вашей игровой станции. Различные размеры и дизайны на любой вкус.</p>
+            <div style="margin-top: 1.5rem;">
+                </span>
+            </div>
         </div>
     </div>
 
@@ -929,19 +954,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно выбора размера -->
-    <div class="size-modal" id="sizeModal">
-        <div class="size-modal-content">
-            <h3>Выберите размер коврика</h3>
-            <div id="selectedPadPreview"></div>
-            <div class="size-options" id="sizeOptions"></div>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-cancel" onclick="closeSizeModal()">Отмена</button>
-                <button class="modal-btn modal-btn-confirm" onclick="confirmSizeSelection()"></button>
-            </div>
-        </div>
-    </div>
-
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
@@ -1025,7 +1037,6 @@
             const selectedSizes = Array.from(document.querySelectorAll('#sizeFilters input:checked')).map(cb => cb.value);
             if (selectedSizes.length > 0) {
                 filtered = filtered.filter(pad => {
-                    // Если у коврика есть поле sizes (размеры)
                     if (pad.sizes && pad.sizes.length > 0) {
                         return pad.sizes.some(size => {
                             const sizeCat = getSizeCategory(size.width, size.height);
@@ -1129,7 +1140,6 @@
             const priceValue = parsePrice(pad.price);
             const firstImage = pad.images && pad.images.length ? pad.images[0] : (pad.image || 'https://via.placeholder.com/800x600?text=No+Image');
             
-            // Получаем размеры из характеристик или создаем заглушку
             let sizesText = 'Размеры не указаны';
             if (pad.features && pad.features.length > 0) {
                 const sizeFeature = pad.features.find(f => f.toLowerCase().includes('размер') || f.toLowerCase().includes('mm') || f.toLowerCase().includes('см'));
@@ -1165,9 +1175,6 @@
                     </div>
                     <div class="pad-price">${formatPrice(priceValue)}</div>
                     <div class="pad-actions">
-                        <button class="pad-btn pad-btn-primary" onclick="addToCart('${pad.id}')">
-                            <i class="fas fa-shopping-cart"></i> В корзину
-                        </button>
                     </div>
                 </div>
             `;
@@ -1175,32 +1182,14 @@
             return card;
         }
 
-        // Функция добавления в корзину
+        // Функция показа сообщения "Скоро"
+        window.showSoonMessage = function() {
+            showNotification('⏳ Коврики скоро появятся в продаже! Следите за обновлениями в Telegram');
+        };
+
+        // Функция добавления в корзину (отключена)
         window.addToCart = function(padId) {
-            const pad = pads.find(p => p.id == padId);
-            if (!pad) return;
-            
-            const product = {
-                id: pad.id,
-                name: pad.name,
-                price: pad.price,
-                image: pad.images && pad.images.length ? pad.images[0] : 'https://via.placeholder.com/800x600?text=No+Image',
-                quantity: 1,
-                category: 'pads'
-            };
-            
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existing = cart.find(item => item.id === product.id);
-            
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push(product);
-            }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            showNotification(`✅ ${product.name} пока в разработке`);
+            showNotification('⏳ Коврики пока недоступны для заказа. Скоро появятся в продаже!');
         };
 
         // Глобальные функции для работы с лайтбоксом
@@ -1273,12 +1262,6 @@
             document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
         };
 
-        window.closeSizeModal = function() {
-            document.getElementById('sizeModal').classList.remove('active');
-            selectedPad = null;
-            selectedSize = null;
-        };
-
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
@@ -1293,7 +1276,7 @@
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                background: #10b981;
+                background: #ff6b6b;
                 color: white;
                 padding: 1rem 1.5rem;
                 border-radius: 12px;
@@ -1302,7 +1285,7 @@
                 animation: slideInRight 0.3s ease;
                 box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             `;
-            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            notification.innerHTML = `<i class="fas fa-hourglass-half"></i> ${message}`;
             document.body.appendChild(notification);
             
             setTimeout(() => {
