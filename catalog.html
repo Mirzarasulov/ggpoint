@@ -516,12 +516,12 @@
                         <a href="keycaps.html" class="nav-link keycaps-nav">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Новинка</span>
+                            <span class="beta-badge">Коллекция</span>
                         </a>
                     </li>
-                     <li class="nav-item">
-                        <a href="pads.html" class="nav-link keycaps-nav">
-                            <i class="fas fa-keyboard"></i>
+                    <li class="nav-item">
+                        <a href="pads.html" class="nav-link">
+                            <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
                         </a>
@@ -599,19 +599,23 @@
                             </label>
                             <label class="filter-option">
                                 <input type="radio" name="category" value="мышь">
-                                <span>Игровые мыши</span>
+                                <span><i class="fas fa-mouse"></i> Игровые мыши</span>
                             </label>
                             <label class="filter-option">
                                 <input type="radio" name="category" value="клавиатура">
-                                <span>Клавиатуры</span>
+                                <span><i class="fas fa-keyboard"></i> Клавиатуры</span>
                             </label>
                             <label class="filter-option">
                                 <input type="radio" name="category" value="наушники">
-                                <span>Наушники</span>
+                                <span><i class="fas fa-headphones"></i> Наушники</span>
                             </label>
                             <label class="filter-option">
                                 <input type="radio" name="category" value="монитор">
-                                <span>Мониторы</span>
+                                <span><i class="fas fa-desktop"></i> Мониторы</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="pads">
+                                <span><i class="fas fa-mouse-pointer"></i> Коврики</span>
                             </label>
                         </div>
                     </div>
@@ -764,7 +768,7 @@
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
-                    li><a href="pads.html">Коврики</a></li>
+                    <li><a href="pads.html">Коврики</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -1029,15 +1033,26 @@
         const urlParams = new URLSearchParams(window.location.search);
         const categoryParam = urlParams.get('category');
         const brandParam = urlParams.get('brand');
-        const discountParam = urlParams.get('discount');
-        const sortParam = urlParams.get('sort');
 
         // Загрузка данных
         function loadData() {
             const productsRef = ref(database, 'products');
             onValue(productsRef, (snapshot) => {
                 const data = snapshot.val();
-                products = data ? Object.values(data) : [];
+                if (data) {
+                    // ВАЖНО: Исключаем кейкапы и коврики из общего каталога
+                    // Кейкапы и коврики показываются только на своих отдельных страницах
+                    products = Object.values(data).filter(product => 
+                        product.category !== 'keycaps' && product.category !== 'pads'
+                    );
+                    console.log('Загружено товаров (без кейкапов и ковриков):', products.length);
+                    console.log('Категории:', products.reduce((acc, p) => {
+                        acc[p.category] = (acc[p.category] || 0) + 1;
+                        return acc;
+                    }, {}));
+                } else {
+                    products = [];
+                }
                 
                 const hotPricesRef = ref(database, 'hotPrices');
                 onValue(hotPricesRef, (snapshot) => {
@@ -1075,13 +1090,13 @@
 
         // Применение фильтров
         function applyFilters() {
-            let filtered = [...products].filter(p => p.category !== 'keycaps');
+            let filtered = [...products];
             
             // Фильтр по категории
             const category = document.querySelector('input[name="category"]:checked')?.value;
             if (category && category !== 'all') {
                 filtered = filtered.filter(p => p.category === category);
-            } else if (categoryParam) {
+            } else if (categoryParam && categoryParam !== 'all') {
                 filtered = filtered.filter(p => p.category === categoryParam);
                 document.querySelector(`input[name="category"][value="${categoryParam}"]`).checked = true;
             }
@@ -1105,7 +1120,7 @@
             
             // Фильтр по скидкам
             const discountOnly = document.getElementById('discountFilter').checked;
-            if (discountOnly || discountParam) {
+            if (discountOnly) {
                 filtered = filtered.filter(p => hotPrices[p.id]);
             }
             
@@ -1123,6 +1138,7 @@
             applySorting(filtered, sortBy);
             
             filteredProducts = filtered;
+            currentPage = 1;
             updateProductsCount();
             renderProducts();
             updateActiveFilters();
@@ -1155,7 +1171,13 @@
         // Парсинг цены
         function parsePrice(priceStr) {
             if (!priceStr) return 0;
-            return parseInt(priceStr.replace(/[^\d]/g, '')) || 0;
+            if (typeof priceStr === 'number') return priceStr;
+            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
+        }
+
+        // Форматирование цены
+        function formatPrice(price) {
+            return price.toLocaleString() + ' UZS';
         }
 
         // Обновление счетчика товаров
@@ -1248,19 +1270,23 @@
             if (isHot) badges += '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>';
             if (isNew) badges += '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>';
             
+            const firstImage = product.images && product.images.length ? product.images[0] : 'https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото';
+            const priceValue = parsePrice(product.price);
+            
             card.innerHTML = `
                 ${badges}
                 <div class="product-image-container">
-                    <img src="${product.images?.[0] || 'https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото'}" 
+                    <img src="${firstImage}" 
                          alt="${product.name}" 
-                         class="product-image">
+                         class="product-image"
+                         onerror="this.src='https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото'">
                 </div>
                 <div class="product-info">
                     <div class="product-category">${getCategoryName(product.category)}</div>
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-description-short">${product.description?.substring(0, 80)}...</p>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <p class="product-price">${product.price}</p>
+                        <p class="product-price">${formatPrice(priceValue)}</p>
                         <button class="cart-btn" style="width: 40px; height: 40px;" onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
                             <i class="fas fa-shopping-cart"></i>
                         </button>
@@ -1296,7 +1322,10 @@
         // Рендер недавно просмотренных
         function renderRecentlyViewed() {
             const grid = document.getElementById('recentlyViewedGrid');
-            if (!grid || recentlyViewed.length === 0) return;
+            if (!grid || recentlyViewed.length === 0) {
+                if (grid) grid.innerHTML = '';
+                return;
+            }
             
             grid.innerHTML = '';
             recentlyViewed.slice(0, 4).forEach(product => {
@@ -1374,7 +1403,7 @@
                 'наушники': 'Наушники',
                 'монитор': 'Монитор',
                 'keycaps': 'Кейкапы',
-                'pads': 'Коврики'
+                'pads': 'Коврик'
             };
             return categories[key] || key;
         }
@@ -1394,7 +1423,7 @@
             updateCartCount();
             
             // Показать уведомление
-            showNotification('Товар добавлен в корзину');
+            showNotification('✅ Товар добавлен в корзину');
         };
 
         // Обновление счетчика корзины
@@ -1413,28 +1442,54 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: var(--success-green);
+                background: #10b981;
                 color: white;
                 padding: 1rem 1.5rem;
                 border-radius: 8px;
                 font-weight: 600;
                 z-index: 9999;
-                animation: slideIn 0.3s ease;
+                animation: slideInRight 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             `;
-            notification.textContent = message;
+            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
+                notification.style.animation = 'slideOutRight 0.3s ease';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
+
+        // Стили для анимаций
+        const styleEl = document.createElement('style');
+        styleEl.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styleEl);
 
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             updateCartCount();
-            renderRecentlyViewed();
             
             // Обработчики событий
             document.querySelectorAll('input[name="category"]').forEach(radio => {
@@ -1491,6 +1546,9 @@
                 document.getElementById('gridView').classList.remove('active');
                 document.querySelector('.products-grid').classList.add('list-view');
             });
+            
+            // Рендер недавно просмотренных
+            setTimeout(() => renderRecentlyViewed(), 1000);
         });
 
         // Debounce функция
