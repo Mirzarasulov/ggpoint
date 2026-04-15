@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO -->
-    <title>GGPoint – официальный сайт игровых сервисов</title>
-    <meta name="description" content="GGPoint.store – лучшие цены на игровые услуги и аккаунты.">
+    <title>GGPoint – магазин игровой периферии в Узбекистане</title>
+    <meta name="description" content="GGPoint – оригинальная игровая периферия. Мыши, клавиатуры, наушники, кейкапы и коврики. Быстрая доставка по Ташкенту и Узбекистану.">
+    <meta name="keywords" content="игровая периферия, мыши, клавиатуры, наушники, кейкапы, коврики, Ташкент, Узбекистан">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -16,25 +17,132 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
     <!-- Swiper CSS для карусели постеров -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
-    <!-- ⚡ Критический CSS для быстрой загрузки -->
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#fff;line-height:1.6}
-        header{background:#0f172a;padding:1rem 2rem;position:sticky;top:0;z-index:100;border-bottom:1px solid #1e293b}
-        .header-container{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-        .logo a{font-size:1.8rem;font-weight:bold;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
-        .nav-list{display:flex;gap:2rem;list-style:none}
-        .nav-link{color:#fff;text-decoration:none;display:flex;align-items:center;gap:0.5rem}
-        .hero{min-height:70vh;background:linear-gradient(135deg,#2563eb20,#7c3aed20);display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
-        .hero h1{font-size:clamp(2.5rem,8vw,5rem);margin-bottom:1rem}
-        .container{max-width:1400px;margin:0 auto;padding:0 2rem}
-        .btn{background:#2563eb;color:#fff;border:none;padding:0.8rem 1.5rem;border-radius:8px;cursor:pointer}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        /* RGB градиент */
+        .gradient-text,
+        .logo a,
+        .section-title span,
+        .hero h1 span {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero секция */
+        .hero {
+            min-height: 70vh;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Единый стиль для всех кнопок */
+        .btn,
+        .btn-primary,
+        .poster-btn,
+        .tracking-btn-main {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .btn:hover,
+        .btn-primary:hover,
+        .poster-btn:hover,
+        .tracking-btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
         
         /* Стили для постеров */
         .posters-section {
@@ -90,18 +198,12 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.8rem 2rem;
-            background: #2563eb;
-            color: white;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
         }
         
         .poster-btn:hover {
             background: transparent;
-            border-color: #2563eb;
+            border: 2px solid #2563eb;
             transform: translateY(-2px);
         }
         
@@ -128,6 +230,315 @@
             background: rgba(37,99,235,0.3);
         }
         
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .admin-btn {
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid rgba(37, 99, 235, 0.5);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transform: scale(1.05);
+        }
+        
+        /* Категории */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .category-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: #2563eb;
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .category-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .category-link:hover {
+            color: #2563eb;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-subtitle {
+            color: #94a3b8;
+        }
+        
+        /* Преимущества */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* CTA секция */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        /* Товары */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .product-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #2563eb;
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            background: white;
+            border-radius: 12px;
+        }
+        
+        .product-card h3 {
+            margin: 1rem 0 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .product-card p {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+        
+        .section-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        /* Футер */
+        footer {
+            background: #0f172a;
+            border-top: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-section h3, .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h3 {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #60a5fa;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(37, 99, 235, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+            color: #64748b;
+        }
+        
+        /* Кнопка наверх */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        
+        .beta-badge {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            font-size: 0.6rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.3rem;
+        }
+        
+        .hero-buttons {
+            margin-top: 2rem;
+        }
+        
         @media (max-width: 768px) {
             .poster-slide {
                 height: 400px;
@@ -148,6 +559,22 @@
             .swiper-button-prev,
             .swiper-button-next {
                 display: none;
+            }
+            
+            .tracking-btn-main span {
+                display: none;
+            }
+            
+            .tracking-btn-main {
+                padding: 0.6rem 1rem;
+            }
+            
+            .nav-list {
+                gap: 1rem;
+            }
+            
+            .nav-text {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -175,15 +602,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="keycaps.html" class="nav-link keycaps-nav">
+                        <a href="keycaps.html" class="nav-link">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
                             <span class="beta-badge">Новинка</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pads.html" class="nav-link keycaps-nav">
-                            <i class="fas fa-keyboard"></i>
+                        <a href="pads.html" class="nav-link">
+                            <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
                         </a>
@@ -204,9 +631,9 @@
             </nav>
             
             <div class="header-actions">
-                <button class="cart-btn" id="cartBtn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
+                <button class="tracking-btn-main" id="trackingBtn">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Отследить заказ</span>
                 </button>
                 <button class="admin-btn" id="adminBtn">
                     <i class="fas fa-cog"></i>
@@ -215,54 +642,40 @@
         </div>
     </header>
 
-    <!-- Hero Section (оставляем как есть) -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-badge">🔥 Каталог товаров</span>
-            <h1>GGPoint – <span class="gradient-text">игровая периферия</span> премиум-класса</h1>
+            <span class="hero-badge">🔥 Официальный магазин</span>
+            <h1>GGPoint – <span>игровая периферия</span> премиум-класса</h1>
             <p>Оригинальные товары по лучшим ценам. Быстрая доставка по Ташкенту и Узбекистану.</p>
             
             <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="showDevelopmentMessage()">
+                <a href="catalog.html" class="btn btn-primary">
                     <i class="fas fa-shopping-bag"></i>
                     Перейти в каталог
-                </button>
-            </div>
-            
-            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 2px dashed #2563eb;">
-                <p style="color: #94a3b8; font-size: 1.1rem;">
-                    <i class="fas fa-tools" style="color: #2563eb; margin-right: 0.5rem;"></i>
-                    Каталог в разработке. Скоро здесь появятся все товары!
-                </p>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Секция с постерами (НОВАЯ) -->
+    <!-- Секция с постерами -->
     <section class="posters-section">
         <div class="container">
-            <div class="section-header" style="margin-bottom: 2rem;">
+            <div class="section-header">
                 <h2 class="section-title">Акции и новинки</h2>
                 <p class="section-subtitle">Специальные предложения для вас</p>
             </div>
             
-            <!-- Swiper -->
             <div class="swiper postersSwiper">
-                <div class="swiper-wrapper" id="postersContainer">
-                    <!-- Постеры будут загружаться динамически -->
-                </div>
-                
-                <!-- Пагинация -->
+                <div class="swiper-wrapper" id="postersContainer"></div>
                 <div class="swiper-pagination"></div>
-                
-                <!-- Навигация -->
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
         </div>
     </section>
 
-    <!-- 1. КАТЕГОРИИ -->
+    <!-- Категории -->
     <section class="categories">
         <div class="container">
             <div class="section-header">
@@ -270,49 +683,29 @@
                 <p class="section-subtitle">Выберите то, что вам нужно</p>
             </div>
             
-            <div class="categories-grid" id="categoriesGrid">
-                <!-- Мыши -->
+            <div class="categories-grid">
                 <div class="category-card" data-category="мышь">
-                    <div class="category-icon">
-                        <i class="fas fa-mouse"></i>
-                    </div>
+                    <div class="category-icon"><i class="fas fa-mouse"></i></div>
                     <h3 class="category-name">Игровые мыши</h3>
                     <a href="catalog.html?category=мышь" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <!-- Клавиатуры -->
                 <div class="category-card" data-category="клавиатура">
-                    <div class="category-icon">
-                        <i class="fas fa-keyboard"></i>
-                    </div>
+                    <div class="category-icon"><i class="fas fa-keyboard"></i></div>
                     <h3 class="category-name">Клавиатуры</h3>
                     <a href="catalog.html?category=клавиатура" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <!-- Наушники -->
                 <div class="category-card" data-category="наушники">
-                    <div class="category-icon">
-                        <i class="fas fa-headphones"></i>
-                    </div>
+                    <div class="category-icon"><i class="fas fa-headphones"></i></div>
                     <h3 class="category-name">Наушники</h3>
                     <a href="catalog.html?category=наушники" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <!-- Мониторы -->
                 <div class="category-card" data-category="монитор">
-                    <div class="category-icon">
-                        <i class="fas fa-desktop"></i>
-                    </div>
+                    <div class="category-icon"><i class="fas fa-desktop"></i></div>
                     <h3 class="category-name">Мониторы</h3>
                     <a href="catalog.html?category=монитор" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <!-- Кейкапы -->
                 <div class="category-card" data-category="keycaps">
-                    <div class="category-icon">
-                        <i class="fas fa-keyboard"></i>
-                        <span style="position: absolute; top: 10px; right: 10px; background: #7c3aed; color: white; font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;">Коллекция</span>
-                    </div>
+                    <div class="category-icon"><i class="fas fa-keyboard"></i></div>
                     <h3 class="category-name">Кейкапы</h3>
                     <a href="keycaps.html" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
                 </div>
@@ -320,50 +713,41 @@
         </div>
     </section>
     
-    <!-- 4. НОВИНКИ -->
+    <!-- Новинки -->
     <section class="new-products-section">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Новинки</h2>
                 <p class="section-subtitle">Самые свежие поступления</p>
             </div>
-            
             <div class="products-grid" id="newProductsGrid">
-                <!-- Новинки загружаются динамически -->
+                <div style="text-align: center; grid-column: 1/-1; padding: 3rem; color: #94a3b8;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                    <p>Загрузка новинок...</p>
+                </div>
             </div>
-            
             <div class="section-footer">
-                <a href="catalog.html?sort=newest" class="btn btn-primary">
-                    Все новинки <i class="fas fa-arrow-right"></i>
-                </a>
+                <a href="catalog.html?sort=newest" class="btn btn-primary">Все новинки <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
 
-    <!-- 5. ПРЕИМУЩЕСТВА -->
+    <!-- Преимущества -->
     <section class="features-section">
         <div class="container">
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h4>Гарантия качества</h4>
                     <p>Все товары оригинальные и имеют официальную гарантию</p>
                 </div>
-                
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-truck-fast"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
                     <h4>Быстрая доставка</h4>
                     <p>Доставляем по Ташкенту за 24 часа, по Узбекистану за 3 дня</p>
                 </div>
-                
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
                     <h4>Поддержка 24/7</h4>
                     <p>Мы всегда на связи и готовы помочь с выбором</p>
                 </div>
@@ -371,15 +755,14 @@
         </div>
     </section>
 
-    <!-- 6. CTA "Не нашли то, что искали?" -->
+    <!-- CTA -->
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
                 <h2>Не нашли то, что искали?</h2>
                 <p>Свяжитесь с нами, и мы поможем подобрать идеальный товар под ваш бюджет</p>
-                <a href="contacts.html" class="btn btn-primary btn-large">
-                    <i class="fas fa-headset"></i>
-                    Связаться с нами
+                <a href="contacts.html" class="btn btn-primary">
+                    <i class="fas fa-headset"></i> Связаться с нами
                 </a>
             </div>
         </div>
@@ -387,92 +770,54 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <!-- О компании -->
-                <div class="footer-section">
-                    <h3>GGPoint</h3>
-                    <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
-                    <div class="social-links">
-                        <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
-                            <i class="fab fa-telegram"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Навигация -->
-                <div class="footer-section">
-                    <h4>Навигация</h4>
-<ul class="nav-list">
-    <li><a href="/">Главная</a></li>
-    <li><a href="/catalog">Каталог</a></li>
-    <li><a href="/keycaps">Кейкапы</a></li>
-    <li><a href="/pads">Коврики</a></li>
-    <li><a href="/about">О нас</a></li>
-    <li><a href="/contacts">Контакты</a></li>
-</ul>
-                </div>
-                
-                <!-- Категории -->
-                <div class="footer-section">
-                    <h4>Категории</h4>
-                    <ul class="footer-links">
-                        <li><a href="catalog.html?category=мышь">Игровые мыши</a></li>
-                        <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
-                        <li><a href="catalog.html?category=наушники">Наушники</a></li>
-                        <li><a href="catalog.html?category=монитор">Мониторы</a></li>
-                        <li><a href="keycaps.html">Кейкапы</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Контакты -->
-                <div class="footer-section">
-                    <h4>Контакты</h4>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+998 97 747 0157</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-telegram"></i>
-                            <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Ташкент, Узбекистан</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Ежедневно 10:00 - 22:00</span>
-                        </div>
-                    </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GGPoint</h3>
+                <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
+                <div class="social-links">
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 GGPoint. Все права защищены.</p>
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Категории</h4>
+                <ul class="footer-links">
+                    <li><a href="catalog.html?category=мышь">Игровые мыши</a></li>
+                    <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
+                    <li><a href="catalog.html?category=наушники">Наушники</a></li>
+                    <li><a href="catalog.html?category=монитор">Мониторы</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="pads.html">Коврики</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
+                    <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank" style="color:#94a3b8; text-decoration:none;">@GGPointUz</a></span></div>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Ташкент, Узбекистан</span></div>
+                    <div class="contact-item"><i class="fas fa-clock"></i><span>Ежедневно 10:00 - 22:00</span></div>
+                </div>
             </div>
         </div>
+        <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
     </footer>
 
-    <!-- Back to top button -->
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- Scripts -->
-    <script type="module" src="js/main.js"></script>
-    
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    
-    <!-- Firebase -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
@@ -490,98 +835,92 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Загрузка постеров
         const postersRef = ref(database, 'posters');
         onValue(postersRef, (snapshot) => {
             const data = snapshot.val();
             const posters = data ? Object.values(data).filter(p => p.active) : [];
-            
-            // Сортируем по порядку
             posters.sort((a, b) => (a.order || 999) - (b.order || 999));
-            
             const container = document.getElementById('postersContainer');
             if (!container) return;
             
             if (posters.length === 0) {
-                container.innerHTML = `
-                    <div class="swiper-slide">
-                        <div class="poster-slide">
-                            <img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image">
-                            <div class="poster-overlay">
-                                <h2 class="poster-title">Добро пожаловать в GGPoint!</h2>
-                                <p class="poster-description">Скоро здесь появятся акции и новинки</p>
-                                <a href="/catalog" class="poster-btn">
-                                    Перейти в каталог <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                container.innerHTML = `<div class="swiper-slide"><div class="poster-slide"><img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image"><div class="poster-overlay"><h2 class="poster-title">Добро пожаловать в GGPoint!</h2><p class="poster-description">Скоро здесь появятся акции и новинки</p><a href="catalog.html" class="poster-btn">Перейти в каталог <i class="fas fa-arrow-right"></i></a></div></div></div>`;
             } else {
                 container.innerHTML = posters.map(poster => `
                     <div class="swiper-slide">
                         <div class="poster-slide">
-                            <img src="${poster.imageUrl}" class="poster-image" alt="${poster.title}" onerror="this.src='https://via.placeholder.com/1400x500/1e293b/2563eb?text=Ошибка+загрузки'">
+                            <img src="${poster.imageUrl}" class="poster-image" alt="${poster.title}" onerror="this.src='https://via.placeholder.com/1400x500/1e293b/2563eb?text=Ошибка'">
                             <div class="poster-overlay">
-                                <h2 class="poster-title">${poster.title}</h2>
-                                ${poster.description ? `<p class="poster-description">${poster.description}</p>` : ''}
-                                <a href="${poster.link || '/catalog'}" class="poster-btn">
-                                    ${poster.buttonText || 'Подробнее'} <i class="fas fa-arrow-right"></i>
-                                </a>
+                                <h2 class="poster-title">${escapeHtml(poster.title)}</h2>
+                                ${poster.description ? `<p class="poster-description">${escapeHtml(poster.description)}</p>` : ''}
+                                <a href="${poster.link || '/catalog'}" class="poster-btn">${escapeHtml(poster.buttonText || 'Подробнее')} <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                 `).join('');
             }
-            
-            // Инициализация Swiper после загрузки постеров
             setTimeout(() => {
                 new Swiper('.postersSwiper', {
                     loop: true,
-                    autoplay: {
-                        delay: 5000,
-                        disableOnInteraction: false,
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
+                    autoplay: { delay: 5000, disableOnInteraction: false },
+                    pagination: { el: '.swiper-pagination', clickable: true },
+                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
                 });
             }, 100);
         });
 
-    
-    <!-- Скрипт для сообщения о разработке -->
-    <script>
-    function showDevelopmentMessage() {
-        alert('Каталог находится в разработке. Скоро здесь появятся все товары! Следите за обновлениями.');
-    }
-    
-    // Кнопка "Наверх"
-    document.getElementById('backToTop')?.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    // Показывать/скрывать кнопку "Наверх"
-    window.addEventListener('scroll', function() {
-        const btn = document.getElementById('backToTop');
-        if (btn) {
-            if (window.scrollY > 500) {
-                btn.style.display = 'flex';
+        const productsRef = ref(database, 'products');
+        onValue(productsRef, (snapshot) => {
+            const data = snapshot.val();
+            const products = data ? Object.values(data) : [];
+            const newest = [...products].sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0)).slice(0, 4);
+            const container = document.getElementById('newProductsGrid');
+            if (!container) return;
+            if (newest.length === 0) {
+                container.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 3rem; color: #94a3b8;">Новинок пока нет</div>';
             } else {
-                btn.style.display = 'none';
+                container.innerHTML = newest.map(product => `
+                    <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
+                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/1e293b/2563eb?text=Нет+фото'}" alt="${escapeHtml(product.name)}">
+                        <h3>${escapeHtml(product.name)}</h3>
+                        <p>${product.price}</p>
+                    </div>
+                `).join('');
             }
+        });
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
-    });
-    
-    // Кнопка админки
-    document.getElementById('adminBtn')?.addEventListener('click', function() {
-        window.location.href = 'admin.html';
-    });
+    </script>
+    <script>
+        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+        document.getElementById('adminBtn')?.addEventListener('click', () => window.location.href = 'admin-panel.html');
+        
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', (e) => { 
+                if (e.target.tagName !== 'A') { 
+                    const link = card.querySelector('.category-link'); 
+                    if (link) window.location.href = link.href; 
+                } 
+            });
+        });
     </script>
 </body>
 </html>
