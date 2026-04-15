@@ -9,12 +9,146 @@
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
     
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        :root {
+            --primary-blue: #2563eb;
+            --primary-purple: #7c3aed;
+            --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+            --card-bg: #1e293b;
+            --dark-bg: #0f172a;
+            --text-light: #f1f5f9;
+            --text-gray: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ec4899;
+            --success-green: #10b981;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .beta-badge {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            font-size: 0.6rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.3rem;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Единый стиль для кнопки отслеживания */
+        .tracking-btn-main {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .tracking-btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+        
+        .admin-btn {
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid rgba(37, 99, 235, 0.5);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transform: scale(1.05);
+        }
+        
+        /* Keycaps Hero */
         .keycaps-hero {
-            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
-            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+            padding: 6rem 2rem 4rem;
             text-align: center;
             color: white;
         }
@@ -31,6 +165,7 @@
             margin: 0 auto;
         }
         
+        /* Keycaps Grid */
         .keycaps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -41,18 +176,19 @@
         }
         
         .keycap-card {
-            background: var(--card-bg);
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.3s ease;
-            border: 2px solid #334155;
+            border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
         }
         
         .keycap-card:hover {
             transform: translateY(-10px);
-            border-color: var(--accent-purple);
+            border-color: #7c3aed;
             box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
         }
         
@@ -60,7 +196,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: var(--accent-purple);
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
             color: white;
             padding: 0.3rem 1rem;
             border-radius: 20px;
@@ -98,7 +234,7 @@
         .keycap-name {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: var(--text-light);
+            color: #f1f5f9;
             font-weight: 600;
         }
         
@@ -111,7 +247,7 @@
         
         .keycap-profile {
             background: rgba(124, 58, 237, 0.2);
-            color: var(--accent-purple);
+            color: #7c3aed;
             padding: 0.2rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -120,7 +256,7 @@
         
         .keycap-material {
             background: rgba(16, 185, 129, 0.2);
-            color: var(--success-green);
+            color: #10b981;
             padding: 0.2rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -129,38 +265,147 @@
         
         .keycap-price {
             font-size: 1.3rem;
-            color: var(--accent-purple);
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: bold;
             margin: 0.5rem 0;
         }
         
-        /* Стили для кнопки с меткой (пин) */
-        .location-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            border: none;
-            color: white;
+        /* Footer */
+        footer {
+            background: #0f172a;
+            border-top: 1px solid rgba(37, 99, 235, 0.3);
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-section h3 {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #f1f5f9;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #60a5fa;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+        }
+        
+        .contact-item a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            color: #60a5fa;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
             width: 40px;
             height: 40px;
+            background: rgba(37, 99, 235, 0.2);
             border-radius: 50%;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
             transition: all 0.3s ease;
-            margin-left: 0.5rem;
+            border: 1px solid rgba(37, 99, 235, 0.3);
         }
         
-        .location-btn i {
-            font-size: 1.2rem;
+        .social-link:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transform: translateY(-3px);
         }
         
-        .location-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+            color: #64748b;
         }
         
-        .location-btn:active {
-            transform: scale(0.95);
+        .loader {
+            text-align: center;
+            padding: 3rem;
+            color: #94a3b8;
+        }
+        
+        .loader:before {
+            content: "⏳";
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tracking-btn-main span {
+                display: none;
+            }
+            
+            .tracking-btn-main {
+                padding: 0.6rem 1rem;
+            }
+            
+            .nav-list {
+                gap: 1rem;
+            }
+            
+            .nav-text {
+                font-size: 0.9rem;
+            }
+            
+            .keycaps-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .keycaps-hero {
+                padding: 4rem 1rem 3rem;
+            }
         }
     </style>
 </head>
@@ -186,14 +431,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="keycaps.html" class="nav-link active keycaps-nav">
+                        <a href="keycaps.html" class="nav-link active">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
                             <span class="beta-badge">Коллекция</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pads.html" class="nav-link keycaps-nav">
+                        <a href="pads.html" class="nav-link">
                             <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
@@ -215,9 +460,9 @@
             </nav>
             
             <div class="header-actions">
-                <!-- Кнопка с меткой (пин) - ведёт на tracking.html -->
-                <button class="location-btn" id="locationBtn" onclick="window.location.href='tracking.html'" title="Отследить заказ">
+                <button class="tracking-btn-main" id="trackingBtn">
                     <i class="fas fa-map-marker-alt"></i>
+                    <span>Отследить заказ</span>
                 </button>
                 <button class="admin-btn" id="adminBtn">
                     <i class="fas fa-cog"></i>
@@ -231,7 +476,6 @@
         <p>PBT, ABS, double-shot, и многое другое. Сделайте свою клавиатуру уникальной!</p>
     </section>
 
-    <!-- Сетка кейкапов -->
     <div class="keycaps-grid" id="keycapsGrid">
         <div class="loader"></div>
     </div>
@@ -250,13 +494,13 @@
             
             <div class="footer-section">
                 <h4>Навигация</h4>
-                <ul style="list-style: none;">
-                    <li><a href="index.html" style="color: #94a3b8; text-decoration: none;">Главная</a></li>
-                    <li><a href="catalog.html" style="color: #94a3b8; text-decoration: none;">Каталог</a></li>
-                    <li><a href="keycaps.html" style="color: #94a3b8; text-decoration: none;">Кейкапы</a></li>
-                    <li><a href="pads.html" style="color: #94a3b8; text-decoration: none;">Коврики</a></li>
-                    <li><a href="about.html" style="color: #94a3b8; text-decoration: none;">О нас</a></li>
-                    <li><a href="contacts.html" style="color: #94a3b8; text-decoration: none;">Контакты</a></li>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
                 </ul>
             </div>
             
@@ -276,7 +520,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2024 GGPoint. Все права защищены.</p>
+            <p>&copy; 2025 GGPoint. Все права защищены.</p>
         </div>
     </footer>
 
@@ -297,7 +541,6 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Тестовые кейкапы если в базе пусто
         const defaultKeycaps = [
             {
                 id: 1001,
@@ -363,19 +606,15 @@
 
         let keycaps = [];
 
-        // Загрузка данных
         const productsRef = ref(database, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // Фильтруем только кейкапы
                 keycaps = Object.values(data).filter(p => p.category === 'keycaps');
             }
             
-            // Если кейкапов нет, используем тестовые
             if (keycaps.length === 0) {
                 keycaps = defaultKeycaps;
-                // Сохраняем тестовые в Firebase
                 defaultKeycaps.forEach(k => {
                     const productRef = ref(database, 'products/' + k.id);
                     set(productRef, k).catch(() => {});
@@ -385,9 +624,9 @@
             renderKeycaps();
         });
 
-        // Рендер кейкапов
         function renderKeycaps() {
             const grid = document.getElementById('keycapsGrid');
+            if (!grid) return;
             grid.innerHTML = '';
             
             keycaps.forEach(keycap => {
@@ -397,21 +636,21 @@
                 card.innerHTML = `
                     <div class="keycap-badge">${keycap.profile || 'Кейкапы'}</div>
                     <div class="keycap-image-container">
-                        <img src="${keycap.images?.[0] || 'https://via.placeholder.com/300x280/ffffff/333333?text=Кейкапы'}" 
-                             alt="${keycap.name}" 
+                        <img src="${keycap.images?.[0] || 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'}" 
+                             alt="${escapeHtml(keycap.name)}" 
                              class="keycap-image"
-                             onerror="this.src='https://via.placeholder.com/300x280/ffffff/333333?text=Кейкапы'">
+                             onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'">
                     </div>
                     <div class="keycap-info">
-                        <h3 class="keycap-name">${keycap.name}</h3>
+                        <h3 class="keycap-name">${escapeHtml(keycap.name)}</h3>
                         <div class="keycap-meta">
-                            <span class="keycap-profile">${keycap.profile || 'Профиль'}</span>
-                            <span class="keycap-material">${keycap.material || 'PBT'}</span>
+                            <span class="keycap-profile">${escapeHtml(keycap.profile || 'Профиль')}</span>
+                            <span class="keycap-material">${escapeHtml(keycap.material || 'PBT')}</span>
                         </div>
-                        <p style="color: var(--text-gray); font-size: 0.9rem; margin: 0.5rem 0;">
-                            ${keycap.description?.substring(0, 60)}...
+                        <p style="color: #94a3b8; font-size: 0.9rem; margin: 0.5rem 0;">
+                            ${escapeHtml(keycap.description?.substring(0, 60) || '')}...
                         </p>
-                        <div class="keycap-price">${keycap.price}</div>
+                        <div class="keycap-price">${escapeHtml(keycap.price)}</div>
                     </div>
                 `;
                 
@@ -423,8 +662,21 @@
             });
         }
 
-        // Админка
-        document.getElementById('adminBtn').addEventListener('click', () => {
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        document.getElementById('trackingBtn')?.addEventListener('click', () => {
+            window.location.href = 'tracking.html';
+        });
+        
+        document.getElementById('adminBtn')?.addEventListener('click', () => {
             window.location.href = 'admin-panel.html';
         });
     </script>
