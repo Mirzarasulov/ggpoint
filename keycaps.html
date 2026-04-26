@@ -4,18 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     
-    <title>Кейкапы - GGPoint</title>
-    <meta name="description" content="Каталог кейкапов для механических клавиатур">
+    <!-- 🔥 Preconnect для ускорения -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- 🔥 Preload шрифта -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    
+    <title>Кейкапы - GGPoint | Каталог кейкапов для механических клавиатур</title>
+    <meta name="description" content="Каталог кейкапов для механических клавиатур. PBT, ABS, double-shot. Сделайте свою клавиатуру уникальной!">
+    <meta name="keywords" content="кейкапы, keycaps, механические клавиатуры, PBT, ABS, Ташкент">
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     
-    <!-- Bootstrap 5 CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 🔥 Асинхронная загрузка Bootstrap CSS -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"></noscript>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 🔥 Асинхронная загрузка Font Awesome -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- 🔥 Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW error:', err));
+            });
+        }
+    </script>
     
     <style>
+        /* ВСЕ ВАШИ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ */
         * {
             margin: 0;
             padding: 0;
@@ -432,6 +457,77 @@
             color: #94a3b8;
         }
         
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .py-5 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .pt-5 {
+            padding-top: 3rem;
+        }
+        
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+        
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+        
+        .mb-0 {
+            margin-bottom: 0;
+        }
+        
+        .g-4 {
+            gap: 1.5rem;
+        }
+        
+        .col-12 {
+            flex: 0 0 auto;
+            width: 100%;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-secondary {
+            color: #cbd5e1;
+        }
+        
+        @media (min-width: 576px) {
+            .col-sm-6 {
+                flex: 0 0 auto;
+                width: 50%;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .col-lg-4 {
+                flex: 0 0 auto;
+                width: 33.333%;
+            }
+            .col-lg-3 {
+                flex: 0 0 auto;
+                width: 25%;
+            }
+            .col-xl-3 {
+                flex: 0 0 auto;
+                width: 25%;
+            }
+        }
+        
         @media (max-width: 768px) {
             .tracking-btn-main span {
                 display: none;
@@ -451,6 +547,10 @@
             
             .keycaps-hero {
                 padding: 4rem 0 3rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
             }
         }
     </style>
@@ -509,27 +609,30 @@
     </div>
 </nav>
 
-<!-- Hero секция -->
-<section class="keycaps-hero">
-    <div class="container">
-        <h1>Кейкапы для механических клавиатур</h1>
-        <p>PBT, ABS, double-shot, и многое другое. Сделайте свою клавиатуру уникальной!</p>
-    </div>
-</section>
+<!-- MAIN ориентир 🔥 ДОБАВЛЕНО -->
+<main id="main-content">
+    <!-- Hero секция -->
+    <section class="keycaps-hero">
+        <div class="container">
+            <h1>Кейкапы для механических клавиатур</h1>
+            <p>PBT, ABS, double-shot, и многое другое. Сделайте свою клавиатуру уникальной!</p>
+        </div>
+    </section>
 
-<!-- Сетка кейкапов на Bootstrap -->
-<section class="py-5">
-    <div class="container">
-        <div class="row g-4" id="keycapsGrid">
-            <div class="col-12 text-center py-5">
-                <div class="loader">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
-                    <p class="mt-2">Загрузка кейкапов...</p>
+    <!-- Сетка кейкапов на Bootstrap -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4" id="keycapsGrid">
+                <div class="col-12 text-center py-5">
+                    <div class="loader">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                        <p class="mt-2">Загрузка кейкапов...</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
 <!-- Модальное окно для входа в админку -->
 <div class="modal" id="adminLoginModal">
@@ -605,8 +708,8 @@
     </div>
 </footer>
 
-<!-- Bootstrap JS + Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 🔥 Bootstrap JS + Popper (defer) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
 
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
@@ -725,12 +828,18 @@
             const card = document.createElement('div');
             card.className = 'keycap-card';
             
+            // 🔥 Добавлены width/height для изображений
+            const imgSrc = keycap.images?.[0] || 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы';
+            
             card.innerHTML = `
                 <div class="keycap-badge">${escapeHtml(keycap.profile || 'Кейкапы')}</div>
                 <div class="keycap-image-container">
-                    <img src="${keycap.images?.[0] || 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'}" 
+                    <img src="${imgSrc}" 
                          alt="${escapeHtml(keycap.name)}" 
                          class="keycap-image img-fluid"
+                         width="300"
+                         height="280"
+                         loading="lazy"
                          onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'">
                 </div>
                 <div class="keycap-info">
@@ -739,7 +848,7 @@
                         <span class="keycap-profile">${escapeHtml(keycap.profile || 'Профиль')}</span>
                         <span class="keycap-material">${escapeHtml(keycap.material || 'PBT')}</span>
                     </div>
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin: 0.5rem 0;">
+                    <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0.5rem 0;">
                         ${escapeHtml(keycap.description?.substring(0, 60) || '')}...
                     </p>
                     <div class="keycap-price">${escapeHtml(keycap.price)}</div>
@@ -767,6 +876,11 @@
 
     document.getElementById('trackingBtn')?.addEventListener('click', () => {
         window.location.href = 'tracking.html';
+    });
+    
+    // 🔥 lazy loading для всех изображений
+    document.querySelectorAll('img:not([loading])').forEach(img => {
+        img.setAttribute('loading', 'lazy');
     });
     
     // Скрытый вход в админку (Ctrl + тройной клик)
