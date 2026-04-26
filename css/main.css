@@ -1,0 +1,145 @@
+/* GGPoint Main Styles */
+/* Кастомные стили поверх Bootstrap */
+
+/* ========== Кнопки и элементы управления ========== */
+.btn-gradient {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+    color: #fff;
+}
+
+/* ========== Карточки ========== */
+.glass-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: #2563eb;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+}
+
+/* ========== Анимации ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* ========== Утилиты ========== */
+.gradient-text {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* ========== Скелетон загрузки ========== */
+.skeleton {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ========== Корзина и избранное ========== */
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorite-active {
+    color: #ef4444;
+}
+
+/* ========== Адаптивность ========== */
+@media (max-width: 768px) {
+    .container-custom {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .glass-card {
+        border-radius: 16px;
+    }
+}
+
+/* ========== Уведомления ========== */
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    z-index: 9999;
+    animation: slideInRight 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    max-width: 300px;
+}
+
+/* ========== Прокрутка ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e293b;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
