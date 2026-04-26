@@ -4,23 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     
+    <!-- Preconnect + DNS Prefetch -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Preload критических ресурсов -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    
     <!-- SEO -->
-    <title>GGPoint – магазин игровой периферии в Узбекистане</title>
-    <meta name="description" content="GGPoint – оригинальная игровая периферия. Мыши, клавиатуры, наушники, кейкапы и коврики. Быстрая доставка по Ташкенту и Узбекистану.">
-    <meta name="keywords" content="игровая периферия, мыши, клавиатуры, наушники, кейкапы, коврики, Ташкент, Узбекистан">
+    <title>GGPoint – магазин игровой периферии премиум-класса в Узбекистане</title>
+    <meta name="description" content="GGPoint – оригинальная игровая периферия: мыши, клавиатуры, наушники, кейкапы, коврики. Быстрая доставка по Ташкенту. Гарантия качества.">
+    <meta name="keywords" content="игровая периферия, мыши, клавиатуры, наушники, кейкапы, коврики, Ташкент, Узбекистан, GGPoint">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180x180.png">
     
-    <!-- Bootstrap 5 CSS CDN -->
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Swiper CSS для карусели постеров -->
+    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <style>
@@ -37,18 +49,7 @@
             line-height: 1.6;
         }
         
-        /* RGB градиент */
-        .gradient-text,
-        .logo a,
-        .section-title span,
-        .hero h1 span {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* Навбар Bootstrap — кастомизация под ваш стиль */
+        /* Навбар */
         .navbar {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -59,12 +60,10 @@
         .navbar-brand {
             font-size: 1.8rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            padding: 0;
         }
         
         .navbar-nav {
@@ -98,7 +97,6 @@
             background-color: rgba(37, 99, 235, 0.1);
         }
         
-        /* Яркая кнопка-гамбургер */
         .navbar-toggler {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             border: none;
@@ -117,7 +115,6 @@
             filter: brightness(0) invert(1);
         }
         
-        /* Кнопка отследить заказ */
         .tracking-btn-main {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             color: #fff;
@@ -146,7 +143,7 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Hero секция */
+        /* Hero */
         .hero {
             min-height: 70vh;
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
@@ -162,39 +159,32 @@
             margin-bottom: 1rem;
         }
         
-        .container-custom {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        /* Единый стиль для всех кнопок */
-        .btn,
-        .btn-primary,
-        .poster-btn {
+        .hero h1 span {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            font-size: 1rem;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .btn:hover,
-        .btn-primary:hover,
-        .poster-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        .hero-badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
         }
         
-        /* Стили для постеров */
+        .beta-badge {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            font-size: 0.6rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.3rem;
+            color: white;
+        }
+        
+        /* Постеры */
         .posters-section {
             padding: 4rem 0;
             background: #0f172a;
@@ -233,13 +223,12 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .poster-description {
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
-            color: #e2e8f0;
+            color: #cbd5e1;
             max-width: 600px;
         }
         
@@ -248,43 +237,39 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
             text-decoration: none;
+            transition: all 0.3s ease;
         }
         
         .poster-btn:hover {
-            background: transparent;
-            border: 2px solid #2563eb;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
         .swiper-pagination-bullet {
-            background: #2563eb;
+            background: #2563eb !important;
         }
         
         .swiper-button-prev,
         .swiper-button-next {
-            color: #2563eb;
+            color: #2563eb !important;
             background: rgba(255,255,255,0.1);
             width: 50px;
             height: 50px;
             border-radius: 50%;
         }
         
-        .swiper-button-prev:after,
-        .swiper-button-next:after {
-            font-size: 1.5rem;
-        }
-        
-        .swiper-button-prev:hover,
-        .swiper-button-next:hover {
-            background: rgba(37,99,235,0.3);
-        }
-        
         /* Категории */
         .category-card {
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
@@ -311,6 +296,7 @@
         .category-name {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            color: #fff;
         }
         
         .category-link {
@@ -332,10 +318,11 @@
         .section-title {
             font-size: 2rem;
             margin-bottom: 0.5rem;
+            color: #fff;
         }
         
         .section-subtitle {
-            color: #94a3b8;
+            color: #cbd5e1;
         }
         
         /* Преимущества */
@@ -344,7 +331,7 @@
             padding: 2rem;
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid rgba(37, 99, 235, 0.2);
             transition: all 0.3s ease;
             height: 100%;
@@ -364,18 +351,20 @@
             -webkit-text-fill-color: transparent;
         }
         
-        /* CTA секция */
-        .cta-section {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
-            padding: 4rem 0;
-            text-align: center;
+        .feature-card h4 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            color: #cbd5e1;
         }
         
         /* Товары */
         .product-card {
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1rem;
             text-align: center;
             cursor: pointer;
@@ -401,11 +390,44 @@
         .product-card h3 {
             margin: 1rem 0 0.5rem;
             font-size: 1rem;
+            color: #fff;
         }
         
         .product-card p {
             color: #60a5fa;
             font-weight: bold;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        
+        .btn, .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .btn:hover, .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
         .section-footer {
@@ -443,7 +465,7 @@
         }
         
         .footer-links a {
-            color: #94a3b8;
+            color: #cbd5e1;
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -457,7 +479,7 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.5rem;
-            color: #94a3b8;
+            color: #cbd5e1;
         }
         
         .social-links {
@@ -477,6 +499,7 @@
             color: white;
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.3);
+            text-decoration: none;
         }
         
         .social-link:hover {
@@ -510,38 +533,16 @@
             z-index: 100;
         }
         
+        .back-to-top.show {
+            display: flex;
+        }
+        
         .back-to-top:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        .back-to-top.show {
-            display: flex;
-        }
-        
-        .hero-badge {
-            display: inline-block;
-            background: rgba(37, 99, 235, 0.2);
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-        }
-        
-        .beta-badge {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            font-size: 0.6rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            margin-left: 0.3rem;
-            color: white;
-        }
-        
-        .hero-buttons {
-            margin-top: 2rem;
-        }
-        
-        /* Modal */
+        /* Модалка */
         .modal {
             display: none;
             position: fixed;
@@ -569,7 +570,7 @@
             cursor: pointer;
             background: none;
             border: none;
-            color: #94a3b8;
+            color: #cbd5e1;
         }
         
         .close-modal:hover {
@@ -583,7 +584,7 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #94a3b8;
+            color: #cbd5e1;
         }
         
         .form-group input {
@@ -595,81 +596,95 @@
             color: #fff;
         }
         
+        .hero-buttons {
+            margin-top: 2rem;
+        }
+        
+        .lead {
+            color: #cbd5e1;
+        }
+        
+        .text-secondary {
+            color: #cbd5e1 !important;
+        }
+        
+        .py-5 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .pt-5 {
+            padding-top: 3rem;
+        }
+        
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+        
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        
         @media (max-width: 768px) {
             .poster-slide {
                 height: 400px;
             }
-            
             .poster-overlay {
                 padding: 2rem;
             }
-            
             .poster-title {
                 font-size: 1.8rem;
             }
-            
-            .poster-description {
-                font-size: 1rem;
-            }
-            
             .swiper-button-prev,
             .swiper-button-next {
                 display: none;
             }
-            
             .tracking-btn-main span {
                 display: none;
             }
-            
             .tracking-btn-main {
                 padding: 0.6rem 1rem;
             }
         }
+        
+        .container-custom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
     </style>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('SW registered:', reg))
+                    .catch(err => console.log('SW error:', err));
+            });
+        }
+    </script>
 </head>
 <body>
 
-<!-- Header с Bootstrap Navbar (гамбургер на телефоне / горизонтальный на компе) -->
+<!-- Навбар -->
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
         <a class="navbar-brand" href="index.html">GGPoint</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">
-                        <i class="fas fa-home"></i> Главная
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="catalog.html">
-                        <i class="fas fa-th-large"></i> Каталог
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="keycaps.html">
-                        <i class="fas fa-keyboard"></i> Кейкапы
-                        <span class="beta-badge">Новинка</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pads.html">
-                        <i class="fas fa-mouse-pointer"></i> Коврики
-                        <span class="beta-badge">Новинка</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">
-                        <i class="fas fa-info-circle"></i> О нас
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contacts.html">
-                        <i class="fas fa-phone"></i> Контакты
-                    </a>
-                </li>
+                <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="catalog.html"><i class="fas fa-th-large"></i> Каталог</a></li>
+                <li class="nav-item"><a class="nav-link" href="keycaps.html"><i class="fas fa-keyboard"></i> Кейкапы <span class="beta-badge">Новинка</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="pads.html"><i class="fas fa-mouse-pointer"></i> Коврики <span class="beta-badge">Новинка</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html"><i class="fas fa-info-circle"></i> О нас</a></li>
+                <li class="nav-item"><a class="nav-link" href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
             </ul>
             <div class="d-flex">
                 <button class="tracking-btn-main" id="trackingBtn">
@@ -681,153 +696,165 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8 text-center">
-                <span class="hero-badge">🔥 Официальный каталог сайт</span>
-                <h1>GGPoint – <span>игровая периферия</span> премиум-класса</h1>
-                <p class="lead">Оригинальные товары по лучшим ценам. Быстрая доставка по Ташкенту и Узбекистану.</p>
-                <div class="hero-buttons">
-                    <a href="catalog.html" class="btn btn-primary">
-                        <i class="fas fa-shopping-bag"></i> Перейти в каталог
+<!-- MAIN -->
+<main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8 text-center">
+                    <span class="hero-badge">🔥 Официальный каталог</span>
+                    <h1>GGPoint – <span>игровая периферия</span> премиум-класса</h1>
+                    <p class="lead">Оригинальные товары по лучшим ценам. Быстрая доставка по Ташкенту и Узбекистану.</p>
+                    <div class="hero-buttons">
+                        <a href="catalog.html" class="btn btn-primary">
+                            <i class="fas fa-shopping-bag"></i> Перейти в каталог
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Постеры -->
+    <section class="posters-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Акции и новинки</h2>
+                <p class="section-subtitle">Специальные предложения для вас</p>
+            </div>
+            <div class="swiper postersSwiper">
+                <div class="swiper-wrapper" id="postersContainer">
+                    <div class="swiper-slide">
+                        <div class="poster-slide">
+                            <img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image" alt="GGPoint" loading="lazy">
+                            <div class="poster-overlay">
+                                <h2 class="poster-title">Добро пожаловать в GGPoint!</h2>
+                                <p class="poster-description">Лучшая игровая периферия в Узбекистане</p>
+                                <a href="catalog.html" class="poster-btn">Перейти в каталог <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Категории -->
+    <section class="categories py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Популярные категории</h2>
+                <p class="section-subtitle">Выберите то, что вам нужно</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                    <div class="category-card" data-category="мышь">
+                        <div class="category-icon"><i class="fas fa-mouse"></i></div>
+                        <h3 class="category-name">Игровые мыши</h3>
+                        <a href="catalog.html?category=мышь" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                    <div class="category-card" data-category="клавиатура">
+                        <div class="category-icon"><i class="fas fa-keyboard"></i></div>
+                        <h3 class="category-name">Клавиатуры</h3>
+                        <a href="catalog.html?category=клавиатура" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                    <div class="category-card" data-category="наушники">
+                        <div class="category-icon"><i class="fas fa-headphones"></i></div>
+                        <h3 class="category-name">Наушники</h3>
+                        <a href="catalog.html?category=наушники" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                    <div class="category-card" data-category="монитор">
+                        <div class="category-icon"><i class="fas fa-desktop"></i></div>
+                        <h3 class="category-name">Мониторы</h3>
+                        <a href="catalog.html?category=монитор" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                    <div class="category-card" data-category="keycaps">
+                        <div class="category-icon"><i class="fas fa-keyboard"></i></div>
+                        <h3 class="category-name">Кейкапы</h3>
+                        <a href="keycaps.html" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- НОВИНКИ - загружаются из Firebase -->
+    <section class="new-products-section py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Новинки</h2>
+                <p class="section-subtitle">Самые свежие поступления</p>
+            </div>
+            <div class="row g-4" id="newProductsGrid">
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                    <p class="text-secondary mt-2">Загрузка новинок...</p>
+                </div>
+            </div>
+            <div class="section-footer">
+                <a href="catalog.html?sort=newest" class="btn btn-primary">Все новинки <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="features-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Гарантия качества</h4>
+                        <p>Все товары оригинальные и имеют официальную гарантию</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
+                        <h4>Быстрая доставка</h4>
+                        <p>Доставляем по Ташкенту за 24 часа, по Узбекистану за 3 дня</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                        <h4>Поддержка 24/7</h4>
+                        <p>Мы всегда на связи и готовы помочь с выбором</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8 text-center">
+                    <h2>Не нашли то, что искали?</h2>
+                    <p class="mb-4">Свяжитесь с нами, и мы поможем подобрать идеальный товар под ваш бюджет</p>
+                    <a href="contacts.html" class="btn btn-primary">
+                        <i class="fas fa-headset"></i> Связаться с нами
                     </a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
-<!-- Секция с постерами -->
-<section class="posters-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Акции и новинки</h2>
-            <p class="section-subtitle">Специальные предложения для вас</p>
-        </div>
-        
-        <div class="swiper postersSwiper">
-            <div class="swiper-wrapper" id="postersContainer"></div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
-</section>
-
-<!-- Категории (адаптивная сетка Bootstrap) -->
-<section class="categories py-5">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Популярные категории</h2>
-            <p class="section-subtitle">Выберите то, что вам нужно</p>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                <div class="category-card" data-category="мышь">
-                    <div class="category-icon"><i class="fas fa-mouse"></i></div>
-                    <h3 class="category-name">Игровые мыши</h3>
-                    <a href="catalog.html?category=мышь" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                <div class="category-card" data-category="клавиатура">
-                    <div class="category-icon"><i class="fas fa-keyboard"></i></div>
-                    <h3 class="category-name">Клавиатуры</h3>
-                    <a href="catalog.html?category=клавиатура" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                <div class="category-card" data-category="наушники">
-                    <div class="category-icon"><i class="fas fa-headphones"></i></div>
-                    <h3 class="category-name">Наушники</h3>
-                    <a href="catalog.html?category=наушники" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                <div class="category-card" data-category="монитор">
-                    <div class="category-icon"><i class="fas fa-desktop"></i></div>
-                    <h3 class="category-name">Мониторы</h3>
-                    <a href="catalog.html?category=монитор" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                <div class="category-card" data-category="keycaps">
-                    <div class="category-icon"><i class="fas fa-keyboard"></i></div>
-                    <h3 class="category-name">Кейкапы</h3>
-                    <a href="keycaps.html" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Новинки (сетка Bootstrap) -->
-<section class="new-products-section py-5">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Новинки</h2>
-            <p class="section-subtitle">Самые свежие поступления</p>
-        </div>
-        <div class="row g-4" id="newProductsGrid">
-            <div class="col-12 text-center py-5">
-                <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
-                <p class="text-secondary mt-2">Загрузка новинок...</p>
-            </div>
-        </div>
-        <div class="section-footer">
-            <a href="catalog.html?sort=newest" class="btn btn-primary">Все новинки <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-</section>
-
-<!-- Преимущества (сетка Bootstrap) -->
-<section class="features-section py-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h4>Гарантия качества</h4>
-                    <p>Все товары оригинальные и имеют официальную гарантию</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
-                    <h4>Быстрая доставка</h4>
-                    <p>Доставляем по Ташкенту за 24 часа, по Узбекистану за 3 дня</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                    <h4>Поддержка 24/7</h4>
-                    <p>Мы всегда на связи и готовы помочь с выбором</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA секция -->
-<section class="cta-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8 text-center">
-                <h2>Не нашли то, что искали?</h2>
-                <p class="mb-4">Свяжитесь с нами, и мы поможем подобрать идеальный товар под ваш бюджет</p>
-                <a href="contacts.html" class="btn btn-primary">
-                    <i class="fas fa-headset"></i> Связаться с нами
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Footer (сетка Bootstrap) -->
+<!-- Футер -->
 <footer class="pt-5">
     <div class="container">
         <div class="row g-4">
@@ -873,7 +900,7 @@
                     <h4>Контакты</h4>
                     <div class="contact-info">
                         <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
-                        <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank" style="color:#94a3b8; text-decoration:none;">@GGPointUz</a></span></div>
+                        <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div>
                         <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Ташкент, Узбекистан</span></div>
                         <div class="contact-item"><i class="fas fa-clock"></i><span>Ежедневно 10:00 - 22:00</span></div>
                     </div>
@@ -888,11 +915,11 @@
 
 <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
 
-<!-- Модальное окно для входа в админку -->
+<!-- Модалка админа -->
 <div class="modal" id="adminLoginModal">
     <div class="modal-content">
         <button class="close-modal" id="closeAdminModal">&times;</button>
-        <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
+        <h2>Вход в админ-панель</h2>
         <form id="adminLoginForm">
             <div class="form-group">
                 <label for="adminLogin">Логин</label>
@@ -909,10 +936,11 @@
     </div>
 </div>
 
-<!-- Bootstrap JS + Popper (для гамбургера) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
+<!-- FIREBASE - полный рабочий код -->
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
     import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
@@ -930,6 +958,17 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Загрузка постеров
     const postersRef = ref(database, 'posters');
     onValue(postersRef, (snapshot) => {
         const data = snapshot.val();
@@ -939,12 +978,12 @@
         if (!container) return;
         
         if (posters.length === 0) {
-            container.innerHTML = `<div class="swiper-slide"><div class="poster-slide"><img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image"><div class="poster-overlay"><h2 class="poster-title">Добро пожаловать в GGPoint!</h2><p class="poster-description">Скоро здесь появятся акции и новинки</p><a href="catalog.html" class="poster-btn">Перейти в каталог <i class="fas fa-arrow-right"></i></a></div></div></div>`;
+            container.innerHTML = `<div class="swiper-slide"><div class="poster-slide"><img src="https://via.placeholder.com/1400x500/1e293b/2563eb?text=GGPoint" class="poster-image" alt="Добро пожаловать" loading="lazy"><div class="poster-overlay"><h2 class="poster-title">Добро пожаловать в GGPoint!</h2><p class="poster-description">Скоро здесь появятся акции</p><a href="catalog.html" class="poster-btn">Перейти в каталог <i class="fas fa-arrow-right"></i></a></div></div></div>`;
         } else {
             container.innerHTML = posters.map(poster => `
                 <div class="swiper-slide">
                     <div class="poster-slide">
-                        <img src="${poster.imageUrl}" class="poster-image img-fluid" alt="${escapeHtml(poster.title)}" onerror="this.src='https://via.placeholder.com/1400x500/1e293b/2563eb?text=Ошибка'">
+                        <img src="${poster.imageUrl}" class="poster-image" alt="${escapeHtml(poster.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/1400x500/1e293b/2563eb?text=Ошибка'">
                         <div class="poster-overlay">
                             <h2 class="poster-title">${escapeHtml(poster.title)}</h2>
                             ${poster.description ? `<p class="poster-description">${escapeHtml(poster.description)}</p>` : ''}
@@ -954,6 +993,8 @@
                 </div>
             `).join('');
         }
+        
+        // Инициализация Swiper после загрузки постеров
         setTimeout(() => {
             new Swiper('.postersSwiper', {
                 loop: true,
@@ -964,6 +1005,7 @@
         }, 100);
     });
 
+    // ЗАГРУЗКА НОВИНОК из Firebase
     const productsRef = ref(database, 'products');
     onValue(productsRef, (snapshot) => {
         const data = snapshot.val();
@@ -971,13 +1013,14 @@
         const newest = [...products].sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0)).slice(0, 4);
         const container = document.getElementById('newProductsGrid');
         if (!container) return;
+        
         if (newest.length === 0) {
             container.innerHTML = '<div class="col-12 text-center py-5 text-secondary">Новинок пока нет</div>';
         } else {
             container.innerHTML = newest.map(product => `
                 <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                     <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
-                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/1e293b/2563eb?text=Нет+фото'}" alt="${escapeHtml(product.name)}" class="img-fluid">
+                        <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/1e293b/2563eb?text=Нет+фото'}" alt="${escapeHtml(product.name)}" class="img-fluid" loading="lazy">
                         <h3>${escapeHtml(product.name)}</h3>
                         <p>${product.price}</p>
                     </div>
@@ -985,21 +1028,35 @@
             `).join('');
         }
     });
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
 </script>
 
 <script>
     // Кнопка отслеживания
     document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+    
+    // Кнопка наверх
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
+        }
+    });
+    backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
+    // Категории кликабельные
+    document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', (e) => { 
+            if (e.target.tagName !== 'A') { 
+                const link = card.querySelector('.category-link'); 
+                if (link) window.location.href = link.href; 
+            } 
+        });
+    });
+    
+    // lazy loading для всех изображений
+    document.querySelectorAll('img:not([loading])').forEach(img => img.setAttribute('loading', 'lazy'));
     
     // Скрытый вход в админку (Ctrl + тройной клик)
     let ctrlClickCount = 0;
@@ -1054,27 +1111,6 @@
             }
         });
     }
-    
-    // Кнопка наверх
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTop.classList.add('show');
-        } else {
-            backToTop.classList.remove('show');
-        }
-    });
-    backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    
-    // Категории
-    document.querySelectorAll('.category-card').forEach(card => {
-        card.addEventListener('click', (e) => { 
-            if (e.target.tagName !== 'A') { 
-                const link = card.querySelector('.category-link'); 
-                if (link) window.location.href = link.href; 
-            } 
-        });
-    });
 </script>
 </body>
 </html>
