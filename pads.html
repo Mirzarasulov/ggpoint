@@ -2,48 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    
-    <!-- 🔥 Preconnect для ускорения -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.gstatic.com">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    
-    <!-- 🔥 Preload шрифта -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO -->
-    <title>Игровые коврики - GGPoint | Каталог ковриков для мыши</title>
-    <meta name="description" content="Игровые коврики для мыши. Различные размеры и дизайны. Высокое качество материалов. Быстрая доставка по Ташкенту.">
-    <meta name="keywords" content="игровые коврики, коврики для мыши, gaming pad, Ташкент, GGPoint">
+    <title>Игровые коврики - GGPoint</title>
+    <meta name="description" content="Игровые коврики для мыши. Различные размеры и дизайны. Высокое качество материалов.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     
-    <!-- 🔥 Асинхронная загрузка Bootstrap CSS -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"></noscript>
-    
-    <!-- 🔥 Асинхронная загрузка Font Awesome -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    
-    <!-- 🔥 Service Worker -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW error:', err));
-            });
-        }
-    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ВСЕ ВАШИ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ */
         * {
             margin: 0;
             padding: 0;
@@ -64,46 +36,52 @@
             --card-bg: #1e293b;
             --dark-bg: #0f172a;
             --text-light: #f1f5f9;
-            --text-gray: #cbd5e1;
+            --text-gray: #94a3b8;
         }
         
-        /* Навбар Bootstrap — кастомизация */
-        .navbar {
+        /* Header */
+        header {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             border-bottom: 1px solid rgba(37, 99, 235, 0.3);
-            padding: 1rem 0;
         }
         
-        .navbar-brand {
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo a {
             font-size: 1.8rem;
             font-weight: 800;
+            text-decoration: none;
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
-        .navbar-nav {
-            gap: 0.5rem;
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
         }
         
         .nav-link {
-            color: #fff !important;
+            color: #fff;
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
             font-weight: 500;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-        }
-        
-        @media (min-width: 992px) {
-            .nav-link {
-                padding: 0.8rem 1.2rem;
-                font-size: 1rem;
-            }
         }
         
         .nav-link:hover,
@@ -112,26 +90,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-color: rgba(37, 99, 235, 0.1);
-        }
-        
-        /* Яркая кнопка-гамбургер */
-        .navbar-toggler {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border: none;
-            padding: 0.6rem 0.9rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.5);
-        }
-        
-        .navbar-toggler:focus {
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.6);
-            outline: none;
-        }
-        
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-            filter: brightness(0) invert(1);
         }
         
         .beta-badge {
@@ -140,15 +98,20 @@
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
             margin-left: 0.3rem;
-            color: white;
         }
         
-        /* Кнопка отслеживания */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Единый стиль для кнопки отслеживания */
         .tracking-btn-main {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             color: #fff;
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
@@ -157,14 +120,7 @@
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        @media (min-width: 992px) {
-            .tracking-btn-main {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
+            font-size: 1rem;
         }
         
         .tracking-btn-main:hover {
@@ -172,10 +128,19 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
+        /* Кнопка-шестеренка УДАЛЕНА - больше не используется */
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
         /* Pads Header */
         .pads-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 4rem 0;
+            padding: 4rem 2rem;
             text-align: center;
             color: white;
             margin-bottom: 2rem;
@@ -203,6 +168,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Catalog Layout */
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
         /* Sidebar */
         .catalog-sidebar {
             background: rgba(30, 41, 59, 0.3);
@@ -210,6 +183,9 @@
             border-radius: 16px;
             padding: 1.5rem;
             border: 1px solid rgba(37, 99, 235, 0.2);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
         }
         
         .filters-header {
@@ -411,10 +387,16 @@
         
         .products-count {
             margin-bottom: 1rem;
-            color: #cbd5e1;
+            color: #94a3b8;
         }
         
-        /* Pad Card */
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
         .pad-card {
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(10px);
@@ -423,7 +405,6 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
-            height: 100%;
         }
         
         .pad-card:hover {
@@ -531,7 +512,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #cbd5e1;
+            color: #94a3b8;
             font-size: 0.85rem;
         }
         
@@ -541,6 +522,7 @@
         }
         
         .no-products {
+            grid-column: 1/-1;
             text-align: center;
             padding: 3rem;
             background: rgba(30, 41, 59, 0.5);
@@ -550,7 +532,7 @@
         
         .no-products i {
             font-size: 3rem;
-            color: #cbd5e1;
+            color: #94a3b8;
             margin-bottom: 1rem;
         }
         
@@ -560,13 +542,21 @@
         }
         
         .no-products p {
-            color: #cbd5e1;
+            color: #94a3b8;
         }
         
         .loader {
             text-align: center;
             padding: 3rem;
-            color: #cbd5e1;
+            color: #94a3b8;
+            grid-column: 1/-1;
+        }
+        
+        .loader:before {
+            content: "⏳";
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 1rem;
         }
         
         /* Modal */
@@ -597,7 +587,7 @@
             cursor: pointer;
             background: none;
             border: none;
-            color: #cbd5e1;
+            color: #94a3b8;
         }
         
         .close-modal:hover {
@@ -611,7 +601,7 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #cbd5e1;
+            color: #94a3b8;
         }
         
         .form-group input {
@@ -647,6 +637,15 @@
             margin-top: 3rem;
         }
         
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
         .footer-section h3 {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             -webkit-background-clip: text;
@@ -663,7 +662,6 @@
         
         .footer-section ul {
             list-style: none;
-            padding-left: 0;
         }
         
         .footer-section ul li {
@@ -671,7 +669,7 @@
         }
         
         .footer-section ul li a {
-            color: #cbd5e1;
+            color: #94a3b8;
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -685,11 +683,11 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.5rem;
-            color: #cbd5e1;
+            color: #94a3b8;
         }
         
         .contact-item a {
-            color: #cbd5e1;
+            color: #94a3b8;
             text-decoration: none;
         }
         
@@ -851,74 +849,15 @@
             backdrop-filter: blur(5px);
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        
-        .py-4 {
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-        
-        .pt-5 {
-            padding-top: 3rem;
-        }
-        
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
-        
-        .mt-4 {
-            margin-top: 1.5rem;
-        }
-        
-        .mb-0 {
-            margin-bottom: 0;
-        }
-        
-        .g-4 {
-            gap: 1.5rem;
-        }
-        
-        .col-12 {
-            flex: 0 0 auto;
-            width: 100%;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        @media (min-width: 768px) {
-            .col-md-6 {
-                flex: 0 0 auto;
-                width: 50%;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .col-lg-3 {
-                flex: 0 0 auto;
-                width: 25%;
-            }
-            .col-lg-4 {
-                flex: 0 0 auto;
-                width: 33.333%;
-            }
-            .col-lg-9 {
-                flex: 0 0 auto;
-                width: 75%;
-            }
-        }
-        
         @media (max-width: 768px) {
+            .catalog-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .catalog-sidebar {
+                position: static;
+            }
+            
             .catalog-toolbar {
                 flex-direction: column;
             }
@@ -939,12 +878,16 @@
                 padding: 0.6rem 1rem;
             }
             
-            .navbar-nav .nav-link {
-                padding: 0.8rem 0;
+            .nav-list {
+                gap: 1rem;
+            }
+            
+            .nav-text {
+                font-size: 0.9rem;
             }
             
             .pads-header {
-                padding: 2rem 0;
+                padding: 2rem 1rem;
             }
             
             .pads-header h1 {
@@ -965,70 +908,69 @@
                 height: 40px;
                 font-size: 1.2rem;
             }
-            
-            .container {
-                padding: 0 1rem;
-            }
         }
     </style>
 </head>
 <body>
-
-<!-- Bootstrap Navbar с гамбургером -->
-<nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">GGPoint</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <i class="fas fa-home"></i> Главная
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="catalog.html">
-                        <i class="fas fa-th-large"></i> Каталог
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="keycaps.html">
-                        <i class="fas fa-keyboard"></i> Кейкапы
-                        <span class="beta-badge">Коллекция</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="pads.html">
-                        <i class="fas fa-mouse-pointer"></i> Коврики
-                        <span class="beta-badge">Новинка</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">
-                        <i class="fas fa-info-circle"></i> О нас
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contacts.html">
-                        <i class="fas fa-phone"></i> Контакты
-                    </a>
-                </li>
-            </ul>
-            <div class="d-flex">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">GGPoint</a>
+            </div>
+            
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">Главная</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="catalog.html" class="nav-link">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Каталог</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="keycaps.html" class="nav-link">
+                            <i class="fas fa-keyboard"></i>
+                            <span class="nav-text">Кейкапы</span>
+                            <span class="beta-badge">Коллекция</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pads.html" class="nav-link active">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <span class="nav-text">Коврики</span>
+                            <span class="beta-badge">Новинка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="nav-text">О нас</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacts.html" class="nav-link">
+                            <i class="fas fa-phone"></i>
+                            <span class="nav-text">Контакты</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
                 <button class="tracking-btn-main" id="trackingBtn">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
                 </button>
+                <!-- Кнопка-шестеренка УДАЛЕНА -->
             </div>
         </div>
-    </div>
-</nav>
+    </header>
 
-<!-- MAIN ориентир 🔥 ДОБАВЛЕНО -->
-<main id="main-content">
-    <!-- Hero секция -->
     <div class="pads-header">
         <div class="container">
             <h1>Игровые коврики</h1>
@@ -1036,91 +978,86 @@
         </div>
     </div>
 
-    <!-- Catalog Section с Bootstrap сеткой -->
-    <section class="catalog-section py-4">
+    <section class="catalog-section">
         <div class="container">
-            <div class="row g-4">
-                <!-- Sidebar Filters -->
-                <div class="col-12 col-lg-3">
-                    <aside class="catalog-sidebar">
-                        <div class="filters-header">
-                            <h3>Фильтры</h3>
-                            <button class="clear-filters" id="clearFilters">
-                                <i class="fas fa-times"></i> Сбросить
-                            </button>
+            <div class="catalog-layout">
+                <aside class="catalog-sidebar">
+                    <div class="filters-header">
+                        <h3>Фильтры</h3>
+                        <button class="clear-filters" id="clearFilters">
+                            <i class="fas fa-times"></i> Сбросить
+                        </button>
+                    </div>
+                    
+                    <div class="active-filters" id="activeFilters"></div>
+                    
+                    <div class="filter-block">
+                        <h4 class="filter-title">
+                            <i class="fas fa-expand-alt"></i>
+                            Размер (мм)
+                        </h4>
+                        <div class="size-filter-group" id="sizeFilters">
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="small">
+                                <span>Малые (до 300x250)</span>
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="medium">
+                                <span>Средние (300x250 - 400x350)</span>
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="large">
+                                <span>Большие (400x350 - 500x450)</span>
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="xl">
+                                <span>XL (500x450 - 900x450)</span>
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="xxl">
+                                <span>XXL (900x450 и более)</span>
+                            </label>
                         </div>
-                        
-                        <div class="active-filters" id="activeFilters"></div>
-                        
-                        <div class="filter-block">
-                            <h4 class="filter-title">
-                                <i class="fas fa-expand-alt"></i>
-                                Размер (мм)
-                            </h4>
-                            <div class="size-filter-group" id="sizeFilters">
-                                <label class="size-checkbox">
-                                    <input type="checkbox" value="small">
-                                    <span>Малые (до 300x250)</span>
-                                </label>
-                                <label class="size-checkbox">
-                                    <input type="checkbox" value="medium">
-                                    <span>Средние (300x250 - 400x350)</span>
-                                </label>
-                                <label class="size-checkbox">
-                                    <input type="checkbox" value="large">
-                                    <span>Большие (400x350 - 500x450)</span>
-                                </label>
-                                <label class="size-checkbox">
-                                    <input type="checkbox" value="xl">
-                                    <span>XL (500x450 - 900x450)</span>
-                                </label>
-                                <label class="size-checkbox">
-                                    <input type="checkbox" value="xxl">
-                                    <span>XXL (900x450 и более)</span>
-                                </label>
-                            </div>
+                    </div>
+                    
+                    <div class="filter-block">
+                        <h4 class="filter-title">
+                            <i class="fas fa-layer-group"></i>
+                            Материал
+                        </h4>
+                        <div class="filter-options" id="materialFilters">
+                            <label class="filter-option">
+                                <input type="checkbox" value="cloth">
+                                <span>Тканевый</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="hybrid">
+                                <span>Гибридный</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" value="hard">
+                                <span>Жесткий</span>
+                            </label>
                         </div>
-                        
-                        <div class="filter-block">
-                            <h4 class="filter-title">
-                                <i class="fas fa-layer-group"></i>
-                                Материал
-                            </h4>
-                            <div class="filter-options" id="materialFilters">
-                                <label class="filter-option">
-                                    <input type="checkbox" value="cloth">
-                                    <span>Тканевый</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" value="hybrid">
-                                    <span>Гибридный</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" value="hard">
-                                    <span>Жесткий</span>
-                                </label>
-                            </div>
+                    </div>
+                    
+                    <div class="filter-block">
+                        <h4 class="filter-title">
+                            <i class="fas fa-dollar-sign"></i>
+                            Цена
+                        </h4>
+                        <div class="price-inputs">
+                            <input type="number" id="minPrice" placeholder="От" min="0">
+                            <span>-</span>
+                            <input type="number" id="maxPrice" placeholder="До" min="0">
                         </div>
-                        
-                        <div class="filter-block">
-                            <h4 class="filter-title">
-                                <i class="fas fa-dollar-sign"></i>
-                                Цена
-                            </h4>
-                            <div class="price-inputs">
-                                <input type="number" id="minPrice" placeholder="От" min="0">
-                                <span>-</span>
-                                <input type="number" id="maxPrice" placeholder="До" min="0">
-                            </div>
-                            <button class="apply-price-btn" id="applyPriceFilter">
-                                Применить
-                            </button>
-                        </div>
-                    </aside>
-                </div>
+                        <button class="apply-price-btn" id="applyPriceFilter">
+                            Применить
+                        </button>
+                    </div>
+                </aside>
                 
-                <!-- Main Content -->
-                <div class="col-12 col-lg-9">
+                <div class="catalog-main">
                     <div class="catalog-toolbar">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
@@ -1140,547 +1077,513 @@
                     
                     <div class="products-count" id="productsCount">Загрузка...</div>
                     
-                    <div class="row g-4" id="padsGrid">
-                        <div class="col-12 text-center py-5">
-                            <div class="loader">
-                                <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
-                                <p class="mt-2">Загрузка ковриков...</p>
-                            </div>
-                        </div>
+                    <div class="products-grid" id="padsGrid">
+                        <div class="loader"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-</main>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
-    <div class="lightbox-content">
-        <img class="lightbox-image" id="lightboxImage" src="" alt="" onclick="toggleZoom()">
-        <button class="lightbox-close" onclick="closeLightbox()">×</button>
-        <div class="lightbox-nav">
-            <button class="lightbox-nav-btn" onclick="event.stopPropagation(); prevImage()">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="lightbox-nav-btn" onclick="event.stopPropagation(); nextImage()">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
-        <div class="zoom-hint">
-            <i class="fas fa-search-plus"></i>
-            <span>Клик для увеличения</span>
+    <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+        <div class="lightbox-content">
+            <img class="lightbox-image" id="lightboxImage" src="" alt="" onclick="toggleZoom()">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <div class="lightbox-nav">
+                <button class="lightbox-nav-btn" onclick="event.stopPropagation(); prevImage()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="lightbox-nav-btn" onclick="event.stopPropagation(); nextImage()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+            <div class="zoom-hint">
+                <i class="fas fa-search-plus"></i>
+                <span>Клик для увеличения</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Модальное окно для входа в админку -->
-<div class="modal" id="adminLoginModal">
-    <div class="modal-content">
-        <button class="close-modal" id="closeAdminModal">&times;</button>
-        <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
-        <form id="adminLoginForm">
-            <div class="form-group">
-                <label for="adminLogin">Логин</label>
-                <input type="text" id="adminLogin" required placeholder="Введите логин">
-            </div>
-            <div class="form-group">
-                <label for="adminPassword">Пароль</label>
-                <input type="password" id="adminPassword" required placeholder="Введите пароль">
-            </div>
-            <button type="submit" class="btn-primary">
-                <i class="fas fa-sign-in-alt"></i> Войти
-            </button>
-        </form>
+    <!-- Модальное окно для входа в админку -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminLogin">Логин</label>
+                    <input type="text" id="adminLogin" required placeholder="Введите логин">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Пароль</label>
+                    <input type="password" id="adminPassword" required placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- Footer с Bootstrap сеткой -->
-<footer class="pt-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="footer-section">
-                    <h3>GGPoint</h3>
-                    <p>Ваш надежный магазин игровой периферии в Узбекистане.</p>
-                    <div class="social-links">
-                        <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
-                            <i class="fab fa-telegram"></i>
-                        </a>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GGPoint</h3>
+                <p>Ваш надежный магазин игровой периферии в Узбекистане.</p>
+                <div class="social-links">
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+998 97 747 0157</span>
                     </div>
-                </div>
-            </div>
-            
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="footer-section">
-                    <h4>Навигация</h4>
-                    <ul>
-                        <li><a href="index.html">Главная</a></li>
-                        <li><a href="catalog.html">Каталог</a></li>
-                        <li><a href="keycaps.html">Кейкапы</a></li>
-                        <li><a href="pads.html">Коврики</a></li>
-                        <li><a href="about.html">О нас</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="footer-section">
-                    <h4>Контакты</h4>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+998 97 747 0157</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-telegram"></i>
-                            <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
-                        </div>
+                    <div class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="footer-bottom mt-4">
-        <p class="mb-0">&copy; 2025 GGPoint. Все права защищены.</p>
-    </div>
-</footer>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 GGPoint. Все права защищены.</p>
+        </div>
+    </footer>
 
-<!-- 🔥 Bootstrap JS + Popper (defer) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-    import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+            authDomain: "ggpoint-shop.firebaseapp.com",
+            databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+            projectId: "ggpoint-shop",
+            storageBucket: "ggpoint-shop.firebasestorage.app",
+            messagingSenderId: "182227173652",
+            appId: "1:182227173652:web:0949e2edae9900afd98201"
+        };
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
-        authDomain: "ggpoint-shop.firebaseapp.com",
-        databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
-        projectId: "ggpoint-shop",
-        storageBucket: "ggpoint-shop.firebasestorage.app",
-        messagingSenderId: "182227173652",
-        appId: "1:182227173652:web:0949e2edae9900afd98201"
-    };
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
+        let pads = [];
+        let filteredPads = [];
+        let currentImageList = [];
+        let currentImageIndex = 0;
+        let isZoomed = false;
 
-    let pads = [];
-    let filteredPads = [];
-    let currentImageList = [];
-    let currentImageIndex = 0;
-    let isZoomed = false;
-
-    function loadPads() {
-        const productsRef = ref(database, 'products');
-        onValue(productsRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                pads = Object.values(data).filter(product => product.category === 'pads');
-                console.log('Загружено ковриков:', pads.length);
-            } else {
-                pads = [];
-            }
-            applyFilters();
-        }, (error) => {
-            console.error('Ошибка загрузки:', error);
-            const grid = document.getElementById('padsGrid');
-            if (grid) {
-                grid.innerHTML = `
-                    <div class="col-12">
-                        <div class="no-products">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <h3>Ошибка загрузки</h3>
-                            <p>Не удалось загрузить данные. Проверьте подключение к интернету.</p>
-                        </div>
+        function loadPads() {
+            const productsRef = ref(database, 'products');
+            onValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    pads = Object.values(data).filter(product => product.category === 'pads');
+                    console.log('Загружено ковриков:', pads.length);
+                } else {
+                    pads = [];
+                }
+                applyFilters();
+            }, (error) => {
+                console.error('Ошибка загрузки:', error);
+                document.getElementById('padsGrid').innerHTML = `
+                    <div class="no-products">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Ошибка загрузки</h3>
+                        <p>Не удалось загрузить данные. Проверьте подключение к интернету.</p>
                     </div>
                 `;
+            });
+        }
+
+        function getSizeCategory(width, height) {
+            if (width <= 300 && height <= 250) return 'small';
+            if (width <= 400 && height <= 350) return 'medium';
+            if (width <= 500 && height <= 450) return 'large';
+            if (width <= 900 && height <= 450) return 'xl';
+            return 'xxl';
+        }
+
+        function parsePrice(priceStr) {
+            if (!priceStr) return 0;
+            if (typeof priceStr === 'number') return priceStr;
+            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
+        }
+
+        function formatPrice(price) {
+            return price.toLocaleString() + ' UZS';
+        }
+
+        function getMaterialName(material) {
+            const materials = {
+                'cloth': 'Тканевый',
+                'hybrid': 'Гибридный',
+                'hard': 'Жесткий'
+            };
+            return materials[material] || material || 'Не указан';
+        }
+
+        function applyFilters() {
+            if (!pads.length) {
+                filteredPads = [];
+                updateProductsCount();
+                renderPads();
+                return;
             }
-        });
-    }
-
-    function getSizeCategory(width, height) {
-        if (width <= 300 && height <= 250) return 'small';
-        if (width <= 400 && height <= 350) return 'medium';
-        if (width <= 500 && height <= 450) return 'large';
-        if (width <= 900 && height <= 450) return 'xl';
-        return 'xxl';
-    }
-
-    function parsePrice(priceStr) {
-        if (!priceStr) return 0;
-        if (typeof priceStr === 'number') return priceStr;
-        return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
-    }
-
-    function formatPrice(price) {
-        return price.toLocaleString() + ' UZS';
-    }
-
-    function getMaterialName(material) {
-        const materials = {
-            'cloth': 'Тканевый',
-            'hybrid': 'Гибридный',
-            'hard': 'Жесткий'
-        };
-        return materials[material] || material || 'Не указан';
-    }
-
-    function applyFilters() {
-        if (!pads.length) {
-            filteredPads = [];
+            
+            let filtered = [...pads];
+            
+            const selectedSizes = Array.from(document.querySelectorAll('#sizeFilters input:checked')).map(cb => cb.value);
+            if (selectedSizes.length > 0) {
+                filtered = filtered.filter(pad => {
+                    if (pad.sizes && pad.sizes.length > 0) {
+                        return pad.sizes.some(size => {
+                            const sizeCat = getSizeCategory(size.width, size.height);
+                            return selectedSizes.includes(sizeCat);
+                        });
+                    }
+                    return true;
+                });
+            }
+            
+            const selectedMaterials = Array.from(document.querySelectorAll('#materialFilters input:checked')).map(cb => cb.value);
+            if (selectedMaterials.length > 0) {
+                filtered = filtered.filter(pad => pad.material && selectedMaterials.includes(pad.material));
+            }
+            
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            
+            if (minPrice || maxPrice) {
+                filtered = filtered.filter(pad => {
+                    const priceValue = parsePrice(pad.price);
+                    if (minPrice && maxPrice) {
+                        return priceValue >= parsePrice(minPrice) && priceValue <= parsePrice(maxPrice);
+                    } else if (minPrice) {
+                        return priceValue >= parsePrice(minPrice);
+                    } else if (maxPrice) {
+                        return priceValue <= parsePrice(maxPrice);
+                    }
+                    return true;
+                });
+            }
+            
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            if (searchQuery) {
+                filtered = filtered.filter(pad => 
+                    (pad.name && pad.name.toLowerCase().includes(searchQuery)) || 
+                    (pad.brand && pad.brand.toLowerCase().includes(searchQuery))
+                );
+            }
+            
+            const sortBy = document.getElementById('sortSelect').value;
+            if (sortBy === 'price_asc') {
+                filtered.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+            } else if (sortBy === 'price_desc') {
+                filtered.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+            } else if (sortBy === 'name_asc') {
+                filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            } else if (sortBy === 'name_desc') {
+                filtered.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+            }
+            
+            filteredPads = filtered;
             updateProductsCount();
             renderPads();
-            return;
+            updateActiveFilters();
         }
-        
-        let filtered = [...pads];
-        
-        const selectedSizes = Array.from(document.querySelectorAll('#sizeFilters input:checked')).map(cb => cb.value);
-        if (selectedSizes.length > 0) {
-            filtered = filtered.filter(pad => {
-                if (pad.sizes && pad.sizes.length > 0) {
-                    return pad.sizes.some(size => {
-                        const sizeCat = getSizeCategory(size.width, size.height);
-                        return selectedSizes.includes(sizeCat);
-                    });
-                }
-                return true;
-            });
-        }
-        
-        const selectedMaterials = Array.from(document.querySelectorAll('#materialFilters input:checked')).map(cb => cb.value);
-        if (selectedMaterials.length > 0) {
-            filtered = filtered.filter(pad => pad.material && selectedMaterials.includes(pad.material));
-        }
-        
-        const minPrice = document.getElementById('minPrice').value;
-        const maxPrice = document.getElementById('maxPrice').value;
-        
-        if (minPrice || maxPrice) {
-            filtered = filtered.filter(pad => {
-                const priceValue = parsePrice(pad.price);
-                if (minPrice && maxPrice) {
-                    return priceValue >= parsePrice(minPrice) && priceValue <= parsePrice(maxPrice);
-                } else if (minPrice) {
-                    return priceValue >= parsePrice(minPrice);
-                } else if (maxPrice) {
-                    return priceValue <= parsePrice(maxPrice);
-                }
-                return true;
-            });
-        }
-        
-        const searchQuery = document.getElementById('searchInput').value.toLowerCase();
-        if (searchQuery) {
-            filtered = filtered.filter(pad => 
-                (pad.name && pad.name.toLowerCase().includes(searchQuery)) || 
-                (pad.brand && pad.brand.toLowerCase().includes(searchQuery))
-            );
-        }
-        
-        const sortBy = document.getElementById('sortSelect').value;
-        if (sortBy === 'price_asc') {
-            filtered.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
-        } else if (sortBy === 'price_desc') {
-            filtered.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
-        } else if (sortBy === 'name_asc') {
-            filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-        } else if (sortBy === 'name_desc') {
-            filtered.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
-        }
-        
-        filteredPads = filtered;
-        updateProductsCount();
-        renderPads();
-        updateActiveFilters();
-    }
 
-    function updateProductsCount() {
-        const countEl = document.getElementById('productsCount');
-        if (pads.length === 0) {
-            countEl.textContent = 'Коврики скоро появятся...';
-        } else {
-            countEl.textContent = `Найдено ковриков: ${filteredPads.length}`;
+        function updateProductsCount() {
+            const countEl = document.getElementById('productsCount');
+            if (pads.length === 0) {
+                countEl.textContent = 'Коврики скоро появятся...';
+            } else {
+                countEl.textContent = `Найдено ковриков: ${filteredPads.length}`;
+            }
         }
-    }
 
-    function renderPads() {
-        const grid = document.getElementById('padsGrid');
-        grid.innerHTML = '';
-        
-        if (filteredPads.length === 0) {
-            grid.innerHTML = `
-                <div class="col-12">
+        function renderPads() {
+            const grid = document.getElementById('padsGrid');
+            grid.innerHTML = '';
+            
+            if (filteredPads.length === 0) {
+                grid.innerHTML = `
                     <div class="no-products">
                         <i class="fas fa-search"></i>
                         <h3>Коврики не найдены</h3>
                         <p>${pads.length === 0 ? 'В каталоге пока нет ковриков. Скоро они появятся!' : 'Попробуйте изменить параметры поиска'}</p>
                     </div>
+                `;
+                return;
+            }
+            
+            filteredPads.forEach(pad => {
+                grid.appendChild(createPadCard(pad));
+            });
+        }
+
+        function createPadCard(pad) {
+            const card = document.createElement('div');
+            card.className = 'pad-card';
+            
+            const priceValue = parsePrice(pad.price);
+            const firstImage = pad.images && pad.images.length ? pad.images[0] : 'https://via.placeholder.com/800x600/1e293b/2563eb?text=No+Image';
+            
+            let sizesText = 'Размеры не указаны';
+            if (pad.features && pad.features.length > 0) {
+                const sizeFeature = pad.features.find(f => f.toLowerCase().includes('размер') || f.toLowerCase().includes('mm'));
+                if (sizeFeature) sizesText = sizeFeature;
+            }
+            
+            card.innerHTML = `
+                <div class="pad-image-container" onclick="event.stopPropagation(); openLightbox('${pad.id}', 0)">
+                    <img src="${firstImage}" alt="${pad.name || 'Коврик'}" class="pad-image" onerror="this.src='https://via.placeholder.com/800x600/1e293b/2563eb?text=No+Image'">
+                    <div class="image-overlay">
+                        <div class="zoom-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="pad-badge">${escapeHtml(pad.brand || 'GGPoint')}</div>
+                </div>
+                <div class="pad-info-content">
+                    <h3 class="pad-name">${escapeHtml(pad.name || 'Коврик')}</h3>
+                    <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.5rem;">${escapeHtml((pad.description || '').substring(0, 80))}${pad.description && pad.description.length > 80 ? '...' : ''}</p>
+                    <div class="pad-specs">
+                        <div class="pad-spec"><i class="fas fa-expand-alt"></i><span>${escapeHtml(sizesText)}</span></div>
+                        <div class="pad-spec"><i class="fas fa-layer-group"></i><span>${getMaterialName(pad.material)}</span></div>
+                    </div>
+                    <div class="pad-price">${formatPrice(priceValue)}</div>
                 </div>
             `;
-            return;
+            
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.pad-image-container')) {
+                    window.location.href = `product.html?id=${pad.id}`;
+                }
+            });
+            
+            return card;
         }
-        
-        filteredPads.forEach(pad => {
-            const col = document.createElement('div');
-            col.className = 'col-12 col-sm-6 col-lg-4';
-            col.appendChild(createPadCard(pad));
-            grid.appendChild(col);
-        });
-    }
 
-    function createPadCard(pad) {
-        const card = document.createElement('div');
-        card.className = 'pad-card';
-        
-        const priceValue = parsePrice(pad.price);
-        const firstImage = pad.images && pad.images.length ? pad.images[0] : 'https://via.placeholder.com/800x600/1e293b/2563eb?text=No+Image';
-        
-        let sizesText = 'Размеры не указаны';
-        if (pad.features && pad.features.length > 0) {
-            const sizeFeature = pad.features.find(f => f.toLowerCase().includes('размер') || f.toLowerCase().includes('mm'));
-            if (sizeFeature) sizesText = sizeFeature;
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
-        
-        card.innerHTML = `
-            <div class="pad-image-container" onclick="event.stopPropagation(); openLightbox('${pad.id}', 0)">
-                <img src="${firstImage}" alt="${pad.name || 'Коврик'}" class="pad-image img-fluid" width="800" height="600" loading="lazy" onerror="this.src='https://via.placeholder.com/800x600/1e293b/2563eb?text=No+Image'">
-                <div class="image-overlay">
-                    <div class="zoom-icon"><i class="fas fa-search-plus"></i></div>
-                </div>
-                <div class="pad-badge">${escapeHtml(pad.brand || 'GGPoint')}</div>
-            </div>
-            <div class="pad-info-content">
-                <h3 class="pad-name">${escapeHtml(pad.name || 'Коврик')}</h3>
-                <p style="color: #cbd5e1; font-size: 0.85rem; margin-bottom: 0.5rem;">${escapeHtml((pad.description || '').substring(0, 80))}${pad.description && pad.description.length > 80 ? '...' : ''}</p>
-                <div class="pad-specs">
-                    <div class="pad-spec"><i class="fas fa-expand-alt"></i><span>${escapeHtml(sizesText)}</span></div>
-                    <div class="pad-spec"><i class="fas fa-layer-group"></i><span>${getMaterialName(pad.material)}</span></div>
-                </div>
-                <div class="pad-price">${formatPrice(priceValue)}</div>
-            </div>
-        `;
-        
-        card.addEventListener('click', (e) => {
-            if (!e.target.closest('.pad-image-container')) {
-                window.location.href = `product.html?id=${pad.id}`;
+
+        window.openLightbox = function(padId, index) {
+            const pad = pads.find(p => p.id == padId);
+            if (!pad || !pad.images || !pad.images.length) return;
+            
+            currentImageList = pad.images;
+            currentImageIndex = index;
+            isZoomed = false;
+            
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const counter = document.getElementById('lightboxCounter');
+            
+            lightboxImage.src = currentImageList[currentImageIndex];
+            lightboxImage.classList.remove('zoomed');
+            counter.textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeLightbox = function() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+            isZoomed = false;
+        };
+
+        window.closeLightboxOnBg = function(event) {
+            if (event.target === document.getElementById('lightbox')) {
+                closeLightbox();
+            }
+        };
+
+        window.toggleZoom = function() {
+            const img = document.getElementById('lightboxImage');
+            isZoomed = !isZoomed;
+            if (isZoomed) {
+                img.classList.add('zoomed');
+            } else {
+                img.classList.remove('zoomed');
+            }
+        };
+
+        window.prevImage = function() {
+            if (currentImageList.length === 0) return;
+            currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : currentImageList.length - 1;
+            const img = document.getElementById('lightboxImage');
+            img.src = currentImageList[currentImageIndex];
+            img.classList.remove('zoomed');
+            isZoomed = false;
+            document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
+        };
+
+        window.nextImage = function() {
+            if (currentImageList.length === 0) return;
+            currentImageIndex = currentImageIndex < currentImageList.length - 1 ? currentImageIndex + 1 : 0;
+            const img = document.getElementById('lightboxImage');
+            img.src = currentImageList[currentImageIndex];
+            img.classList.remove('zoomed');
+            isZoomed = false;
+            document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
+        };
+
+        function updateActiveFilters() {
+            const container = document.getElementById('activeFilters');
+            container.innerHTML = '';
+            
+            const selectedSizes = Array.from(document.querySelectorAll('#sizeFilters input:checked')).map(cb => cb.value);
+            if (selectedSizes.length > 0) {
+                const sizeNames = { small: 'Малые', medium: 'Средние', large: 'Большие', xl: 'XL', xxl: 'XXL' };
+                addFilterTag(container, `Размер: ${selectedSizes.map(s => sizeNames[s]).join(', ')}`, () => {
+                    document.querySelectorAll('#sizeFilters input:checked').forEach(cb => cb.checked = false);
+                    applyFilters();
+                });
+            }
+            
+            const selectedMaterials = Array.from(document.querySelectorAll('#materialFilters input:checked')).map(cb => cb.value);
+            if (selectedMaterials.length > 0) {
+                addFilterTag(container, `Материал: ${selectedMaterials.map(m => getMaterialName(m)).join(', ')}`, () => {
+                    document.querySelectorAll('#materialFilters input:checked').forEach(cb => cb.checked = false);
+                    applyFilters();
+                });
+            }
+            
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery) {
+                addFilterTag(container, `Поиск: ${searchQuery}`, () => {
+                    document.getElementById('searchInput').value = '';
+                    applyFilters();
+                });
+            }
+        }
+
+        function addFilterTag(container, text, onRemove) {
+            const tag = document.createElement('span');
+            tag.className = 'filter-tag';
+            tag.innerHTML = `${text} <i class="fas fa-times"></i>`;
+            tag.querySelector('i').addEventListener('click', onRemove);
+            container.appendChild(tag);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'Escape') closeLightbox();
             }
         });
-        
-        return card;
-    }
 
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
-    window.openLightbox = function(padId, index) {
-        const pad = pads.find(p => p.id == padId);
-        if (!pad || !pad.images || !pad.images.length) return;
-        
-        currentImageList = pad.images;
-        currentImageIndex = index;
-        isZoomed = false;
-        
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const counter = document.getElementById('lightboxCounter');
-        
-        lightboxImage.src = currentImageList[currentImageIndex];
-        lightboxImage.classList.remove('zoomed');
-        counter.textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.closeLightbox = function() {
-        document.getElementById('lightbox').classList.remove('active');
-        document.body.style.overflow = '';
-        isZoomed = false;
-    };
-
-    window.closeLightboxOnBg = function(event) {
-        if (event.target === document.getElementById('lightbox')) {
-            closeLightbox();
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, arguments), wait);
+            };
         }
-    };
 
-    window.toggleZoom = function() {
-        const img = document.getElementById('lightboxImage');
-        isZoomed = !isZoomed;
-        if (isZoomed) {
-            img.classList.add('zoomed');
-        } else {
-            img.classList.remove('zoomed');
-        }
-    };
-
-    window.prevImage = function() {
-        if (currentImageList.length === 0) return;
-        currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : currentImageList.length - 1;
-        const img = document.getElementById('lightboxImage');
-        img.src = currentImageList[currentImageIndex];
-        img.classList.remove('zoomed');
-        isZoomed = false;
-        document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
-    };
-
-    window.nextImage = function() {
-        if (currentImageList.length === 0) return;
-        currentImageIndex = currentImageIndex < currentImageList.length - 1 ? currentImageIndex + 1 : 0;
-        const img = document.getElementById('lightboxImage');
-        img.src = currentImageList[currentImageIndex];
-        img.classList.remove('zoomed');
-        isZoomed = false;
-        document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
-    };
-
-    function updateActiveFilters() {
-        const container = document.getElementById('activeFilters');
-        container.innerHTML = '';
-        
-        const selectedSizes = Array.from(document.querySelectorAll('#sizeFilters input:checked')).map(cb => cb.value);
-        if (selectedSizes.length > 0) {
-            const sizeNames = { small: 'Малые', medium: 'Средние', large: 'Большие', xl: 'XL', xxl: 'XXL' };
-            addFilterTag(container, `Размер: ${selectedSizes.map(s => sizeNames[s]).join(', ')}`, () => {
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPads();
+            
+            document.getElementById('trackingBtn')?.addEventListener('click', () => {
+                window.location.href = 'tracking.html';
+            });
+            
+            document.getElementById('sizeFilters').addEventListener('change', () => applyFilters());
+            document.getElementById('materialFilters').addEventListener('change', () => applyFilters());
+            document.getElementById('applyPriceFilter').addEventListener('click', () => applyFilters());
+            document.getElementById('searchInput').addEventListener('input', debounce(() => applyFilters(), 500));
+            document.getElementById('sortSelect').addEventListener('change', () => applyFilters());
+            
+            document.getElementById('clearFilters').addEventListener('click', () => {
                 document.querySelectorAll('#sizeFilters input:checked').forEach(cb => cb.checked = false);
-                applyFilters();
-            });
-        }
-        
-        const selectedMaterials = Array.from(document.querySelectorAll('#materialFilters input:checked')).map(cb => cb.value);
-        if (selectedMaterials.length > 0) {
-            addFilterTag(container, `Материал: ${selectedMaterials.map(m => getMaterialName(m)).join(', ')}`, () => {
                 document.querySelectorAll('#materialFilters input:checked').forEach(cb => cb.checked = false);
-                applyFilters();
-            });
-        }
-        
-        const searchQuery = document.getElementById('searchInput').value;
-        if (searchQuery) {
-            addFilterTag(container, `Поиск: ${searchQuery}`, () => {
+                document.getElementById('minPrice').value = '';
+                document.getElementById('maxPrice').value = '';
                 document.getElementById('searchInput').value = '';
                 applyFilters();
             });
-        }
-    }
-
-    function addFilterTag(container, text, onRemove) {
-        const tag = document.createElement('span');
-        tag.className = 'filter-tag';
-        tag.innerHTML = `${text} <i class="fas fa-times"></i>`;
-        tag.querySelector('i').addEventListener('click', onRemove);
-        container.appendChild(tag);
-    }
-
-    document.addEventListener('keydown', (e) => {
-        const lightbox = document.getElementById('lightbox');
-        if (lightbox.classList.contains('active')) {
-            if (e.key === 'ArrowLeft') prevImage();
-            if (e.key === 'ArrowRight') nextImage();
-            if (e.key === 'Escape') closeLightbox();
-        }
-    });
-
-    function debounce(func, wait) {
-        let timeout;
-        return function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, arguments), wait);
-        };
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        loadPads();
-        
-        document.getElementById('trackingBtn')?.addEventListener('click', () => {
-            window.location.href = 'tracking.html';
-        });
-        
-        document.getElementById('sizeFilters').addEventListener('change', () => applyFilters());
-        document.getElementById('materialFilters').addEventListener('change', () => applyFilters());
-        document.getElementById('applyPriceFilter').addEventListener('click', () => applyFilters());
-        document.getElementById('searchInput').addEventListener('input', debounce(() => applyFilters(), 500));
-        document.getElementById('sortSelect').addEventListener('change', () => applyFilters());
-        
-        document.getElementById('clearFilters').addEventListener('click', () => {
-            document.querySelectorAll('#sizeFilters input:checked').forEach(cb => cb.checked = false);
-            document.querySelectorAll('#materialFilters input:checked').forEach(cb => cb.checked = false);
-            document.getElementById('minPrice').value = '';
-            document.getElementById('maxPrice').value = '';
-            document.getElementById('searchInput').value = '';
-            applyFilters();
-        });
-        
-        // 🔥 lazy loading для всех изображений
-        document.querySelectorAll('img:not([loading])').forEach(img => {
-            img.setAttribute('loading', 'lazy');
-        });
-        
-        // Скрытый вход в админку (Ctrl + тройной клик)
-        let ctrlClickCount = 0;
-        let ctrlClickTimer = null;
-        
-        document.addEventListener('click', function(e) {
-            if (e.ctrlKey) {
-                ctrlClickCount++;
-                clearTimeout(ctrlClickTimer);
-                ctrlClickTimer = setTimeout(() => {
-                    ctrlClickCount = 0;
-                }, 800);
-                
-                if (ctrlClickCount === 3) {
-                    const adminModal = document.getElementById('adminLoginModal');
-                    if (adminModal) {
-                        adminModal.style.display = 'block';
-                    }
-                    ctrlClickCount = 0;
+            
+            // ========== НОВЫЙ СКРЫТЫЙ ВХОД (ВМЕСТО КНОПКИ-ШЕСТЕРЁНКИ) ==========
+            let ctrlClickCount = 0;
+            let ctrlClickTimer = null;
+            
+            document.addEventListener('click', function(e) {
+                if (e.ctrlKey) {
+                    ctrlClickCount++;
                     clearTimeout(ctrlClickTimer);
+                    ctrlClickTimer = setTimeout(() => {
+                        ctrlClickCount = 0;
+                    }, 800);
+                    
+                    if (ctrlClickCount === 3) {
+                        const adminModal = document.getElementById('adminLoginModal');
+                        if (adminModal) {
+                            adminModal.style.display = 'block';
+                        }
+                        ctrlClickCount = 0;
+                        clearTimeout(ctrlClickTimer);
+                    }
                 }
-            }
-        });
-        
-        const adminModal = document.getElementById('adminLoginModal');
-        const closeAdminModal = document.getElementById('closeAdminModal');
-        
-        if (closeAdminModal) {
-            closeAdminModal.addEventListener('click', () => {
-                if (adminModal) adminModal.style.display = 'none';
             });
-        }
-        
-        window.addEventListener('click', (e) => {
-            if (adminModal && e.target === adminModal) {
-                adminModal.style.display = 'none';
-            }
-        });
-        
-        const adminLoginForm = document.getElementById('adminLoginForm');
-        if (adminLoginForm) {
-            adminLoginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const login = document.getElementById('adminLogin').value;
-                const password = document.getElementById('adminPassword').value;
-                if (login === 'admin' && password === 'admin') {
+            
+            const adminModal = document.getElementById('adminLoginModal');
+            const closeAdminModal = document.getElementById('closeAdminModal');
+            
+            if (closeAdminModal) {
+                closeAdminModal.addEventListener('click', () => {
                     if (adminModal) adminModal.style.display = 'none';
-                    window.location.href = 'admin-panel.html';
-                } else {
-                    alert('Неверный логин или пароль!');
+                });
+            }
+            
+            window.addEventListener('click', (e) => {
+                if (adminModal && e.target === adminModal) {
+                    adminModal.style.display = 'none';
                 }
             });
-        }
-    });
-</script>
+            
+            const adminLoginForm = document.getElementById('adminLoginForm');
+            if (adminLoginForm) {
+                adminLoginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const login = document.getElementById('adminLogin').value;
+                    const password = document.getElementById('adminPassword').value;
+                    if (login === 'admin' && password === 'admin') {
+                        if (adminModal) adminModal.style.display = 'none';
+                        window.location.href = 'admin-panel.html';
+                    } else {
+                        alert('Неверный логин или пароль!');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
