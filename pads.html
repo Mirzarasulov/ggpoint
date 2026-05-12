@@ -56,6 +56,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         
         .logo a {
@@ -70,8 +72,9 @@
         
         .nav-list {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
+            flex-wrap: wrap;
         }
         
         .nav-link {
@@ -1214,20 +1217,25 @@
                 const data = snapshot.val();
                 if (data) {
                     pads = Object.values(data).filter(product => product.category === 'pads');
-                    console.log('Загружено ковриков:', pads.length);
+                    console.log('✅ Загружено ковриков из Firebase:', pads.length);
                 } else {
                     pads = [];
+                    console.warn('⚠️ В Firebase нет данных по пути products');
                 }
                 applyFilters();
             }, (error) => {
-                console.error('Ошибка загрузки:', error);
-                document.getElementById('padsGrid').innerHTML = `
-                    <div class="no-products">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Ошибка загрузки</h3>
-                        <p>Не удалось загрузить данные. Проверьте подключение к интернету.</p>
-                    </div>
-                `;
+                console.error('❌ Ошибка загрузки из Firebase:', error);
+                const grid = document.getElementById('padsGrid');
+                if (grid) {
+                    grid.innerHTML = `
+                        <div class="no-products">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Ошибка загрузки</h3>
+                            <p>Не удалось загрузить данные из базы. Проверьте подключение к интернету.</p>
+                            <button onclick="location.reload()" style="margin-top: 1rem; background: var(--gradient); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 8px; cursor: pointer;">🔄 Повторить</button>
+                        </div>
+                    `;
+                }
             });
         }
 
@@ -1339,6 +1347,7 @@
 
         function renderPads() {
             const grid = document.getElementById('padsGrid');
+            if (!grid) return;
             grid.innerHTML = '';
             
             if (filteredPads.length === 0) {
@@ -1473,6 +1482,7 @@
 
         function updateActiveFilters() {
             const container = document.getElementById('activeFilters');
+            if (!container) return;
             container.innerHTML = '';
             
             const selectedSizes = Array.from(document.querySelectorAll('#sizeFilters input:checked')).map(cb => cb.value);
@@ -1533,20 +1543,31 @@
                 window.location.href = 'tracking.html';
             });
             
-            document.getElementById('sizeFilters').addEventListener('change', () => applyFilters());
-            document.getElementById('materialFilters').addEventListener('change', () => applyFilters());
-            document.getElementById('applyPriceFilter').addEventListener('click', () => applyFilters());
-            document.getElementById('searchInput').addEventListener('input', debounce(() => applyFilters(), 500));
-            document.getElementById('sortSelect').addEventListener('change', () => applyFilters());
+            const sizeFilters = document.getElementById('sizeFilters');
+            const materialFilters = document.getElementById('materialFilters');
+            const applyPriceBtn = document.getElementById('applyPriceFilter');
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const clearFiltersBtn = document.getElementById('clearFilters');
             
-            document.getElementById('clearFilters').addEventListener('click', () => {
-                document.querySelectorAll('#sizeFilters input:checked').forEach(cb => cb.checked = false);
-                document.querySelectorAll('#materialFilters input:checked').forEach(cb => cb.checked = false);
-                document.getElementById('minPrice').value = '';
-                document.getElementById('maxPrice').value = '';
-                document.getElementById('searchInput').value = '';
-                applyFilters();
-            });
+            if (sizeFilters) sizeFilters.addEventListener('change', () => applyFilters());
+            if (materialFilters) materialFilters.addEventListener('change', () => applyFilters());
+            if (applyPriceBtn) applyPriceBtn.addEventListener('click', () => applyFilters());
+            if (searchInput) searchInput.addEventListener('input', debounce(() => applyFilters(), 500));
+            if (sortSelect) sortSelect.addEventListener('change', () => applyFilters());
+            
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener('click', () => {
+                    document.querySelectorAll('#sizeFilters input:checked').forEach(cb => cb.checked = false);
+                    document.querySelectorAll('#materialFilters input:checked').forEach(cb => cb.checked = false);
+                    const minPrice = document.getElementById('minPrice');
+                    const maxPrice = document.getElementById('maxPrice');
+                    if (minPrice) minPrice.value = '';
+                    if (maxPrice) maxPrice.value = '';
+                    if (searchInput) searchInput.value = '';
+                    applyFilters();
+                });
+            }
             
             // Скрытый вход в админку (Ctrl + тройной клик)
             let ctrlClickCount = 0;
