@@ -164,6 +164,16 @@
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .keycap-card:hover {
@@ -251,6 +261,80 @@
             -webkit-text-fill-color: transparent;
             font-weight: bold;
             margin: 0.5rem 0;
+        }
+        
+        /* Скелетон загрузки */
+        .skeleton-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .skeleton-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        
+        .skeleton-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        .skeleton-info {
+            padding: 1.5rem;
+        }
+        
+        .skeleton-title {
+            height: 20px;
+            width: 80%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .skeleton-meta {
+            height: 24px;
+            width: 60%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .skeleton-text {
+            height: 16px;
+            width: 100%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-price {
+            height: 24px;
+            width: 40%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
         .modal {
@@ -418,24 +502,18 @@
             color: #64748b;
         }
         
-        .loader {
-            text-align: center;
-            padding: 3rem;
-            color: #94a3b8;
-        }
-        
-        .loader:before {
-            content: "⌛";
-            font-size: 2rem;
-            display: block;
-            margin-bottom: 1rem;
-        }
-        
         .empty-message {
             text-align: center;
             padding: 4rem;
             color: #94a3b8;
             font-size: 1.2rem;
+            grid-column: 1/-1;
+        }
+        
+        .empty-message i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
         }
         
         @media (max-width: 768px) {
@@ -501,6 +579,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="mb.html" class="nav-link">
+                            <i class="fas fa-microchip"></i>
+                            <span class="nav-text">MB</span>
+                            <span class="beta-badge">Материнские платы</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="about.html" class="nav-link">
                             <i class="fas fa-info-circle"></i>
                             <span class="nav-text">О нас</span>
@@ -529,9 +614,17 @@
         <p>PBT, ABS, double-shot, и многое другое. Сделайте свою клавиатуру уникальной!</p>
     </section>
 
-    <div class="keycaps-grid" id="keycapsGrid">
-        <div class="loader" role="status" aria-label="Загрузка кейкапов">Загрузка кейкапов...</div>
+    <!-- Скелетон загрузки -->
+    <div id="skeletonLoader" class="skeleton-grid">
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
     </div>
+
+    <div class="keycaps-grid" id="keycapsGrid" style="display: none;"></div>
 
     <div class="modal" id="adminLoginModal">
         <div class="modal-content">
@@ -572,6 +665,7 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -617,6 +711,9 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        const skeletonLoader = document.getElementById('skeletonLoader');
+        const keycapsGrid = document.getElementById('keycapsGrid');
+
         function escapeHtml(str) {
             if (!str) return '';
             return String(str).replace(/[&<>]/g, function(m) {
@@ -628,22 +725,23 @@
         }
 
         function renderKeycaps(keycapsArray) {
-            const grid = document.getElementById('keycapsGrid');
-            if (!grid) return;
+            if (!keycapsGrid) return;
+            
+            // Скрываем скелетон, показываем сетку
+            if (skeletonLoader) skeletonLoader.style.display = 'none';
+            keycapsGrid.style.display = 'grid';
             
             if (!keycapsArray || keycapsArray.length === 0) {
-                grid.innerHTML = '<div class="empty-message">😕 Кейкапы пока не добавлены. Загляните позже!</div>';
+                keycapsGrid.innerHTML = '<div class="empty-message"><i class="fas fa-keyboard"></i><br>😕 Кейкапы пока не добавлены.<br><small style="font-size: 0.9rem;">Добавьте их через админ-панель (Ctrl + тройной клик)</small></div>';
                 return;
             }
             
-            grid.innerHTML = '';
+            keycapsGrid.innerHTML = '';
             
             keycapsArray.forEach((keycap, index) => {
                 const card = document.createElement('div');
                 card.className = 'keycap-card';
-                
-                const isFirst = index === 0;
-                const imgLoadingAttr = isFirst ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"';
+                card.style.animationDelay = `${index * 0.05}s`;
                 
                 const imageUrl = keycap.images && keycap.images[0] 
                     ? keycap.images[0] 
@@ -655,7 +753,7 @@
                         <img src="${imageUrl}" 
                              alt="${escapeHtml(keycap.name)}" 
                              class="keycap-image"
-                             ${imgLoadingAttr}
+                             loading="${index < 3 ? 'eager' : 'lazy'}"
                              onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'">
                     </div>
                     <div class="keycap-info">
@@ -677,11 +775,11 @@
                     }
                 });
                 
-                grid.appendChild(card);
+                keycapsGrid.appendChild(card);
             });
         }
 
-        // ⭐ ЗАГРУЖАЕМ ТОЛЬКО КЕЙКАПЫ ИЗ FIREBASE
+        // ⭐ ПРАВИЛЬНАЯ ЗАГРУЗКА ТОЛЬКО КЕЙКАПОВ ИЗ FIREBASE
         const productsRef = ref(database, 'products');
         
         onValue(productsRef, (snapshot) => {
@@ -692,6 +790,7 @@
                 // Проходим по всем товарам и собираем только те, у которых category === 'keycaps'
                 for (const id in data) {
                     const product = data[id];
+                    // ⭐ ТОЛЬКО КЕЙКАПЫ - строгая фильтрация по category
                     if (product && product.category === 'keycaps') {
                         // Добавляем id в объект товара для ссылки
                         product.id = id;
@@ -700,12 +799,16 @@
                 }
             }
             
-            console.log(`Загружено кейкапов: ${keycaps.length}`);
+            console.log(`🔑 Загружено кейкапов из Firebase: ${keycaps.length}`);
             renderKeycaps(keycaps);
             
         }, (error) => {
-            console.error('Ошибка загрузки из Firebase:', error);
-            document.getElementById('keycapsGrid').innerHTML = '<div class="empty-message">❌ Ошибка загрузки данных. Проверьте подключение.</div>';
+            console.error('❌ Ошибка загрузки из Firebase:', error);
+            if (skeletonLoader) skeletonLoader.style.display = 'none';
+            if (keycapsGrid) {
+                keycapsGrid.style.display = 'grid';
+                keycapsGrid.innerHTML = '<div class="empty-message"><i class="fas fa-exclamation-triangle"></i><br>❌ Ошибка загрузки данных.<br><small>Проверьте подключение к интернету</small></div>';
+            }
         });
 
         document.getElementById('trackingBtn')?.addEventListener('click', () => {
