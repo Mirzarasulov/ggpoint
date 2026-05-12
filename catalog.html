@@ -4,54 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO -->
     <title>Каталог товаров - GGPoint</title>
-    <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы, материнские платы и аксессуары.">
+    <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы, материнские платы.">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS -->
     <style>
-        /* Базовые стили */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
         
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f172a;
-            color: #fff;
-            line-height: 1.6;
-        }
-        
-        /* RGB градиент */
         :root {
             --primary-blue: #2563eb;
             --primary-purple: #7c3aed;
             --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
             --card-bg: #1e293b;
-            --dark-bg: #0f172a;
-            --text-light: #f1f5f9;
             --text-gray: #94a3b8;
             --success-green: #10b981;
-            --sale-red: #ef4444;
-            --warning-yellow: #f59e0b;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
         
-        /* Header */
         header {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -68,116 +42,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         
-        .logo a {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-decoration: none;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .nav-list {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+        .nav-list { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+        .nav-link { color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-weight: 500; white-space: nowrap; }
+        .nav-link:hover, .nav-link.active { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
+        .beta-badge { background: var(--gradient); font-size: 0.6rem; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem; }
+        .tracking-btn-main { background: var(--gradient); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .tracking-btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
         
-        .nav-link:hover,
-        .nav-link.active {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .beta-badge {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            font-size: 0.6rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            margin-left: 0.3rem;
-        }
-        
-        /* Кнопка отслеживания */
-        .tracking-btn-main {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-        
-        .tracking-btn-main:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        /* Page Header */
         .page-header {
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
             padding: 3rem 0;
             text-align: center;
         }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .breadcrumbs { display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #94a3b8; }
+        .breadcrumbs a { color: #60a5fa; text-decoration: none; }
         
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
+        .catalog-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; margin: 2rem 0; }
         
-        .breadcrumbs {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .breadcrumbs a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-        
-        .breadcrumbs a:hover {
-            color: #2563eb;
-        }
-        
-        /* Catalog Layout */
-        .catalog-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        /* Sidebar */
         .catalog-sidebar {
             background: rgba(30, 41, 59, 0.3);
             backdrop-filter: blur(10px);
@@ -189,228 +79,42 @@
             top: 100px;
         }
         
-        .filters-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
-        }
+        .filters-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(37, 99, 235, 0.2); }
+        .filters-header h3 { font-size: 1.2rem; }
+        .clear-filters { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 0.85rem; }
+        .clear-filters:hover { color: #ef4444; }
         
-        .filters-header h3 {
-            font-size: 1.2rem;
-        }
+        .filter-block { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(37, 99, 235, 0.1); }
+        .filter-title { font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .filter-options { display: flex; flex-direction: column; gap: 0.75rem; }
+        .filter-option { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #94a3b8; }
+        .filter-option:hover { color: #60a5fa; }
+        .filter-option input { accent-color: #2563eb; cursor: pointer; }
+        .filter-select { width: 100%; padding: 0.5rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; cursor: pointer; }
         
-        .clear-filters {
-            background: none;
-            border: none;
-            color: #60a5fa;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
+        .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .filter-tag { background: rgba(37, 99, 235, 0.1); border: 1px solid #2563eb; color: #60a5fa; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .filter-tag i { cursor: pointer; }
+        .filter-tag i:hover { color: #ef4444; }
         
-        .clear-filters:hover {
-            color: #ef4444;
-        }
+        .price-inputs { display: flex; gap: 0.5rem; align-items: center; }
+        .price-inputs input { width: 100%; padding: 0.5rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; }
+        .apply-price-btn { width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: var(--gradient); color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .apply-price-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         
-        .filter-block {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
-        }
+        .catalog-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .search-box { display: flex; align-items: center; background: #1e293b; border-radius: 8px; padding: 0.5rem 1rem; border: 1px solid #334155; }
+        .search-box i { color: #64748b; margin-right: 0.5rem; }
+        .search-box input { background: none; border: none; color: #fff; outline: none; width: 250px; }
+        .sort-select { width: 200px; padding: 0.5rem; background: #1e293b; border: 2px solid #334155; border-radius: 8px; color: #fff; cursor: pointer; }
+        .view-options { display: flex; gap: 0.5rem; }
+        .view-btn { width: 40px; height: 40px; border: 2px solid #334155; background: #1e293b; color: #94a3b8; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .view-btn.active { background: var(--gradient); border-color: transparent; color: white; }
+        .products-count { margin-bottom: 1rem; color: #94a3b8; }
         
-        .filter-title {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .filter-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        
-        .filter-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            color: #94a3b8;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-option:hover {
-            color: #60a5fa;
-        }
-        
-        .filter-option input {
-            cursor: pointer;
-            accent-color: #2563eb;
-        }
-        
-        .filter-select {
-            width: 100%;
-            padding: 0.5rem;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-        }
-        
-        .active-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .filter-tag {
-            background: rgba(37, 99, 235, 0.1);
-            border: 1px solid #2563eb;
-            color: #60a5fa;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .filter-tag i {
-            cursor: pointer;
-        }
-        
-        .filter-tag i:hover {
-            color: #ef4444;
-        }
-        
-        .price-inputs {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-        
-        .price-inputs input {
-            width: 100%;
-            padding: 0.5rem;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-        }
-        
-        .apply-price-btn {
-            width: 100%;
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .apply-price-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-        
-        /* Toolbar */
-        .catalog-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: #1e293b;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            border: 1px solid #334155;
-        }
-        
-        .search-box i {
-            color: #64748b;
-            margin-right: 0.5rem;
-        }
-        
-        .search-box input {
-            background: none;
-            border: none;
-            color: #fff;
-            outline: none;
-            width: 250px;
-        }
-        
-        .search-box input::placeholder {
-            color: #64748b;
-        }
-        
-        .sort-select {
-            width: 200px;
-            padding: 0.5rem;
-            background: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-        }
-        
-        .view-options {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .view-btn {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #334155;
-            background: #1e293b;
-            color: #94a3b8;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .view-btn.active {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border-color: transparent;
-            color: white;
-        }
-        
-        .products-count {
-            margin-bottom: 1rem;
-            color: #94a3b8;
-        }
-        
-        /* Products Grid - с анимацией как на MB странице */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .products-grid.list-view {
-            grid-template-columns: 1fr;
-        }
-        
-        .products-grid.list-view .product-card {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 1rem;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .products-grid.list-view { grid-template-columns: 1fr; }
+        .products-grid.list-view .product-card { display: grid; grid-template-columns: 200px 1fr; gap: 1rem; }
         
         .product-card {
             background: rgba(30, 41, 59, 0.5);
@@ -421,724 +125,199 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s ease forwards;
         }
         
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .product-card:hover { transform: translateY(-5px); border-color: #2563eb; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3); }
         
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: #2563eb;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
-        }
+        .product-badge-sale, .product-badge-new { position: absolute; top: 10px; left: 10px; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; z-index: 1; }
+        .product-badge-sale { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .product-badge-new { background: linear-gradient(135deg, #10b981, #059669); }
         
-        .product-badge-sale,
-        .product-badge-new {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 1;
-        }
+        .product-image-container { height: 250px; overflow: hidden; background: white; display: flex; align-items: center; justify-content: center; }
+        .product-image { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
         
-        .product-badge-sale {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-        }
+        .product-info { padding: 1rem; }
+        .product-category { font-size: 0.75rem; color: #60a5fa; margin-bottom: 0.5rem; }
+        .product-name { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
+        .product-description-short { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem; }
+        .product-price { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 1.2rem; }
         
-        .product-badge-new {
-            background: linear-gradient(135deg, #10b981, #059669);
-        }
+        .cart-btn { width: 40px; height: 40px; background: var(--gradient); border: none; color: white; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .cart-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         
-        .product-image-container {
-            height: 250px;
-            overflow: hidden;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
+        .pagination-btn { width: 40px; height: 40px; border: 2px solid #334155; background: #1e293b; color: #fff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        .pagination-btn:hover, .pagination-btn.active { background: var(--gradient); border-color: transparent; }
         
-        .product-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
+        .section-header { text-align: center; margin-bottom: 2rem; }
+        .section-title { font-size: 2rem; margin-bottom: 0.5rem; }
         
-        .product-card:hover .product-image {
-            transform: scale(1.05);
-        }
+        footer { background: #0f172a; border-top: 1px solid rgba(37, 99, 235, 0.3); margin-top: 3rem; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+        .footer-section h3 { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; margin-bottom: 1rem; }
+        .footer-section h4 { margin-bottom: 1rem; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: #94a3b8; text-decoration: none; transition: all 0.3s ease; }
+        .footer-links a:hover { color: #60a5fa; }
+        .contact-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #94a3b8; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-link { width: 40px; height: 40px; background: rgba(37, 99, 235, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; border: 1px solid rgba(37, 99, 235, 0.3); }
+        .social-link:hover { background: var(--gradient); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(37, 99, 235, 0.2); color: #64748b; }
         
-        .product-info {
-            padding: 1rem;
-        }
+        .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--gradient); color: white; border: none; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 100; }
+        .back-to-top.show { display: flex; }
+        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         
-        .product-category {
-            font-size: 0.75rem;
-            color: #60a5fa;
-            margin-bottom: 0.5rem;
-        }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: #1e293b; margin: 10% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(37, 99, 235, 0.3); }
+        .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #94a3b8; }
+        .close-modal:hover { color: #fff; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #94a3b8; }
+        .form-group input { width: 100%; padding: 0.75rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; }
+        .btn-modal { background: var(--gradient); color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
         
-        .product-name {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
+        .no-products { text-align: center; padding: 3rem; color: #94a3b8; grid-column: 1/-1; }
+        .no-products i { font-size: 3rem; margin-bottom: 1rem; }
         
-        .product-description-short {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-bottom: 1rem;
-        }
-        
-        .product-price {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .cart-btn {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border: none;
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .cart-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-        
-        .pagination-btn {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #334155;
-            background: #1e293b;
-            color: #fff;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .pagination-btn:hover,
-        .pagination-btn.active {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border-color: transparent;
-        }
-        
-        /* Section Header */
-        .section-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Footer */
-        footer {
-            background: #0f172a;
-            border-top: 1px solid rgba(37, 99, 235, 0.3);
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-        
-        .footer-section h3 {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-section h4 {
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: #60a5fa;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(37, 99, 235, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(37, 99, 235, 0.3);
-        }
-        
-        .social-link:hover {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            transform: translateY(-3px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding: 1.5rem;
-            border-top: 1px solid rgba(37, 99, 235, 0.2);
-            color: #64748b;
-        }
-        
-        /* Back to top */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-        
-        .back-to-top.show {
-            display: flex;
-        }
-        
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-        }
-        
-        .modal-content {
-            background: #1e293b;
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid rgba(37, 99, 235, 0.3);
-        }
-        
-        .close-modal {
-            float: right;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #94a3b8;
-        }
-        
-        .close-modal:hover {
-            color: #fff;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        .no-products {
-            text-align: center;
-            padding: 3rem;
-            color: #94a3b8;
-        }
-        
-        .no-products i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* Скелетон загрузки */
-        .skeleton-card {
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(37, 99, 235, 0.2);
-        }
-        
-        .skeleton-image {
-            height: 250px;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        
-        .skeleton-info {
-            padding: 1rem;
-        }
-        
-        .skeleton-title {
-            height: 20px;
-            width: 80%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-        
-        .skeleton-text {
-            height: 14px;
-            width: 100%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
-        
-        .skeleton-price {
-            height: 24px;
-            width: 40%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            margin-top: 12px;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        .loader { text-align: center; padding: 3rem; color: #94a3b8; grid-column: 1/-1; }
+        .loader i { font-size: 2rem; margin-bottom: 1rem; display: inline-block; animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         @media (max-width: 768px) {
-            .catalog-layout {
-                grid-template-columns: 1fr;
-            }
-            
-            .catalog-sidebar {
-                position: static;
-            }
-            
-            .catalog-toolbar {
-                flex-direction: column;
-            }
-            
-            .search-box input {
-                width: 100%;
-            }
-            
-            .sort-select {
-                width: 100%;
-            }
-            
-            .tracking-btn-main span {
-                display: none;
-            }
-            
-            .tracking-btn-main {
-                padding: 0.6rem 1rem;
-            }
-            
-            .nav-list {
-                gap: 1rem;
-            }
-            
-            .nav-text {
-                font-size: 0.9rem;
-            }
+            .catalog-layout { grid-template-columns: 1fr; }
+            .catalog-sidebar { position: static; }
+            .catalog-toolbar { flex-direction: column; }
+            .search-box input { width: 100%; }
+            .sort-select { width: 100%; }
+            .tracking-btn-main span { display: none; }
+            .tracking-btn-main { padding: 0.5rem 0.8rem; }
+            .nav-list { gap: 0.8rem; }
+            .nav-text { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="header-container">
-            <div class="logo">
-                <a href="index.html">GGPoint</a>
-            </div>
-            
-            <nav id="mainNav">
+            <div class="logo"><a href="index.html">GGPoint</a></div>
+            <nav>
                 <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="index.html" class="nav-link">
-                            <i class="fas fa-home"></i>
-                            <span class="nav-text">Главная</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="catalog.html" class="nav-link active">
-                            <i class="fas fa-th-large"></i>
-                            <span class="nav-text">Каталог</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="keycaps.html" class="nav-link">
-                            <i class="fas fa-keyboard"></i>
-                            <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Коллекция</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pads.html" class="nav-link">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span class="nav-text">Коврики</span>
-                            <span class="beta-badge">Новинка</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="mb.html" class="nav-link">
-                            <i class="fas fa-microchip"></i>
-                            <span class="nav-text">MB</span>
-                            <span class="beta-badge">Материнские платы</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.html" class="nav-link">
-                            <i class="fas fa-info-circle"></i>
-                            <span class="nav-text">О нас</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contacts.html" class="nav-link">
-                            <i class="fas fa-phone"></i>
-                            <span class="nav-text">Контакты</span>
-                        </a>
-                    </li>
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span class="nav-text">Главная</span></a></li>
+                    <li><a href="catalog.html" class="nav-link active"><i class="fas fa-th-large"></i><span class="nav-text">Каталог</span></a></li>
+                    <li><a href="keycaps.html" class="nav-link"><i class="fas fa-keyboard"></i><span class="nav-text">Кейкапы</span><span class="beta-badge">Коллекция</span></a></li>
+                    <li><a href="pads.html" class="nav-link"><i class="fas fa-mouse-pointer"></i><span class="nav-text">Коврики</span><span class="beta-badge">Новинка</span></a></li>
+                    <li><a href="mb.html" class="nav-link"><i class="fas fa-microchip"></i><span class="nav-text">MB</span><span class="beta-badge">Материнские платы</span></a></li>
+                    <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i><span class="nav-text">О нас</span></a></li>
+                    <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i><span class="nav-text">Контакты</span></a></li>
                 </ul>
             </nav>
-            
             <div class="header-actions">
-                <!-- Кнопка отслеживания -->
-                <button class="tracking-btn-main" id="trackingBtn">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Отследить заказ</span>
-                </button>
+                <button class="tracking-btn-main" id="trackingBtn"><i class="fas fa-map-marker-alt"></i><span>Отследить заказ</span></button>
             </div>
         </div>
     </header>
 
-    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <h1>Каталог товаров</h1>
             <div class="breadcrumbs">
-                <a href="index.html">Главная</a>
-                <i class="fas fa-chevron-right"></i>
-                <span>Каталог</span>
+                <a href="index.html">Главная</a> <i class="fas fa-chevron-right"></i> <span>Каталог</span>
             </div>
         </div>
     </section>
 
-    <!-- Catalog Section -->
     <section class="catalog-section">
         <div class="container">
             <div class="catalog-layout">
-                <!-- Sidebar Filters -->
                 <aside class="catalog-sidebar">
                     <div class="filters-header">
                         <h3>Фильтры</h3>
-                        <button class="clear-filters" id="clearFilters">
-                            <i class="fas fa-times"></i> Сбросить
-                        </button>
+                        <button class="clear-filters" id="clearFilters"><i class="fas fa-times"></i> Сбросить</button>
                     </div>
-                    
                     <div class="active-filters" id="activeFilters"></div>
                     
                     <div class="filter-block">
                         <h4 class="filter-title"><i class="fas fa-filter"></i> Категория</h4>
                         <div class="filter-options" id="categoryFilters">
-                            <label class="filter-option">
-                                <input type="radio" name="category" value="all" checked>
-                                <span>Все категории</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="category" value="мышь">
-                                <span><i class="fas fa-mouse"></i> Игровые мыши</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="category" value="клавиатура">
-                                <span><i class="fas fa-keyboard"></i> Клавиатуры</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="category" value="наушники">
-                                <span><i class="fas fa-headphones"></i> Наушники</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="category" value="монитор">
-                                <span><i class="fas fa-desktop"></i> Мониторы</span>
-                            </label>
+                            <label class="filter-option"><input type="radio" name="category" value="all" checked> <span>Все категории</span></label>
+                            <label class="filter-option"><input type="radio" name="category" value="мышь"> <span><i class="fas fa-mouse"></i> Мыши</span></label>
+                            <label class="filter-option"><input type="radio" name="category" value="клавиатура"> <span><i class="fas fa-keyboard"></i> Клавиатуры</span></label>
+                            <label class="filter-option"><input type="radio" name="category" value="наушники"> <span><i class="fas fa-headphones"></i> Наушники</span></label>
+                            <label class="filter-option"><input type="radio" name="category" value="монитор"> <span><i class="fas fa-desktop"></i> Мониторы</span></label>
                         </div>
                     </div>
                     
                     <div class="filter-block">
                         <h4 class="filter-title"><i class="fas fa-tag"></i> Бренд</h4>
-                        <select class="filter-select" id="brandFilter">
-                            <option value="all">Все бренды</option>
-                        </select>
+                        <select class="filter-select" id="brandFilter"><option value="all">Все бренды</option></select>
                     </div>
                     
                     <div class="filter-block">
                         <h4 class="filter-title"><i class="fas fa-dollar-sign"></i> Цена</h4>
-                        <div class="price-inputs">
-                            <input type="number" id="minPrice" placeholder="От" min="0">
-                            <span>-</span>
-                            <input type="number" id="maxPrice" placeholder="До" min="0">
-                        </div>
+                        <div class="price-inputs"><input type="number" id="minPrice" placeholder="От"><span>-</span><input type="number" id="maxPrice" placeholder="До"></div>
                         <button class="apply-price-btn" id="applyPriceFilter">Применить</button>
                     </div>
                     
                     <div class="filter-block">
                         <h4 class="filter-title"><i class="fas fa-fire"></i> Скидки</h4>
-                        <label class="filter-option">
-                            <input type="checkbox" id="discountFilter">
-                            <span>Только со скидкой</span>
-                        </label>
+                        <label class="filter-option"><input type="checkbox" id="discountFilter"> <span>Только со скидкой</span></label>
                     </div>
                 </aside>
                 
-                <!-- Main Content -->
                 <div class="catalog-main">
                     <div class="catalog-toolbar">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="searchInput" placeholder="Поиск по названию...">
-                        </div>
-                        
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <select class="sort-select" id="sortSelect">
-                                <option value="default">По умолчанию</option>
-                                <option value="price_asc">Цена: по возрастанию</option>
-                                <option value="price_desc">Цена: по убыванию</option>
-                                <option value="name_asc">Название: А-Я</option>
-                                <option value="name_desc">Название: Я-А</option>
-                                <option value="newest">Сначала новые</option>
-                                <option value="popular">Сначала популярные</option>
-                            </select>
-                            
-                            <div class="view-options">
-                                <button class="view-btn active" id="gridView" title="Сетка">
-                                    <i class="fas fa-th"></i>
-                                </button>
-                                <button class="view-btn" id="listView" title="Список">
-                                    <i class="fas fa-list"></i>
-                                </button>
-                            </div>
+                        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Поиск..."></div>
+                        <select class="sort-select" id="sortSelect">
+                            <option value="default">По умолчанию</option>
+                            <option value="price_asc">Цена ↑</option>
+                            <option value="price_desc">Цена ↓</option>
+                            <option value="name_asc">А-Я</option>
+                            <option value="name_desc">Я-А</option>
+                            <option value="newest">Новинки</option>
+                        </select>
+                        <div class="view-options">
+                            <button class="view-btn active" id="gridView"><i class="fas fa-th"></i></button>
+                            <button class="view-btn" id="listView"><i class="fas fa-list"></i></button>
                         </div>
                     </div>
                     
-                    <div class="products-count" id="productsCount">Найдено товаров: 0</div>
-                    
-                    <div class="products-grid" id="productsGrid"></div>
-                    
+                    <div class="products-count" id="productsCount">Загрузка...</div>
+                    <div class="products-grid" id="productsGrid"><div class="loader"><i class="fas fa-spinner fa-spin"></i><br>Загрузка товаров...</div></div>
                     <div class="pagination" id="pagination"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Recently Viewed -->
     <section class="products-section" style="padding-top: 0;">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Вы недавно смотрели</h2>
-            </div>
+            <div class="section-header"><h2 class="section-title">Вы недавно смотрели</h2></div>
             <div class="products-grid" id="recentlyViewedGrid"></div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>GGPoint</h3>
-                <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
-                <div class="social-links">
-                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Навигация</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">MB</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Категории</h4>
-                <ul class="footer-links">
-                    <li><a href="catalog.html?category=мышь">Игровые мыши</a></li>
-                    <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
-                    <li><a href="catalog.html?category=наушники">Наушники</a></li>
-                    <li><a href="catalog.html?category=монитор">Мониторы</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">Материнские платы</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <div class="contact-info">
-                    <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
-                    <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank" style="color:#94a3b8; text-decoration:none;">@GGPointUz</a></span></div>
-                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Ташкент, Узбекистан</span></div>
-                    <div class="contact-item"><i class="fas fa-clock"></i><span>Ежедневно 10:00 - 22:00</span></div>
-                </div>
-            </div>
+            <div class="footer-section"><h3>GGPoint</h3><p>Ваш надежный магазин игровой периферии в Узбекистане.</p><div class="social-links"><a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a></div></div>
+            <div class="footer-section"><h4>Навигация</h4><ul class="footer-links"><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">MB</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+            <div class="footer-section"><h4>Категории</h4><ul class="footer-links"><li><a href="catalog.html?category=мышь">Мыши</a></li><li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li><li><a href="catalog.html?category=наушники">Наушники</a></li><li><a href="catalog.html?category=монитор">Мониторы</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">Материнские платы</a></li></ul></div>
+            <div class="footer-section"><h4>Контакты</h4><div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div><div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
     </footer>
 
     <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+    <div class="modal" id="adminLoginModal"><div class="modal-content"><button class="close-modal" id="closeAdminModal">&times;</button><h2 style="background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2><form id="adminLoginForm"><div class="form-group"><label>Логин</label><input type="text" id="adminLogin" required></div><div class="form-group"><label>Пароль</label><input type="password" id="adminPassword" required></div><button type="submit" class="btn-modal">Войти</button></form></div></div>
 
-    <div class="modal" id="adminLoginModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeAdminModal">&times;</button>
-            <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label for="adminLogin">Логин</label>
-                    <input type="text" id="adminLogin" required placeholder="Введите логин">
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword">Пароль</label>
-                    <input type="password" id="adminPassword" required placeholder="Введите пароль">
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%;">Войти</button>
-            </form>
-        </div>
-    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
-            authDomain: "ggpoint-shop.firebaseapp.com",
-            databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
-            projectId: "ggpoint-shop",
-            storageBucket: "ggpoint-shop.firebasestorage.app",
-            messagingSenderId: "182227173652",
-            appId: "1:182227173652:web:0949e2edae9900afd98201"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
+    <script>
+        const FIREBASE_URL = 'https://ggpoint-shop-default-rtdb.firebaseio.com/products.json';
+        
         let products = [];
         let filteredProducts = [];
         let hotPrices = {};
@@ -1146,595 +325,202 @@
         let currentPage = 1;
         let itemsPerPage = 12;
         let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
-        let isLoading = true;
+        let urlParams = new URLSearchParams(window.location.search);
+        let categoryParam = urlParams.get('category');
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const categoryParam = urlParams.get('category');
+        function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+        function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
+        function formatPrice(price) { return price.toLocaleString() + ' UZS'; }
+        
+        function getCategoryName(key) {
+            const cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' };
+            return cats[key] || key;
+        }
 
-        function loadData() {
-            const productsRef = ref(database, 'products');
-            onValue(productsRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    products = Object.values(data).filter(product => 
-                        product.category !== 'keycaps' && product.category !== 'pads'
-                    );
-                } else {
-                    products = [];
+        async function loadData() {
+            try {
+                const response = await fetch(FIREBASE_URL);
+                const data = await response.json();
+                
+                products = [];
+                for (const id in data) {
+                    const p = data[id];
+                    if (p.category !== 'keycaps' && p.category !== 'pads') {
+                        p.id = id;
+                        products.push(p);
+                    }
                 }
                 
-                const hotPricesRef = ref(database, 'hotPrices');
-                onValue(hotPricesRef, (snapshot) => {
-                    hotPrices = snapshot.val() || {};
-                    isLoading = false;
-                    applyFilters();
-                });
-            });
-
-            const brandsRef = ref(database, 'brands');
-            onValue(brandsRef, (snapshot) => {
-                brands = snapshot.val() || {};
+                const brandsRes = await fetch('https://ggpoint-shop-default-rtdb.firebaseio.com/brands.json');
+                const brandsData = await brandsRes.json();
+                brands = brandsData || {};
                 updateBrandFilter();
-            });
+                
+                const hotRes = await fetch('https://ggpoint-shop-default-rtdb.firebaseio.com/hotPrices.json');
+                hotPrices = await hotRes.json() || {};
+                
+                applyFilters();
+            } catch(e) { console.error(e); document.getElementById('productsGrid').innerHTML = '<div class="no-products"><i class="fas fa-exclamation-triangle"></i><h3>Ошибка загрузки</h3></div>'; }
         }
 
         function updateBrandFilter() {
-            const brandSelect = document.getElementById('brandFilter');
-            if (!brandSelect) return;
-            brandSelect.innerHTML = '<option value="all">Все бренды</option>';
-            
-            Object.values(brands).sort((a, b) => a.name.localeCompare(b.name)).forEach(brand => {
-                const option = document.createElement('option');
-                option.value = brand.name;
-                option.textContent = brand.name;
-                brandSelect.appendChild(option);
-            });
+            const select = document.getElementById('brandFilter');
+            if (!select) return;
+            select.innerHTML = '<option value="all">Все бренды</option>';
+            Object.values(brands).sort((a,b)=>a.name.localeCompare(b.name)).forEach(b => { select.innerHTML += `<option value="${b.name}">${b.name}</option>`; });
         }
 
         function applyFilters() {
             let filtered = [...products];
-            
             const category = document.querySelector('input[name="category"]:checked')?.value;
-            if (category && category !== 'all') {
-                filtered = filtered.filter(p => p.category === category);
-            } else if (categoryParam && categoryParam !== 'all' && categoryParam !== 'keycaps' && categoryParam !== 'pads') {
-                filtered = filtered.filter(p => p.category === categoryParam);
-                const radio = document.querySelector(`input[name="category"][value="${categoryParam}"]`);
-                if (radio) radio.checked = true;
-            }
+            if (category && category !== 'all') filtered = filtered.filter(p => p.category === category);
+            else if (categoryParam && categoryParam !== 'all') filtered = filtered.filter(p => p.category === categoryParam);
             
             const brand = document.getElementById('brandFilter')?.value;
-            if (brand && brand !== 'all') {
-                filtered = filtered.filter(p => p.brand === brand);
-            }
+            if (brand && brand !== 'all') filtered = filtered.filter(p => p.brand === brand);
             
             const minPrice = document.getElementById('minPrice')?.value;
             const maxPrice = document.getElementById('maxPrice')?.value;
+            if (minPrice) filtered = filtered.filter(p => parsePrice(p.price) >= Number(minPrice));
+            if (maxPrice) filtered = filtered.filter(p => parsePrice(p.price) <= Number(maxPrice));
             
-            if (minPrice) {
-                filtered = filtered.filter(p => parsePrice(p.price) >= Number(minPrice));
-            }
-            if (maxPrice) {
-                filtered = filtered.filter(p => parsePrice(p.price) <= Number(maxPrice));
-            }
-            
-            const discountOnly = document.getElementById('discountFilter')?.checked;
-            if (discountOnly) {
-                filtered = filtered.filter(p => hotPrices[p.id]);
-            }
+            if (document.getElementById('discountFilter')?.checked) filtered = filtered.filter(p => hotPrices[p.id]);
             
             const searchQuery = document.getElementById('searchInput')?.value.toLowerCase();
-            if (searchQuery) {
-                filtered = filtered.filter(p => 
-                    p.name.toLowerCase().includes(searchQuery) || 
-                    p.description?.toLowerCase().includes(searchQuery)
-                );
-            }
+            if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || (p.description || '').toLowerCase().includes(searchQuery));
             
             const sortBy = document.getElementById('sortSelect')?.value;
-            applySorting(filtered, sortBy);
+            if (sortBy === 'price_asc') filtered.sort((a,b) => parsePrice(a.price) - parsePrice(b.price));
+            else if (sortBy === 'price_desc') filtered.sort((a,b) => parsePrice(b.price) - parsePrice(a.price));
+            else if (sortBy === 'name_asc') filtered.sort((a,b) => a.name.localeCompare(b.name));
+            else if (sortBy === 'name_desc') filtered.sort((a,b) => b.name.localeCompare(a.name));
+            else if (sortBy === 'newest') filtered.sort((a,b) => new Date(b.dateAdded||0) - new Date(a.dateAdded||0));
             
             filteredProducts = filtered;
             currentPage = 1;
-            updateProductsCount();
+            document.getElementById('productsCount').textContent = `Найдено товаров: ${filteredProducts.length}`;
             renderProducts();
             updateActiveFilters();
         }
 
-        function applySorting(productsArr, sortBy) {
-            switch(sortBy) {
-                case 'price_asc':
-                    productsArr.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
-                    break;
-                case 'price_desc':
-                    productsArr.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
-                    break;
-                case 'name_asc':
-                    productsArr.sort((a, b) => a.name.localeCompare(b.name));
-                    break;
-                case 'name_desc':
-                    productsArr.sort((a, b) => b.name.localeCompare(a.name));
-                    break;
-                case 'newest':
-                    productsArr.sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0));
-                    break;
-                case 'popular':
-                    productsArr.sort((a, b) => (b.views || 0) - (a.views || 0));
-                    break;
-            }
-        }
-
-        function parsePrice(priceStr) {
-            if (!priceStr) return 0;
-            if (typeof priceStr === 'number') return priceStr;
-            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
-        }
-
-        function formatPrice(price) {
-            return price.toLocaleString() + '$';
-        }
-
-        function updateProductsCount() {
-            const countEl = document.getElementById('productsCount');
-            if (countEl) countEl.textContent = `Найдено товаров: ${filteredProducts.length}`;
-        }
-
-        function updateActiveFilters() {
-            const container = document.getElementById('activeFilters');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            const category = document.querySelector('input[name="category"]:checked')?.value;
-            if (category && category !== 'all') {
-                addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => {
-                    const radio = document.querySelector('input[name="category"][value="all"]');
-                    if (radio) radio.checked = true;
-                    applyFilters();
-                });
-            }
-            
-            const brand = document.getElementById('brandFilter')?.value;
-            if (brand && brand !== 'all') {
-                addFilterTag(container, `Бренд: ${brand}`, () => {
-                    const brandSelect = document.getElementById('brandFilter');
-                    if (brandSelect) brandSelect.value = 'all';
-                    applyFilters();
-                });
-            }
-            
-            const searchQuery = document.getElementById('searchInput')?.value;
-            if (searchQuery) {
-                addFilterTag(container, `Поиск: ${searchQuery}`, () => {
-                    const searchInput = document.getElementById('searchInput');
-                    if (searchInput) searchInput.value = '';
-                    applyFilters();
-                });
-            }
-            
-            const discountOnly = document.getElementById('discountFilter')?.checked;
-            if (discountOnly) {
-                addFilterTag(container, 'Только со скидкой', () => {
-                    const discountCheck = document.getElementById('discountFilter');
-                    if (discountCheck) discountCheck.checked = false;
-                    applyFilters();
-                });
-            }
-        }
-
-        function addFilterTag(container, text, onRemove) {
-            const tag = document.createElement('span');
-            tag.className = 'filter-tag';
-            tag.innerHTML = `${text} <i class="fas fa-times"></i>`;
-            tag.querySelector('i').addEventListener('click', onRemove);
-            container.appendChild(tag);
-        }
-
-        function showSkeleton() {
-            const grid = document.getElementById('productsGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            for (let i = 0; i < 6; i++) {
-                const skeleton = document.createElement('div');
-                skeleton.className = 'skeleton-card';
-                skeleton.innerHTML = `
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-info">
-                        <div class="skeleton-title"></div>
-                        <div class="skeleton-text"></div>
-                        <div class="skeleton-text" style="width: 80%;"></div>
-                        <div class="skeleton-price"></div>
-                    </div>
-                `;
-                grid.appendChild(skeleton);
-            }
-        }
-
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
-            if (!grid) return;
+            const start = (currentPage-1)*itemsPerPage;
+            const pageProducts = filteredProducts.slice(start, start+itemsPerPage);
             
-            if (isLoading) {
-                showSkeleton();
-                return;
-            }
-            
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageProducts = filteredProducts.slice(start, end);
+            if (pageProducts.length === 0) { grid.innerHTML = '<div class="no-products"><i class="fas fa-search"></i><h3>Товары не найдены</h3></div>'; renderPagination(); return; }
             
             grid.innerHTML = '';
-            
-            if (pageProducts.length === 0) {
-                grid.innerHTML = `<div class="no-products"><i class="fas fa-search"></i><h3>Товары не найдены</h3><p>Попробуйте изменить параметры поиска</p></div>`;
-            } else {
-                pageProducts.forEach((product, index) => {
-                    const card = createProductCard(product);
-                    card.style.animationDelay = `${index * 0.05}s`;
-                    grid.appendChild(card);
-                });
-            }
-            renderPagination();
-        }
-
-        function createProductCard(product) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            
-            const isHot = hotPrices[product.id];
-            const isNew = isProductNew(product);
-            
-            let badges = '';
-            if (isHot) badges += '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>';
-            if (isNew) badges += '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>';
-            
-            const firstImage = product.images && product.images.length ? product.images[0] : 'https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото';
-            const priceValue = parsePrice(product.price);
-            
-            card.innerHTML = `
-                ${badges}
-                <div class="product-image-container">
-                    <img src="${firstImage}" alt="${escapeHtml(product.name)}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200/ffffff/333333?text=Нет+фото'">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">${getCategoryName(product.category)}</div>
-                    <h3 class="product-name">${escapeHtml(product.name)}</h3>
-                    <p class="product-description-short">${escapeHtml(product.description?.substring(0, 80) || '')}...</p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <p class="product-price">${formatPrice(priceValue)}</p>
-                        <button class="cart-btn" onclick="event.stopPropagation(); window.addToCart && window.addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            card.addEventListener('click', () => {
-                addToRecentlyViewed(product);
-                window.location.href = `product.html?id=${product.id}`;
+            pageProducts.forEach((p, i) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                const isHot = hotPrices[p.id];
+                const isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
+                const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
+                card.innerHTML = `
+                    ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
+                    ${isNew ? '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>' : ''}
+                    <div class="product-image-container"><img src="${img}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/1e293b/2563eb?text=Ошибка'"></div>
+                    <div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><p class="product-description-short">${escapeHtml((p.description||'').substring(0,70))}...</p><div style="display:flex;justify-content:space-between;align-items:center;"><p class="product-price">${formatPrice(parsePrice(p.price))}</p><button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})"><i class="fas fa-shopping-cart"></i></button></div></div>
+                `;
+                card.onclick = () => { addToRecentlyViewed(p); window.location.href = `product.html?id=${p.id}`; };
+                grid.appendChild(card);
             });
-            
-            return card;
+            renderPagination();
+            renderRecentlyViewed();
         }
 
-        function isProductNew(product) {
-            if (!product.dateAdded) return false;
-            const added = new Date(product.dateAdded);
-            const now = new Date();
-            const diffDays = Math.floor((now - added) / (1000 * 60 * 60 * 24));
-            return diffDays <= 30;
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let existing = cart.find(i => i.id === product.id);
+            if (existing) existing.quantity = (existing.quantity||1)+1;
+            else cart.push({...product, quantity:1});
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('✅ Товар добавлен в корзину');
         }
 
-        function addToRecentlyViewed(product) {
-            recentlyViewed = recentlyViewed.filter(p => p.id !== product.id);
-            recentlyViewed.unshift(product);
+        function addToRecentlyViewed(p) {
+            recentlyViewed = recentlyViewed.filter(i => i.id !== p.id);
+            recentlyViewed.unshift(p);
             if (recentlyViewed.length > 6) recentlyViewed.pop();
             localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
-            renderRecentlyViewed();
         }
 
         function renderRecentlyViewed() {
             const grid = document.getElementById('recentlyViewedGrid');
             if (!grid) return;
-            if (recentlyViewed.length === 0) {
-                grid.innerHTML = '';
-                return;
-            }
+            if (recentlyViewed.length === 0) { grid.innerHTML = ''; return; }
             grid.innerHTML = '';
-            recentlyViewed.slice(0, 4).forEach((product, index) => {
-                const card = createProductCard(product);
-                card.style.animationDelay = `${index * 0.05}s`;
+            recentlyViewed.slice(0,4).forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
+                card.innerHTML = `<div class="product-image-container"><img src="${img}" class="product-image" loading="lazy"></div><div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><p class="product-price">${p.price}</p></div>`;
+                card.onclick = () => window.location.href = `product.html?id=${p.id}`;
                 grid.appendChild(card);
             });
         }
 
         function renderPagination() {
-            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-            const pagination = document.getElementById('pagination');
-            if (!pagination) return;
-            
-            if (totalPages <= 1) {
-                pagination.innerHTML = '';
-                return;
+            const total = Math.ceil(filteredProducts.length / itemsPerPage);
+            const pag = document.getElementById('pagination');
+            if (total <= 1) { pag.innerHTML = ''; return; }
+            pag.innerHTML = '';
+            const prev = document.createElement('button'); prev.className = 'pagination-btn'; prev.innerHTML = '<i class="fas fa-chevron-left"></i>'; prev.onclick = () => { if(currentPage>1){currentPage--;renderProducts();window.scrollTo({top:0});} };
+            pag.appendChild(prev);
+            for(let i=1; i<=total; i++) {
+                if(i===1 || i===total || (i>=currentPage-2 && i<=currentPage+2)) {
+                    const btn = document.createElement('button'); btn.className = `pagination-btn ${i===currentPage?'active':''}`; btn.textContent = i; btn.onclick = () => { currentPage=i; renderProducts(); window.scrollTo({top:0}); };
+                    pag.appendChild(btn);
+                } else if(i===currentPage-3 || i===currentPage+3) { const span = document.createElement('span'); span.className = 'pagination-btn'; span.textContent = '...'; span.disabled = true; pag.appendChild(span); }
             }
-            
-            pagination.innerHTML = '';
-            
-            const prevBtn = document.createElement('button');
-            prevBtn.className = 'pagination-btn';
-            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-            prevBtn.disabled = currentPage === 1;
-            prevBtn.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderProducts();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-            pagination.appendChild(prevBtn);
-            
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
-                    const btn = document.createElement('button');
-                    btn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
-                    btn.textContent = i;
-                    btn.addEventListener('click', () => {
-                        currentPage = i;
-                        renderProducts();
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    });
-                    pagination.appendChild(btn);
-                } else if (i === currentPage - 3 || i === currentPage + 3) {
-                    const span = document.createElement('span');
-                    span.className = 'pagination-btn';
-                    span.textContent = '...';
-                    span.disabled = true;
-                    pagination.appendChild(span);
-                }
-            }
-            
-            const nextBtn = document.createElement('button');
-            nextBtn.className = 'pagination-btn';
-            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-            nextBtn.disabled = currentPage === totalPages;
-            nextBtn.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderProducts();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-            pagination.appendChild(nextBtn);
+            const next = document.createElement('button'); next.className = 'pagination-btn'; next.innerHTML = '<i class="fas fa-chevron-right"></i>'; next.onclick = () => { if(currentPage<total){currentPage++;renderProducts();window.scrollTo({top:0});} };
+            pag.appendChild(next);
         }
 
-        function getCategoryName(key) {
-            const categories = {
-                'мышь': 'Мышь',
-                'клавиатура': 'Клавиатура',
-                'наушники': 'Наушники',
-                'монитор': 'Монитор',
-                'mb': 'Материнская плата'
-            };
-            return categories[key] || key;
+        function updateActiveFilters() {
+            const container = document.getElementById('activeFilters');
+            container.innerHTML = '';
+            const category = document.querySelector('input[name="category"]:checked')?.value;
+            if(category && category!=='all') addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { document.querySelector('input[name="category"][value="all"]').checked=true; applyFilters(); });
+            const brand = document.getElementById('brandFilter')?.value;
+            if(brand && brand!=='all') addFilterTag(container, `Бренд: ${brand}`, () => { document.getElementById('brandFilter').value='all'; applyFilters(); });
+            const search = document.getElementById('searchInput')?.value;
+            if(search) addFilterTag(container, `Поиск: ${search}`, () => { document.getElementById('searchInput').value=''; applyFilters(); });
+            if(document.getElementById('discountFilter')?.checked) addFilterTag(container, 'Со скидкой', () => { document.getElementById('discountFilter').checked=false; applyFilters(); });
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
+        function addFilterTag(container, text, onRemove) { const tag = document.createElement('span'); tag.className='filter-tag'; tag.innerHTML=`${text} <i class="fas fa-times"></i>`; tag.querySelector('i').onclick=onRemove; container.appendChild(tag); }
 
-        window.addToCart = function(product) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existing = cart.find(item => item.id === product.id);
-            if (existing) {
-                existing.quantity = (existing.quantity || 1) + 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            showNotification('✅ Товар добавлен в корзину');
-        };
-
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #2563eb, #7c3aed);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 9999;
-                animation: slideInRight 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            `;
-            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            document.body.appendChild(notification);
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        const styleEl = document.createElement('style');
-        styleEl.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(styleEl);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            
-            document.querySelectorAll('input[name="category"]').forEach(radio => {
-                radio.addEventListener('change', () => {
-                    currentPage = 1;
-                    applyFilters();
-                });
-            });
-            
-            const brandFilter = document.getElementById('brandFilter');
-            if (brandFilter) brandFilter.addEventListener('change', () => {
-                currentPage = 1;
-                applyFilters();
-            });
-            
-            const applyPriceBtn = document.getElementById('applyPriceFilter');
-            if (applyPriceBtn) applyPriceBtn.addEventListener('click', () => {
-                currentPage = 1;
-                applyFilters();
-            });
-            
-            const discountFilter = document.getElementById('discountFilter');
-            if (discountFilter) discountFilter.addEventListener('change', () => {
-                currentPage = 1;
-                applyFilters();
-            });
-            
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', debounce(() => {
-                    currentPage = 1;
-                    applyFilters();
-                }, 500));
-            }
-            
-            const sortSelect = document.getElementById('sortSelect');
-            if (sortSelect) sortSelect.addEventListener('change', () => applyFilters());
-            
-            const clearFiltersBtn = document.getElementById('clearFilters');
-            if (clearFiltersBtn) {
-                clearFiltersBtn.addEventListener('click', () => {
-                    const allRadio = document.querySelector('input[name="category"][value="all"]');
-                    if (allRadio) allRadio.checked = true;
-                    const brandSelect = document.getElementById('brandFilter');
-                    if (brandSelect) brandSelect.value = 'all';
-                    const minPrice = document.getElementById('minPrice');
-                    if (minPrice) minPrice.value = '';
-                    const maxPrice = document.getElementById('maxPrice');
-                    if (maxPrice) maxPrice.value = '';
-                    const discountCheck = document.getElementById('discountFilter');
-                    if (discountCheck) discountCheck.checked = false;
-                    const searchBox = document.getElementById('searchInput');
-                    if (searchBox) searchBox.value = '';
-                    currentPage = 1;
-                    applyFilters();
-                });
-            }
-            
-            const gridView = document.getElementById('gridView');
-            const listView = document.getElementById('listView');
-            const productsGrid = document.getElementById('productsGrid');
-            
-            if (gridView && listView && productsGrid) {
-                gridView.addEventListener('click', () => {
-                    gridView.classList.add('active');
-                    listView.classList.remove('active');
-                    productsGrid.classList.remove('list-view');
-                });
-                
-                listView.addEventListener('click', () => {
-                    listView.classList.add('active');
-                    gridView.classList.remove('active');
-                    productsGrid.classList.add('list-view');
-                });
-            }
+        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href='tracking.html');
+        document.getElementById('clearFilters')?.addEventListener('click', () => {
+            document.querySelector('input[name="category"][value="all"]').checked=true;
+            document.getElementById('brandFilter').value='all';
+            document.getElementById('minPrice').value='';
+            document.getElementById('maxPrice').value='';
+            document.getElementById('discountFilter').checked=false;
+            document.getElementById('searchInput').value='';
+            applyFilters();
         });
-
-        function debounce(func, wait) {
-            let timeout;
-            return function() {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, arguments), wait);
-            };
-        }
-
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (backToTop) {
-                if (window.scrollY > 300) {
-                    backToTop.classList.add('show');
-                } else {
-                    backToTop.classList.remove('show');
-                }
-            }
-        });
+        document.querySelectorAll('input[name="category"]').forEach(r=>r.addEventListener('change',()=>applyFilters()));
+        document.getElementById('brandFilter')?.addEventListener('change',()=>applyFilters());
+        document.getElementById('applyPriceFilter')?.addEventListener('click',()=>applyFilters());
+        document.getElementById('discountFilter')?.addEventListener('change',()=>applyFilters());
+        document.getElementById('searchInput')?.addEventListener('input',()=>applyFilters());
+        document.getElementById('sortSelect')?.addEventListener('change',()=>applyFilters());
+        document.getElementById('gridView')?.addEventListener('click',()=>{ document.getElementById('productsGrid').classList.remove('list-view'); });
+        document.getElementById('listView')?.addEventListener('click',()=>{ document.getElementById('productsGrid').classList.add('list-view'); });
         
-        if (backToTop) {
-            backToTop.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        // Скрытый вход в админку (Ctrl + тройной клик)
-        let ctrlClickCount = 0;
-        let ctrlClickTimer = null;
+        let ctrlClick=0, timer=null;
+        document.addEventListener('click', e=>{ if(e.ctrlKey){ ctrlClick++; clearTimeout(timer); timer=setTimeout(()=>ctrlClick=0,800); if(ctrlClick===3){ document.getElementById('adminLoginModal').style.display='block'; ctrlClick=0; } } });
+        document.getElementById('closeAdminModal')?.addEventListener('click',()=>document.getElementById('adminLoginModal').style.display='none');
+        window.addEventListener('click',e=>{ if(e.target===document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display='none'; });
+        document.getElementById('adminLoginForm')?.addEventListener('submit',e=>{ e.preventDefault(); if(document.getElementById('adminLogin').value==='admin' && document.getElementById('adminPassword').value==='admin'){ document.getElementById('adminLoginModal').style.display='none'; window.location.href='admin-panel.html'; } else alert('Неверный логин или пароль!'); });
         
-        document.addEventListener('click', function(e) {
-            if (e.ctrlKey) {
-                ctrlClickCount++;
-                clearTimeout(ctrlClickTimer);
-                ctrlClickTimer = setTimeout(() => {
-                    ctrlClickCount = 0;
-                }, 800);
-                
-                if (ctrlClickCount === 3) {
-                    const adminModal = document.getElementById('adminLoginModal');
-                    if (adminModal) {
-                        adminModal.style.display = 'block';
-                    }
-                    ctrlClickCount = 0;
-                    clearTimeout(ctrlClickTimer);
-                }
-            }
-        });
+        window.addEventListener('scroll',()=>{ const btn=document.getElementById('backToTop'); if(window.scrollY>300) btn.classList.add('show'); else btn.classList.remove('show'); });
+        document.getElementById('backToTop')?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
         
-        const adminModal = document.getElementById('adminLoginModal');
-        const closeAdminModal = document.getElementById('closeAdminModal');
-        const trackingBtn = document.getElementById('trackingBtn');
-        
-        if (trackingBtn) {
-            trackingBtn.addEventListener('click', () => window.location.href = 'tracking.html');
-        }
-        
-        if (closeAdminModal && adminModal) {
-            closeAdminModal.addEventListener('click', () => {
-                adminModal.style.display = 'none';
-            });
-        }
-        
-        window.addEventListener('click', (e) => {
-            if (adminModal && e.target === adminModal) {
-                adminModal.style.display = 'none';
-            }
-        });
-        
-        const adminLoginForm = document.getElementById('adminLoginForm');
-        if (adminLoginForm) {
-            adminLoginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const login = document.getElementById('adminLogin').value;
-                const password = document.getElementById('adminPassword').value;
-                if (login === 'admin' && password === 'admin') {
-                    if (adminModal) adminModal.style.display = 'none';
-                    window.location.href = 'admin-panel.html';
-                } else {
-                    alert('Неверный логин или пароль!');
-                }
-            });
-        }
+        loadData();
     </script>
 </body>
 </html>
