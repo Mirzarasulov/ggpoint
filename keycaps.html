@@ -132,8 +132,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Кнопка-шестеренка УДАЛЕНА - больше не используется */
-        
         /* Keycaps Hero */
         .keycaps-hero {
             background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
@@ -520,7 +518,6 @@
             </nav>
             
             <div class="header-actions">
-                <!-- ⭐ ACCESSIBILITY: добавлен aria-label -->
                 <button class="tracking-btn-main" id="trackingBtn" aria-label="Отследить заказ">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
@@ -688,35 +685,24 @@
         ];
 
         let keycaps = [];
-
-        const productsRef = ref(database, 'products');
-        onValue(productsRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                keycaps = Object.values(data).filter(p => p.category === 'keycaps');
-            }
-            
-            if (keycaps.length === 0) {
-                keycaps = defaultKeycaps;
-                defaultKeycaps.forEach(k => {
-                    const productRef = ref(database, 'products/' + k.id);
-                    set(productRef, k).catch(() => {});
-                });
-            }
-            
-            renderKeycaps();
-        });
+        let firebaseLoaded = false;
+        let timeoutTriggered = false;
 
         function renderKeycaps() {
             const grid = document.getElementById('keycapsGrid');
             if (!grid) return;
+            
+            if (keycaps.length === 0) {
+                grid.innerHTML = '<div class="loader" role="status" aria-label="Нет данных"></div>';
+                return;
+            }
+            
             grid.innerHTML = '';
             
             keycaps.forEach((keycap, index) => {
                 const card = document.createElement('div');
                 card.className = 'keycap-card';
                 
-                // ⭐ LCP-ОПТИМИЗАЦИЯ: первая картинка получает fetchpriority="high"
                 const isFirst = index === 0;
                 const imgLoadingAttr = isFirst ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"';
                 
@@ -759,6 +745,54 @@
                 return m;
             });
         }
+
+        // ⭐ ОСНОВНОЕ ИСПРАВЛЕНИЕ: таймаут 3 секунды на Firebase
+        const productsRef = ref(database, 'products');
+        
+        // Таймаут: если Firebase не ответил за 3 секунды — показываем defaultKeycaps
+        const firebaseTimeout = setTimeout(() => {
+            if (!firebaseLoaded) {
+                console.warn('Firebase не загрузился, использую defaultKeycaps');
+                timeoutTriggered = true;
+                keycaps = [...defaultKeycaps];
+                renderKeycaps();
+            }
+        }, 3000);
+        
+        onValue(productsRef, (snapshot) => {
+            firebaseLoaded = true;
+            clearTimeout(firebaseTimeout);
+            
+            const data = snapshot.val();
+            if (data) {
+                const filtered = Object.values(data).filter(p => p.category === 'keycaps');
+                if (filtered.length > 0) {
+                    keycaps = filtered;
+                } else {
+                    keycaps = [...defaultKeycaps];
+                }
+            } else {
+                keycaps = [...defaultKeycaps];
+            }
+            
+            renderKeycaps();
+        }, (error) => {
+            // ⭐ Обработка ошибки подключения
+            console.error('Ошибка Firebase:', error);
+            if (!timeoutTriggered) {
+                clearTimeout(firebaseTimeout);
+                keycaps = [...defaultKeycaps];
+                renderKeycaps();
+            }
+        });
+
+        // На всякий случай, если onValue вообще не сработает — показываем default через 3.5 сек
+        setTimeout(() => {
+            if (!firebaseLoaded && keycaps.length === 0) {
+                keycaps = [...defaultKeycaps];
+                renderKeycaps();
+            }
+        }, 3500);
 
         document.getElementById('trackingBtn')?.addEventListener('click', () => {
             window.location.href = 'tracking.html';
