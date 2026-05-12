@@ -481,48 +481,6 @@
             font-weight: bold;
         }
         
-        .product-actions {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .action-btn {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        .action-btn.primary {
-            background: var(--gradient);
-            border-color: transparent;
-            color: white;
-        }
-        
-        .action-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-        
-        .action-btn.secondary {
-            background: transparent;
-            border-color: var(--primary-blue);
-            color: var(--primary-blue);
-        }
-        
-        .action-btn.secondary:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
-        
         /* YouTube плеер */
         .youtube-section-bottom {
             background: var(--card-bg);
@@ -687,6 +645,165 @@
             font-weight: 600;
             color: var(--text-light);
             width: 200px;
+        }
+        
+        /* Отзывы */
+        .reviews-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid #334155;
+            margin: 2rem 0;
+        }
+        
+        .reviews-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .reviews-list {
+            margin-bottom: 2rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .review-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #334155;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .review-name {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        .review-date {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+        
+        .review-rating {
+            color: #ffd700;
+            font-size: 1rem;
+        }
+        
+        .review-text {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+        
+        .no-reviews {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-gray);
+        }
+        
+        .add-review-form {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .add-review-form h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        
+        .star-rating i {
+            font-size: 1.8rem;
+            color: #ffd700;
+            transition: all 0.2s ease;
+        }
+        
+        .star-rating i:hover,
+        .star-rating i.hover {
+            transform: scale(1.1);
+        }
+        
+        .review-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--dark-bg);
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .review-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        
+        .review-name-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--dark-bg);
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .submit-review-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
         /* Похожие товары */
@@ -974,6 +1091,25 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success-green);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
         /* Footer */
         footer {
             background: #0f172a;
@@ -1028,15 +1164,6 @@
             gap: 0.5rem;
             margin-bottom: 0.5rem;
             color: #94a3b8;
-        }
-        
-        .contact-item a {
-            color: #94a3b8;
-            text-decoration: none;
-        }
-        
-        .contact-item a:hover {
-            color: #60a5fa;
         }
         
         .social-links {
@@ -1098,25 +1225,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--success-green);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
         @media (max-width: 768px) {
             .back-button {
                 top: 5rem;
@@ -1140,10 +1248,6 @@
             
             .features-list {
                 grid-template-columns: 1fr;
-            }
-            
-            .product-actions {
-                flex-direction: column;
             }
             
             .main-image-container {
@@ -1309,17 +1413,6 @@
                     <h3>Характеристики</h3>
                     <ul class="features-list" id="featuresList"></ul>
                 </div>
-                
-                <div class="product-actions">
-                    <button class="action-btn primary" onclick="showComingSoon()">
-                        <i class="fas fa-bell"></i>
-                        Уведомить о поступлении
-                    </button>
-                    <button class="action-btn secondary" onclick="addToFavorites()">
-                        <i class="far fa-heart"></i>
-                        В избранное
-                    </button>
-                </div>
             </div>
         </div>
         
@@ -1353,6 +1446,35 @@
             
             <div class="tab-content" id="tab-specs">
                 <table class="specs-table" id="specsTable"></table>
+            </div>
+        </div>
+        
+        <!-- БЛОК ОТЗЫВОВ -->
+        <div class="reviews-section" id="reviewsSection">
+            <div class="reviews-title">
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                Отзывы о товаре
+                <span id="reviewsCount" style="font-size: 1rem; color: var(--text-gray);"></span>
+            </div>
+            
+            <div class="reviews-list" id="reviewsList">
+                <div class="no-reviews">Загрузка отзывов...</div>
+            </div>
+            
+            <div class="add-review-form">
+                <h3>Оставить отзыв</h3>
+                <div class="star-rating" id="starRating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <input type="text" id="reviewName" class="review-name-input" placeholder="Ваше имя" maxlength="50">
+                <textarea id="reviewText" class="review-input" rows="3" placeholder="Поделитесь впечатлениями о товаре..." maxlength="500"></textarea>
+                <button class="submit-review-btn" onclick="submitReview()">
+                    <i class="fas fa-paper-plane"></i> Отправить отзыв
+                </button>
             </div>
         </div>
         
@@ -1450,7 +1572,7 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        import { getDatabase, ref, onValue, push, set } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
@@ -1476,8 +1598,23 @@
         let products = [];
         let hotPrices = {};
         let brands = {};
+        let reviews = [];
         let currentImageIndex = 0;
         let images = [];
+        let selectedRating = 5;
+        let currentUserId = null;
+
+        // Функция для генерации простого ID пользователя (для анонимных отзывов)
+        function getUserId() {
+            let id = localStorage.getItem('ggpoint_user_id');
+            if (!id) {
+                id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('ggpoint_user_id', id);
+            }
+            return id;
+        }
+
+        currentUserId = getUserId();
 
         function loadData() {
             const productRef = ref(database, 'products/' + productId);
@@ -1508,6 +1645,125 @@
             onValue(brandsRef, (snapshot) => {
                 brands = snapshot.val() || {};
                 renderProduct();
+            });
+
+            // Загрузка отзывов для этого товара
+            const reviewsRef = ref(database, 'reviews');
+            onValue(reviewsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    reviews = Object.values(data).filter(r => r.productId == productId && r.status === 'approved');
+                    renderReviews();
+                } else {
+                    reviews = [];
+                    renderReviews();
+                }
+            });
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsList');
+            const countSpan = document.getElementById('reviewsCount');
+            
+            if (!container) return;
+            
+            if (reviews.length === 0) {
+                container.innerHTML = '<div class="no-reviews"><i class="fas fa-comment"></i><br>Пока нет отзывов. Будьте первым!</div>';
+                if (countSpan) countSpan.textContent = '(0)';
+                return;
+            }
+            
+            if (countSpan) countSpan.textContent = `(${reviews.length})`;
+            
+            container.innerHTML = reviews.map(review => `
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <div class="review-avatar">${review.author?.charAt(0).toUpperCase() || 'А'}</div>
+                            <div>
+                                <div class="review-name">${escapeHtml(review.author) || 'Аноним'}</div>
+                                <div class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            ${'★'.repeat(review.rating || 5)}${'☆'.repeat(5 - (review.rating || 5))}
+                        </div>
+                    </div>
+                    <div class="review-text">${escapeHtml(review.text)}</div>
+                </div>
+            `).join('');
+        }
+
+        function submitReview() {
+            const name = document.getElementById('reviewName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            
+            if (!text) {
+                showNotification('❌ Напишите текст отзыва!', 'error');
+                return;
+            }
+            
+            if (text.length < 10) {
+                showNotification('❌ Отзыв должен содержать минимум 10 символов', 'error');
+                return;
+            }
+            
+            const reviewData = {
+                productId: productId,
+                productName: product?.name || 'Товар',
+                author: name || 'Аноним',
+                text: text,
+                rating: selectedRating,
+                date: new Date().toISOString(),
+                userId: currentUserId,
+                status: 'pending' // на модерации
+            };
+            
+            const reviewsRef = ref(database, 'reviews');
+            push(reviewsRef, reviewData).then(() => {
+                showNotification('✅ Спасибо за отзыв! Он появится после модерации.', 'success');
+                document.getElementById('reviewName').value = '';
+                document.getElementById('reviewText').value = '';
+                selectedRating = 5;
+                updateStarDisplay(selectedRating);
+            }).catch(error => {
+                console.error('Ошибка:', error);
+                showNotification('❌ Ошибка при отправке отзыва', 'error');
+            });
+        }
+
+        function updateStarDisplay(rating) {
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.className = 'fas fa-star';
+                } else {
+                    star.className = 'far fa-star';
+                }
+            });
+        }
+
+        function initStarRating() {
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    selectedRating = parseInt(star.dataset.rating);
+                    updateStarDisplay(selectedRating);
+                });
+                star.addEventListener('mouseenter', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    stars.forEach((s, i) => {
+                        if (i < rating) {
+                            s.className = 'fas fa-star';
+                        } else {
+                            s.className = 'far fa-star';
+                        }
+                    });
+                });
+            });
+            
+            document.getElementById('starRating').addEventListener('mouseleave', () => {
+                updateStarDisplay(selectedRating);
             });
         }
 
@@ -1585,7 +1841,6 @@
                     <span class="product-badge sale"><i class="fas fa-fire"></i> Скидка!</span>
                 `;
                 const oldPrice = parsePrice(product.price);
-                const newPrice = Math.round(oldPrice * 0.7);
                 document.getElementById('oldPrice').style.display = 'inline';
                 document.getElementById('oldPrice').textContent = formatPrice(oldPrice);
                 document.getElementById('discountInfo').style.display = 'inline';
@@ -1693,6 +1948,30 @@
             return price.toLocaleString() + ' UZS';
         }
 
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
         window.goBack = () => {
             if (document.referrer) window.history.back();
             else window.location.href = 'catalog.html';
@@ -1747,27 +2026,6 @@
 
         window.toggleFullscreenZoom = () => {
             document.getElementById('fullscreenImage').classList.toggle('zoomed');
-        };
-
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-        }
-
-        window.showComingSoon = () => showNotification('🔔 Функция покупки скоро появится!');
-        
-        window.addToFavorites = () => {
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            if (!favorites.includes(productId)) {
-                favorites.push(productId);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                showNotification('❤️ Товар добавлен в избранное');
-            } else {
-                showNotification('Товар уже в избранном');
-            }
         };
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1853,7 +2111,10 @@
             });
         }
 
+        window.submitReview = submitReview;
+        
         loadData();
+        initStarRating();
     </script>
 </body>
 </html>
