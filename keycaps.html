@@ -7,13 +7,10 @@
     <title>Кейкапы - GGPoint</title>
     <meta name="description" content="Каталог кейкапов для механических клавиатур">
     
-    <!-- ⭐ БЕЗОПАСНОСТЬ: CSP + HSTS -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://ggpoint-shop.firebaseio.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' https://via.placeholder.com https://images.unsplash.com data:; connect-src 'self' https://ggpoint-shop-default-rtdb.firebaseio.com; frame-src 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://ggpoint-shop.firebaseio.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' https://via.placeholder.com https://images.unsplash.com data: https://firebasestorage.googleapis.com; connect-src 'self' https://ggpoint-shop-default-rtdb.firebaseio.com; frame-src 'none';">
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    
-    <!-- ⭐ ПРЕЗАГРУЗКА ШРИФТА -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
     
     <style>
@@ -43,7 +40,6 @@
             --success-green: #10b981;
         }
         
-        /* Header */
         header {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -110,7 +106,6 @@
             gap: 12px;
         }
         
-        /* Единый стиль для кнопки отслеживания */
         .tracking-btn-main {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             color: #fff;
@@ -132,7 +127,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Keycaps Hero */
         .keycaps-hero {
             background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
             padding: 6rem 2rem 4rem;
@@ -152,7 +146,6 @@
             margin: 0 auto;
         }
         
-        /* Keycaps Grid */
         .keycaps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -260,7 +253,6 @@
             margin: 0.5rem 0;
         }
         
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -331,7 +323,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Footer */
         footer {
             background: #0f172a;
             border-top: 1px solid rgba(37, 99, 235, 0.3);
@@ -440,6 +431,13 @@
             margin-bottom: 1rem;
         }
         
+        .empty-message {
+            text-align: center;
+            padding: 4rem;
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+        
         @media (max-width: 768px) {
             .tracking-btn-main span {
                 display: none;
@@ -532,10 +530,9 @@
     </section>
 
     <div class="keycaps-grid" id="keycapsGrid">
-        <div class="loader" role="status" aria-label="Загрузка кейкапов"></div>
+        <div class="loader" role="status" aria-label="Загрузка кейкапов">Загрузка кейкапов...</div>
     </div>
 
-    <!-- Модальное окно для входа в админку -->
     <div class="modal" id="adminLoginModal">
         <div class="modal-content">
             <button class="close-modal" id="closeAdminModal" aria-label="Закрыть">&times;</button>
@@ -600,13 +597,12 @@
         </div>
     </footer>
 
-    <!-- ⭐ Font Awesome загружается НЕБЛОКИРУЮЩЕ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue, set } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
@@ -621,95 +617,42 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        const defaultKeycaps = [
-            {
-                id: 1001,
-                name: "Кейкапы GMK Laser",
-                category: "keycaps",
-                price: "899,000 UZS",
-                images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
-                description: "Профиль Cherry, материал ABS double-shot, яркие неоновые цвета",
-                features: ["Профиль: Cherry", "Материал: ABS", "Технология: Double-shot", "Комплектация: 130 клавиш"],
-                profile: "Cherry",
-                material: "ABS",
-                inStock: true
-            },
-            {
-                id: 1002,
-                name: "Кейкапы PBT Olivia",
-                category: "keycaps",
-                price: "749,000 UZS",
-                images: ["https://images.unsplash.com/photo-1595225476474-87563907c212?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
-                description: "Профиль OEM, материал PBT, пастельные тона",
-                features: ["Профиль: OEM", "Материал: PBT", "Технология: Dye-sub", "Комплектация: 108 клавиш"],
-                profile: "OEM",
-                material: "PBT",
-                inStock: true
-            },
-            {
-                id: 1003,
-                name: "Кейкапы SA Carbon",
-                category: "keycaps",
-                price: "999,000 UZS",
-                images: ["https://images.unsplash.com/photo-1603048588665-791ca8aea617?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
-                description: "Профиль SA, материал ABS, оранжево-серые тона",
-                features: ["Профиль: SA", "Материал: ABS", "Технология: Double-shot", "Комплектация: 120 клавиш"],
-                profile: "SA",
-                material: "ABS",
-                inStock: true
-            },
-            {
-                id: 1004,
-                name: "Кейкапы DSA Miami",
-                category: "keycaps",
-                price: "649,000 UZS",
-                images: ["https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
-                description: "Профиль DSA, материал PBT, яркие розово-голубые тона",
-                features: ["Профиль: DSA", "Материал: PBT", "Технология: Dye-sub", "Комплектация: 125 клавиш"],
-                profile: "DSA",
-                material: "PBT",
-                inStock: true
-            },
-            {
-                id: 1005,
-                name: "Кейкапы XDA Godspeed",
-                category: "keycaps",
-                price: "849,000 UZS",
-                images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"],
-                description: "Профиль XDA, материал PBT, космическая тематика",
-                features: ["Профиль: XDA", "Материал: PBT", "Технология: Double-shot", "Комплектация: 140 клавиш"],
-                profile: "XDA",
-                material: "PBT",
-                inStock: true
-            }
-        ];
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
 
-        let keycaps = [];
-        let firebaseLoaded = false;
-        let timeoutTriggered = false;
-
-        function renderKeycaps() {
+        function renderKeycaps(keycapsArray) {
             const grid = document.getElementById('keycapsGrid');
             if (!grid) return;
             
-            if (keycaps.length === 0) {
-                grid.innerHTML = '<div class="loader" role="status" aria-label="Нет данных"></div>';
+            if (!keycapsArray || keycapsArray.length === 0) {
+                grid.innerHTML = '<div class="empty-message">😕 Кейкапы пока не добавлены. Загляните позже!</div>';
                 return;
             }
             
             grid.innerHTML = '';
             
-            keycaps.forEach((keycap, index) => {
+            keycapsArray.forEach((keycap, index) => {
                 const card = document.createElement('div');
                 card.className = 'keycap-card';
                 
                 const isFirst = index === 0;
                 const imgLoadingAttr = isFirst ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"';
                 
+                const imageUrl = keycap.images && keycap.images[0] 
+                    ? keycap.images[0] 
+                    : 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы';
+                
                 card.innerHTML = `
                     <div class="keycap-badge">${escapeHtml(keycap.profile || 'Кейкапы')}</div>
                     <div class="keycap-image-container">
-                        <img src="${keycap.images?.[0] || 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'}" 
+                        <img src="${imageUrl}" 
                              alt="${escapeHtml(keycap.name)}" 
                              class="keycap-image"
                              ${imgLoadingAttr}
@@ -722,83 +665,54 @@
                             <span class="keycap-material">${escapeHtml(keycap.material || 'PBT')}</span>
                         </div>
                         <p style="color: #94a3b8; font-size: 0.9rem; margin: 0.5rem 0;">
-                            ${escapeHtml(keycap.description?.substring(0, 60) || '')}...
+                            ${escapeHtml(keycap.description?.substring(0, 60) || '')}${keycap.description?.length > 60 ? '...' : ''}
                         </p>
                         <div class="keycap-price">${escapeHtml(keycap.price)}</div>
                     </div>
                 `;
                 
                 card.addEventListener('click', () => {
-                    window.location.href = `product.html?id=${keycap.id}`;
+                    if (keycap.id) {
+                        window.location.href = `product.html?id=${keycap.id}`;
+                    }
                 });
                 
                 grid.appendChild(card);
             });
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        // ⭐ ОСНОВНОЕ ИСПРАВЛЕНИЕ: таймаут 3 секунды на Firebase
+        // ⭐ ЗАГРУЖАЕМ ТОЛЬКО КЕЙКАПЫ ИЗ FIREBASE
         const productsRef = ref(database, 'products');
         
-        // Таймаут: если Firebase не ответил за 3 секунды — показываем defaultKeycaps
-        const firebaseTimeout = setTimeout(() => {
-            if (!firebaseLoaded) {
-                console.warn('Firebase не загрузился, использую defaultKeycaps');
-                timeoutTriggered = true;
-                keycaps = [...defaultKeycaps];
-                renderKeycaps();
-            }
-        }, 3000);
-        
         onValue(productsRef, (snapshot) => {
-            firebaseLoaded = true;
-            clearTimeout(firebaseTimeout);
-            
             const data = snapshot.val();
+            const keycaps = [];
+            
             if (data) {
-                const filtered = Object.values(data).filter(p => p.category === 'keycaps');
-                if (filtered.length > 0) {
-                    keycaps = filtered;
-                } else {
-                    keycaps = [...defaultKeycaps];
+                // Проходим по всем товарам и собираем только те, у которых category === 'keycaps'
+                for (const id in data) {
+                    const product = data[id];
+                    if (product && product.category === 'keycaps') {
+                        // Добавляем id в объект товара для ссылки
+                        product.id = id;
+                        keycaps.push(product);
+                    }
                 }
-            } else {
-                keycaps = [...defaultKeycaps];
             }
             
-            renderKeycaps();
+            console.log(`Загружено кейкапов: ${keycaps.length}`);
+            renderKeycaps(keycaps);
+            
         }, (error) => {
-            // ⭐ Обработка ошибки подключения
-            console.error('Ошибка Firebase:', error);
-            if (!timeoutTriggered) {
-                clearTimeout(firebaseTimeout);
-                keycaps = [...defaultKeycaps];
-                renderKeycaps();
-            }
+            console.error('Ошибка загрузки из Firebase:', error);
+            document.getElementById('keycapsGrid').innerHTML = '<div class="empty-message">❌ Ошибка загрузки данных. Проверьте подключение.</div>';
         });
-
-        // На всякий случай, если onValue вообще не сработает — показываем default через 3.5 сек
-        setTimeout(() => {
-            if (!firebaseLoaded && keycaps.length === 0) {
-                keycaps = [...defaultKeycaps];
-                renderKeycaps();
-            }
-        }, 3500);
 
         document.getElementById('trackingBtn')?.addEventListener('click', () => {
             window.location.href = 'tracking.html';
         });
         
-        // ========== СКРЫТЫЙ ВХОД (Ctrl + тройной клик) ==========
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
