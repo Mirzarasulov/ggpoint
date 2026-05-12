@@ -130,8 +130,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Кнопка-шестеренка УДАЛЕНА - больше не используется */
-        
         /* Стили для страницы товара */
         .product-page {
             padding: 6rem 2rem 4rem;
@@ -368,6 +366,11 @@
             color: white;
         }
         
+        .product-badge.mb {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+        }
+        
         .product-title {
             font-size: 2rem;
             margin-bottom: 1rem;
@@ -390,6 +393,11 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
+        }
+        
+        .product-category.mb {
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid var(--primary-blue);
         }
         
         .product-brand {
@@ -707,6 +715,16 @@
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .product-card:hover {
@@ -1195,6 +1213,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="mb.html" class="nav-link">
+                            <i class="fas fa-microchip"></i>
+                            <span class="nav-text">MB</span>
+                            <span class="beta-badge">Материнские платы</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="about.html" class="nav-link">
                             <i class="fas fa-info-circle"></i>
                             <span class="nav-text">О нас</span>
@@ -1214,7 +1239,6 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
                 </button>
-                <!-- Кнопка-шестеренка УДАЛЕНА -->
             </div>
         </div>
     </header>
@@ -1227,14 +1251,6 @@
     <button class="close-button" onclick="closeAndGoBack()" title="Закрыть">
         <i class="fas fa-times"></i>
     </button>
-
-    <div style="display: none;" id="breadcrumbs">
-        <a href="index.html">Главная</a>
-        <i class="fas fa-chevron-right"></i>
-        <a href="catalog.html">Каталог</a>
-        <i class="fas fa-chevron-right"></i>
-        <span id="currentCategory">Товар</span>
-    </div>
 
     <div class="product-page">
         <div class="product-container">
@@ -1402,6 +1418,7 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -1545,7 +1562,13 @@
             images = product.images || ['https://via.placeholder.com/500x400/1e293b/2563eb?text=Нет+фото'];
             
             document.getElementById('productTitle').textContent = product.name;
-            document.getElementById('productCategory').textContent = getCategoryName(product.category);
+            
+            const categoryName = getCategoryName(product.category);
+            const categorySpan = document.getElementById('productCategory');
+            categorySpan.textContent = categoryName;
+            if (product.category === 'mb') {
+                categorySpan.classList.add('mb');
+            }
             
             const brandInfo = Object.values(brands).find(b => b.name === product.brand);
             if (brandInfo) {
@@ -1626,15 +1649,16 @@
                 grid.innerHTML = '<p style="color: var(--text-gray);">Похожих товаров не найдено</p>';
                 return;
             }
-            related.forEach(p => {
+            related.forEach((p, index) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                card.style.animationDelay = `${index * 0.1}s`;
                 const isHot = hotPrices[p.id];
                 const imageUrl = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
                 card.innerHTML = `
                     ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
                     <div class="product-image-container">
-                        <img src="${imageUrl}" class="product-image" alt="${escapeHtml(p.name)}">
+                        <img src="${imageUrl}" class="product-image" alt="${escapeHtml(p.name)}" loading="lazy">
                     </div>
                     <div class="product-info">
                         <div class="product-category">${getCategoryName(p.category)}</div>
@@ -1654,7 +1678,8 @@
                 'наушники': 'Наушники',
                 'монитор': 'Монитор',
                 'keycaps': 'Кейкапы',
-                'pads': 'Коврик'
+                'pads': 'Коврик',
+                'mb': 'Материнская плата'
             };
             return categories[key] || key;
         }
@@ -1775,7 +1800,7 @@
             }
         });
 
-        // ========== НОВЫЙ СКРЫТЫЙ ВХОД (ВМЕСТО КНОПКИ-ШЕСТЕРЁНКИ) ==========
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
