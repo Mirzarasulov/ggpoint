@@ -1,25 +1,23 @@
+Ответ администратора будет отображаться в `product.html` сразу под отзывом. Вот полный исправленный код `product.html` с:
+1. Отображением ответа администратора
+2. Ограничением длины отзыва от 5 до 999 символов
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO -->
     <title>Товар - GGPoint</title>
     <meta name="description" content="Подробное описание товара">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -52,1523 +50,307 @@
             border-bottom: 1px solid rgba(37, 99, 235, 0.3);
         }
         
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo a {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-decoration: none;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-list {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .nav-link:hover,
-        .nav-link.active {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .beta-badge {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            font-size: 0.6rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            margin-left: 0.3rem;
-        }
-        
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        /* Единый стиль для кнопки отслеживания */
-        .tracking-btn-main {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-        
-        .tracking-btn-main:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
+        .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-list { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+        .nav-link { color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-weight: 500; white-space: nowrap; }
+        .nav-link:hover, .nav-link.active { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .beta-badge { background: var(--gradient); font-size: 0.6rem; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem; }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .tracking-btn-main { background: var(--gradient); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; white-space: nowrap; }
+        .tracking-btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         
         /* Стили для страницы товара */
-        .product-page {
-            padding: 6rem 2rem 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-        }
+        .product-page { padding: 6rem 2rem 4rem; max-width: 1400px; margin: 0 auto; position: relative; }
+        .back-button { position: absolute; top: 6rem; left: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: var(--card-bg); border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; z-index: 10; }
+        .back-button:hover { background: var(--primary-blue); color: white; transform: translateX(-5px); }
+        .close-button { position: absolute; top: 6rem; right: 2rem; width: 40px; height: 40px; background: var(--card-bg); border: 2px solid var(--sale-red); color: var(--sale-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 10; font-size: 1.2rem; }
+        .close-button:hover { background: var(--sale-red); color: white; transform: scale(1.1); }
         
-        /* Кнопка назад */
-        .back-button {
-            position: absolute;
-            top: 6rem;
-            left: 2rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            background: var(--card-bg);
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-        
-        .back-button:hover {
-            background: var(--primary-blue);
-            color: white;
-            transform: translateX(-5px);
-        }
-        
-        .close-button {
-            position: absolute;
-            top: 6rem;
-            right: 2rem;
-            width: 40px;
-            height: 40px;
-            background: var(--card-bg);
-            border: 2px solid var(--sale-red);
-            color: var(--sale-red);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-            font-size: 1.2rem;
-        }
-        
-        .close-button:hover {
-            background: var(--sale-red);
-            color: white;
-            transform: scale(1.1);
-        }
-        
-        .product-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 2rem;
-        }
+        .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
         
         /* Галерея */
-        .product-gallery {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 1.5rem;
-            border: 2px solid #334155;
-        }
-        
-        .main-image-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-            cursor: zoom-in;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .main-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-        
-        .main-image.zoomed {
-            transform: scale(2);
-            cursor: zoom-out;
-        }
-        
-        .zoom-hint {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            padding: 0 1rem;
-            pointer-events: none;
-        }
-        
-        .gallery-btn {
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid white;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            pointer-events: all;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .gallery-btn:hover:not(:disabled) {
-            background: var(--primary-blue);
-            transform: scale(1.1);
-        }
-        
-        .gallery-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-        
-        .thumbnail-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        
-        .thumbnail {
-            width: 100%;
-            height: 80px;
-            object-fit: contain;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            padding: 0.2rem;
-        }
-        
-        .thumbnail:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary-blue);
-        }
-        
-        .thumbnail.active {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-        }
-        
-        .photo-count {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 8px;
-            color: var(--text-gray);
-        }
-        
-        .fullscreen-btn {
-            background: transparent;
-            border: 1px solid var(--primary-blue);
-            color: var(--primary-blue);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        
-        .fullscreen-btn:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
+        .product-gallery { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; border: 2px solid #334155; }
+        .main-image-container { position: relative; width: 100%; height: 500px; background: white; border-radius: 12px; overflow: hidden; margin-bottom: 1rem; cursor: zoom-in; display: flex; align-items: center; justify-content: center; }
+        .main-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+        .main-image.zoomed { transform: scale(2); cursor: zoom-out; }
+        .zoom-hint { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; pointer-events: none; display: flex; align-items: center; gap: 0.3rem; }
+        .gallery-nav { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 1rem; pointer-events: none; }
+        .gallery-btn { width: 40px; height: 40px; background: rgba(0,0,0,0.7); border: 2px solid white; border-radius: 50%; color: white; cursor: pointer; pointer-events: all; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .gallery-btn:hover:not(:disabled) { background: var(--primary-blue); transform: scale(1.1); }
+        .gallery-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .thumbnail-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-top: 1rem; }
+        .thumbnail { width: 100%; height: 80px; object-fit: contain; background: white; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease; padding: 0.2rem; }
+        .thumbnail:hover { transform: translateY(-2px); border-color: var(--primary-blue); }
+        .thumbnail.active { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3); }
+        .photo-count { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding: 0.5rem 1rem; background: rgba(37, 99, 235, 0.1); border-radius: 8px; color: var(--text-gray); }
+        .fullscreen-btn { background: transparent; border: 1px solid var(--primary-blue); color: var(--primary-blue); padding: 0.3rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.3rem; }
+        .fullscreen-btn:hover { background: var(--primary-blue); color: white; }
         
         /* Информация о товаре */
-        .product-info {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid #334155;
-        }
-        
-        .product-badge {
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .product-badge.sale {
-            background: var(--hot-gradient);
-            color: white;
-        }
-        
-        .product-badge.new {
-            background: var(--success-green);
-            color: white;
-        }
-        
-        .product-badge.mb {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-        }
-        
-        .product-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-            line-height: 1.3;
-        }
-        
-        .product-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .product-category {
-            color: var(--primary-blue);
-            background: rgba(37, 99, 235, 0.1);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .product-category.mb {
-            background: rgba(37, 99, 235, 0.2);
-            border: 1px solid var(--primary-blue);
-        }
-        
-        .product-brand {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        
-        .product-brand img {
-            height: 25px;
-            filter: brightness(0) invert(1);
-        }
-        
-        .product-price-block {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 2px solid var(--primary-blue);
-        }
-        
-        .current-price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-        }
-        
-        .old-price {
-            font-size: 1.3rem;
-            color: var(--text-gray);
-            text-decoration: line-through;
-            margin-left: 1rem;
-        }
-        
-        .discount-info {
-            display: inline-block;
-            background: var(--hot-gradient);
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 1rem;
-        }
-        
-        .product-description {
-            margin-bottom: 2rem;
-            color: var(--text-gray);
-            line-height: 1.7;
-        }
-        
-        .product-features {
-            margin-bottom: 2rem;
-        }
-        
-        .product-features h3 {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .features-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
-        }
-        
-        .features-list li {
-            color: var(--text-gray);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-        
-        .features-list li::before {
-            content: '✓';
-            color: var(--success-green);
-            font-weight: bold;
-        }
+        .product-info { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid #334155; }
+        .product-badge { display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .product-badge.sale { background: var(--hot-gradient); color: white; }
+        .product-badge.new { background: var(--success-green); color: white; }
+        .product-badge.mb { background: var(--gradient); color: white; }
+        .product-title { font-size: 2rem; margin-bottom: 1rem; color: var(--text-light); line-height: 1.3; }
+        .product-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .product-category { color: var(--primary-blue); background: rgba(37, 99, 235, 0.1); padding: 0.3rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+        .product-category.mb { background: rgba(37, 99, 235, 0.2); border: 1px solid var(--primary-blue); }
+        .product-brand { color: var(--text-gray); font-size: 0.9rem; display: flex; align-items: center; gap: 0.3rem; }
+        .product-brand img { height: 25px; filter: brightness(0) invert(1); }
+        .product-price-block { background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 2px solid var(--primary-blue); }
+        .current-price { font-size: 2.5rem; font-weight: bold; color: var(--primary-blue); }
+        .old-price { font-size: 1.3rem; color: var(--text-gray); text-decoration: line-through; margin-left: 1rem; }
+        .discount-info { display: inline-block; background: var(--hot-gradient); color: white; padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.9rem; margin-left: 1rem; }
+        .product-description { margin-bottom: 2rem; color: var(--text-gray); line-height: 1.7; }
+        .product-features { margin-bottom: 2rem; }
+        .product-features h3 { color: var(--text-light); margin-bottom: 1rem; font-size: 1.2rem; }
+        .features-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+        .features-list li { color: var(--text-gray); display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; }
+        .features-list li::before { content: '✓'; color: var(--success-green); font-weight: bold; }
         
         /* YouTube плеер */
-        .youtube-section-bottom {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid var(--primary-blue);
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .youtube-header-bottom {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .youtube-icon-large {
-            width: 60px;
-            height: 60px;
-            background: #ff0000;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            box-shadow: 0 10px 20px rgba(255,0,0,0.3);
-        }
-        
-        .youtube-title {
-            flex: 1;
-        }
-        
-        .youtube-title h3 {
-            color: var(--text-light);
-            font-size: 1.8rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .youtube-title p {
-            color: var(--text-gray);
-            font-size: 1rem;
-        }
-        
-        .youtube-badge {
-            background: rgba(255,0,0,0.1);
-            color: #ff0000;
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 600;
-            border: 2px solid #ff0000;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .video-container-bottom {
-            position: relative;
-            width: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            border: 2px solid #ff0000;
-            margin-top: 1rem;
-            background: #000;
-            min-height: 200px;
-        }
-        
-        .video-container-bottom iframe {
-            width: 100%;
-            height: 450px;
-            border: none;
-            display: block;
-        }
-        
-        .no-video-bottom {
-            text-align: center;
-            padding: 4rem;
-            background: linear-gradient(135deg, rgba(255,0,0,0.05) 0%, rgba(0,0,0,0.2) 100%);
-            border-radius: 16px;
-            color: var(--text-gray);
-            border: 2px dashed #ff0000;
-        }
+        .youtube-section-bottom { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid var(--primary-blue); margin: 2rem 0; }
+        .youtube-header-bottom { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .youtube-icon-large { width: 60px; height: 60px; background: #ff0000; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; box-shadow: 0 10px 20px rgba(255,0,0,0.3); }
+        .youtube-title { flex: 1; }
+        .youtube-title h3 { color: var(--text-light); font-size: 1.8rem; margin-bottom: 0.3rem; }
+        .youtube-title p { color: var(--text-gray); font-size: 1rem; }
+        .youtube-badge { background: rgba(255,0,0,0.1); color: #ff0000; padding: 0.5rem 1.5rem; border-radius: 30px; font-weight: 600; border: 2px solid #ff0000; display: flex; align-items: center; gap: 0.5rem; }
+        .video-container-bottom { position: relative; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.3); border: 2px solid #ff0000; margin-top: 1rem; background: #000; min-height: 200px; }
+        .video-container-bottom iframe { width: 100%; height: 450px; border: none; display: block; }
+        .no-video-bottom { text-align: center; padding: 4rem; background: linear-gradient(135deg, rgba(255,0,0,0.05) 0%, rgba(0,0,0,0.2) 100%); border-radius: 16px; color: var(--text-gray); border: 2px dashed #ff0000; }
         
         /* Вкладки */
-        .product-tabs {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid #334155;
-            margin: 2rem 0;
-        }
-        
-        .tabs-header {
-            display: flex;
-            gap: 1rem;
-            border-bottom: 2px solid #334155;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .tab-btn {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            color: var(--text-gray);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary-blue);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .tab-btn:hover {
-            color: var(--primary-blue);
-        }
-        
-        .tab-btn.active {
-            color: var(--primary-blue);
-        }
-        
-        .tab-btn.active::after {
-            transform: scaleX(1);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .specs-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .specs-table tr {
-            border-bottom: 1px solid #334155;
-        }
-        
-        .specs-table td {
-            padding: 1rem;
-            color: var(--text-gray);
-        }
-        
-        .specs-table td:first-child {
-            font-weight: 600;
-            color: var(--text-light);
-            width: 200px;
-        }
+        .product-tabs { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid #334155; margin: 2rem 0; }
+        .tabs-header { display: flex; gap: 1rem; border-bottom: 2px solid #334155; margin-bottom: 2rem; flex-wrap: wrap; }
+        .tab-btn { padding: 1rem 2rem; background: transparent; border: none; color: var(--text-gray); font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .tab-btn::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--primary-blue); transform: scaleX(0); transition: transform 0.3s ease; }
+        .tab-btn:hover { color: var(--primary-blue); }
+        .tab-btn.active { color: var(--primary-blue); }
+        .tab-btn.active::after { transform: scaleX(1); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .specs-table { width: 100%; border-collapse: collapse; }
+        .specs-table tr { border-bottom: 1px solid #334155; }
+        .specs-table td { padding: 1rem; color: var(--text-gray); }
+        .specs-table td:first-child { font-weight: 600; color: var(--text-light); width: 200px; }
         
         /* Отзывы */
-        .reviews-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid #334155;
-            margin: 2rem 0;
-        }
-        
-        .reviews-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .reviews-list {
-            margin-bottom: 2rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .review-item {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-            border: 1px solid #334155;
-        }
-        
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            flex-wrap: wrap;
-        }
-        
-        .review-author {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        
-        .review-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .review-name {
-            font-weight: 600;
-            color: var(--text-light);
-        }
-        
-        .review-date {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-        }
-        
-        .review-rating {
-            color: #ffd700;
-            font-size: 1rem;
-        }
-        
-        .review-text {
-            color: var(--text-gray);
-            line-height: 1.6;
-            margin-top: 0.5rem;
-        }
-        
-        .no-reviews {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-gray);
-        }
-        
-        .add-review-form {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-        }
-        
-        .add-review-form h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .star-rating {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-        }
-        
-        .star-rating i {
-            font-size: 1.8rem;
-            color: #ffd700;
-            transition: all 0.2s ease;
-        }
-        
-        .star-rating i:hover,
-        .star-rating i.hover {
-            transform: scale(1.1);
-        }
-        
-        .review-input {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            resize: vertical;
-            font-family: inherit;
-        }
-        
-        .review-input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-        }
-        
-        .review-name-input {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-        
-        .submit-review-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .submit-review-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
+        .reviews-section { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid #334155; margin: 2rem 0; }
+        .reviews-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-light); display: flex; align-items: center; gap: 0.5rem; }
+        .reviews-list { margin-bottom: 2rem; max-height: 400px; overflow-y: auto; }
+        .review-item { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #334155; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .review-author { display: flex; align-items: center; gap: 0.8rem; }
+        .review-avatar { width: 40px; height: 40px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .review-name { font-weight: 600; color: var(--text-light); }
+        .review-date { font-size: 0.8rem; color: var(--text-gray); }
+        .review-rating { color: #ffd700; font-size: 1rem; }
+        .review-text { color: var(--text-gray); line-height: 1.6; margin-top: 0.5rem; }
+        .admin-reply-block { margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid rgba(37, 99, 235, 0.2); }
+        .admin-reply-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .admin-reply-header i { color: var(--primary-blue); }
+        .admin-reply-header span { font-weight: 600; color: var(--primary-blue); font-size: 0.85rem; }
+        .admin-reply-text { color: var(--text-gray); font-size: 0.9rem; line-height: 1.5; }
+        .no-reviews { text-align: center; padding: 2rem; color: var(--text-gray); }
+        .add-review-form { background: rgba(0,0,0,0.2); border-radius: 16px; padding: 1.5rem; margin-top: 1rem; }
+        .add-review-form h3 { margin-bottom: 1rem; font-size: 1.2rem; }
+        .star-rating { display: flex; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer; }
+        .star-rating i { font-size: 1.8rem; color: #ffd700; transition: all 0.2s ease; }
+        .star-rating i:hover, .star-rating i.hover { transform: scale(1.1); }
+        .review-input { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); margin-bottom: 1rem; resize: vertical; font-family: inherit; }
+        .review-input:focus { outline: none; border-color: var(--primary-blue); }
+        .review-name-input { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); margin-bottom: 1rem; }
+        .review-counter { text-align: right; font-size: 0.8rem; color: var(--text-gray); margin-top: -0.5rem; margin-bottom: 0.5rem; }
+        .review-counter.error { color: var(--sale-red); }
+        .submit-review-btn { background: var(--gradient); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+        .submit-review-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
+        .submit-review-btn.disabled { opacity: 0.5; cursor: not-allowed; }
         
         /* Похожие товары */
-        .related-products {
-            margin-top: 4rem;
-        }
-        
-        .related-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .product-card {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(37, 99, 235, 0.2);
-            cursor: pointer;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: #2563eb;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
-        }
-        
-        .product-badge-sale {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-        
-        .product-image-container {
-            height: 200px;
-            overflow: hidden;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .product-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-        
-        .product-card:hover .product-image {
-            transform: scale(1.05);
-        }
-        
-        .product-card .product-info {
-            padding: 1rem;
-            background: transparent;
-            border: none;
-        }
-        
-        .product-card .product-category {
-            font-size: 0.75rem;
-            color: #60a5fa;
-            margin-bottom: 0.5rem;
-        }
-        
-        .product-card .product-name {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-        
-        .product-card .product-price {
-            font-size: 1.1rem;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: bold;
-        }
+        .related-products { margin-top: 4rem; }
+        .related-title { font-size: 2rem; margin-bottom: 2rem; color: var(--text-light); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .product-card { background: rgba(30,41,59,0.5); backdrop-filter: blur(10px); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; border: 1px solid rgba(37,99,235,0.2); cursor: pointer; position: relative; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .product-card:hover { transform: translateY(-5px); border-color: #2563eb; box-shadow: 0 10px 25px -5px rgba(37,99,235,0.3); }
+        .product-badge-sale { position: absolute; top: 10px; left: 10px; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; z-index: 2; }
+        .product-image-container { height: 200px; overflow: hidden; background: white; display: flex; align-items: center; justify-content: center; }
+        .product-image { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
+        .product-card .product-info { padding: 1rem; background: transparent; border: none; }
+        .product-card .product-category { font-size: 0.75rem; color: #60a5fa; margin-bottom: 0.5rem; }
+        .product-card .product-name { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-light); }
+        .product-card .product-price { font-size: 1.1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; }
         
         /* Полноэкранная галерея */
-        .fullscreen-gallery {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.98);
-            z-index: 3000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
+        .fullscreen-gallery { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.98); z-index: 3000; display: none; align-items: center; justify-content: center; }
+        .fullscreen-gallery.active { display: flex; }
+        .fullscreen-image-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .fullscreen-image { max-width: 90%; max-height: 90%; object-fit: contain; transition: transform 0.3s ease; cursor: zoom-in; }
+        .fullscreen-image.zoomed { transform: scale(2); cursor: zoom-out; }
+        .fullscreen-close { position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; background: rgba(255,255,255,0.1); border: 2px solid white; border-radius: 50%; color: white; font-size: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 3001; }
+        .fullscreen-close:hover { background: var(--sale-red); transform: scale(1.1); }
+        .fullscreen-nav { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 2rem; pointer-events: none; z-index: 3001; }
+        .fullscreen-nav-btn { width: 60px; height: 60px; background: rgba(255,255,255,0.1); border: 2px solid white; border-radius: 50%; color: white; font-size: 1.5rem; cursor: pointer; pointer-events: all; transition: all 0.3s ease; }
+        .fullscreen-nav-btn:hover { background: var(--primary-blue); transform: scale(1.1); }
+        .fullscreen-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: white; background: rgba(0,0,0,0.5); padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2); z-index: 3001; }
         
-        .fullscreen-gallery.active {
-            display: flex;
-        }
-        
-        .fullscreen-image-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .fullscreen-image {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-            cursor: zoom-in;
-        }
-        
-        .fullscreen-image.zoomed {
-            transform: scale(2);
-            cursor: zoom-out;
-        }
-        
-        .fullscreen-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid white;
-            border-radius: 50%;
-            color: white;
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 3001;
-        }
-        
-        .fullscreen-close:hover {
-            background: var(--sale-red);
-            transform: scale(1.1);
-        }
-        
-        .fullscreen-nav {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            padding: 0 2rem;
-            pointer-events: none;
-            z-index: 3001;
-        }
-        
-        .fullscreen-nav-btn {
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid white;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            pointer-events: all;
-            transition: all 0.3s ease;
-        }
-        
-        .fullscreen-nav-btn:hover {
-            background: var(--primary-blue);
-            transform: scale(1.1);
-        }
-        
-        .fullscreen-counter {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            font-size: 1rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            z-index: 3001;
-        }
-        
-        /* Modal для входа в админку */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 4000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-        }
-        
-        .modal-content {
-            background: #1e293b;
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid rgba(37, 99, 235, 0.3);
-        }
-        
-        .close-modal {
-            float: right;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #94a3b8;
-        }
-        
-        .close-modal:hover {
-            color: #fff;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-        }
-        
-        .btn-primary-modal {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .btn-primary-modal:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: #1e293b; margin: 10% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(37,99,235,0.3); }
+        .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #94a3b8; }
+        .close-modal:hover { color: #fff; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #94a3b8; }
+        .form-group input { width: 100%; padding: 0.75rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; }
+        .btn-primary-modal { background: var(--gradient); color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+        .btn-primary-modal:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,99,235,0.4); }
         
         /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--success-green);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .notification { position: fixed; top: 20px; right: 20px; background: var(--success-green); color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 600; z-index: 9999; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
         /* Footer */
-        footer {
-            background: #0f172a;
-            border-top: 1px solid rgba(37, 99, 235, 0.3);
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-        
-        .footer-section h3 {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: #60a5fa;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(37, 99, 235, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(37, 99, 235, 0.3);
-        }
-        
-        .social-link:hover {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            transform: translateY(-3px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding: 1.5rem;
-            border-top: 1px solid rgba(37, 99, 235, 0.2);
-            color: #64748b;
-        }
-        
-        /* Back to top */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-        
-        .back-to-top.show {
-            display: flex;
-        }
-        
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
+        footer { background: #0f172a; border-top: 1px solid rgba(37,99,235,0.3); margin-top: 3rem; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+        .footer-section h3 { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; margin-bottom: 1rem; }
+        .footer-section h4 { margin-bottom: 1rem; color: var(--text-light); }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: #94a3b8; text-decoration: none; transition: all 0.3s ease; }
+        .footer-links a:hover { color: #60a5fa; }
+        .contact-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #94a3b8; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-link { width: 40px; height: 40px; background: rgba(37,99,235,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; border: 1px solid rgba(37,99,235,0.3); }
+        .social-link:hover { background: var(--gradient); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(37,99,235,0.2); color: #64748b; }
+        .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--gradient); color: white; border: none; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 100; }
+        .back-to-top.show { display: flex; }
+        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37,99,235,0.4); }
         
         @media (max-width: 768px) {
-            .back-button {
-                top: 5rem;
-                left: 1rem;
-                padding: 0.4rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .close-button {
-                top: 5rem;
-                right: 1rem;
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-            
-            .product-container {
-                grid-template-columns: 1fr;
-                margin-top: 3rem;
-            }
-            
-            .features-list {
-                grid-template-columns: 1fr;
-            }
-            
-            .main-image-container {
-                height: 350px;
-            }
-            
-            .youtube-header-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .video-container-bottom iframe {
-                height: 250px;
-            }
-            
-            .tracking-btn-main span {
-                display: none;
-            }
-            
-            .tracking-btn-main {
-                padding: 0.6rem 1rem;
-            }
-            
-            .nav-list {
-                gap: 1rem;
-            }
-            
-            .nav-text {
-                font-size: 0.9rem;
-            }
+            .back-button { top: 5rem; left: 1rem; padding: 0.4rem 1rem; font-size: 0.9rem; }
+            .close-button { top: 5rem; right: 1rem; width: 35px; height: 35px; font-size: 1rem; }
+            .product-container { grid-template-columns: 1fr; margin-top: 3rem; }
+            .features-list { grid-template-columns: 1fr; }
+            .main-image-container { height: 350px; }
+            .youtube-header-bottom { flex-direction: column; text-align: center; }
+            .video-container-bottom iframe { height: 250px; }
+            .tracking-btn-main span { display: none; }
+            .tracking-btn-main { padding: 0.5rem 0.8rem; }
+            .nav-list { gap: 0.8rem; }
+            .nav-text { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-container">
-            <div class="logo">
-                <a href="index.html">GGPoint</a>
-            </div>
-            
+            <div class="logo"><a href="index.html">GGPoint</a></div>
             <nav>
                 <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="index.html" class="nav-link">
-                            <i class="fas fa-home"></i>
-                            <span class="nav-text">Главная</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="catalog.html" class="nav-link">
-                            <i class="fas fa-th-large"></i>
-                            <span class="nav-text">Каталог</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="keycaps.html" class="nav-link">
-                            <i class="fas fa-keyboard"></i>
-                            <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Коллекция</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pads.html" class="nav-link">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span class="nav-text">Коврики</span>
-                            <span class="beta-badge">Новинка</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="mb.html" class="nav-link">
-                            <i class="fas fa-microchip"></i>
-                            <span class="nav-text">MB</span>
-                            <span class="beta-badge">Материнские платы</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.html" class="nav-link">
-                            <i class="fas fa-info-circle"></i>
-                            <span class="nav-text">О нас</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contacts.html" class="nav-link">
-                            <i class="fas fa-phone"></i>
-                            <span class="nav-text">Контакты</span>
-                        </a>
-                    </li>
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>Главная</span></a></li>
+                    <li><a href="catalog.html" class="nav-link"><i class="fas fa-th-large"></i><span>Каталог</span></a></li>
+                    <li><a href="keycaps.html" class="nav-link"><i class="fas fa-keyboard"></i><span>Кейкапы</span><span class="beta-badge">Коллекция</span></a></li>
+                    <li><a href="pads.html" class="nav-link"><i class="fas fa-mouse-pointer"></i><span>Коврики</span><span class="beta-badge">Новинка</span></a></li>
+                    <li><a href="mb.html" class="nav-link"><i class="fas fa-microchip"></i><span>MB</span><span class="beta-badge">Материнские платы</span></a></li>
+                    <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i><span>О нас</span></a></li>
+                    <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i><span>Контакты</span></a></li>
                 </ul>
             </nav>
-            
             <div class="header-actions">
-                <button class="tracking-btn-main" id="trackingBtn">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Отследить заказ</span>
-                </button>
+                <button class="tracking-btn-main" id="trackingBtn"><i class="fas fa-map-marker-alt"></i><span>Отследить заказ</span></button>
             </div>
         </div>
     </header>
 
-    <button class="back-button" onclick="goBack()">
-        <i class="fas fa-arrow-left"></i>
-        <span>Назад</span>
-    </button>
-    
-    <button class="close-button" onclick="closeAndGoBack()" title="Закрыть">
-        <i class="fas fa-times"></i>
-    </button>
+    <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i><span>Назад</span></button>
+    <button class="close-button" onclick="closeAndGoBack()" title="Закрыть"><i class="fas fa-times"></i></button>
 
     <div class="product-page">
         <div class="product-container">
             <div class="product-gallery">
                 <div class="main-image-container" id="mainImageContainer">
                     <img src="" alt="" class="main-image" id="mainImage">
-                    <div class="zoom-hint">
-                        <i class="fas fa-search-plus"></i>
-                        <span>Клик для увеличения</span>
-                    </div>
+                    <div class="zoom-hint"><i class="fas fa-search-plus"></i><span>Клик для увеличения</span></div>
                     <div class="gallery-nav">
-                        <button class="gallery-btn" id="prevImageBtn" onclick="changeImage(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="gallery-btn" id="nextImageBtn" onclick="changeImage(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
+                        <button class="gallery-btn" id="prevImageBtn" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <button class="gallery-btn" id="nextImageBtn" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
-                
                 <div class="thumbnail-grid" id="thumbnailGrid"></div>
-                
-                <div class="photo-count">
-                    <span>
-                        <i class="fas fa-camera"></i>
-                        <span id="photoCount">0 фото</span>
-                    </span>
-                    <button class="fullscreen-btn" onclick="openFullscreen()">
-                        <i class="fas fa-expand"></i>
-                        На весь экран
-                    </button>
-                </div>
+                <div class="photo-count"><span><i class="fas fa-camera"></i> <span id="photoCount">0 фото</span></span><button class="fullscreen-btn" onclick="openFullscreen()"><i class="fas fa-expand"></i> На весь экран</button></div>
             </div>
             
             <div class="product-info">
                 <div id="saleBadge"></div>
-                
                 <h1 class="product-title" id="productTitle">Загрузка...</h1>
-                
-                <div class="product-meta">
-                    <span class="product-category" id="productCategory">-</span>
-                    <div class="product-brand" id="productBrand"></div>
-                </div>
-                
-                <div class="product-price-block" id="productPriceBlock">
-                    <span class="current-price" id="productPrice">-</span>
-                    <span class="old-price" id="oldPrice" style="display: none;"></span>
-                    <span class="discount-info" id="discountInfo" style="display: none;"></span>
-                </div>
-                
-                <div class="product-description" id="productDescription">
-                    Загрузка описания...
-                </div>
-                
-                <div class="product-features" id="featuresSection">
-                    <h3>Характеристики</h3>
-                    <ul class="features-list" id="featuresList"></ul>
-                </div>
+                <div class="product-meta"><span class="product-category" id="productCategory">-</span><div class="product-brand" id="productBrand"></div></div>
+                <div class="product-price-block" id="productPriceBlock"><span class="current-price" id="productPrice">-</span><span class="old-price" id="oldPrice" style="display:none;"></span><span class="discount-info" id="discountInfo" style="display:none;"></span></div>
+                <div class="product-description" id="productDescription">Загрузка описания...</div>
+                <div class="product-features" id="featuresSection"><h3>Характеристики</h3><ul class="features-list" id="featuresList"></ul></div>
             </div>
         </div>
         
         <div class="youtube-section-bottom" id="youtubeSectionBottom">
             <div class="youtube-header-bottom">
-                <div class="youtube-icon-large">
-                    <i class="fab fa-youtube"></i>
-                </div>
-                <div class="youtube-title">
-                    <h3>Видеообзор товара</h3>
-                    <p>Смотрите подробный обзор на YouTube канале</p>
-                </div>
-                <div class="youtube-badge">
-                    <i class="fas fa-play"></i>
-                    <span>Смотреть</span>
-                </div>
+                <div class="youtube-icon-large"><i class="fab fa-youtube"></i></div>
+                <div class="youtube-title"><h3>Видеообзор товара</h3><p>Смотрите подробный обзор на YouTube канале</p></div>
+                <div class="youtube-badge"><i class="fas fa-play"></i><span>Смотреть</span></div>
             </div>
-            
             <div id="videoContainerBottom" class="video-container-bottom"></div>
         </div>
         
         <div class="product-tabs">
-            <div class="tabs-header">
-                <button class="tab-btn active" data-tab="desc">Полное описание</button>
-                <button class="tab-btn" data-tab="specs">Характеристики</button>
-            </div>
-            
-            <div class="tab-content active" id="tab-desc">
-                <p id="fullDescription" style="color: var(--text-gray); line-height: 1.8;">Загрузка...</p>
-            </div>
-            
-            <div class="tab-content" id="tab-specs">
-                <table class="specs-table" id="specsTable"></table>
-            </div>
+            <div class="tabs-header"><button class="tab-btn active" data-tab="desc">Полное описание</button><button class="tab-btn" data-tab="specs">Характеристики</button></div>
+            <div class="tab-content active" id="tab-desc"><p id="fullDescription" style="color:var(--text-gray); line-height:1.8;">Загрузка...</p></div>
+            <div class="tab-content" id="tab-specs"><table class="specs-table" id="specsTable"><tr></table></div>
         </div>
         
         <!-- БЛОК ОТЗЫВОВ -->
         <div class="reviews-section" id="reviewsSection">
-            <div class="reviews-title">
-                <i class="fas fa-star" style="color: #ffd700;"></i>
-                Отзывы о товаре
-                <span id="reviewsCount" style="font-size: 1rem; color: var(--text-gray);"></span>
-            </div>
-            
-            <div class="reviews-list" id="reviewsList">
-                <div class="no-reviews">Загрузка отзывов...</div>
-            </div>
+            <div class="reviews-title"><i class="fas fa-star" style="color:#ffd700;"></i> Отзывы о товаре <span id="reviewsCount" style="font-size:1rem; color:var(--text-gray);"></span></div>
+            <div class="reviews-list" id="reviewsList"><div class="no-reviews">Загрузка отзывов...</div></div>
             
             <div class="add-review-form">
                 <h3>Оставить отзыв</h3>
                 <div class="star-rating" id="starRating">
-                    <i class="far fa-star" data-rating="1"></i>
-                    <i class="far fa-star" data-rating="2"></i>
-                    <i class="far fa-star" data-rating="3"></i>
-                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="1"></i><i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i><i class="far fa-star" data-rating="4"></i>
                     <i class="far fa-star" data-rating="5"></i>
                 </div>
                 <input type="text" id="reviewName" class="review-name-input" placeholder="Ваше имя" maxlength="50">
-                <textarea id="reviewText" class="review-input" rows="3" placeholder="Поделитесь впечатлениями о товаре..." maxlength="500"></textarea>
-                <button class="submit-review-btn" onclick="submitReview()">
-                    <i class="fas fa-paper-plane"></i> Отправить отзыв
-                </button>
+                <textarea id="reviewText" class="review-input" rows="3" placeholder="Поделитесь впечатлениями о товаре..." maxlength="999"></textarea>
+                <div class="review-counter" id="reviewCounter">0 / 999 символов</div>
+                <button class="submit-review-btn" id="submitReviewBtn" onclick="submitReview()"><i class="fas fa-paper-plane"></i> Отправить отзыв</button>
             </div>
         </div>
         
-        <div class="related-products">
-            <h2 class="related-title">Похожие товары</h2>
-            <div class="products-grid" id="relatedProducts"></div>
-        </div>
+        <div class="related-products"><h2 class="related-title">Похожие товары</h2><div class="products-grid" id="relatedProducts"></div></div>
     </div>
 
     <div class="fullscreen-gallery" id="fullscreenGallery">
         <button class="fullscreen-close" onclick="closeFullscreen()">×</button>
-        <div class="fullscreen-nav">
-            <button class="fullscreen-nav-btn" onclick="fullscreenChangeImage(-1)">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="fullscreen-nav-btn" onclick="fullscreenChangeImage(1)">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        <div class="fullscreen-image-container">
-            <img src="" alt="" class="fullscreen-image" id="fullscreenImage" onclick="toggleFullscreenZoom()">
-        </div>
+        <div class="fullscreen-nav"><button class="fullscreen-nav-btn" onclick="fullscreenChangeImage(-1)"><i class="fas fa-chevron-left"></i></button><button class="fullscreen-nav-btn" onclick="fullscreenChangeImage(1)"><i class="fas fa-chevron-right"></i></button></div>
+        <div class="fullscreen-image-container"><img src="" alt="" class="fullscreen-image" id="fullscreenImage" onclick="toggleFullscreenZoom()"></div>
         <div class="fullscreen-counter" id="fullscreenCounter">1 / 1</div>
     </div>
 
-    <!-- Модальное окно для входа в админку -->
-    <div class="modal" id="adminLoginModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeAdminModal">&times;</button>
-            <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label for="adminLogin">Логин</label>
-                    <input type="text" id="adminLogin" required placeholder="Введите логин">
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword">Пароль</label>
-                    <input type="password" id="adminPassword" required placeholder="Введите пароль">
-                </div>
-                <button type="submit" class="btn-primary-modal">
-                    <i class="fas fa-sign-in-alt"></i> Войти
-                </button>
-            </form>
-        </div>
-    </div>
+    <div class="modal" id="adminLoginModal"><div class="modal-content"><button class="close-modal" id="closeAdminModal">&times;</button><h2 style="background:var(--gradient); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-align:center; margin-bottom:2rem;">Вход в админ-панель</h2><form id="adminLoginForm"><div class="form-group"><label>Логин</label><input type="text" id="adminLogin" required></div><div class="form-group"><label>Пароль</label><input type="password" id="adminPassword" required></div><button type="submit" class="btn-primary-modal"><i class="fas fa-sign-in-alt"></i> Войти</button></form></div></div>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>GGPoint</h3>
-                <p>Ваш надежный магазин игровой периферии в Узбекистане.</p>
-                <div class="social-links">
-                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Навигация</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">MB</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+998 97 747 0157</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-telegram"></i>
-                        <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
-                    </div>
-                </div>
-            </div>
+            <div class="footer-section"><h3>GGPoint</h3><p>Ваш надежный магазин игровой периферии в Узбекистане.</p><div class="social-links"><a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a></div></div>
+            <div class="footer-section"><h4>Навигация</h4><ul class="footer-links"><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">MB</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+            <div class="footer-section"><h4>Контакты</h4><div class="contact-info"><div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div><div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div></div></div>
         </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 GGPoint. Все права защищены.</p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
     </footer>
 
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
@@ -1590,81 +372,67 @@
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
 
-        if (!productId) {
-            window.location.href = 'catalog.html';
-        }
+        if (!productId) window.location.href = 'catalog.html';
 
-        let product = null;
-        let products = [];
-        let hotPrices = {};
-        let brands = {};
-        let reviews = [];
-        let currentImageIndex = 0;
-        let images = [];
-        let selectedRating = 5;
-        let currentUserId = null;
+        let product = null, products = [], hotPrices = {}, brands = {}, reviews = [];
+        let currentImageIndex = 0, images = [], selectedRating = 5, currentUserId = null;
 
-        // Функция для генерации простого ID пользователя (для анонимных отзывов)
         function getUserId() {
             let id = localStorage.getItem('ggpoint_user_id');
-            if (!id) {
-                id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('ggpoint_user_id', id);
-            }
+            if (!id) { id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('ggpoint_user_id', id); }
             return id;
         }
-
         currentUserId = getUserId();
 
+        function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.background = type === 'success' ? '#10b981' : '#ef4444';
+            document.body.appendChild(notification);
+            setTimeout(() => { notification.style.opacity = '0'; setTimeout(() => notification.remove(), 300); }, 3000);
+        }
+
+        // Ограничение длины отзыва
+        const reviewTextarea = document.getElementById('reviewText');
+        const reviewCounter = document.getElementById('reviewCounter');
+        const submitBtn = document.getElementById('submitReviewBtn');
+        
+        function updateReviewCounter() {
+            const length = reviewTextarea.value.length;
+            reviewCounter.textContent = `${length} / 999 символов`;
+            if (length < 5) {
+                reviewCounter.classList.add('error');
+                reviewCounter.innerHTML = `${length} / 999 символов (минимум 5)`;
+                if (submitBtn) submitBtn.disabled = true;
+            } else if (length > 999) {
+                reviewTextarea.value = reviewTextarea.value.slice(0, 999);
+                reviewCounter.textContent = `999 / 999 символов`;
+                if (submitBtn) submitBtn.disabled = false;
+            } else {
+                reviewCounter.classList.remove('error');
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        }
+        
+        if (reviewTextarea) {
+            reviewTextarea.addEventListener('input', updateReviewCounter);
+            updateReviewCounter();
+        }
+
         function loadData() {
-            const productRef = ref(database, 'products/' + productId);
-            onValue(productRef, (snapshot) => {
-                product = snapshot.val();
-                if (!product) {
-                    window.location.href = 'catalog.html';
-                    return;
-                }
-                document.title = `${product.name} - GGPoint`;
-                renderProduct();
-            });
-
-            const productsRef = ref(database, 'products');
-            onValue(productsRef, (snapshot) => {
-                const data = snapshot.val();
-                products = data ? Object.values(data) : [];
-                renderRelatedProducts();
-            });
-
-            const hotPricesRef = ref(database, 'hotPrices');
-            onValue(hotPricesRef, (snapshot) => {
-                hotPrices = snapshot.val() || {};
-                renderProduct();
-            });
-
-            const brandsRef = ref(database, 'brands');
-            onValue(brandsRef, (snapshot) => {
-                brands = snapshot.val() || {};
-                renderProduct();
-            });
-
-            // Загрузка отзывов для этого товара
-            const reviewsRef = ref(database, 'reviews');
-            onValue(reviewsRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    reviews = Object.values(data).filter(r => r.productId == productId && r.status === 'approved');
-                    renderReviews();
-                } else {
-                    reviews = [];
-                    renderReviews();
-                }
-            });
+            onValue(ref(database, 'products/' + productId), (s) => { product = s.val(); if (!product) window.location.href = 'catalog.html'; document.title = `${product.name} - GGPoint`; renderProduct(); });
+            onValue(ref(database, 'products'), (s) => { products = s.val() ? Object.values(s.val()) : []; renderRelatedProducts(); });
+            onValue(ref(database, 'hotPrices'), (s) => { hotPrices = s.val() || {}; renderProduct(); });
+            onValue(ref(database, 'brands'), (s) => { brands = s.val() || {}; renderProduct(); });
+            onValue(ref(database, 'reviews'), (s) => { const d = s.val(); reviews = d ? Object.values(d).filter(r => r.productId == productId && r.status === 'approved') : []; renderReviews(); });
         }
 
         function renderReviews() {
             const container = document.getElementById('reviewsList');
             const countSpan = document.getElementById('reviewsCount');
-            
             if (!container) return;
             
             if (reviews.length === 0) {
@@ -1679,17 +447,18 @@
                 <div class="review-item">
                     <div class="review-header">
                         <div class="review-author">
-                            <div class="review-avatar">${review.author?.charAt(0).toUpperCase() || 'А'}</div>
-                            <div>
-                                <div class="review-name">${escapeHtml(review.author) || 'Аноним'}</div>
-                                <div class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</div>
-                            </div>
+                            <div class="review-avatar">${(review.author?.charAt(0) || 'А').toUpperCase()}</div>
+                            <div><div class="review-name">${escapeHtml(review.author) || 'Аноним'}</div><div class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</div></div>
                         </div>
-                        <div class="review-rating">
-                            ${'★'.repeat(review.rating || 5)}${'☆'.repeat(5 - (review.rating || 5))}
-                        </div>
+                        <div class="review-rating">${'★'.repeat(review.rating || 5)}${'☆'.repeat(5 - (review.rating || 5))}</div>
                     </div>
                     <div class="review-text">${escapeHtml(review.text)}</div>
+                    ${review.adminReply ? `
+                        <div class="admin-reply-block">
+                            <div class="admin-reply-header"><i class="fas fa-user-shield"></i><span>Ответ администратора</span></div>
+                            <div class="admin-reply-text">${escapeHtml(review.adminReply)}</div>
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
         }
@@ -1698,148 +467,69 @@
             const name = document.getElementById('reviewName').value.trim();
             const text = document.getElementById('reviewText').value.trim();
             
-            if (!text) {
-                showNotification('❌ Напишите текст отзыва!', 'error');
-                return;
-            }
-            
-            if (text.length < 10) {
-                showNotification('❌ Отзыв должен содержать минимум 10 символов', 'error');
-                return;
-            }
+            if (!text) { showNotification('❌ Напишите текст отзыва!', 'error'); return; }
+            if (text.length < 5) { showNotification('❌ Отзыв должен содержать минимум 5 символов', 'error'); return; }
+            if (text.length > 999) { showNotification('❌ Отзыв не может превышать 999 символов', 'error'); return; }
             
             const reviewData = {
-                productId: productId,
-                productName: product?.name || 'Товар',
-                author: name || 'Аноним',
-                text: text,
-                rating: selectedRating,
-                date: new Date().toISOString(),
-                userId: currentUserId,
-                status: 'pending' // на модерации
+                productId: productId, productName: product?.name || 'Товар', author: name || 'Аноним',
+                text: text, rating: selectedRating, date: new Date().toISOString(),
+                userId: currentUserId, status: 'pending'
             };
             
-            const reviewsRef = ref(database, 'reviews');
-            push(reviewsRef, reviewData).then(() => {
+            push(ref(database, 'reviews'), reviewData).then(() => {
                 showNotification('✅ Спасибо за отзыв! Он появится после модерации.', 'success');
                 document.getElementById('reviewName').value = '';
                 document.getElementById('reviewText').value = '';
                 selectedRating = 5;
                 updateStarDisplay(selectedRating);
-            }).catch(error => {
-                console.error('Ошибка:', error);
-                showNotification('❌ Ошибка при отправке отзыва', 'error');
-            });
+                updateReviewCounter();
+            }).catch(error => { console.error(error); showNotification('❌ Ошибка при отправке отзыва', 'error'); });
         }
 
         function updateStarDisplay(rating) {
-            const stars = document.querySelectorAll('#starRating i');
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.className = 'fas fa-star';
-                } else {
-                    star.className = 'far fa-star';
-                }
-            });
+            document.querySelectorAll('#starRating i').forEach((star, i) => star.className = i < rating ? 'fas fa-star' : 'far fa-star');
         }
 
         function initStarRating() {
-            const stars = document.querySelectorAll('#starRating i');
-            stars.forEach(star => {
-                star.addEventListener('click', () => {
-                    selectedRating = parseInt(star.dataset.rating);
-                    updateStarDisplay(selectedRating);
-                });
-                star.addEventListener('mouseenter', () => {
-                    const rating = parseInt(star.dataset.rating);
-                    stars.forEach((s, i) => {
-                        if (i < rating) {
-                            s.className = 'fas fa-star';
-                        } else {
-                            s.className = 'far fa-star';
-                        }
-                    });
-                });
+            document.querySelectorAll('#starRating i').forEach(star => {
+                star.addEventListener('click', () => { selectedRating = parseInt(star.dataset.rating); updateStarDisplay(selectedRating); });
+                star.addEventListener('mouseenter', () => { const rating = parseInt(star.dataset.rating); document.querySelectorAll('#starRating i').forEach((s, i) => s.className = i < rating ? 'fas fa-star' : 'far fa-star'); });
             });
-            
-            document.getElementById('starRating').addEventListener('mouseleave', () => {
-                updateStarDisplay(selectedRating);
-            });
+            document.getElementById('starRating').addEventListener('mouseleave', () => updateStarDisplay(selectedRating));
         }
 
         function getYouTubeId(url) {
             if (!url) return null;
             if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-            const patterns = [
-                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/i,
-                /youtube\.com\/shorts\/([^?]+)/i
-            ];
-            for (let pattern of patterns) {
-                const match = url.match(pattern);
-                if (match) return match[1];
-            }
+            const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/i, /youtube\.com\/shorts\/([^?]+)/i];
+            for (let pattern of patterns) { const match = url.match(pattern); if (match) return match[1]; }
             return null;
         }
 
         function renderYouTubeVideoBottom() {
             const videoContainer = document.getElementById('videoContainerBottom');
-            if (!product.video) {
-                videoContainer.innerHTML = `
-                    <div class="no-video-bottom">
-                        <i class="fab fa-youtube"></i>
-                        <h4>Видеообзор скоро появится</h4>
-                        <p>Мы готовим подробный обзор этого товара</p>
-                    </div>
-                `;
-                return;
-            }
+            if (!product.video) { videoContainer.innerHTML = '<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видеообзор скоро появится</h4><p>Мы готовим подробный обзор этого товара</p></div>'; return; }
             const videoId = getYouTubeId(product.video);
-            if (videoId) {
-                videoContainer.innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1" 
-                            title="YouTube video player" frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen loading="lazy"></iframe>
-                `;
-            } else {
-                videoContainer.innerHTML = `
-                    <div class="no-video-bottom">
-                        <i class="fab fa-youtube"></i>
-                        <h4>Видео временно недоступно</h4>
-                        <p>ID видео: ${product.video}</p>
-                    </div>
-                `;
-            }
+            if (videoId) videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+            else videoContainer.innerHTML = `<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видео временно недоступно</h4><p>ID видео: ${product.video}</p></div>`;
         }
 
         function renderProduct() {
             if (!product) return;
-            
             images = product.images || ['https://via.placeholder.com/500x400/1e293b/2563eb?text=Нет+фото'];
-            
             document.getElementById('productTitle').textContent = product.name;
-            
             const categoryName = getCategoryName(product.category);
             const categorySpan = document.getElementById('productCategory');
             categorySpan.textContent = categoryName;
-            if (product.category === 'mb') {
-                categorySpan.classList.add('mb');
-            }
+            if (product.category === 'mb') categorySpan.classList.add('mb');
             
             const brandInfo = Object.values(brands).find(b => b.name === product.brand);
-            if (brandInfo) {
-                document.getElementById('productBrand').innerHTML = `
-                    <img src="${brandInfo.icon}" alt="${product.brand}" loading="lazy" onerror="this.style.display='none'">
-                    <span>${product.brand}</span>
-                `;
-            }
+            if (brandInfo) document.getElementById('productBrand').innerHTML = `<img src="${brandInfo.icon}" alt="${product.brand}" onerror="this.style.display='none'"><span>${product.brand}</span>`;
             
             document.getElementById('productPrice').textContent = product.price;
-            
             if (hotPrices[productId]) {
-                document.getElementById('saleBadge').innerHTML = `
-                    <span class="product-badge sale"><i class="fas fa-fire"></i> Скидка!</span>
-                `;
+                document.getElementById('saleBadge').innerHTML = '<span class="product-badge sale"><i class="fas fa-fire"></i> Скидка!</span>';
                 const oldPrice = parsePrice(product.price);
                 document.getElementById('oldPrice').style.display = 'inline';
                 document.getElementById('oldPrice').textContent = formatPrice(oldPrice);
@@ -1853,44 +543,18 @@
             if (product.features && product.features.length > 0) {
                 document.getElementById('featuresList').innerHTML = product.features.map(f => `<li>${escapeHtml(f)}</li>`).join('');
                 const specsTable = document.getElementById('specsTable');
-                specsTable.innerHTML = `
-                    <tr><td>Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr>
-                    <tr><td>Категория</td><td>${getCategoryName(product.category)}</td></tr>
-                    <tr><td>Артикул</td><td>${productId}</td></tr>
-                    ${product.features.map(f => {
-                        const parts = f.split(':');
-                        if (parts.length > 1) {
-                            return `<tr><td>${escapeHtml(parts[0].trim())}</td><td>${escapeHtml(parts.slice(1).join(':').trim())}</td></tr>`;
-                        }
-                        return `<tr><td>Характеристика</td><td>${escapeHtml(f)}</td></tr>`;
-                    }).join('')}
-                `;
+                specsTable.innerHTML = `<tr><td>Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr><tr><td>Категория</td><td>${getCategoryName(product.category)}</td></tr><tr><td>Артикул</td><td>${productId}</td></tr>${product.features.map(f => { const parts = f.split(':'); if (parts.length > 1) return `<tr><td>${escapeHtml(parts[0].trim())}</td><td>${escapeHtml(parts.slice(1).join(':').trim())}</td></tr>`; return `<tr><td>Характеристика</td><td>${escapeHtml(f)}</td></tr>`; }).join('')}`;
             }
             
             renderYouTubeVideoBottom();
             renderGallery();
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
         function renderGallery() {
             document.getElementById('photoCount').textContent = `${images.length} фото`;
             document.getElementById('mainImage').src = images[0];
             document.getElementById('fullscreenImage').src = images[0];
-            
-            const thumbnailGrid = document.getElementById('thumbnailGrid');
-            thumbnailGrid.innerHTML = images.map((img, index) => `
-                <img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" onclick="setImage(${index})">
-            `).join('');
-            
+            document.getElementById('thumbnailGrid').innerHTML = images.map((img, idx) => `<img src="${img}" class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="setImage(${idx})">`).join('');
             document.getElementById('prevImageBtn').disabled = images.length <= 1;
             document.getElementById('nextImageBtn').disabled = images.length <= 1;
         }
@@ -1900,221 +564,57 @@
             const related = products.filter(p => p.category === product.category && p.id != productId).slice(0, 4);
             const grid = document.getElementById('relatedProducts');
             grid.innerHTML = '';
-            if (related.length === 0) {
-                grid.innerHTML = '<p style="color: var(--text-gray);">Похожих товаров не найдено</p>';
-                return;
-            }
+            if (related.length === 0) { grid.innerHTML = '<p style="color: var(--text-gray);">Похожих товаров не найдено</p>'; return; }
             related.forEach((p, index) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.style.animationDelay = `${index * 0.1}s`;
                 const isHot = hotPrices[p.id];
                 const imageUrl = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
-                card.innerHTML = `
-                    ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
-                    <div class="product-image-container">
-                        <img src="${imageUrl}" class="product-image" alt="${escapeHtml(p.name)}" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">${getCategoryName(p.category)}</div>
-                        <h3 class="product-name">${escapeHtml(p.name)}</h3>
-                        <p class="product-price">${p.price}</p>
-                    </div>
-                `;
+                card.innerHTML = `${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}<div class="product-image-container"><img src="${imageUrl}" class="product-image" alt="${escapeHtml(p.name)}" loading="lazy"></div><div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><p class="product-price">${p.price}</p></div>`;
                 card.addEventListener('click', () => window.location.href = `product.html?id=${p.id}`);
                 grid.appendChild(card);
             });
         }
 
         function getCategoryName(key) {
-            const categories = {
-                'мышь': 'Игровая мышь',
-                'клавиатура': 'Клавиатура',
-                'наушники': 'Наушники',
-                'монитор': 'Монитор',
-                'keycaps': 'Кейкапы',
-                'pads': 'Коврик',
-                'mb': 'Материнская плата'
-            };
+            const categories = { 'мышь':'Игровая мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'keycaps':'Кейкапы', 'pads':'Коврик', 'mb':'Материнская плата' };
             return categories[key] || key;
         }
 
-        function parsePrice(priceStr) {
-            if (!priceStr) return 0;
-            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
-        }
+        function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
+        function formatPrice(price) { return price.toLocaleString() + ' UZS'; }
 
-        function formatPrice(price) {
-            return price.toLocaleString() + ' UZS';
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#10b981' : '#ef4444'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.3s';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        window.goBack = () => {
-            if (document.referrer) window.history.back();
-            else window.location.href = 'catalog.html';
-        };
-
-        window.closeAndGoBack = () => {
-            if (document.referrer) window.history.back();
-            else window.location.href = 'catalog.html';
-        };
-
-        window.setImage = (index) => {
-            currentImageIndex = index;
-            document.getElementById('mainImage').src = images[index];
-            document.getElementById('fullscreenImage').src = images[index];
-            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
-                thumb.classList.toggle('active', i === index);
-            });
-        };
-
-        window.changeImage = (delta) => {
-            const newIndex = currentImageIndex + delta;
-            if (newIndex >= 0 && newIndex < images.length) setImage(newIndex);
-        };
-
-        document.getElementById('mainImageContainer').addEventListener('click', function() {
-            const img = document.getElementById('mainImage');
-            img.classList.toggle('zoomed');
-        });
-
-        window.openFullscreen = () => {
-            document.getElementById('fullscreenGallery').classList.add('active');
-            document.getElementById('fullscreenImage').src = images[currentImageIndex];
-            document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`;
-            document.body.style.overflow = 'hidden';
-        };
-
-        window.closeFullscreen = () => {
-            document.getElementById('fullscreenGallery').classList.remove('active');
-            document.body.style.overflow = '';
-        };
-
-        window.fullscreenChangeImage = (delta) => {
-            let newIndex = currentImageIndex + delta;
-            if (newIndex < 0) newIndex = images.length - 1;
-            if (newIndex >= images.length) newIndex = 0;
-            currentImageIndex = newIndex;
-            document.getElementById('fullscreenImage').src = images[currentImageIndex];
-            document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`;
-            document.getElementById('fullscreenImage').classList.remove('zoomed');
-            setImage(currentImageIndex);
-        };
-
-        window.toggleFullscreenZoom = () => {
-            document.getElementById('fullscreenImage').classList.toggle('zoomed');
-        };
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
-            });
-        });
-
-        const trackingBtn = document.getElementById('trackingBtn');
-        if (trackingBtn) {
-            trackingBtn.addEventListener('click', () => window.location.href = 'tracking.html');
-        }
-
+        window.goBack = () => { if (document.referrer) window.history.back(); else window.location.href = 'catalog.html'; };
+        window.closeAndGoBack = () => { if (document.referrer) window.history.back(); else window.location.href = 'catalog.html'; };
+        window.setImage = (index) => { currentImageIndex = index; document.getElementById('mainImage').src = images[index]; document.getElementById('fullscreenImage').src = images[index]; document.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === index)); };
+        window.changeImage = (delta) => { const newIndex = currentImageIndex + delta; if (newIndex >= 0 && newIndex < images.length) setImage(newIndex); };
+        document.getElementById('mainImageContainer')?.addEventListener('click', () => document.getElementById('mainImage').classList.toggle('zoomed'));
+        window.openFullscreen = () => { document.getElementById('fullscreenGallery').classList.add('active'); document.getElementById('fullscreenImage').src = images[currentImageIndex]; document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`; document.body.style.overflow = 'hidden'; };
+        window.closeFullscreen = () => { document.getElementById('fullscreenGallery').classList.remove('active'); document.body.style.overflow = ''; };
+        window.fullscreenChangeImage = (delta) => { let newIndex = currentImageIndex + delta; if (newIndex < 0) newIndex = images.length - 1; if (newIndex >= images.length) newIndex = 0; currentImageIndex = newIndex; document.getElementById('fullscreenImage').src = images[currentImageIndex]; document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`; document.getElementById('fullscreenImage').classList.remove('zoomed'); setImage(currentImageIndex); };
+        window.toggleFullscreenZoom = () => document.getElementById('fullscreenImage').classList.toggle('zoomed');
+        
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); btn.classList.add('active'); document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active'); }));
+        
+        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+        
         const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) backToTop.classList.add('show');
-            else backToTop.classList.remove('show');
-        });
-        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        document.addEventListener('keydown', (e) => {
-            const fsg = document.getElementById('fullscreenGallery');
-            if (fsg.classList.contains('active')) {
-                if (e.key === 'ArrowLeft') fullscreenChangeImage(-1);
-                if (e.key === 'ArrowRight') fullscreenChangeImage(1);
-                if (e.key === 'Escape') closeFullscreen();
-            }
-        });
-
-        // Скрытый вход в админку (Ctrl + тройной клик)
-        let ctrlClickCount = 0;
-        let ctrlClickTimer = null;
+        window.addEventListener('scroll', () => { if (window.scrollY > 300) backToTop.classList.add('show'); else backToTop.classList.remove('show'); });
+        backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         
-        document.addEventListener('click', function(e) {
-            if (e.ctrlKey) {
-                ctrlClickCount++;
-                clearTimeout(ctrlClickTimer);
-                ctrlClickTimer = setTimeout(() => {
-                    ctrlClickCount = 0;
-                }, 800);
-                
-                if (ctrlClickCount === 3) {
-                    const adminModal = document.getElementById('adminLoginModal');
-                    if (adminModal) {
-                        adminModal.style.display = 'block';
-                    }
-                    ctrlClickCount = 0;
-                    clearTimeout(ctrlClickTimer);
-                }
-            }
-        });
+        document.addEventListener('keydown', (e) => { const fsg = document.getElementById('fullscreenGallery'); if (fsg.classList.contains('active')) { if (e.key === 'ArrowLeft') fullscreenChangeImage(-1); if (e.key === 'ArrowRight') fullscreenChangeImage(1); if (e.key === 'Escape') closeFullscreen(); } });
         
-        const adminModal = document.getElementById('adminLoginModal');
-        const closeAdminModal = document.getElementById('closeAdminModal');
+        let ctrlClickCount = 0, ctrlClickTimer = null;
+        document.addEventListener('click', function(e) { if (e.ctrlKey) { ctrlClickCount++; clearTimeout(ctrlClickTimer); ctrlClickTimer = setTimeout(() => { ctrlClickCount = 0; }, 800); if (ctrlClickCount === 3) { document.getElementById('adminLoginModal').style.display = 'block'; ctrlClickCount = 0; } } });
+        document.getElementById('closeAdminModal')?.addEventListener('click', () => document.getElementById('adminLoginModal').style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
+        document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('adminLogin').value === 'admin' && document.getElementById('adminPassword').value === 'admin') { document.getElementById('adminLoginModal').style.display = 'none'; window.location.href = 'admin-panel.html'; } else alert('Неверный логин или пароль!'); });
         
-        if (closeAdminModal) {
-            closeAdminModal.addEventListener('click', () => {
-                if (adminModal) adminModal.style.display = 'none';
-            });
-        }
-        
-        window.addEventListener('click', (e) => {
-            if (adminModal && e.target === adminModal) {
-                adminModal.style.display = 'none';
-            }
-        });
-        
-        const adminLoginForm = document.getElementById('adminLoginForm');
-        if (adminLoginForm) {
-            adminLoginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const login = document.getElementById('adminLogin').value;
-                const password = document.getElementById('adminPassword').value;
-                if (login === 'admin' && password === 'admin') {
-                    if (adminModal) adminModal.style.display = 'none';
-                    window.location.href = 'admin-panel.html';
-                } else {
-                    alert('Неверный логин или пароль!');
-                }
-            });
-        }
-
         window.submitReview = submitReview;
-        
         loadData();
         initStarRating();
     </script>
 </body>
 </html>
+```
