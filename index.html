@@ -6,8 +6,8 @@
     
     <!-- SEO -->
     <title>GGPoint – магазин игровой периферии в Узбекистане</title>
-    <meta name="description" content="GGPoint – оригинальная игровая периферия. Мыши, клавиатуры, наушники, кейкапы и коврики. Быстрая доставка по Ташкенту и Узбекистану.">
-    <meta name="keywords" content="игровая периферия, мыши, клавиатуры, наушники, кейкапы, коврики, Ташкент, Узбекистан">
+    <meta name="description" content="GGPoint – оригинальная игровая периферия. Мыши, клавиатуры, наушники, кейкапы, материнские платы и коврики. Быстрая доставка по Ташкенту и Узбекистану.">
+    <meta name="keywords" content="игровая периферия, мыши, клавиатуры, наушники, кейкапы, коврики, материнские платы, Ташкент, Узбекистан">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -236,8 +236,6 @@
             gap: 12px;
         }
         
-        /* Кнопка-шестеренка УДАЛЕНА - больше не используется */
-        
         /* Категории */
         .categories-grid {
             display: grid;
@@ -358,6 +356,16 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .product-card:hover {
@@ -642,7 +650,7 @@
                         <a href="keycaps.html" class="nav-link">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Новинка</span>
+                            <span class="beta-badge">Коллекция</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -650,6 +658,13 @@
                             <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="mb.html" class="nav-link">
+                            <i class="fas fa-microchip"></i>
+                            <span class="nav-text">MB</span>
+                            <span class="beta-badge">Материнские платы</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -672,7 +687,6 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
                 </button>
-                <!-- Кнопка-шестеренка УДАЛЕНА -->
             </div>
         </div>
     </header>
@@ -743,6 +757,11 @@
                     <div class="category-icon"><i class="fas fa-keyboard"></i></div>
                     <h3 class="category-name">Кейкапы</h3>
                     <a href="keycaps.html" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="category-card" data-category="mb">
+                    <div class="category-icon"><i class="fas fa-microchip"></i></div>
+                    <h3 class="category-name">Материнские платы</h3>
+                    <a href="mb.html" class="category-link">Смотреть <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -822,6 +841,7 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -835,6 +855,7 @@
                     <li><a href="catalog.html?category=монитор">Мониторы</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">Материнские платы</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -935,8 +956,8 @@
             if (newest.length === 0) {
                 container.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 3rem; color: #94a3b8;">Новинок пока нет</div>';
             } else {
-                container.innerHTML = newest.map(product => `
-                    <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
+                container.innerHTML = newest.map((product, index) => `
+                    <div class="product-card" style="animation-delay: ${index * 0.1}s" onclick="window.location.href='product.html?id=${product.id}'">
                         <img src="${product.images?.[0] || 'https://via.placeholder.com/300x300/1e293b/2563eb?text=Нет+фото'}" alt="${escapeHtml(product.name)}">
                         <h3>${escapeHtml(product.name)}</h3>
                         <p>${product.price}</p>
@@ -959,9 +980,7 @@
         // Кнопка отслеживания
         document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
         
-        // ========== НОВЫЙ СКРЫТЫЙ ВХОД (ВМЕСТО КНОПКИ-ШЕСТЕРЁНКИ) ==========
-        // Тройной клик с зажатым Ctrl открывает админку
-        
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
