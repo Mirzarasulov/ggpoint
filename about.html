@@ -278,7 +278,21 @@
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
         }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .value-card:nth-child(1) { animation-delay: 0.1s; }
+        .value-card:nth-child(2) { animation-delay: 0.2s; }
+        .value-card:nth-child(3) { animation-delay: 0.3s; }
         
         .value-card:hover {
             transform: translateY(-5px);
@@ -644,7 +658,7 @@
                         <a href="keycaps.html" class="nav-link">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Новинка</span>
+                            <span class="beta-badge">Коллекция</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -652,6 +666,13 @@
                             <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="mb.html" class="nav-link">
+                            <i class="fas fa-microchip"></i>
+                            <span class="nav-text">MB</span>
+                            <span class="beta-badge">Материнские платы</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -674,7 +695,6 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
                 </button>
-                <!-- Кнопка-шестеренка УДАЛЕНА -->
             </div>
         </div>
     </header>
@@ -802,7 +822,6 @@
                         <p>Доставка по Ташкенту осуществляется курьером в течение 24 часов. По Узбекистану отправляем через транспортные компании (доставка 2-3 дня). Стоимость доставки зависит от веса и расстояния.</p>
                     </div>
                 </div>
-                           <div class="faq-grid">
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>Что делать, если товара, который я хочу, нет в каталоге или Telegram? </h3>
@@ -873,6 +892,7 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -887,6 +907,7 @@
                     <li><a href="catalog.html?category=монитор">Мониторы</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">Материнские платы</a></li>
                 </ul>
             </div>
             
@@ -1004,39 +1025,29 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // ========== НОВЫЙ СКРЫТЫЙ ВХОД ==========
-        // Убираем старую кнопку-шестеренку и её обработчики
-        // Добавляем тройной клик с Ctrl для открытия админки
-        
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
         document.addEventListener('click', function(e) {
-            // Проверяем, зажат ли Ctrl
             if (e.ctrlKey) {
                 ctrlClickCount++;
-                
-                // Сбрасываем таймер после каждого клика
                 clearTimeout(ctrlClickTimer);
                 ctrlClickTimer = setTimeout(() => {
                     ctrlClickCount = 0;
-                }, 800); // 0.8 секунды между кликами
+                }, 800);
                 
-                // Если три клика зажатым Ctrl
                 if (ctrlClickCount === 3) {
-                    // Показываем модальное окно админки
                     const adminModal = document.getElementById('adminLoginModal');
                     if (adminModal) {
                         adminModal.style.display = 'block';
                     }
-                    // Сбрасываем счётчик
                     ctrlClickCount = 0;
                     clearTimeout(ctrlClickTimer);
                 }
             }
         });
         
-        // Обработчики модального окна
         const adminModal = document.getElementById('adminLoginModal');
         const closeAdminModal = document.getElementById('closeAdminModal');
         
