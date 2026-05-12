@@ -138,6 +138,13 @@
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .keycap-card:hover {
@@ -340,42 +347,6 @@
         
         .empty-message i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.6; }
         
-        .error-message {
-            text-align: center;
-            padding: 4rem;
-            color: #ef4444;
-            font-size: 1.2rem;
-            grid-column: 1/-1;
-        }
-        
-        .retry-btn {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .debug-info {
-            background: #1e1e2e;
-            border: 1px solid #7c3aed;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 2rem;
-            font-family: monospace;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
         @media (max-width: 768px) {
             .tracking-btn-main span { display: none; }
             .tracking-btn-main { padding: 0.6rem 1rem; }
@@ -396,6 +367,7 @@
                     <li><a href="catalog.html" class="nav-link"><i class="fas fa-th-large"></i><span>Каталог</span></a></li>
                     <li><a href="keycaps.html" class="nav-link active"><i class="fas fa-keyboard"></i><span>Кейкапы</span><span class="beta-badge">Коллекция</span></a></li>
                     <li><a href="pads.html" class="nav-link"><i class="fas fa-mouse-pointer"></i><span>Коврики</span><span class="beta-badge">Новинка</span></a></li>
+                    <li><a href="mb.html" class="nav-link"><i class="fas fa-microchip"></i><span>MB</span><span class="beta-badge">Материнские платы</span></a></li>
                     <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i><span>О нас</span></a></li>
                     <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i><span>Контакты</span></a></li>
                 </ul>
@@ -416,10 +388,11 @@
         <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
         <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
         <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-title"></div><div class="skeleton-meta"></div><div class="skeleton-text"></div><div class="skeleton-text" style="width: 80%;"></div><div class="skeleton-price"></div></div></div>
     </div>
 
     <div class="keycaps-grid" id="keycapsGrid" style="display: none;"></div>
-    <div id="debugPanel" class="debug-info" style="display: none;"></div>
 
     <div class="modal" id="adminLoginModal">
         <div class="modal-content">
@@ -436,7 +409,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section"><h3>GGPoint</h3><p>Ваш надежный магазин игровой периферии в Узбекистане.</p><div class="social-links"><a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a></div></div>
-            <div class="footer-section"><h4>Навигация</h4><ul><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+            <div class="footer-section"><h4>Навигация</h4><ul><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">MB</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
             <div class="footer-section"><h4>Контакты</h4><div class="contact-info"><div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div><div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div></div></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
@@ -458,8 +431,6 @@
             appId: "1:182227173652:web:0949e2edae9900afd98201"
         };
 
-        let dataReceived = false;
-
         function escapeHtml(str) {
             if (!str) return '';
             return String(str).replace(/[&<>]/g, function(m) {
@@ -470,46 +441,35 @@
             });
         }
 
-        function showError(message, details = '') {
+        function renderKeycaps(keycapsArray) {
             const skeleton = document.getElementById('skeletonLoader');
             const grid = document.getElementById('keycapsGrid');
-            if (skeleton) skeleton.style.display = 'none';
-            if (grid) {
-                grid.style.display = 'grid';
-                grid.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i><br>${message}<br><small style="font-size: 0.8rem;">${details}</small><br><button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Повторить попытку</button></div>`;
-            }
-        }
-
-        function renderKeycaps(items) {
-            const skeleton = document.getElementById('skeletonLoader');
-            const grid = document.getElementById('keycapsGrid');
-            const debugPanel = document.getElementById('debugPanel');
             
             if (skeleton) skeleton.style.display = 'none';
             if (grid) grid.style.display = 'grid';
             
-            if (!items || items.length === 0) {
+            if (!keycapsArray || keycapsArray.length === 0) {
                 if (grid) {
-                    grid.innerHTML = `<div class="empty-message"><i class="fas fa-keyboard"></i><br>😕 В Firebase нет товаров с category="keycaps"<br><small>Проверьте структуру данных в Firebase Console</small><br><button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Обновить</button></div>`;
+                    grid.innerHTML = `<div class="empty-message"><i class="fas fa-keyboard"></i><br>😕 Кейкапы пока не добавлены.<br><small style="font-size: 0.9rem;">Добавьте их через админ-панель (Ctrl + тройной клик)</small><br><br><button class="retry-btn" onclick="location.reload()" style="background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; margin-top: 1rem;"><i class="fas fa-sync-alt"></i> Обновить</button></div>`;
                 }
                 return;
             }
             
             if (grid) {
                 grid.innerHTML = '';
-                
-                items.forEach((keycap, index) => {
+                keycapsArray.forEach((keycap, index) => {
                     const card = document.createElement('div');
                     card.className = 'keycap-card';
+                    card.style.animationDelay = `${index * 0.05}s`;
                     
                     const imageUrl = keycap.images && keycap.images[0] 
                         ? keycap.images[0] 
-                        : 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Нет+фото';
+                        : 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы';
                     
                     card.innerHTML = `
                         <div class="keycap-badge">${escapeHtml(keycap.profile || 'Кейкапы')}</div>
                         <div class="keycap-image-container">
-                            <img src="${imageUrl}" alt="${escapeHtml(keycap.name)}" class="keycap-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Ошибка+фото'">
+                            <img src="${imageUrl}" alt="${escapeHtml(keycap.name)}" class="keycap-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Ошибка'">
                         </div>
                         <div class="keycap-info">
                             <h3 class="keycap-name">${escapeHtml(keycap.name)}</h3>
@@ -529,89 +489,55 @@
                     grid.appendChild(card);
                 });
             }
-            
-            // Показываем отладочную информацию
-            if (debugPanel) {
-                debugPanel.style.display = 'block';
-                debugPanel.innerHTML = `
-                    <strong>📊 Отладка Firebase:</strong><br>
-                    ✅ Загружено товаров: ${items.length}<br>
-                    📋 Список: ${items.map(i => i.name).join(', ')}<br>
-                    🔗 Database URL: ${firebaseConfig.databaseURL}
-                `;
-            }
         }
 
-        console.log('🚀 Подключение к Firebase...');
+        console.log('🚀 Инициализация Firebase для страницы кейкапов...');
         
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const productsRef = ref(database, 'products');
         
-        // Таймаут 10 секунд (даём Firebase время)
-        const timeoutId = setTimeout(() => {
-            if (!dataReceived) {
-                console.error('❌ Таймаут: Firebase не ответил за 10 секунд');
-                showError(
-                    'Firebase не отвечает', 
-                    'Проверьте интернет-соединение или настройки безопасности. Возможно, нужно добавить правило в Firebase Realtime Database.'
-                );
-            }
-        }, 10000);
-        
         onValue(productsRef, (snapshot) => {
-            dataReceived = true;
-            clearTimeout(timeoutId);
-            
             const data = snapshot.val();
-            console.log('📦 Данные из Firebase:', data);
+            console.log('📦 Получены данные из Firebase:', data);
             
             const keycaps = [];
             
             if (data) {
                 for (const id in data) {
                     const product = data[id];
-                    console.log(`Товар ${id}:`, product);
-                    
-                    // ⭐ Проверяем category === 'keycaps' (строгое сравнение)
+                    // ⭐ Строгая проверка - только category === 'keycaps'
                     if (product && product.category === 'keycaps') {
                         product.id = id;
                         keycaps.push(product);
-                        console.log(`✅ Добавлен кейкап: ${product.name}`);
-                    } else {
-                        console.log(`⏭️ Пропущен (category="${product?.category}"): ${product?.name || id}`);
+                        console.log(`✅ Найден кейкап: ${product.name} (${id})`);
+                    } else if (product) {
+                        console.log(`⏭️ Пропущен (category=${product.category}): ${product.name || id}`);
                     }
                 }
             } else {
                 console.warn('⚠️ В Firebase нет данных по пути products');
             }
             
-            console.log(`🎯 ИТОГО кейкапов: ${keycaps.length}`);
-            
-            if (keycaps.length > 0) {
-                renderKeycaps(keycaps);
-            } else {
-                showError(
-                    'Кейкапы не найдены', 
-                    'В Firebase нет товаров с category="keycaps". Проверьте структуру данных в Firebase Console.'
-                );
-            }
+            console.log(`🎯 ИТОГО загружено кейкапов: ${keycaps.length}`);
+            renderKeycaps(keycaps);
             
         }, (error) => {
-            dataReceived = true;
-            clearTimeout(timeoutId);
-            console.error('❌ Ошибка Firebase:', error);
-            showError(
-                'Ошибка подключения к Firebase', 
-                error.message || 'Проверьте правила безопасности в Firebase Realtime Database'
-            );
+            console.error('❌ Ошибка подключения к Firebase:', error);
+            const skeleton = document.getElementById('skeletonLoader');
+            const grid = document.getElementById('keycapsGrid');
+            if (skeleton) skeleton.style.display = 'none';
+            if (grid) {
+                grid.style.display = 'grid';
+                grid.innerHTML = `<div class="empty-message"><i class="fas fa-exclamation-triangle"></i><br>❌ Ошибка подключения к базе данных<br><small>${error.message || 'Проверьте интернет-соединение'}</small><br><br><button class="retry-btn" onclick="location.reload()" style="background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer;"><i class="fas fa-sync-alt"></i> Повторить</button></div>`;
+            }
         });
 
         document.getElementById('trackingBtn')?.addEventListener('click', () => {
             window.location.href = 'tracking.html';
         });
         
-        // Скрытый вход в админку
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
@@ -627,26 +553,35 @@
             }
         });
         
-        document.getElementById('closeAdminModal')?.addEventListener('click', () => {
-            document.getElementById('adminLoginModal').style.display = 'none';
-        });
+        const closeAdminModal = document.getElementById('closeAdminModal');
+        const adminModal = document.getElementById('adminLoginModal');
+        
+        if (closeAdminModal) {
+            closeAdminModal.addEventListener('click', () => {
+                if (adminModal) adminModal.style.display = 'none';
+            });
+        }
         
         window.addEventListener('click', (e) => {
-            const modal = document.getElementById('adminLoginModal');
-            if (e.target === modal) modal.style.display = 'none';
-        });
-        
-        document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const login = document.getElementById('adminLogin').value;
-            const password = document.getElementById('adminPassword').value;
-            if (login === 'admin' && password === 'admin') {
-                document.getElementById('adminLoginModal').style.display = 'none';
-                window.location.href = 'admin-panel.html';
-            } else {
-                alert('Неверный логин или пароль!');
+            if (adminModal && e.target === adminModal) {
+                adminModal.style.display = 'none';
             }
         });
+        
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        if (adminLoginForm) {
+            adminLoginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const login = document.getElementById('adminLogin').value;
+                const password = document.getElementById('adminPassword').value;
+                if (login === 'admin' && password === 'admin') {
+                    if (adminModal) adminModal.style.display = 'none';
+                    window.location.href = 'admin-panel.html';
+                } else {
+                    alert('Неверный логин или пароль!');
+                }
+            });
+        }
     </script>
 </body>
 </html>
