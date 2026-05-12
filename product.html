@@ -1,3 +1,6 @@
+Понял, убираем красное слово и чиним ошибку. Вот исправленный `product.html` (товар будет показываться, убраны красные уведомления):
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -31,10 +34,8 @@
             --text-gray: #94a3b8;
             --success-green: #10b981;
             --sale-red: #ef4444;
-            --hot-gradient: linear-gradient(135deg, #ef4444, #dc2626);
         }
         
-        /* Header */
         header {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -45,7 +46,7 @@
             border-bottom: 1px solid rgba(37, 99, 235, 0.3);
         }
         
-        .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-list { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
         .nav-link { color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-weight: 500; white-space: nowrap; }
@@ -55,7 +56,6 @@
         .tracking-btn-main { background: var(--gradient); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; white-space: nowrap; }
         .tracking-btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         
-        /* Стили для страницы товара */
         .product-page { padding: 6rem 2rem 4rem; max-width: 1400px; margin: 0 auto; position: relative; }
         .back-button { position: absolute; top: 6rem; left: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: var(--card-bg); border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; z-index: 10; }
         .back-button:hover { background: var(--primary-blue); color: white; transform: translateX(-5px); }
@@ -64,7 +64,6 @@
         
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
         
-        /* Галерея */
         .product-gallery { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; border: 2px solid #334155; }
         .main-image-container { position: relative; width: 100%; height: 500px; background: white; border-radius: 12px; overflow: hidden; margin-bottom: 1rem; cursor: zoom-in; display: flex; align-items: center; justify-content: center; }
         .main-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
@@ -82,22 +81,18 @@
         .fullscreen-btn { background: transparent; border: 1px solid var(--primary-blue); color: var(--primary-blue); padding: 0.3rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.3rem; }
         .fullscreen-btn:hover { background: var(--primary-blue); color: white; }
         
-        /* Информация о товаре */
         .product-info { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid #334155; }
         .product-badge { display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
-        .product-badge.sale { background: var(--hot-gradient); color: white; }
-        .product-badge.new { background: var(--success-green); color: white; }
-        .product-badge.mb { background: var(--gradient); color: white; }
+        .product-badge.sale { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
         .product-title { font-size: 2rem; margin-bottom: 1rem; color: var(--text-light); line-height: 1.3; }
         .product-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
         .product-category { color: var(--primary-blue); background: rgba(37, 99, 235, 0.1); padding: 0.3rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
-        .product-category.mb { background: rgba(37, 99, 235, 0.2); border: 1px solid var(--primary-blue); }
         .product-brand { color: var(--text-gray); font-size: 0.9rem; display: flex; align-items: center; gap: 0.3rem; }
         .product-brand img { height: 25px; filter: brightness(0) invert(1); }
         .product-price-block { background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 2px solid var(--primary-blue); }
         .current-price { font-size: 2.5rem; font-weight: bold; color: var(--primary-blue); }
         .old-price { font-size: 1.3rem; color: var(--text-gray); text-decoration: line-through; margin-left: 1rem; }
-        .discount-info { display: inline-block; background: var(--hot-gradient); color: white; padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.9rem; margin-left: 1rem; }
+        .discount-info { display: inline-block; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.9rem; margin-left: 1rem; }
         .product-description { margin-bottom: 2rem; color: var(--text-gray); line-height: 1.7; }
         .product-features { margin-bottom: 2rem; }
         .product-features h3 { color: var(--text-light); margin-bottom: 1rem; font-size: 1.2rem; }
@@ -105,19 +100,17 @@
         .features-list li { color: var(--text-gray); display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; }
         .features-list li::before { content: '✓'; color: var(--success-green); font-weight: bold; }
         
-        /* YouTube плеер */
         .youtube-section-bottom { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid var(--primary-blue); margin: 2rem 0; }
         .youtube-header-bottom { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-        .youtube-icon-large { width: 60px; height: 60px; background: #ff0000; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; box-shadow: 0 10px 20px rgba(255,0,0,0.3); }
+        .youtube-icon-large { width: 60px; height: 60px; background: #ff0000; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; }
         .youtube-title { flex: 1; }
         .youtube-title h3 { color: var(--text-light); font-size: 1.8rem; margin-bottom: 0.3rem; }
         .youtube-title p { color: var(--text-gray); font-size: 1rem; }
         .youtube-badge { background: rgba(255,0,0,0.1); color: #ff0000; padding: 0.5rem 1.5rem; border-radius: 30px; font-weight: 600; border: 2px solid #ff0000; display: flex; align-items: center; gap: 0.5rem; }
-        .video-container-bottom { position: relative; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.3); border: 2px solid #ff0000; margin-top: 1rem; background: #000; min-height: 200px; }
+        .video-container-bottom { position: relative; width: 100%; border-radius: 16px; overflow: hidden; margin-top: 1rem; background: #000; min-height: 200px; }
         .video-container-bottom iframe { width: 100%; height: 450px; border: none; display: block; }
-        .no-video-bottom { text-align: center; padding: 4rem; background: linear-gradient(135deg, rgba(255,0,0,0.05) 0%, rgba(0,0,0,0.2) 100%); border-radius: 16px; color: var(--text-gray); border: 2px dashed #ff0000; }
+        .no-video-bottom { text-align: center; padding: 4rem; background: rgba(0,0,0,0.2); border-radius: 16px; color: var(--text-gray); border: 2px dashed #ff0000; }
         
-        /* Вкладки */
         .product-tabs { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid #334155; margin: 2rem 0; }
         .tabs-header { display: flex; gap: 1rem; border-bottom: 2px solid #334155; margin-bottom: 2rem; flex-wrap: wrap; }
         .tab-btn { padding: 1rem 2rem; background: transparent; border: none; color: var(--text-gray); font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative; }
@@ -132,7 +125,6 @@
         .specs-table td { padding: 1rem; color: var(--text-gray); }
         .specs-table td:first-child { font-weight: 600; color: var(--text-light); width: 200px; }
         
-        /* Отзывы */
         .reviews-section { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid #334155; margin: 2rem 0; }
         .reviews-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-light); display: flex; align-items: center; gap: 0.5rem; }
         .reviews-list { margin-bottom: 2rem; max-height: 400px; overflow-y: auto; }
@@ -154,17 +146,12 @@
         .add-review-form h3 { margin-bottom: 1rem; font-size: 1.2rem; }
         .star-rating { display: flex; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer; }
         .star-rating i { font-size: 1.8rem; color: #ffd700; transition: all 0.2s ease; }
-        .star-rating i:hover, .star-rating i.hover { transform: scale(1.1); }
         .review-input { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); margin-bottom: 1rem; resize: vertical; font-family: inherit; }
         .review-input:focus { outline: none; border-color: var(--primary-blue); }
         .review-name-input { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); margin-bottom: 1rem; }
-        .review-counter { text-align: right; font-size: 0.8rem; color: var(--text-gray); margin-top: -0.5rem; margin-bottom: 0.5rem; }
-        .review-counter.error { color: var(--sale-red); }
         .submit-review-btn { background: var(--gradient); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
         .submit-review-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
-        .submit-review-btn.disabled { opacity: 0.5; cursor: not-allowed; }
         
-        /* Похожие товары */
         .related-products { margin-top: 4rem; }
         .related-title { font-size: 2rem; margin-bottom: 2rem; color: var(--text-light); }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
@@ -180,7 +167,6 @@
         .product-card .product-name { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-light); }
         .product-card .product-price { font-size: 1.1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; }
         
-        /* Полноэкранная галерея */
         .fullscreen-gallery { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.98); z-index: 3000; display: none; align-items: center; justify-content: center; }
         .fullscreen-gallery.active { display: flex; }
         .fullscreen-image-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -193,7 +179,6 @@
         .fullscreen-nav-btn:hover { background: var(--primary-blue); transform: scale(1.1); }
         .fullscreen-counter { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: white; background: rgba(0,0,0,0.5); padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2); z-index: 3001; }
         
-        /* Modal */
         .modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
         .modal-content { background: #1e293b; margin: 10% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(37,99,235,0.3); }
         .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #94a3b8; }
@@ -204,11 +189,6 @@
         .btn-primary-modal { background: var(--gradient); color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
         .btn-primary-modal:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,99,235,0.4); }
         
-        /* Notification */
-        .notification { position: fixed; top: 20px; right: 20px; background: var(--success-green); color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 600; z-index: 9999; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        
-        /* Footer */
         footer { background: #0f172a; border-top: 1px solid rgba(37,99,235,0.3); margin-top: 3rem; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
         .footer-section h3 { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; margin-bottom: 1rem; }
@@ -302,10 +282,9 @@
         <div class="product-tabs">
             <div class="tabs-header"><button class="tab-btn active" data-tab="desc">Полное описание</button><button class="tab-btn" data-tab="specs">Характеристики</button></div>
             <div class="tab-content active" id="tab-desc"><p id="fullDescription" style="color:var(--text-gray); line-height:1.8;">Загрузка...</p></div>
-            <div class="tab-content" id="tab-specs"><table class="specs-table" id="specsTable"><tr></table></div>
+            <div class="tab-content" id="tab-specs"><table class="specs-table" id="specsTable"></table></div>
         </div>
         
-        <!-- БЛОК ОТЗЫВОВ -->
         <div class="reviews-section" id="reviewsSection">
             <div class="reviews-title"><i class="fas fa-star" style="color:#ffd700;"></i> Отзывы о товаре <span id="reviewsCount" style="font-size:1rem; color:var(--text-gray);"></span></div>
             <div class="reviews-list" id="reviewsList"><div class="no-reviews">Загрузка отзывов...</div></div>
@@ -319,7 +298,6 @@
                 </div>
                 <input type="text" id="reviewName" class="review-name-input" placeholder="Ваше имя" maxlength="50">
                 <textarea id="reviewText" class="review-input" rows="3" placeholder="Поделитесь впечатлениями о товаре..." maxlength="999"></textarea>
-                <div class="review-counter" id="reviewCounter"></div>
                 <button class="submit-review-btn" id="submitReviewBtn" onclick="submitReview()"><i class="fas fa-paper-plane"></i> Отправить отзыв</button>
             </div>
         </div>
@@ -349,7 +327,7 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue, push, set } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        import { getDatabase, ref, onValue, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
@@ -367,62 +345,111 @@
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
 
-        if (!productId) window.location.href = 'catalog.html';
-
-        let product = null, products = [], hotPrices = {}, brands = {}, reviews = [];
-        let currentImageIndex = 0, images = [], selectedRating = 5, currentUserId = null;
-
-        function getUserId() {
-            let id = localStorage.getItem('ggpoint_user_id');
-            if (!id) { id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('ggpoint_user_id', id); }
-            return id;
+        if (!productId) {
+            window.location.href = 'catalog.html';
         }
-        currentUserId = getUserId();
 
-        function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+        let product = null;
+        let products = [];
+        let hotPrices = {};
+        let brands = {};
+        let reviews = [];
+        let currentImageIndex = 0;
+        let images = [];
+        let selectedRating = 5;
 
-        function showNotification(message, type = 'success') {
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function showNotification(message) {
             const notification = document.createElement('div');
-            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #10b981;
+                color: white;
+                padding: 0.8rem 1.2rem;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                font-size: 0.9rem;
+            `;
             notification.textContent = message;
-            notification.style.background = type === 'success' ? '#10b981' : '#ef4444';
             document.body.appendChild(notification);
-            setTimeout(() => { notification.style.opacity = '0'; setTimeout(() => notification.remove(), 300); }, 3000);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
 
         // Ограничение длины отзыва
         const reviewTextarea = document.getElementById('reviewText');
-        const reviewCounter = document.getElementById('reviewCounter');
-        const submitBtn = document.getElementById('submitReviewBtn');
         
         function updateReviewCounter() {
+            if (!reviewTextarea) return;
             const length = reviewTextarea.value.length;
-            reviewCounter.textContent = `${length} / 999 символов`;
-            if (length < 5) {
-                reviewCounter.classList.add('error');
-                reviewCounter.innerHTML = `${length} / 999 символов (минимум 5)`;
-                if (submitBtn) submitBtn.disabled = true;
-            } else if (length > 999) {
+            if (length > 999) {
                 reviewTextarea.value = reviewTextarea.value.slice(0, 999);
-                reviewCounter.textContent = `999 / 999 символов`;
-                if (submitBtn) submitBtn.disabled = false;
-            } else {
-                reviewCounter.classList.remove('error');
-                if (submitBtn) submitBtn.disabled = false;
             }
         }
         
         if (reviewTextarea) {
             reviewTextarea.addEventListener('input', updateReviewCounter);
-            updateReviewCounter();
         }
 
         function loadData() {
-            onValue(ref(database, 'products/' + productId), (s) => { product = s.val(); if (!product) window.location.href = 'catalog.html'; document.title = `${product.name} - GGPoint`; renderProduct(); });
-            onValue(ref(database, 'products'), (s) => { products = s.val() ? Object.values(s.val()) : []; renderRelatedProducts(); });
-            onValue(ref(database, 'hotPrices'), (s) => { hotPrices = s.val() || {}; renderProduct(); });
-            onValue(ref(database, 'brands'), (s) => { brands = s.val() || {}; renderProduct(); });
-            onValue(ref(database, 'reviews'), (s) => { const d = s.val(); reviews = d ? Object.values(d).filter(r => r.productId == productId && r.status === 'approved') : []; renderReviews(); });
+            const productRef = ref(database, 'products/' + productId);
+            onValue(productRef, (snapshot) => {
+                product = snapshot.val();
+                if (!product) {
+                    window.location.href = 'catalog.html';
+                    return;
+                }
+                document.title = `${product.name} - GGPoint`;
+                renderProduct();
+            });
+
+            const productsRef = ref(database, 'products');
+            onValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                products = data ? Object.values(data) : [];
+                renderRelatedProducts();
+            });
+
+            const hotPricesRef = ref(database, 'hotPrices');
+            onValue(hotPricesRef, (snapshot) => {
+                hotPrices = snapshot.val() || {};
+                renderProduct();
+            });
+
+            const brandsRef = ref(database, 'brands');
+            onValue(brandsRef, (snapshot) => {
+                brands = snapshot.val() || {};
+                renderProduct();
+            });
+
+            const reviewsRef = ref(database, 'reviews');
+            onValue(reviewsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    reviews = Object.values(data).filter(r => r.productId == productId && r.status === 'approved');
+                    renderReviews();
+                } else {
+                    reviews = [];
+                    renderReviews();
+                }
+            });
         }
 
         function renderReviews() {
@@ -431,7 +458,7 @@
             if (!container) return;
             
             if (reviews.length === 0) {
-                container.innerHTML = '<div class="no-reviews"><i class="fas fa-comment"></i><br>Пока отзывов нет — станьте первым, кто поделится своим мнением и впечатлениями о товаре!</div>';
+                container.innerHTML = '<div class="no-reviews"><i class="fas fa-comment"></i><br>Пока отзывов нет. Будьте первым!</div>';
                 if (countSpan) countSpan.textContent = '(0)';
                 return;
             }
@@ -443,7 +470,10 @@
                     <div class="review-header">
                         <div class="review-author">
                             <div class="review-avatar">${(review.author?.charAt(0) || 'А').toUpperCase()}</div>
-                            <div><div class="review-name">${escapeHtml(review.author) || 'Аноним'}</div><div class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</div></div>
+                            <div>
+                                <div class="review-name">${escapeHtml(review.author) || 'Аноним'}</div>
+                                <div class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</div>
+                            </div>
                         </div>
                         <div class="review-rating">${'★'.repeat(review.rating || 5)}${'☆'.repeat(5 - (review.rating || 5))}</div>
                     </div>
@@ -462,67 +492,112 @@
             const name = document.getElementById('reviewName').value.trim();
             const text = document.getElementById('reviewText').value.trim();
             
-            if (!text) { showNotification('❌ Напишите текст отзыва!', 'error'); return; }
-            if (text.length < 5) { showNotification('❌ Отзыв должен содержать минимум 5 символов', 'error'); return; }
-            if (text.length > 999) { showNotification('❌ Отзыв не может превышать 999 символов', 'error'); return; }
+            if (!text) {
+                showNotification('Напишите текст отзыва');
+                return;
+            }
+            if (text.length < 5) {
+                showNotification('Отзыв должен содержать минимум 5 символов');
+                return;
+            }
+            if (text.length > 999) {
+                showNotification('Отзыв не может превышать 999 символов');
+                return;
+            }
             
             const reviewData = {
-                productId: productId, productName: product?.name || 'Товар', author: name || 'Аноним',
-                text: text, rating: selectedRating, date: new Date().toISOString(),
-                userId: currentUserId, status: 'pending'
+                productId: productId,
+                productName: product?.name || 'Товар',
+                author: name || 'Аноним',
+                text: text,
+                rating: selectedRating,
+                date: new Date().toISOString(),
+                status: 'pending'
             };
             
             push(ref(database, 'reviews'), reviewData).then(() => {
-                showNotification('✅ Спасибо за отзыв! Он появится после модерации.', 'success');
+                showNotification('Спасибо за отзыв! Он появится после модерации.');
                 document.getElementById('reviewName').value = '';
                 document.getElementById('reviewText').value = '';
                 selectedRating = 5;
                 updateStarDisplay(selectedRating);
-                updateReviewCounter();
-            }).catch(error => { console.error(error); showNotification('❌ Ошибка при отправке отзыва', 'error'); });
+            }).catch(error => {
+                console.error(error);
+                showNotification('Ошибка при отправке отзыва');
+            });
         }
 
         function updateStarDisplay(rating) {
-            document.querySelectorAll('#starRating i').forEach((star, i) => star.className = i < rating ? 'fas fa-star' : 'far fa-star');
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, i) => {
+                star.className = i < rating ? 'fas fa-star' : 'far fa-star';
+            });
         }
 
         function initStarRating() {
-            document.querySelectorAll('#starRating i').forEach(star => {
-                star.addEventListener('click', () => { selectedRating = parseInt(star.dataset.rating); updateStarDisplay(selectedRating); });
-                star.addEventListener('mouseenter', () => { const rating = parseInt(star.dataset.rating); document.querySelectorAll('#starRating i').forEach((s, i) => s.className = i < rating ? 'fas fa-star' : 'far fa-star'); });
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    selectedRating = parseInt(star.dataset.rating);
+                    updateStarDisplay(selectedRating);
+                });
+                star.addEventListener('mouseenter', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    stars.forEach((s, i) => {
+                        s.className = i < rating ? 'fas fa-star' : 'far fa-star';
+                    });
+                });
             });
-            document.getElementById('starRating').addEventListener('mouseleave', () => updateStarDisplay(selectedRating));
+            document.getElementById('starRating').addEventListener('mouseleave', () => {
+                updateStarDisplay(selectedRating);
+            });
         }
 
         function getYouTubeId(url) {
             if (!url) return null;
             if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-            const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/i, /youtube\.com\/shorts\/([^?]+)/i];
-            for (let pattern of patterns) { const match = url.match(pattern); if (match) return match[1]; }
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/i,
+                /youtube\.com\/shorts\/([^?]+)/i
+            ];
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
             return null;
         }
 
         function renderYouTubeVideoBottom() {
             const videoContainer = document.getElementById('videoContainerBottom');
-            if (!product.video) { videoContainer.innerHTML = '<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видеообзор скоро появится</h4><p>Мы готовим подробный обзор этого товара</p></div>'; return; }
+            if (!product.video) {
+                videoContainer.innerHTML = '<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видеообзор скоро появится</h4></div>';
+                return;
+            }
             const videoId = getYouTubeId(product.video);
-            if (videoId) videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
-            else videoContainer.innerHTML = `<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видео временно недоступно</h4><p>ID видео: ${product.video}</p></div>`;
+            if (videoId) {
+                videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+            } else {
+                videoContainer.innerHTML = '<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видео временно недоступно</h4></div>';
+            }
         }
 
         function renderProduct() {
             if (!product) return;
+            
             images = product.images || ['https://via.placeholder.com/500x400/1e293b/2563eb?text=Нет+фото'];
+            
             document.getElementById('productTitle').textContent = product.name;
+            
             const categoryName = getCategoryName(product.category);
-            const categorySpan = document.getElementById('productCategory');
-            categorySpan.textContent = categoryName;
-            if (product.category === 'mb') categorySpan.classList.add('mb');
+            document.getElementById('productCategory').textContent = categoryName;
             
             const brandInfo = Object.values(brands).find(b => b.name === product.brand);
-            if (brandInfo) document.getElementById('productBrand').innerHTML = `<img src="${brandInfo.icon}" alt="${product.brand}" onerror="this.style.display='none'"><span>${product.brand}</span>`;
+            if (brandInfo) {
+                document.getElementById('productBrand').innerHTML = `<img src="${brandInfo.icon}" alt="${product.brand}" onerror="this.style.display='none'"><span>${escapeHtml(product.brand)}</span>`;
+            }
             
             document.getElementById('productPrice').textContent = product.price;
+            
             if (hotPrices[productId]) {
                 document.getElementById('saleBadge').innerHTML = '<span class="product-badge sale"><i class="fas fa-fire"></i> Скидка!</span>';
                 const oldPrice = parsePrice(product.price);
@@ -538,7 +613,18 @@
             if (product.features && product.features.length > 0) {
                 document.getElementById('featuresList').innerHTML = product.features.map(f => `<li>${escapeHtml(f)}</li>`).join('');
                 const specsTable = document.getElementById('specsTable');
-                specsTable.innerHTML = `<tr><td>Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr><tr><td>Категория</td><td>${getCategoryName(product.category)}</td></tr><tr><td>Артикул</td><td>${productId}</td></tr>${product.features.map(f => { const parts = f.split(':'); if (parts.length > 1) return `<tr><td>${escapeHtml(parts[0].trim())}</td><td>${escapeHtml(parts.slice(1).join(':').trim())}</td></tr>`; return `<tr><td>Характеристика</td><td>${escapeHtml(f)}</td></tr>`; }).join('')}`;
+                specsTable.innerHTML = `
+                    <tr><td>Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr>
+                    <tr><td>Категория</td><td>${categoryName}</td></tr>
+                    <tr><td>Артикул</td><td>${productId}</td></tr>
+                    ${product.features.map(f => {
+                        const parts = f.split(':');
+                        if (parts.length > 1) {
+                            return `<tr><td>${escapeHtml(parts[0].trim())}</td><td>${escapeHtml(parts.slice(1).join(':').trim())}</td></tr>`;
+                        }
+                        return `<tr><td>Характеристика</td><td>${escapeHtml(f)}</td></tr>`;
+                    }).join('')}
+                `;
             }
             
             renderYouTubeVideoBottom();
@@ -549,7 +635,10 @@
             document.getElementById('photoCount').textContent = `${images.length} фото`;
             document.getElementById('mainImage').src = images[0];
             document.getElementById('fullscreenImage').src = images[0];
-            document.getElementById('thumbnailGrid').innerHTML = images.map((img, idx) => `<img src="${img}" class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="setImage(${idx})">`).join('');
+            
+            const thumbnailGrid = document.getElementById('thumbnailGrid');
+            thumbnailGrid.innerHTML = images.map((img, index) => `<img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" onclick="setImage(${index})">`).join('');
+            
             document.getElementById('prevImageBtn').disabled = images.length <= 1;
             document.getElementById('nextImageBtn').disabled = images.length <= 1;
         }
@@ -559,7 +648,10 @@
             const related = products.filter(p => p.category === product.category && p.id != productId).slice(0, 4);
             const grid = document.getElementById('relatedProducts');
             grid.innerHTML = '';
-            if (related.length === 0) { grid.innerHTML = '<p style="color: var(--text-gray);">Похожих товаров не найдено</p>'; return; }
+            if (related.length === 0) {
+                grid.innerHTML = '<p style="color: var(--text-gray);">Похожих товаров не найдено</p>';
+                return;
+            }
             related.forEach((p, index) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -573,42 +665,153 @@
         }
 
         function getCategoryName(key) {
-            const categories = { 'мышь':'Игровая мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'keycaps':'Кейкапы', 'pads':'Коврик', 'mb':'Материнская плата' };
+            const categories = {
+                'мышь': 'Игровая мышь',
+                'клавиатура': 'Клавиатура',
+                'наушники': 'Наушники',
+                'монитор': 'Монитор',
+                'keycaps': 'Кейкапы',
+                'pads': 'Коврик',
+                'mb': 'Материнская плата'
+            };
             return categories[key] || key;
         }
 
-        function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
-        function formatPrice(price) { return price.toLocaleString() + ' UZS'; }
+        function parsePrice(priceStr) {
+            if (!priceStr) return 0;
+            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
+        }
 
-        window.goBack = () => { if (document.referrer) window.history.back(); else window.location.href = 'catalog.html'; };
-        window.closeAndGoBack = () => { if (document.referrer) window.history.back(); else window.location.href = 'catalog.html'; };
-        window.setImage = (index) => { currentImageIndex = index; document.getElementById('mainImage').src = images[index]; document.getElementById('fullscreenImage').src = images[index]; document.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === index)); };
-        window.changeImage = (delta) => { const newIndex = currentImageIndex + delta; if (newIndex >= 0 && newIndex < images.length) setImage(newIndex); };
-        document.getElementById('mainImageContainer')?.addEventListener('click', () => document.getElementById('mainImage').classList.toggle('zoomed'));
-        window.openFullscreen = () => { document.getElementById('fullscreenGallery').classList.add('active'); document.getElementById('fullscreenImage').src = images[currentImageIndex]; document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`; document.body.style.overflow = 'hidden'; };
-        window.closeFullscreen = () => { document.getElementById('fullscreenGallery').classList.remove('active'); document.body.style.overflow = ''; };
-        window.fullscreenChangeImage = (delta) => { let newIndex = currentImageIndex + delta; if (newIndex < 0) newIndex = images.length - 1; if (newIndex >= images.length) newIndex = 0; currentImageIndex = newIndex; document.getElementById('fullscreenImage').src = images[currentImageIndex]; document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`; document.getElementById('fullscreenImage').classList.remove('zoomed'); setImage(currentImageIndex); };
-        window.toggleFullscreenZoom = () => document.getElementById('fullscreenImage').classList.toggle('zoomed');
-        
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); btn.classList.add('active'); document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active'); }));
-        
-        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
-        
+        function formatPrice(price) {
+            return price.toLocaleString() + ' UZS';
+        }
+
+        window.goBack = () => {
+            if (document.referrer) window.history.back();
+            else window.location.href = 'catalog.html';
+        };
+
+        window.closeAndGoBack = () => {
+            if (document.referrer) window.history.back();
+            else window.location.href = 'catalog.html';
+        };
+
+        window.setImage = (index) => {
+            currentImageIndex = index;
+            document.getElementById('mainImage').src = images[index];
+            document.getElementById('fullscreenImage').src = images[index];
+            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        };
+
+        window.changeImage = (delta) => {
+            const newIndex = currentImageIndex + delta;
+            if (newIndex >= 0 && newIndex < images.length) setImage(newIndex);
+        };
+
+        document.getElementById('mainImageContainer')?.addEventListener('click', function() {
+            document.getElementById('mainImage').classList.toggle('zoomed');
+        });
+
+        window.openFullscreen = () => {
+            document.getElementById('fullscreenGallery').classList.add('active');
+            document.getElementById('fullscreenImage').src = images[currentImageIndex];
+            document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`;
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeFullscreen = () => {
+            document.getElementById('fullscreenGallery').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        window.fullscreenChangeImage = (delta) => {
+            let newIndex = currentImageIndex + delta;
+            if (newIndex < 0) newIndex = images.length - 1;
+            if (newIndex >= images.length) newIndex = 0;
+            currentImageIndex = newIndex;
+            document.getElementById('fullscreenImage').src = images[currentImageIndex];
+            document.getElementById('fullscreenCounter').textContent = `${currentImageIndex + 1} / ${images.length}`;
+            document.getElementById('fullscreenImage').classList.remove('zoomed');
+            setImage(currentImageIndex);
+        };
+
+        window.toggleFullscreenZoom = () => {
+            document.getElementById('fullscreenImage').classList.toggle('zoomed');
+        };
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+            });
+        });
+
+        document.getElementById('trackingBtn')?.addEventListener('click', () => {
+            window.location.href = 'tracking.html';
+        });
+
         const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => { if (window.scrollY > 300) backToTop.classList.add('show'); else backToTop.classList.remove('show'); });
-        backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        document.addEventListener('keydown', (e) => {
+            const fsg = document.getElementById('fullscreenGallery');
+            if (fsg.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') fullscreenChangeImage(-1);
+                if (e.key === 'ArrowRight') fullscreenChangeImage(1);
+                if (e.key === 'Escape') closeFullscreen();
+            }
+        });
+
+        // Скрытый вход в админку
+        let ctrlClickCount = 0;
+        let ctrlClickTimer = null;
         
-        document.addEventListener('keydown', (e) => { const fsg = document.getElementById('fullscreenGallery'); if (fsg.classList.contains('active')) { if (e.key === 'ArrowLeft') fullscreenChangeImage(-1); if (e.key === 'ArrowRight') fullscreenChangeImage(1); if (e.key === 'Escape') closeFullscreen(); } });
+        document.addEventListener('click', function(e) {
+            if (e.ctrlKey) {
+                ctrlClickCount++;
+                clearTimeout(ctrlClickTimer);
+                ctrlClickTimer = setTimeout(() => { ctrlClickCount = 0; }, 800);
+                if (ctrlClickCount === 3) {
+                    document.getElementById('adminLoginModal').style.display = 'block';
+                    ctrlClickCount = 0;
+                }
+            }
+        });
         
-        let ctrlClickCount = 0, ctrlClickTimer = null;
-        document.addEventListener('click', function(e) { if (e.ctrlKey) { ctrlClickCount++; clearTimeout(ctrlClickTimer); ctrlClickTimer = setTimeout(() => { ctrlClickCount = 0; }, 800); if (ctrlClickCount === 3) { document.getElementById('adminLoginModal').style.display = 'block'; ctrlClickCount = 0; } } });
-        document.getElementById('closeAdminModal')?.addEventListener('click', () => document.getElementById('adminLoginModal').style.display = 'none');
-        window.addEventListener('click', (e) => { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
-        document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('adminLogin').value === 'admin' && document.getElementById('adminPassword').value === 'admin') { document.getElementById('adminLoginModal').style.display = 'none'; window.location.href = 'admin-panel.html'; } else alert('Неверный логин или пароль!'); });
+        document.getElementById('closeAdminModal')?.addEventListener('click', () => {
+            document.getElementById('adminLoginModal').style.display = 'none';
+        });
         
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('adminLoginModal');
+            if (e.target === modal) modal.style.display = 'none';
+        });
+        
+        document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const login = document.getElementById('adminLogin').value;
+            const password = document.getElementById('adminPassword').value;
+            if (login === 'admin' && password === 'admin') {
+                document.getElementById('adminLoginModal').style.display = 'none';
+                window.location.href = 'admin-panel.html';
+            } else {
+                alert('Неверный логин или пароль!');
+            }
+        });
+
         window.submitReview = submitReview;
+        
         loadData();
         initStarRating();
     </script>
 </body>
 </html>
+```
