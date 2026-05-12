@@ -130,8 +130,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Кнопка-шестеренка УДАЛЕНА - больше не используется */
-        
         /* Container */
         .container {
             max-width: 1400px;
@@ -600,7 +598,7 @@
                         <a href="keycaps.html" class="nav-link">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Новинка</span>
+                            <span class="beta-badge">Коллекция</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -608,6 +606,13 @@
                             <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="mb.html" class="nav-link">
+                            <i class="fas fa-microchip"></i>
+                            <span class="nav-text">MB</span>
+                            <span class="beta-badge">Материнские платы</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -630,7 +635,6 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
                 </button>
-                <!-- Кнопка-шестеренка УДАЛЕНА -->
             </div>
         </div>
     </header>
@@ -759,6 +763,7 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -773,6 +778,7 @@
                     <li><a href="catalog.html?category=монитор">Мониторы</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">Материнские платы</a></li>
                 </ul>
             </div>
             
@@ -916,7 +922,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // ========== НОВЫЙ СКРЫТЫЙ ВХОД (ВМЕСТО КНОПКИ-ШЕСТЕРЁНКИ) ==========
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
