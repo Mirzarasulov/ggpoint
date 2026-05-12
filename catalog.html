@@ -6,7 +6,7 @@
     
     <!-- SEO -->
     <title>Каталог товаров - GGPoint</title>
-    <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы и аксессуары.">
+    <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы, материнские платы и аксессуары.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -112,7 +112,7 @@
             margin-left: 0.3rem;
         }
         
-        /* Кнопка отслеживания - ЕДИНЫЙ СТИЛЬ С ОСНОВНОЙ КНОПКОЙ */
+        /* Кнопка отслеживания */
         .tracking-btn-main {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             color: #fff;
@@ -133,8 +133,6 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
-        
-        /* Кнопка-шестеренка УДАЛЕНА - больше не используется */
         
         .header-actions {
             display: flex;
@@ -397,7 +395,7 @@
             color: #94a3b8;
         }
         
-        /* Products Grid */
+        /* Products Grid - с анимацией как на MB странице */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -423,6 +421,16 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .product-card:hover {
@@ -752,6 +760,60 @@
             margin-bottom: 1rem;
         }
         
+        /* Скелетон загрузки */
+        .skeleton-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        
+        .skeleton-image {
+            height: 250px;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        .skeleton-info {
+            padding: 1rem;
+        }
+        
+        .skeleton-title {
+            height: 20px;
+            width: 80%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .skeleton-text {
+            height: 14px;
+            width: 100%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-price {
+            height: 24px;
+            width: 40%;
+            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
         @media (max-width: 768px) {
             .catalog-layout {
                 grid-template-columns: 1fr;
@@ -828,6 +890,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="mb.html" class="nav-link">
+                            <i class="fas fa-microchip"></i>
+                            <span class="nav-text">MB</span>
+                            <span class="beta-badge">Материнские платы</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="about.html" class="nav-link">
                             <i class="fas fa-info-circle"></i>
                             <span class="nav-text">О нас</span>
@@ -848,7 +917,6 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Отследить заказ</span>
                 </button>
-                <!-- Кнопка-шестеренка УДАЛЕНА -->
             </div>
         </div>
     </header>
@@ -964,9 +1032,7 @@
                     
                     <div class="products-count" id="productsCount">Найдено товаров: 0</div>
                     
-                    <div class="products-grid" id="productsGrid">
-                        <div class="loader"></div>
-                    </div>
+                    <div class="products-grid" id="productsGrid"></div>
                     
                     <div class="pagination" id="pagination"></div>
                 </div>
@@ -1004,6 +1070,7 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
                     <li><a href="about.html">О нас</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
@@ -1018,6 +1085,7 @@
                     <li><a href="catalog.html?category=монитор">Мониторы</a></li>
                     <li><a href="keycaps.html">Кейкапы</a></li>
                     <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">Материнские платы</a></li>
                 </ul>
             </div>
             
@@ -1078,6 +1146,7 @@
         let currentPage = 1;
         let itemsPerPage = 12;
         let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+        let isLoading = true;
 
         const urlParams = new URLSearchParams(window.location.search);
         const categoryParam = urlParams.get('category');
@@ -1097,6 +1166,7 @@
                 const hotPricesRef = ref(database, 'hotPrices');
                 onValue(hotPricesRef, (snapshot) => {
                     hotPrices = snapshot.val() || {};
+                    isLoading = false;
                     applyFilters();
                 });
             });
@@ -1171,25 +1241,25 @@
             updateActiveFilters();
         }
 
-        function applySorting(products, sortBy) {
+        function applySorting(productsArr, sortBy) {
             switch(sortBy) {
                 case 'price_asc':
-                    products.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+                    productsArr.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
                     break;
                 case 'price_desc':
-                    products.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+                    productsArr.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
                     break;
                 case 'name_asc':
-                    products.sort((a, b) => a.name.localeCompare(b.name));
+                    productsArr.sort((a, b) => a.name.localeCompare(b.name));
                     break;
                 case 'name_desc':
-                    products.sort((a, b) => b.name.localeCompare(a.name));
+                    productsArr.sort((a, b) => b.name.localeCompare(a.name));
                     break;
                 case 'newest':
-                    products.sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0));
+                    productsArr.sort((a, b) => new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0));
                     break;
                 case 'popular':
-                    products.sort((a, b) => (b.views || 0) - (a.views || 0));
+                    productsArr.sort((a, b) => (b.views || 0) - (a.views || 0));
                     break;
             }
         }
@@ -1259,9 +1329,35 @@
             container.appendChild(tag);
         }
 
+        function showSkeleton() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                const skeleton = document.createElement('div');
+                skeleton.className = 'skeleton-card';
+                skeleton.innerHTML = `
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-title"></div>
+                        <div class="skeleton-text"></div>
+                        <div class="skeleton-text" style="width: 80%;"></div>
+                        <div class="skeleton-price"></div>
+                    </div>
+                `;
+                grid.appendChild(skeleton);
+            }
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             if (!grid) return;
+            
+            if (isLoading) {
+                showSkeleton();
+                return;
+            }
+            
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const pageProducts = filteredProducts.slice(start, end);
@@ -1271,8 +1367,10 @@
             if (pageProducts.length === 0) {
                 grid.innerHTML = `<div class="no-products"><i class="fas fa-search"></i><h3>Товары не найдены</h3><p>Попробуйте изменить параметры поиска</p></div>`;
             } else {
-                pageProducts.forEach(product => {
-                    grid.appendChild(createProductCard(product));
+                pageProducts.forEach((product, index) => {
+                    const card = createProductCard(product);
+                    card.style.animationDelay = `${index * 0.05}s`;
+                    grid.appendChild(card);
                 });
             }
             renderPagination();
@@ -1342,8 +1440,10 @@
                 return;
             }
             grid.innerHTML = '';
-            recentlyViewed.slice(0, 4).forEach(product => {
-                grid.appendChild(createProductCard(product));
+            recentlyViewed.slice(0, 4).forEach((product, index) => {
+                const card = createProductCard(product);
+                card.style.animationDelay = `${index * 0.05}s`;
+                grid.appendChild(card);
             });
         }
 
@@ -1411,7 +1511,8 @@
                 'мышь': 'Мышь',
                 'клавиатура': 'Клавиатура',
                 'наушники': 'Наушники',
-                'монитор': 'Монитор'
+                'монитор': 'Монитор',
+                'mb': 'Материнская плата'
             };
             return categories[key] || key;
         }
@@ -1550,8 +1651,6 @@
                     productsGrid.classList.add('list-view');
                 });
             }
-            
-            setTimeout(() => renderRecentlyViewed(), 1000);
         });
 
         function debounce(func, wait) {
@@ -1579,9 +1678,7 @@
             });
         }
 
-        // ========== НОВЫЙ СКРЫТЫЙ ВХОД (ВМЕСТО КНОПКИ-ШЕСТЕРЁНКИ) ==========
-        // Тройной клик с зажатым Ctrl открывает админку
-        
+        // Скрытый вход в админку (Ctrl + тройной клик)
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
@@ -1604,7 +1701,6 @@
             }
         });
         
-        // Обработчики модального окна
         const adminModal = document.getElementById('adminLoginModal');
         const closeAdminModal = document.getElementById('closeAdminModal');
         const trackingBtn = document.getElementById('trackingBtn');
