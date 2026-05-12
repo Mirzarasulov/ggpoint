@@ -14,19 +14,8 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f172a;
-            color: #fff;
-            line-height: 1.6;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
         :root {
             --primary-blue: #2563eb;
             --primary-purple: #7c3aed;
@@ -35,9 +24,6 @@
             --dark-bg: #0f172a;
             --text-light: #f1f5f9;
             --text-gray: #94a3b8;
-            --accent-purple: #7c3aed;
-            --accent-pink: #ec4899;
-            --success-green: #10b981;
         }
         
         header {
@@ -87,8 +73,7 @@
             font-weight: 500;
         }
         
-        .nav-link:hover,
-        .nav-link.active {
+        .nav-link:hover, .nav-link.active {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             -webkit-background-clip: text;
             background-clip: text;
@@ -103,11 +88,7 @@
             margin-left: 0.3rem;
         }
         
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
         
         .tracking-btn-main {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
@@ -121,7 +102,6 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            text-decoration: none;
             font-size: 1rem;
         }
         
@@ -137,17 +117,8 @@
             color: white;
         }
         
-        .keycaps-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .keycaps-hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .keycaps-hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .keycaps-hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
         
         .keycaps-grid {
             display: grid;
@@ -167,16 +138,6 @@
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .keycap-card:hover {
@@ -216,45 +177,14 @@
             transition: transform 0.5s ease;
         }
         
-        .keycap-card:hover .keycap-image {
-            transform: scale(1.05);
-        }
+        .keycap-card:hover .keycap-image { transform: scale(1.05); }
         
-        .keycap-info {
-            padding: 1.5rem;
-        }
+        .keycap-info { padding: 1.5rem; }
+        .keycap-name { font-size: 1.2rem; margin-bottom: 0.5rem; color: #f1f5f9; font-weight: 600; }
         
-        .keycap-name {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #f1f5f9;
-            font-weight: 600;
-        }
-        
-        .keycap-meta {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
-            flex-wrap: wrap;
-        }
-        
-        .keycap-profile {
-            background: rgba(124, 58, 237, 0.2);
-            color: #7c3aed;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .keycap-material {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
+        .keycap-meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .keycap-profile { background: rgba(124, 58, 237, 0.2); color: #7c3aed; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .keycap-material { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
         
         .keycap-price {
             font-size: 1.3rem;
@@ -290,49 +220,11 @@
             animation: shimmer 1.5s infinite;
         }
         
-        .skeleton-info {
-            padding: 1.5rem;
-        }
-        
-        .skeleton-title {
-            height: 20px;
-            width: 80%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-        
-        .skeleton-meta {
-            height: 24px;
-            width: 60%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 20px;
-            margin-bottom: 12px;
-        }
-        
-        .skeleton-text {
-            height: 16px;
-            width: 100%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
-        
-        .skeleton-price {
-            height: 24px;
-            width: 40%;
-            background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            margin-top: 12px;
-        }
+        .skeleton-info { padding: 1.5rem; }
+        .skeleton-title { height: 20px; width: 80%; background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; margin-bottom: 12px; }
+        .skeleton-meta { height: 24px; width: 60%; background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 20px; margin-bottom: 12px; }
+        .skeleton-text { height: 16px; width: 100%; background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; margin-bottom: 8px; }
+        .skeleton-price { height: 24px; width: 40%; background: linear-gradient(90deg, #1e293b 25%, #2d3a52 50%, #1e293b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; margin-top: 12px; }
         
         @keyframes shimmer {
             0% { background-position: 200% 0; }
@@ -360,37 +252,12 @@
             border: 1px solid rgba(37, 99, 235, 0.3);
         }
         
-        .close-modal {
-            float: right;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #94a3b8;
-        }
+        .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #94a3b8; }
+        .close-modal:hover { color: #fff; }
         
-        .close-modal:hover {
-            color: #fff;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-        }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #94a3b8; }
+        .form-group input { width: 100%; padding: 0.75rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; }
         
         .btn-primary {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
@@ -433,52 +300,17 @@
             margin-bottom: 1rem;
         }
         
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: #f1f5f9;
-        }
+        .footer-section h4 { margin-bottom: 1rem; color: #f1f5f9; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: #94a3b8; text-decoration: none; transition: all 0.3s ease; }
+        .footer-section ul li a:hover { color: #60a5fa; }
         
-        .footer-section ul {
-            list-style: none;
-        }
+        .contact-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #94a3b8; }
+        .contact-item a { color: #94a3b8; text-decoration: none; }
+        .contact-item a:hover { color: #60a5fa; }
         
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-section ul li a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-section ul li a:hover {
-            color: #60a5fa;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-        }
-        
-        .contact-item a {
-            color: #94a3b8;
-            text-decoration: none;
-        }
-        
-        .contact-item a:hover {
-            color: #60a5fa;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
         .social-link {
             width: 40px;
             height: 40px;
@@ -491,18 +323,12 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.3);
         }
-        
         .social-link:hover {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             transform: translateY(-3px);
         }
         
-        .footer-bottom {
-            text-align: center;
-            padding: 1.5rem;
-            border-top: 1px solid rgba(37, 99, 235, 0.2);
-            color: #64748b;
-        }
+        .footer-bottom { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(37, 99, 235, 0.2); color: #64748b; }
         
         .empty-message {
             text-align: center;
@@ -512,10 +338,14 @@
             grid-column: 1/-1;
         }
         
-        .empty-message i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.6;
+        .empty-message i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.6; }
+        
+        .error-message {
+            text-align: center;
+            padding: 4rem;
+            color: #ef4444;
+            font-size: 1.2rem;
+            grid-column: 1/-1;
         }
         
         .retry-btn {
@@ -532,45 +362,34 @@
             gap: 0.5rem;
         }
         
-        .retry-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        .debug-info {
+            background: #1e1e2e;
+            border: 1px solid #7c3aed;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 2rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         @media (max-width: 768px) {
-            .tracking-btn-main span {
-                display: none;
-            }
-            
-            .tracking-btn-main {
-                padding: 0.6rem 1rem;
-            }
-            
-            .nav-list {
-                gap: 1rem;
-            }
-            
-            .nav-text {
-                font-size: 0.9rem;
-            }
-            
-            .keycaps-hero h1 {
-                font-size: 2rem;
-            }
-            
-            .keycaps-hero {
-                padding: 4rem 1rem 3rem;
-            }
+            .tracking-btn-main span { display: none; }
+            .tracking-btn-main { padding: 0.6rem 1rem; }
+            .nav-list { gap: 1rem; }
+            .nav-text { font-size: 0.9rem; }
+            .keycaps-hero h1 { font-size: 2rem; }
+            .keycaps-hero { padding: 4rem 1rem 3rem; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-container">
-            <div class="logo">
-                <a href="index.html">GGPoint</a>
-            </div>
-            
+            <div class="logo"><a href="index.html">GGPoint</a></div>
             <nav>
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>Главная</span></a></li>
@@ -581,12 +400,8 @@
                     <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i><span>Контакты</span></a></li>
                 </ul>
             </nav>
-            
             <div class="header-actions">
-                <button class="tracking-btn-main" id="trackingBtn">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Отследить заказ</span>
-                </button>
+                <button class="tracking-btn-main" id="trackingBtn"><i class="fas fa-map-marker-alt"></i><span>Отследить заказ</span></button>
             </div>
         </div>
     </header>
@@ -604,20 +419,15 @@
     </div>
 
     <div class="keycaps-grid" id="keycapsGrid" style="display: none;"></div>
+    <div id="debugPanel" class="debug-info" style="display: none;"></div>
 
     <div class="modal" id="adminLoginModal">
         <div class="modal-content">
             <button class="close-modal" id="closeAdminModal">&times;</button>
             <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
             <form id="adminLoginForm">
-                <div class="form-group">
-                    <label for="adminLogin">Логин</label>
-                    <input type="text" id="adminLogin" required placeholder="Введите логин">
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword">Пароль</label>
-                    <input type="password" id="adminPassword" required placeholder="Введите пароль">
-                </div>
+                <div class="form-group"><label for="adminLogin">Логин</label><input type="text" id="adminLogin" required placeholder="Введите логин"></div>
+                <div class="form-group"><label for="adminPassword">Пароль</label><input type="password" id="adminPassword" required placeholder="Введите пароль"></div>
                 <button type="submit" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Войти</button>
             </form>
         </div>
@@ -625,31 +435,9 @@
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>GGPoint</h3>
-                <p>Ваш надежный магазин игровой периферии в Узбекистане.</p>
-                <div class="social-links">
-                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h4>Навигация</h4>
-                <ul>
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <div class="contact-info">
-                    <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
-                    <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div>
-                </div>
-            </div>
+            <div class="footer-section"><h3>GGPoint</h3><p>Ваш надежный магазин игровой периферии в Узбекистане.</p><div class="social-links"><a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a></div></div>
+            <div class="footer-section"><h4>Навигация</h4><ul><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+            <div class="footer-section"><h4>Контакты</h4><div class="contact-info"><div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div><div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div></div></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
     </footer>
@@ -670,18 +458,7 @@
             appId: "1:182227173652:web:0949e2edae9900afd98201"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        // ⭐ ДЕМО-ТОВАРЫ (на случай если Firebase не отвечает)
-        const demoKeycaps = [
-            { id: 1, name: "GMK Laser", category: "keycaps", price: "899,000 UZS", images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500"], description: "Профиль Cherry, ABS double-shot, неоновые цвета", profile: "Cherry", material: "ABS" },
-            { id: 2, name: "PBT Olivia", category: "keycaps", price: "749,000 UZS", images: ["https://images.unsplash.com/photo-1595225476474-87563907c212?w=500"], description: "Профиль OEM, PBT, пастельные тона", profile: "OEM", material: "PBT" },
-            { id: 3, name: "SA Carbon", category: "keycaps", price: "999,000 UZS", images: ["https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500"], description: "Профиль SA, ABS, оранжево-серые тона", profile: "SA", material: "ABS" },
-            { id: 4, name: "DSA Miami", category: "keycaps", price: "649,000 UZS", images: ["https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?w=500"], description: "Профиль DSA, PBT, розово-голубые тона", profile: "DSA", material: "PBT" }
-        ];
-
-        let dataLoaded = false;
+        let dataReceived = false;
 
         function escapeHtml(str) {
             if (!str) return '';
@@ -693,100 +470,141 @@
             });
         }
 
-        function hideSkeleton() {
+        function showError(message, details = '') {
             const skeleton = document.getElementById('skeletonLoader');
             const grid = document.getElementById('keycapsGrid');
             if (skeleton) skeleton.style.display = 'none';
-            if (grid) grid.style.display = 'grid';
+            if (grid) {
+                grid.style.display = 'grid';
+                grid.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i><br>${message}<br><small style="font-size: 0.8rem;">${details}</small><br><button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Повторить попытку</button></div>`;
+            }
         }
 
         function renderKeycaps(items) {
+            const skeleton = document.getElementById('skeletonLoader');
             const grid = document.getElementById('keycapsGrid');
-            if (!grid) return;
+            const debugPanel = document.getElementById('debugPanel');
             
-            hideSkeleton();
+            if (skeleton) skeleton.style.display = 'none';
+            if (grid) grid.style.display = 'grid';
             
             if (!items || items.length === 0) {
-                grid.innerHTML = `<div class="empty-message"><i class="fas fa-keyboard"></i><br>😕 Кейкапы пока не добавлены.<br><button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Обновить страницу</button></div>`;
+                if (grid) {
+                    grid.innerHTML = `<div class="empty-message"><i class="fas fa-keyboard"></i><br>😕 В Firebase нет товаров с category="keycaps"<br><small>Проверьте структуру данных в Firebase Console</small><br><button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Обновить</button></div>`;
+                }
                 return;
             }
             
-            grid.innerHTML = '';
-            
-            items.forEach((keycap, index) => {
-                const card = document.createElement('div');
-                card.className = 'keycap-card';
-                card.style.animationDelay = `${index * 0.05}s`;
+            if (grid) {
+                grid.innerHTML = '';
                 
-                const imageUrl = keycap.images && keycap.images[0] 
-                    ? keycap.images[0] 
-                    : 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы';
-                
-                card.innerHTML = `
-                    <div class="keycap-badge">${escapeHtml(keycap.profile || 'Кейкапы')}</div>
-                    <div class="keycap-image-container">
-                        <img src="${imageUrl}" alt="${escapeHtml(keycap.name)}" class="keycap-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Кейкапы'">
-                    </div>
-                    <div class="keycap-info">
-                        <h3 class="keycap-name">${escapeHtml(keycap.name)}</h3>
-                        <div class="keycap-meta">
-                            <span class="keycap-profile">${escapeHtml(keycap.profile || 'Профиль')}</span>
-                            <span class="keycap-material">${escapeHtml(keycap.material || 'PBT')}</span>
+                items.forEach((keycap, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'keycap-card';
+                    
+                    const imageUrl = keycap.images && keycap.images[0] 
+                        ? keycap.images[0] 
+                        : 'https://via.placeholder.com/300x280/1e293b/7c3aed?text=Нет+фото';
+                    
+                    card.innerHTML = `
+                        <div class="keycap-badge">${escapeHtml(keycap.profile || 'Кейкапы')}</div>
+                        <div class="keycap-image-container">
+                            <img src="${imageUrl}" alt="${escapeHtml(keycap.name)}" class="keycap-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x280/1e293b/7c3aed?text=Ошибка+фото'">
                         </div>
-                        <p style="color: #94a3b8; font-size: 0.9rem; margin: 0.5rem 0;">${escapeHtml((keycap.description || '').substring(0, 60))}${(keycap.description || '').length > 60 ? '...' : ''}</p>
-                        <div class="keycap-price">${escapeHtml(keycap.price)}</div>
-                    </div>
-                `;
-                
-                card.addEventListener('click', () => {
-                    if (keycap.id) window.location.href = `product.html?id=${keycap.id}`;
+                        <div class="keycap-info">
+                            <h3 class="keycap-name">${escapeHtml(keycap.name)}</h3>
+                            <div class="keycap-meta">
+                                <span class="keycap-profile">${escapeHtml(keycap.profile || 'Профиль')}</span>
+                                <span class="keycap-material">${escapeHtml(keycap.material || 'PBT')}</span>
+                            </div>
+                            <p style="color: #94a3b8; font-size: 0.9rem; margin: 0.5rem 0;">${escapeHtml((keycap.description || '').substring(0, 80))}${(keycap.description || '').length > 80 ? '...' : ''}</p>
+                            <div class="keycap-price">${escapeHtml(keycap.price)}</div>
+                        </div>
+                    `;
+                    
+                    card.addEventListener('click', () => {
+                        if (keycap.id) window.location.href = `product.html?id=${keycap.id}`;
+                    });
+                    
+                    grid.appendChild(card);
                 });
-                
-                grid.appendChild(card);
-            });
+            }
+            
+            // Показываем отладочную информацию
+            if (debugPanel) {
+                debugPanel.style.display = 'block';
+                debugPanel.innerHTML = `
+                    <strong>📊 Отладка Firebase:</strong><br>
+                    ✅ Загружено товаров: ${items.length}<br>
+                    📋 Список: ${items.map(i => i.name).join(', ')}<br>
+                    🔗 Database URL: ${firebaseConfig.databaseURL}
+                `;
+            }
         }
 
-        // ⭐ ТАЙМАУТ: через 3 секунды показываем демо-товары, если Firebase молчит
-        const timeoutId = setTimeout(() => {
-            if (!dataLoaded) {
-                console.log('⚠️ Firebase не ответил, показываю демо-товары');
-                renderKeycaps(demoKeycaps);
-            }
-        }, 3000);
-
-        // Загружаем из Firebase
+        console.log('🚀 Подключение к Firebase...');
+        
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
         const productsRef = ref(database, 'products');
         
+        // Таймаут 10 секунд (даём Firebase время)
+        const timeoutId = setTimeout(() => {
+            if (!dataReceived) {
+                console.error('❌ Таймаут: Firebase не ответил за 10 секунд');
+                showError(
+                    'Firebase не отвечает', 
+                    'Проверьте интернет-соединение или настройки безопасности. Возможно, нужно добавить правило в Firebase Realtime Database.'
+                );
+            }
+        }, 10000);
+        
         onValue(productsRef, (snapshot) => {
-            dataLoaded = true;
+            dataReceived = true;
             clearTimeout(timeoutId);
             
             const data = snapshot.val();
+            console.log('📦 Данные из Firebase:', data);
+            
             const keycaps = [];
             
             if (data) {
                 for (const id in data) {
                     const product = data[id];
+                    console.log(`Товар ${id}:`, product);
+                    
+                    // ⭐ Проверяем category === 'keycaps' (строгое сравнение)
                     if (product && product.category === 'keycaps') {
                         product.id = id;
                         keycaps.push(product);
+                        console.log(`✅ Добавлен кейкап: ${product.name}`);
+                    } else {
+                        console.log(`⏭️ Пропущен (category="${product?.category}"): ${product?.name || id}`);
                     }
                 }
+            } else {
+                console.warn('⚠️ В Firebase нет данных по пути products');
             }
             
-            console.log(`🔑 Загружено кейкапов из Firebase: ${keycaps.length}`);
+            console.log(`🎯 ИТОГО кейкапов: ${keycaps.length}`);
             
             if (keycaps.length > 0) {
                 renderKeycaps(keycaps);
             } else {
-                // Если в Firebase нет кейкапов, показываем демо
-                renderKeycaps(demoKeycaps);
+                showError(
+                    'Кейкапы не найдены', 
+                    'В Firebase нет товаров с category="keycaps". Проверьте структуру данных в Firebase Console.'
+                );
             }
+            
         }, (error) => {
-            console.error('❌ Ошибка Firebase:', error);
-            dataLoaded = true;
+            dataReceived = true;
             clearTimeout(timeoutId);
-            renderKeycaps(demoKeycaps);
+            console.error('❌ Ошибка Firebase:', error);
+            showError(
+                'Ошибка подключения к Firebase', 
+                error.message || 'Проверьте правила безопасности в Firebase Realtime Database'
+            );
         });
 
         document.getElementById('trackingBtn')?.addEventListener('click', () => {
