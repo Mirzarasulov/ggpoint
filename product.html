@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,7 +9,6 @@
     <meta name="description" content="Подробное описание товара">
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -390,21 +390,6 @@
             }, 3000);
         }
 
-        // Ограничение длины отзыва
-        const reviewTextarea = document.getElementById('reviewText');
-        
-        function updateReviewCounter() {
-            if (!reviewTextarea) return;
-            const length = reviewTextarea.value.length;
-            if (length > 999) {
-                reviewTextarea.value = reviewTextarea.value.slice(0, 999);
-            }
-        }
-        
-        if (reviewTextarea) {
-            reviewTextarea.addEventListener('input', updateReviewCounter);
-        }
-
         function loadData() {
             const productRef = ref(database, 'products/' + productId);
             onValue(productRef, (snapshot) => {
@@ -607,22 +592,51 @@
             document.getElementById('productDescription').textContent = product.description?.substring(0, 200) + '...';
             document.getElementById('fullDescription').textContent = product.description;
             
+            // ========== ГЛАВНОЕ ИСПРАВЛЕНИЕ: ХАРАКТЕРИСТИКИ MB ==========
             if (product.features && product.features.length > 0) {
                 document.getElementById('featuresList').innerHTML = product.features.map(f => `<li>${escapeHtml(f)}</li>`).join('');
-                const specsTable = document.getElementById('specsTable');
-                specsTable.innerHTML = `
-                    <tr><td>Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr>
-                    <tr><td>Категория</td><td>${categoryName}</td></tr>
-                    <tr><td>Артикул</td><td>${productId}</td></tr>
-                    ${product.features.map(f => {
-                        const parts = f.split(':');
-                        if (parts.length > 1) {
-                            return `<tr><td>${escapeHtml(parts[0].trim())}</td><td>${escapeHtml(parts.slice(1).join(':').trim())}</td></tr>`;
-                        }
-                        return `<tr><td>Характеристика</td><td>${escapeHtml(f)}</td></tr>`;
-                    }).join('')}
-                `;
             }
+            
+            // Собираем таблицу характеристик
+            let specsHtml = `
+                <tr><td style="font-weight: 600; color: var(--text-light);">Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr>
+                <tr><td style="font-weight: 600; color: var(--text-light);">Категория</td><td>${categoryName}</td></tr>
+                <tr><td style="font-weight: 600; color: var(--text-light);">Артикул</td><td>${productId}</td></tr>
+            `;
+            
+            // Если это материнская плата - добавляем характеристики из mbSpecs
+            if (product.category === 'mb' && product.mbSpecs) {
+                const s = product.mbSpecs;
+                const platformName = s.platform === 'intel' ? 'Intel' : 'AMD';
+                const platformColor = s.platform === 'intel' ? '#0071c5' : '#ed1c24';
+                
+                specsHtml += `
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Платформа</td><td style="color: ${platformColor}; font-weight: bold;">${platformName}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Сокет</td><td>${escapeHtml(s.socket || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Чипсет</td><td>${escapeHtml(s.chipset || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Форм-фактор</td><td>${escapeHtml(s.formFactor || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Слоты памяти</td><td>${escapeHtml(s.ramSlots || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">PCIe слоты</td><td>${escapeHtml(s.pcieSlots || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">M.2 слоты</td><td>${escapeHtml(s.m2Slots || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">SATA порты</td><td>${escapeHtml(s.sataPorts || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">USB порты</td><td>${escapeHtml(s.usbPorts || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Сетевая карта</td><td>${escapeHtml(s.lan || '-')}</td></tr>
+                    <tr><td style="font-weight: 600; color: var(--text-light);">Аудио</td><td>${escapeHtml(s.audio || '-')}</td></tr>
+                `;
+            } 
+            // Обычные товары - показываем features
+            else if (product.features && product.features.length > 0) {
+                product.features.forEach(f => {
+                    const parts = f.split(':');
+                    if (parts.length > 1) {
+                        specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">${escapeHtml(parts[0].trim())}</td><td>${escapeHtml(parts.slice(1).join(':').trim())}</td></tr>`;
+                    } else {
+                        specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Характеристика</td><td>${escapeHtml(f)}</td></tr>`;
+                    }
+                });
+            }
+            
+            document.getElementById('specsTable').innerHTML = specsHtml;
             
             renderYouTubeVideoBottom();
             renderGallery();
