@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Материнские платы - GGPoint</title>
-    <meta name="description" content="Материнские платы  для Intel и AMD">
+    <meta name="description" content="Материнские платы для Intel и AMD">
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     
@@ -20,6 +20,7 @@
             --card-bg: #1e293b;
             --intel-blue: #0071c5;
             --amd-orange: #ed1c24;
+            --text-gray: #94a3b8;
         }
         
         header {
@@ -58,20 +59,178 @@
         .mb-hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
         .mb-hero p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
         
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; padding: 3rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .filters-sidebar {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        
+        .filters-header h3 { font-size: 1.2rem; }
+        .clear-filters { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 0.85rem; transition: color 0.2s; }
+        .clear-filters:hover { color: #ef4444; }
+        
+        .filter-block {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+        }
+        
+        .filter-title {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        
+        .filter-option:hover { color: #60a5fa; }
+        .filter-option input { cursor: pointer; accent-color: #2563eb; width: 16px; height: 16px; margin: 0; }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            min-height: 40px;
+        }
+        
+        .filter-tag {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid #2563eb;
+            color: #60a5fa;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .filter-tag i { cursor: pointer; font-size: 0.75rem; }
+        .filter-tag i:hover { color: #ef4444; }
+        
+        .price-inputs {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .price-inputs input {
+            width: 100%;
+            padding: 0.5rem;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+        }
+        
+        .apply-price-btn {
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .apply-price-btn:hover { opacity: 0.9; }
+        
+        .catalog-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #334155;
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .search-box i { color: #64748b; margin-right: 0.5rem; }
+        .search-box input { background: none; border: none; color: #fff; outline: none; width: 100%; }
+        .search-box input::placeholder { color: #64748b; }
+        
+        .sort-select {
+            padding: 0.5rem 1rem;
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .products-count { margin-bottom: 1rem; color: #94a3b8; font-size: 0.9rem; }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            min-height: 400px;
+        }
         
         .product-card {
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
         }
         
-        .product-card:hover { transform: translateY(-10px); border-color: #7c3aed; box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2); }
+        .product-card:hover { transform: translateY(-5px); border-color: #7c3aed; box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2); }
         
         .product-badge { position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #7c3aed, #ec4899); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2; }
         .product-platform-badge { position: absolute; top: 15px; left: 15px; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; z-index: 2; }
@@ -87,8 +246,8 @@
         .product-meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
         .product-chipset { background: rgba(124, 58, 237, 0.2); color: #7c3aed; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
         .product-socket { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .product-ram { background: rgba(236, 72, 153, 0.2); color: #ec4899; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
         .product-status { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .product-status.out-of-stock { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
         .product-price { font-size: 1.3rem; background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; margin: 0.5rem 0; }
         
         .loader { text-align: center; padding: 4rem; color: #94a3b8; grid-column: 1/-1; }
@@ -109,7 +268,7 @@
         .footer-section h4 { margin-bottom: 1rem; color: #f1f5f9; }
         .footer-section ul { list-style: none; }
         .footer-section ul li { margin-bottom: 0.5rem; }
-        .footer-section ul li a { color: #94a3b8; text-decoration: none; transition: all 0.3s ease; }
+        .footer-section ul li a { color: #94a3b8; text-decoration: none; transition: color 0.2s; }
         .footer-section ul li a:hover { color: #60a5fa; }
         .contact-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #94a3b8; }
         .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
@@ -118,6 +277,8 @@
         .footer-bottom { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(37, 99, 235, 0.2); color: #64748b; }
         
         @media (max-width: 768px) {
+            .catalog-layout { grid-template-columns: 1fr; }
+            .filters-sidebar { position: static; }
             .tracking-btn-main span { display: none; }
             .tracking-btn-main { padding: 0.5rem 0.8rem; }
             .nav-list { gap: 0.8rem; }
@@ -125,6 +286,9 @@
             .mb-hero { padding: 2rem 1rem; }
             .mb-hero h1 { font-size: 1.8rem; }
             .products-grid { grid-template-columns: 1fr; }
+            .search-box { max-width: 100%; }
+            .catalog-toolbar { flex-direction: column; align-items: stretch; }
+            .sort-select { width: 100%; }
         }
     </style>
 </head>
@@ -150,12 +314,76 @@
     </header>
 
     <section class="mb-hero">
-        <h1><i class="fas fa-microchip"></i> Материнские платы MB</h1>
-        <p>Надежные материнские платы для вашего ПК. AMD и Intel, любые форм-факторы.</p>
+        <h1><i class="fas fa-microchip"></i> Материнские платы</h1>
+        <p>Выберите идеальную основу для вашего ПК. Intel или AMD, любой форм-фактор и бюджет.</p>
     </section>
 
-    <div class="products-grid" id="productsGrid">
-        <div class="loader"><i class="fas fa-microchip fa-spin"></i><br><br>Загрузка материнских плат...</div>
+    <div class="catalog-layout">
+        <aside class="filters-sidebar">
+            <div class="filters-header">
+                <h3><i class="fas fa-sliders-h"></i> Фильтры</h3>
+                <button class="clear-filters" id="clearFilters"><i class="fas fa-times"></i> Сбросить</button>
+            </div>
+            
+            <div class="active-filters" id="activeFilters"></div>
+            
+            <div class="filter-block">
+                <h4 class="filter-title"><i class="fas fa-microchip"></i> Платформа</h4>
+                <div class="filter-options">
+                    <label class="filter-option"><input type="checkbox" value="intel" id="filterIntel"> <span><i class="fab fa-intel"></i> Intel</span></label>
+                    <label class="filter-option"><input type="checkbox" value="amd" id="filterAmd"> <span><i class="fab fa-amd"></i> AMD</span></label>
+                </div>
+            </div>
+            
+            <div class="filter-block">
+                <h4 class="filter-title"><i class="fas fa-memory"></i> Тип памяти</h4>
+                <div class="filter-options">
+                    <label class="filter-option"><input type="checkbox" value="DDR4" id="filterDDR4"> <span>DDR4</span></label>
+                    <label class="filter-option"><input type="checkbox" value="DDR5" id="filterDDR5"> <span>DDR5</span></label>
+                </div>
+            </div>
+            
+            <div class="filter-block">
+                <h4 class="filter-title"><i class="fas fa-vector-square"></i> Форм-фактор</h4>
+                <div class="filter-options">
+                    <label class="filter-option"><input type="checkbox" value="ATX" id="filterATX"> <span>ATX</span></label>
+                    <label class="filter-option"><input type="checkbox" value="Micro-ATX" id="filterMicroATX"> <span>Micro-ATX</span></label>
+                    <label class="filter-option"><input type="checkbox" value="Mini-ITX" id="filterMiniITX"> <span>Mini-ITX</span></label>
+                </div>
+            </div>
+            
+            <div class="filter-block">
+                <h4 class="filter-title"><i class="fas fa-dollar-sign"></i> Цена (UZS)</h4>
+                <div class="price-inputs">
+                    <input type="number" id="minPrice" placeholder="От">
+                    <span>-</span>
+                    <input type="number" id="maxPrice" placeholder="До">
+                </div>
+                <button class="apply-price-btn" id="applyPrice">Применить</button>
+            </div>
+        </aside>
+        
+        <div class="catalog-main">
+            <div class="catalog-toolbar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Поиск по названию...">
+                </div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="default">По умолчанию</option>
+                    <option value="price_asc">Цена: по возрастанию</option>
+                    <option value="price_desc">Цена: по убыванию</option>
+                    <option value="name_asc">Название: А-Я</option>
+                    <option value="name_desc">Название: Я-А</option>
+                </select>
+            </div>
+            
+            <div class="products-count" id="productsCount">Загрузка...</div>
+            
+            <div class="products-grid" id="productsGrid">
+                <div class="loader"><i class="fas fa-microchip fa-spin"></i><br><br>Загрузка материнских плат...</div>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="adminLoginModal">
@@ -182,8 +410,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
-        // Прямой Fetch запрос к Firebase REST API (быстрее чем SDK)
         const FIREBASE_URL = 'https://ggpoint-shop-default-rtdb.firebaseio.com/products.json';
+        
+        let allProducts = [];
+        let filteredProducts = [];
         
         function escapeHtml(str) {
             if (!str) return '';
@@ -194,24 +424,94 @@
                 return m;
             });
         }
-
-        function renderProducts(products) {
+        
+        function parsePrice(priceStr) {
+            if (!priceStr) return 0;
+            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
+        }
+        
+        function getRamTypeFromSpecs(product) {
+            const ramSlots = product.mbSpecs?.ramSlots || '';
+            if (ramSlots.includes('DDR5')) return 'DDR5';
+            if (ramSlots.includes('DDR4')) return 'DDR4';
+            return '';
+        }
+        
+        function applyFilters() {
+            let filtered = [...allProducts];
+            
+            const platformIntel = document.getElementById('filterIntel')?.checked;
+            const platformAmd = document.getElementById('filterAmd')?.checked;
+            if (platformIntel && !platformAmd) {
+                filtered = filtered.filter(p => (p.mbSpecs?.platform || 'intel').toLowerCase() === 'intel');
+            } else if (!platformIntel && platformAmd) {
+                filtered = filtered.filter(p => (p.mbSpecs?.platform || 'intel').toLowerCase() === 'amd');
+            }
+            
+            const ddr4 = document.getElementById('filterDDR4')?.checked;
+            const ddr5 = document.getElementById('filterDDR5')?.checked;
+            if (ddr4 && !ddr5) {
+                filtered = filtered.filter(p => getRamTypeFromSpecs(p) === 'DDR4');
+            } else if (!ddr4 && ddr5) {
+                filtered = filtered.filter(p => getRamTypeFromSpecs(p) === 'DDR5');
+            }
+            
+            const atx = document.getElementById('filterATX')?.checked;
+            const microAtx = document.getElementById('filterMicroATX')?.checked;
+            const miniItx = document.getElementById('filterMiniITX')?.checked;
+            if (atx || microAtx || miniItx) {
+                filtered = filtered.filter(p => {
+                    const ff = (p.mbSpecs?.formFactor || '').toLowerCase();
+                    if (atx && ff.includes('atx')) return true;
+                    if (microAtx && ff.includes('micro-atx')) return true;
+                    if (miniItx && ff.includes('mini-itx')) return true;
+                    return false;
+                });
+            }
+            
+            const minPrice = document.getElementById('minPrice')?.value;
+            const maxPrice = document.getElementById('maxPrice')?.value;
+            if (minPrice) filtered = filtered.filter(p => parsePrice(p.price) >= parseInt(minPrice));
+            if (maxPrice) filtered = filtered.filter(p => parsePrice(p.price) <= parseInt(maxPrice));
+            
+            const searchQuery = document.getElementById('searchInput')?.value.toLowerCase();
+            if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery));
+            
+            const sortBy = document.getElementById('sortSelect')?.value;
+            if (sortBy === 'price_asc') {
+                filtered.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+            } else if (sortBy === 'price_desc') {
+                filtered.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+            } else if (sortBy === 'name_asc') {
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (sortBy === 'name_desc') {
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
+            }
+            
+            filteredProducts = filtered;
+            document.getElementById('productsCount').textContent = `Найдено материнских плат: ${filteredProducts.length}`;
+            renderProducts();
+            updateActiveFilters();
+        }
+        
+        function renderProducts() {
             const grid = document.getElementById('productsGrid');
             if (!grid) return;
             
-            if (!products || products.length === 0) {
-                grid.innerHTML = `<div class="empty-message"><i class="fas fa-microchip"></i><br>😕 Нет материнских плат в категории MB<br><small>Добавьте их через админ-панель (Ctrl + тройной клик)</small></div>`;
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `<div class="empty-message"><i class="fas fa-microchip"></i><br>😕 Нет материнских плат под выбранные фильтры<br><small>Попробуйте изменить параметры поиска</small></div>`;
                 return;
             }
             
             grid.innerHTML = '';
-            products.forEach((product, index) => {
+            filteredProducts.forEach(product => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 
                 const platform = (product.mbSpecs?.platform || 'intel').toLowerCase();
                 const chipset = product.mbSpecs?.chipset || product.chipset || 'Чипсет';
                 const socket = product.mbSpecs?.socket || product.socket || 'Сокет';
+                const ramType = getRamTypeFromSpecs(product);
                 const platformName = platform === 'intel' ? 'Intel' : 'AMD';
                 const platformClass = platform === 'intel' ? 'intel' : 'amd';
                 const imgUrl = product.images?.[0] || 'https://via.placeholder.com/300x280/1a1a2e/2563eb?text=MB';
@@ -227,6 +527,7 @@
                         <div class="product-meta">
                             <span class="product-chipset">${escapeHtml(chipset)}</span>
                             <span class="product-socket">${escapeHtml(socket)}</span>
+                            ${ramType ? `<span class="product-ram">${escapeHtml(ramType)}</span>` : ''}
                             <span class="product-status">В наличии</span>
                         </div>
                         <p style="color: #94a3b8; font-size: 0.85rem;">${escapeHtml((product.description || '').substring(0, 80))}${(product.description || '').length > 80 ? '...' : ''}</p>
@@ -234,39 +535,110 @@
                     </div>
                 `;
                 
-                card.addEventListener('click', () => {
-                    window.location.href = `product.html?id=${product.id}`;
-                });
-                
+                card.addEventListener('click', () => window.location.href = `product.html?id=${product.id}`);
                 grid.appendChild(card);
             });
         }
-
-        // Быстрый Fetch запрос
+        
+        function updateActiveFilters() {
+            const container = document.getElementById('activeFilters');
+            container.innerHTML = '';
+            
+            const intelChecked = document.getElementById('filterIntel')?.checked;
+            const amdChecked = document.getElementById('filterAmd')?.checked;
+            if (intelChecked && !amdChecked) addFilterTag(container, 'Intel', () => { document.getElementById('filterIntel').checked = false; applyFilters(); });
+            if (!intelChecked && amdChecked) addFilterTag(container, 'AMD', () => { document.getElementById('filterAmd').checked = false; applyFilters(); });
+            
+            const ddr4Checked = document.getElementById('filterDDR4')?.checked;
+            const ddr5Checked = document.getElementById('filterDDR5')?.checked;
+            if (ddr4Checked && !ddr5Checked) addFilterTag(container, 'DDR4', () => { document.getElementById('filterDDR4').checked = false; applyFilters(); });
+            if (!ddr4Checked && ddr5Checked) addFilterTag(container, 'DDR5', () => { document.getElementById('filterDDR5').checked = false; applyFilters(); });
+            
+            if (document.getElementById('filterATX')?.checked) addFilterTag(container, 'ATX', () => { document.getElementById('filterATX').checked = false; applyFilters(); });
+            if (document.getElementById('filterMicroATX')?.checked) addFilterTag(container, 'Micro-ATX', () => { document.getElementById('filterMicroATX').checked = false; applyFilters(); });
+            if (document.getElementById('filterMiniITX')?.checked) addFilterTag(container, 'Mini-ITX', () => { document.getElementById('filterMiniITX').checked = false; applyFilters(); });
+            
+            const minPrice = document.getElementById('minPrice')?.value;
+            const maxPrice = document.getElementById('maxPrice')?.value;
+            if (minPrice || maxPrice) {
+                addFilterTag(container, `${minPrice || '0'} - ${maxPrice || '∞'} UZS`, () => {
+                    document.getElementById('minPrice').value = '';
+                    document.getElementById('maxPrice').value = '';
+                    applyFilters();
+                });
+            }
+            
+            const searchQuery = document.getElementById('searchInput')?.value;
+            if (searchQuery) {
+                addFilterTag(container, searchQuery, () => {
+                    document.getElementById('searchInput').value = '';
+                    applyFilters();
+                });
+            }
+        }
+        
+        function addFilterTag(container, text, onRemove) {
+            const tag = document.createElement('span');
+            tag.className = 'filter-tag';
+            tag.innerHTML = `${text} <i class="fas fa-times"></i>`;
+            tag.querySelector('i').addEventListener('click', onRemove);
+            container.appendChild(tag);
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, arguments), wait);
+            };
+        }
+        
         fetch(FIREBASE_URL)
             .then(response => response.json())
             .then(data => {
-                const mbProducts = [];
+                allProducts = [];
                 if (data) {
                     for (const id in data) {
                         if (data[id].category === 'mb') {
                             data[id].id = id;
-                            mbProducts.push(data[id]);
+                            allProducts.push(data[id]);
                         }
                     }
                 }
-                renderProducts(mbProducts);
+                applyFilters();
             })
             .catch(error => {
                 console.error('Ошибка:', error);
                 document.getElementById('productsGrid').innerHTML = `<div class="empty-message"><i class="fas fa-exclamation-triangle"></i><br>❌ Ошибка загрузки<br><small>${error.message}</small></div>`;
             });
-
-        document.getElementById('trackingBtn')?.addEventListener('click', () => {
-            window.location.href = 'tracking.html';
+        
+        document.getElementById('filterIntel')?.addEventListener('change', applyFilters);
+        document.getElementById('filterAmd')?.addEventListener('change', applyFilters);
+        document.getElementById('filterDDR4')?.addEventListener('change', applyFilters);
+        document.getElementById('filterDDR5')?.addEventListener('change', applyFilters);
+        document.getElementById('filterATX')?.addEventListener('change', applyFilters);
+        document.getElementById('filterMicroATX')?.addEventListener('change', applyFilters);
+        document.getElementById('filterMiniITX')?.addEventListener('change', applyFilters);
+        document.getElementById('applyPrice')?.addEventListener('click', applyFilters);
+        document.getElementById('searchInput')?.addEventListener('input', debounce(applyFilters, 500));
+        document.getElementById('sortSelect')?.addEventListener('change', applyFilters);
+        
+        document.getElementById('clearFilters')?.addEventListener('click', () => {
+            document.getElementById('filterIntel').checked = false;
+            document.getElementById('filterAmd').checked = false;
+            document.getElementById('filterDDR4').checked = false;
+            document.getElementById('filterDDR5').checked = false;
+            document.getElementById('filterATX').checked = false;
+            document.getElementById('filterMicroATX').checked = false;
+            document.getElementById('filterMiniITX').checked = false;
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+            document.getElementById('searchInput').value = '';
+            applyFilters();
         });
         
-        // Скрытый вход в админку
+        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+        
         let ctrlClickCount = 0;
         let ctrlClickTimer = null;
         
@@ -282,14 +654,8 @@
             }
         });
         
-        document.getElementById('closeAdminModal')?.addEventListener('click', () => {
-            document.getElementById('adminLoginModal').style.display = 'none';
-        });
-        
-        window.addEventListener('click', (e) => {
-            const modal = document.getElementById('adminLoginModal');
-            if (e.target === modal) modal.style.display = 'none';
-        });
+        document.getElementById('closeAdminModal')?.addEventListener('click', () => document.getElementById('adminLoginModal').style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
         
         document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => {
             e.preventDefault();
