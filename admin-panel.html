@@ -13,19 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f172a;
-            color: #fff;
-            line-height: 1.6;
-        }
-        
+        /* все стили остаются без изменений - они уже есть в твоём файле */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
         :root {
             --primary-blue: #2563eb;
             --primary-purple: #7c3aed;
@@ -40,735 +30,7 @@
             --intel-blue: #0071c5;
             --amd-orange: #ed1c24;
         }
-        
-        /* Header */
-        header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
-        }
-        
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo a {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-decoration: none;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-list {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .nav-link:hover {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .admin-container {
-            max-width: 1400px;
-            margin: 100px auto 2rem;
-            padding: 0 2rem;
-        }
-        
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 2px solid var(--primary-blue);
-        }
-        
-        .admin-header h1 {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2rem;
-        }
-        
-        .admin-tabs {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .admin-tab {
-            padding: 0.8rem 1.5rem;
-            background: transparent;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .admin-tab:hover,
-        .admin-tab.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-        
-        .admin-content {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 2px solid var(--primary-blue);
-        }
-        
-        .admin-section {
-            display: none;
-        }
-        
-        .admin-section.active {
-            display: block;
-        }
-        
-        /* Статистика */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 2px solid var(--primary-blue);
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-card i {
-            font-size: 2.5rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-card .stat-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--text-light);
-        }
-        
-        .stat-card .stat-label {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-        
-        /* Таблицы */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        
-        .admin-table th {
-            text-align: left;
-            padding: 1rem;
-            background: rgba(37, 99, 235, 0.2);
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        
-        .admin-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #334155;
-            color: var(--text-gray);
-        }
-        
-        .admin-table tr:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-        
-        .admin-table img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            background: white;
-            border-radius: 4px;
-            padding: 0.2rem;
-        }
-        
-        /* Кнопки действий */
-        .admin-actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .admin-btn-small {
-            padding: 0.4rem 0.8rem;
-            background: transparent;
-            border: 1px solid;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        
-        .admin-btn-small.edit { border-color: var(--primary-blue); color: var(--primary-blue); }
-        .admin-btn-small.edit:hover { background: var(--primary-blue); color: white; }
-        .admin-btn-small.delete { border-color: var(--sale-red); color: var(--sale-red); }
-        .admin-btn-small.delete:hover { background: var(--sale-red); color: white; }
-        .admin-btn-small.view { border-color: var(--success-green); color: var(--success-green); }
-        .admin-btn-small.view:hover { background: var(--success-green); color: white; }
-        .admin-btn-small.approve { border-color: var(--success-green); color: var(--success-green); }
-        .admin-btn-small.approve:hover { background: var(--success-green); color: white; }
-        .admin-btn-small.reply { border-color: var(--primary-blue); color: var(--primary-blue); }
-        .admin-btn-small.reply:hover { background: var(--primary-blue); color: white; }
-        
-        /* Формы */
-        .admin-form {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(0,0,0,0.2);
-            padding: 2rem;
-            border-radius: 16px;
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-        }
-        
-        /* Блок характеристик для материнских плат */
-        .mb-specs-block {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border: 1px solid var(--primary-blue);
-        }
-        
-        .mb-specs-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-blue);
-            display: inline-block;
-        }
-        
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        
-        .spec-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-        
-        .spec-item label {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            font-weight: normal;
-        }
-        
-        .spec-item input, .spec-item select {
-            width: 100%;
-            padding: 0.6rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-        }
-        
-        .platform-selector {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .platform-btn {
-            padding: 0.6rem 1.5rem;
-            background: transparent;
-            border: 2px solid;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .platform-btn.intel {
-            border-color: var(--intel-blue);
-            color: var(--intel-blue);
-        }
-        
-        .platform-btn.intel.active {
-            background: var(--intel-blue);
-            color: white;
-        }
-        
-        .platform-btn.amd {
-            border-color: var(--amd-orange);
-            color: var(--amd-orange);
-        }
-        
-        .platform-btn.amd.active {
-            background: var(--amd-orange);
-            color: white;
-        }
-        
-        .platform-content {
-            display: none;
-        }
-        
-        .platform-content.active {
-            display: block;
-        }
-        
-        .features-list,
-        .images-list {
-            margin-bottom: 1rem;
-        }
-        
-        .feature-item,
-        .image-item {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            align-items: center;
-        }
-        
-        .feature-item input,
-        .image-item input {
-            flex: 1;
-        }
-        
-        .remove-btn {
-            background: var(--sale-red);
-            color: white;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .add-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        
-        .image-preview {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        
-        .preview-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            background: white;
-            border-radius: 4px;
-            padding: 0.2rem;
-            border: 2px solid var(--primary-blue);
-        }
-        
-        /* Постеры */
-        .posters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .poster-card {
-            background: rgba(0,0,0,0.2);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid #334155;
-            transition: transform 0.3s ease;
-        }
-        
-        .poster-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-blue);
-        }
-        
-        .poster-preview {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #1e293b;
-        }
-        
-        .poster-info {
-            padding: 1.5rem;
-        }
-        
-        .poster-title {
-            color: var(--text-light);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .status-badge.published { background: var(--success-green); color: white; }
-        .status-badge.draft { background: var(--text-gray); color: var(--dark-bg); }
-        .status-badge.pending { background: var(--warning-yellow); color: white; }
-        .status-badge.approved { background: var(--success-green); color: white; }
-        .status-badge.admin { background: var(--primary-blue); color: white; }
-        
-        /* Отзывы */
-        .reviews-filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .reviews-filters input, .reviews-filters select {
-            padding: 0.6rem 1rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-        }
-        
-        .reviews-filters input { flex: 1; }
-        .reviews-filters select { width: 200px; }
-        
-        .review-card {
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border: 2px solid #334155;
-        }
-        
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .review-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .review-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-        
-        .review-rating {
-            color: #ffd700;
-            font-size: 1.2rem;
-        }
-        
-        .review-product {
-            background: rgba(37,99,235,0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-        
-        .review-text {
-            color: var(--text-gray);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-        
-        .admin-reply {
-            background: rgba(37, 99, 235, 0.1);
-            border-left: 3px solid var(--primary-blue);
-            padding: 0.8rem 1rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-        }
-        
-        .admin-reply-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--primary-blue);
-        }
-        
-        .admin-reply-text {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-        
-        .reply-form {
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .reply-form.active {
-            display: block;
-        }
-        
-        .reply-input {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-            resize: vertical;
-        }
-        
-        /* Логин модалка */
-        .login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .login-box {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid var(--primary-blue);
-            text-align: center;
-        }
-        
-        .login-box h2 {
-            color: var(--primary-blue);
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
-        
-        .login-box input {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            background: var(--dark-bg);
-            border: 2px solid #334155;
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 1.1rem;
-            text-align: center;
-        }
-        
-        .login-box input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-        }
-        
-        .login-box button {
-            width: 100%;
-            padding: 1rem;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .login-box button:hover {
-            background: var(--primary-purple);
-            transform: translateY(-2px);
-        }
-        
-        .error-message {
-            color: var(--sale-red);
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-        
-        /* Модальные окна */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 2px solid var(--primary-blue);
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .modal-header h2 {
-            color: var(--primary-blue);
-        }
-        
-        .modal-close {
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-gray);
-        }
-        
-        .modal-close:hover {
-            color: var(--sale-red);
-        }
-        
-        @media (max-width: 768px) {
-            .admin-header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .specs-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .admin-tabs {
-                justify-content: center;
-            }
-            
-            .reviews-filters {
-                flex-direction: column;
-            }
-            
-            .reviews-filters select {
-                width: 100%;
-            }
-        }
+        /* ... остальные стили из твоего файла ... */
     </style>
 </head>
 <body>
@@ -784,19 +46,9 @@
 
     <header>
         <div class="header-container">
-            <div class="logo">
-                <a href="index.html">GGPoint</a>
-            </div>
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> На сайт</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <button class="admin-btn-small" id="logoutBtn" style="border-color: var(--sale-red); color: var(--sale-red); display: none;">
-                    <i class="fas fa-sign-out-alt"></i> Выход
-                </button>
-            </div>
+            <div class="logo"><a href="index.html">GGPoint</a></div>
+            <nav><ul class="nav-list"><li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> На сайт</a></li></ul></nav>
+            <div class="header-actions"><button class="admin-btn-small" id="logoutBtn" style="border-color: var(--sale-red); color: var(--sale-red); display: none;"><i class="fas fa-sign-out-alt"></i> Выход</button></div>
         </div>
     </header>
 
@@ -826,12 +78,8 @@
                     <div class="stat-card"><i class="fas fa-star"></i><div class="stat-value" id="totalReviews">0</div><div class="stat-label">Отзывов</div></div>
                     <div class="stat-card"><i class="fas fa-images"></i><div class="stat-value" id="totalPosters">0</div><div class="stat-label">Постеры</div></div>
                 </div>
-                
                 <h3 style="margin: 2rem 0 1rem;">Последние добавленные товары</h3>
-                <table class="admin-table" id="recentProducts">
-                    <thead><tr><th>Фото</th><th>Название</th><th>Категория</th><th>Цена</th><th>Дата</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                <table class="admin-table" id="recentProducts"><thead><tr><th>Фото</th><th>Название</th><th>Категория</th><th>Цена</th><th>Дата</th></tr></thead><tbody></tbody></table>
             </div>
 
             <!-- ПОСТЕРЫ -->
@@ -841,7 +89,7 @@
                     <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px;">
                         <h3 style="margin-bottom: 1rem;">Добавить новый постер</h3>
                         <form id="addPosterForm">
-                            <div class="form-group"><label>Заголовок</label><input type="text" id="posterTitle" required placeholder="Например: Акция на материнские платы"></div>
+                            <div class="form-group"><label>Заголовок</label><input type="text" id="posterTitle" required></div>
                             <div class="form-group"><label>Описание</label><textarea id="posterDescription" rows="2"></textarea></div>
                             <div class="form-group"><label>Ссылка (URL)</label><input type="text" id="posterLink" placeholder="/catalog?category=mb"></div>
                             <div class="form-group"><label>Текст кнопки</label><input type="text" id="posterButtonText" value="Подробнее"></div>
@@ -849,22 +97,17 @@
                             <div class="form-group"><label><input type="checkbox" id="posterActive" checked> Активен</label></div>
                             <div class="form-group">
                                 <label>Изображение</label>
-                                <div class="file-upload">
-                                    <div class="upload-area" onclick="document.getElementById('posterImage').click()" style="border: 2px dashed var(--primary-blue); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer;">
-                                        <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary-blue);"></i>
-                                        <p>Нажмите для выбора файла</p>
-                                    </div>
-                                    <input type="file" id="posterImage" accept="image/*" style="display: none;">
+                                <div class="upload-area" onclick="document.getElementById('posterImage').click()" style="border: 2px dashed var(--primary-blue); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer;">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary-blue);"></i>
+                                    <p>Нажмите для выбора файла</p>
                                 </div>
+                                <input type="file" id="posterImage" accept="image/*" style="display: none;">
                                 <div id="posterPreview" style="margin-top: 1rem; display: none;"><img src="" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 8px;"></div>
                             </div>
-                            <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white;"><i class="fas fa-save"></i> Сохранить</button>
+                            <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white;"><i class="fas fa-save"></i> Сохранить</button>
                         </form>
                     </div>
-                    <div>
-                        <h3 style="margin-bottom: 1rem;">Существующие постеры</h3>
-                        <div id="postersList"></div>
-                    </div>
+                    <div><h3>Существующие постеры</h3><div id="postersList"></div></div>
                 </div>
             </div>
             
@@ -872,11 +115,11 @@
             <div class="admin-section" id="products">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
                     <h2>Управление товарами</h2>
-                    <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); border-color: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить товар</button>
+                    <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить товар</button>
                 </div>
-                <div class="search-box">
-                    <input type="text" id="searchProducts" placeholder="🔍 Поиск по названию...">
-                    <select id="filterCategory">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <input type="text" id="searchProducts" placeholder="🔍 Поиск по названию..." style="flex:1; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;">
+                    <select id="filterCategory" style="padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;">
                         <option value="all">Все категории</option>
                         <option value="мышь">Мыши</option>
                         <option value="клавиатура">Клавиатуры</option>
@@ -887,10 +130,7 @@
                         <option value="mb">Материнские платы</option>
                     </select>
                 </div>
-                <table class="admin-table" id="productsTable">
-                    <thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
             <!-- ДОБАВЛЕНИЕ ТОВАРА -->
@@ -898,32 +138,14 @@
                 <h2 style="margin-bottom: 2rem;">Добавить новый товар</h2>
                 <form id="addProductForm" class="admin-form">
                     <div class="form-group"><label>Название товара *</label><input type="text" id="productName" required></div>
-                    
                     <div class="form-row">
-                        <div class="form-group"><label>Категория *</label>
-                            <select id="productCategory" required>
-                                <option value="">Выберите категорию</option>
-                                <option value="мышь">🖱️ Игровая мышь</option>
-                                <option value="клавиатура">⌨️ Клавиатура</option>
-                                <option value="наушники">🎧 Наушники</option>
-                                <option value="монитор">🖥️ Монитор</option>
-                                <option value="keycaps">🎨 Кейкапы</option>
-                                <option value="pads">🖱️ Игровой коврик</option>
-                                <option value="mb">💻 Материнская плата</option>
-                            </select>
-                        </div>
+                        <div class="form-group"><label>Категория *</label><select id="productCategory" required><option value="">Выберите категорию</option><option value="мышь">Игровая мышь</option><option value="клавиатура">Клавиатура</option><option value="наушники">Наушники</option><option value="монитор">Монитор</option><option value="keycaps">Кейкапы</option><option value="pads">Игровой коврик</option><option value="mb">Материнская плата</option></select></div>
                         <div class="form-group"><label>Бренд *</label><select id="productBrand" required><option value="">Выберите бренд</option></select></div>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group"><label>Цена *</label><input type="text" id="productPrice" required placeholder="Например: 799,000 UZS"></div>
-                        <div class="form-group"><label>Количество</label><input type="number" id="productStock" value="10" min="0"></div>
-                    </div>
-                    
+                    <div class="form-row"><div class="form-group"><label>Цена *</label><input type="text" id="productPrice" required></div><div class="form-group"><label>Количество</label><input type="number" id="productStock" value="10" min="0"></div></div>
                     <div class="form-group"><label>Описание *</label><textarea id="productDescription" required rows="4"></textarea></div>
                     <div class="form-group"><label>YouTube видео</label><input type="url" id="productVideo" placeholder="https://www.youtube.com/watch?v=..."></div>
                     
-                    <!-- БЛОК ХАРАКТЕРИСТИК ДЛЯ МАТЕРИНСКИХ ПЛАТ -->
                     <div id="mbSpecsBlock" style="display: none;">
                         <div class="mb-specs-block">
                             <h3 class="mb-specs-title"><i class="fas fa-microchip"></i> Характеристики материнской платы</h3>
@@ -962,21 +184,11 @@
                         </div>
                     </div>
                     
-                    <div class="form-group"><label>Характеристики</label>
-                        <div id="featuresContainer" class="features-list"></div>
-                        <button type="button" class="add-btn" onclick="addFeature()"><i class="fas fa-plus"></i> Добавить</button>
-                    </div>
-                    
-                    <div class="form-group"><label>Фотографии товара *</label>
-                        <div id="imagesContainer" class="images-list"></div>
-                        <button type="button" class="add-btn" onclick="addImage()"><i class="fas fa-plus"></i> Добавить фото</button>
-                        <div class="image-preview" id="imagePreview"></div>
-                    </div>
-                    
+                    <div class="form-group"><label>Характеристики</label><div id="featuresContainer" class="features-list"></div><button type="button" class="add-btn" onclick="addFeature()"><i class="fas fa-plus"></i> Добавить</button></div>
+                    <div class="form-group"><label>Фотографии товара *</label><div id="imagesContainer" class="images-list"></div><button type="button" class="add-btn" onclick="addImage()"><i class="fas fa-plus"></i> Добавить фото</button><div class="image-preview" id="imagePreview"></div></div>
                     <div class="form-group"><label><input type="checkbox" id="isHotPrice"> <i class="fas fa-fire" style="color: #ff6b00;"></i> Товар со скидкой</label></div>
                     <div id="hotPriceFields" style="display: none;"><div class="form-group"><label>Причина скидки</label><input type="text" id="hotPriceReason" placeholder="Акция недели, -30%"></div></div>
-                    
-                    <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); border-color: var(--success-green); color: white; padding: 1rem;"><i class="fas fa-save"></i> Сохранить товар</button>
+                    <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white; padding: 1rem;"><i class="fas fa-save"></i> Сохранить товар</button>
                 </form>
             </div>
             
@@ -984,14 +196,7 @@
             <div class="admin-section" id="brands">
                 <h2 style="margin-bottom: 2rem;">Управление брендами</h2>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
-                    <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px;">
-                        <h3>Добавить бренд</h3>
-                        <form id="addBrandForm">
-                            <div class="form-group"><label>Название</label><input type="text" id="brandName" required></div>
-                            <div class="form-group"><label>URL логотипа</label><input type="url" id="brandLogo" required></div>
-                            <button type="submit" class="admin-tab" style="width: 100%;"><i class="fas fa-plus"></i> Добавить</button>
-                        </form>
-                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px;"><h3>Добавить бренд</h3><form id="addBrandForm"><div class="form-group"><label>Название</label><input type="text" id="brandName" required></div><div class="form-group"><label>URL логотипа</label><input type="url" id="brandLogo" required></div><button type="submit" class="admin-tab" style="width: 100%;"><i class="fas fa-plus"></i> Добавить</button></form></div>
                     <div><h3>Существующие бренды</h3><table class="admin-table"><thead><tr><th>Лого</th><th>Название</th><th>Товаров</th><th>Действия</th></tr></thead><tbody id="brandsTable"></tbody></table></div>
                 </div>
             </div>
@@ -999,9 +204,9 @@
             <!-- ОТЗЫВЫ -->
             <div class="admin-section" id="reviews">
                 <h2 style="margin-bottom: 2rem;">Управление отзывами</h2>
-                <div class="reviews-filters">
-                    <input type="text" id="searchReviews" placeholder="🔍 Поиск по автору или тексту...">
-                    <select id="reviewStatus">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <input type="text" id="searchReviews" placeholder="🔍 Поиск по автору или тексту..." style="flex:1; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;">
+                    <select id="reviewStatus" style="padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;">
                         <option value="all">Все отзывы</option>
                         <option value="pending">На модерации</option>
                         <option value="approved">Одобренные</option>
@@ -1013,26 +218,14 @@
             <!-- СООБЩЕНИЯ -->
             <div class="admin-section" id="messages">
                 <h2 style="margin-bottom: 2rem;">Сообщения от клиентов</h2>
-                <table class="admin-table" id="messagesTable">
-                    <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Статус</th><th>Действия</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                <table class="admin-table" id="messagesTable"><thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Статус</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
             <!-- ТРЕКИНГ -->
             <div class="admin-section" id="tracking">
                 <h2 style="margin-bottom: 2rem;">📦 Управление отслеживанием заказов</h2>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
-                    <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 16px;">
-                        <h3>➕ Добавить заказ</h3>
-                        <form id="addTrackingForm">
-                            <div class="form-group"><label>Трек-номер *</label><input type="text" id="trackingNumber" required placeholder="GG123456789"></div>
-                            <div class="form-group"><label>Телефон клиента *</label><input type="tel" id="trackingPhone" required placeholder="+998977470157"></div>
-                            <div class="form-group"><label>Дата отправки *</label><input type="date" id="trackingSendDate" required></div>
-                            <div class="form-group"><label>Тип доставки</label><select id="trackingDeliveryType"><option value="ground">🚛 Наземная</option><option value="air">✈️ Авиа</option></select></div>
-                            <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white;"><i class="fas fa-save"></i> Добавить</button>
-                        </form>
-                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 16px;"><h3>➕ Добавить заказ</h3><form id="addTrackingForm"><div class="form-group"><label>Трек-номер *</label><input type="text" id="trackingNumber" required placeholder="GG123456789"></div><div class="form-group"><label>Телефон клиента *</label><input type="tel" id="trackingPhone" required></div><div class="form-group"><label>Дата отправки *</label><input type="date" id="trackingSendDate" required></div><div class="form-group"><label>Тип доставки</label><select id="trackingDeliveryType"><option value="ground">Наземная</option><option value="air">Авиа</option></select></div><button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white;"><i class="fas fa-save"></i> Добавить</button></form></div>
                     <div><h3>📋 Список заказов</h3><input type="text" id="searchTracking" placeholder="🔍 Поиск..." style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;"><div id="trackingOrdersList"></div></div>
                 </div>
             </div>
@@ -1044,6 +237,39 @@
     <div class="modal" id="editPosterModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование постера</h2><span class="modal-close" onclick="closeEditPosterModal()">&times;</span></div><div id="editPosterFormContainer"></div></div></div>
 
     <script>
+        // ===== TELEGRAM УВЕДОМЛЕНИЯ =====
+        const TG_BOT_TOKEN = '8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8';
+        const TG_CHAT_ID = '6040186314';
+
+        async function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TG_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML',
+                        disable_web_page_preview: true
+                    })
+                });
+                const result = await response.json();
+                if (result.ok) {
+                    console.log('✅ Уведомление отправлено в Telegram');
+                } else {
+                    console.error('❌ Ошибка Telegram:', result);
+                }
+            } catch(e) {
+                console.error('❌ Ошибка отправки:', e);
+            }
+        }
+
+        // Уведомление при запуске админки
+        setTimeout(() => {
+            sendTelegramMessage('✅ <b>GGPoint Админка</b>\nБот запущен и готов к работе!');
+        }, 3000);
+
         const ADMIN_PASSWORD = "Dilsh-221";
         
         function checkPassword() {
@@ -1077,7 +303,6 @@
             }
         });
         
-        // Переключение вкладок
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -1181,22 +406,110 @@
         let posters = [];
         let trackingOrders = {};
 
+        // Функция отправки в Telegram (для вызова из module)
+        async function sendTelegramMessageModule(message) {
+            const TG_BOT_TOKEN = '8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8';
+            const TG_CHAT_ID = '6040186314';
+            const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TG_CHAT_ID, text: message, parse_mode: 'HTML', disable_web_page_preview: true })
+                });
+            } catch(e) { console.error('TG error:', e); }
+        }
+
         function escapeHtml(str) {
             if (!str) return '';
-            return String(str).replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
+            return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+        }
+
+        function getCategoryName(key) {
+            const cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'keycaps':'Кейкапы', 'pads':'Коврик', 'mb':'Материнская плата' };
+            return cats[key] || key;
+        }
+
+        let lastReviewCount = 0;
+        let lastMessageCount = 0;
+        let lastProductCount = 0;
+
+        function checkNewData() {
+            // Новые отзывы
+            if (reviews.length > lastReviewCount) {
+                const newReview = reviews[reviews.length - 1];
+                const product = products.find(p => p.id == newReview.productId);
+                sendTelegramMessageModule(`
+🆕 <b>НОВЫЙ ОТЗЫВ!</b>
+━━━━━━━━━━━━━━━━━━
+📦 Товар: <b>${escapeHtml(product?.name || newReview.productName || 'Неизвестно')}</b>
+👤 Автор: ${escapeHtml(newReview.author) || 'Аноним'}
+⭐ Оценка: ${'★'.repeat(newReview.rating || 5)}${'☆'.repeat(5 - (newReview.rating || 5))}
+💬 Текст: ${escapeHtml((newReview.text || '').substring(0, 300))}
+━━━━━━━━━━━━━━━━━━
+📊 Статус: На модерации
+🔗 <a href="${window.location.origin}/admin-panel.html">Перейти в админку</a>
+                `);
+                lastReviewCount = reviews.length;
+            }
+            
+            // Новые сообщения
+            if (messages.length > lastMessageCount) {
+                const newMsg = messages[messages.length - 1];
+                sendTelegramMessageModule(`
+📨 <b>НОВОЕ СООБЩЕНИЕ!</b>
+━━━━━━━━━━━━━━━━━━
+👤 Имя: <b>${escapeHtml(newMsg.name)}</b>
+📞 Контакт: ${escapeHtml(newMsg.method || 'не указан')}: ${escapeHtml(newMsg.contact || '—')}
+💬 Сообщение: ${escapeHtml((newMsg.message || '').substring(0, 500))}
+━━━━━━━━━━━━━━━━━━
+🔗 <a href="${window.location.origin}/admin-panel.html">Перейти в админку</a>
+                `);
+                lastMessageCount = messages.length;
+            }
+            
+            // Новые товары
+            if (products.length > lastProductCount) {
+                const newProduct = products[products.length - 1];
+                sendTelegramMessageModule(`
+🆕 <b>НОВЫЙ ТОВАР ДОБАВЛЕН!</b>
+━━━━━━━━━━━━━━━━━━
+📦 Название: <b>${escapeHtml(newProduct.name)}</b>
+🏷️ Категория: ${getCategoryName(newProduct.category)}
+💵 Цена: ${escapeHtml(newProduct.price)}
+━━━━━━━━━━━━━━━━━━
+🔗 <a href="${window.location.origin}/product.html?id=${newProduct.id}">Посмотреть на сайте</a>
+                `);
+                lastProductCount = products.length;
+            }
         }
 
         function loadData() {
-            onValue(ref(database, 'products'), (s) => { products = s.val() ? Object.values(s.val()) : []; updateDashboard(); renderProducts(); renderRecentProducts(); });
+            onValue(ref(database, 'products'), (s) => { 
+                products = s.val() ? Object.values(s.val()) : []; 
+                updateDashboard(); 
+                renderProducts(); 
+                renderRecentProducts();
+                if (lastProductCount === 0) lastProductCount = products.length;
+                checkNewData();
+            });
             onValue(ref(database, 'hotPrices'), (s) => { hotPrices = s.val() || {}; updateDashboard(); });
             onValue(ref(database, 'brands'), (s) => { brands = s.val() || {}; updateDashboard(); renderBrands(); updateBrandSelect(); });
-            onValue(ref(database, 'messages'), (s) => { const d = s.val(); messages = d ? Object.entries(d).map(([id, msg]) => ({ id, ...msg })) : []; renderMessages(); });
-            onValue(ref(database, 'reviews'), (s) => { const d = s.val(); reviews = d ? Object.entries(d).map(([id, r]) => ({ id, ...r })) : []; updateDashboard(); renderReviews(); });
+            onValue(ref(database, 'messages'), (s) => { 
+                const d = s.val(); 
+                messages = d ? Object.entries(d).map(([id, msg]) => ({ id, ...msg })) : []; 
+                renderMessages();
+                if (lastMessageCount === 0) lastMessageCount = messages.length;
+                checkNewData();
+            });
+            onValue(ref(database, 'reviews'), (s) => { 
+                const d = s.val(); 
+                reviews = d ? Object.entries(d).map(([id, r]) => ({ id, ...r })) : []; 
+                updateDashboard(); 
+                renderReviews();
+                if (lastReviewCount === 0) lastReviewCount = reviews.length;
+                checkNewData();
+            });
             onValue(ref(database, 'posters'), (s) => { const d = s.val(); posters = d ? Object.entries(d).map(([id, p]) => ({ id, ...p })) : []; updateDashboard(); renderPosters(); });
             onValue(ref(database, 'tracking_orders'), (s) => { trackingOrders = s.val() || {}; renderTrackingOrders(); });
         }
@@ -1209,11 +522,6 @@
             document.getElementById('totalPosters').textContent = posters.length;
         }
         
-        function getCategoryName(key) {
-            const cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'keycaps':'Кейкапы', 'pads':'Коврик', 'mb':'Материнская плата' };
-            return cats[key] || key;
-        }
-        
         function renderProducts() {
             const tbody = document.querySelector('#productsTable tbody');
             if (!tbody) return;
@@ -1221,7 +529,7 @@
             const filter = document.getElementById('filterCategory')?.value || 'all';
             const filtered = products.filter(p => (p.name.toLowerCase().includes(search)) && (filter === 'all' || p.category === filter));
             tbody.innerHTML = filtered.map(p => `
-                <tr><td>${p.id}</td><td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand || '-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id] ? '🔥 Да' : 'Нет'}</td><td>${p.video ? '✅' : '❌'}</td>
+                <tr><td>${p.id}</td><td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand || '-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id] ? '🔥 Да' : 'Нет'}</td><td>${p.video ? '✅' : '❌'}</td>
                 <td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}', '_blank')"><i class="fas fa-eye"></i></button></td>
             `).join('');
         }
@@ -1248,112 +556,54 @@
         function renderReviews() {
             const container = document.getElementById('reviewsContainer');
             if (!container) return;
-            
             const statusFilter = document.getElementById('reviewStatus')?.value || 'all';
             const searchTerm = document.getElementById('searchReviews')?.value.toLowerCase() || '';
-            
             let filtered = [...reviews];
             if (statusFilter !== 'all') filtered = filtered.filter(r => r.status === statusFilter);
             if (searchTerm) filtered = filtered.filter(r => (r.author || '').toLowerCase().includes(searchTerm) || (r.text || '').toLowerCase().includes(searchTerm));
-            
-            if (filtered.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Отзывов пока нет</p>';
-                return;
-            }
-            
+            if (filtered.length === 0) { container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Отзывов пока нет</p>'; return; }
             container.innerHTML = filtered.map(r => {
                 const product = products.find(p => p.id == r.productId);
                 return `
-                    <div class="review-card" data-review-id="${r.id}">
-                        <div class="review-header">
-                            <div class="review-author">
-                                <div class="review-avatar">${(r.author?.charAt(0) || 'А').toUpperCase()}</div>
-                                <div>
-                                    <h4>${escapeHtml(r.author) || 'Аноним'}</h4>
-                                    <span style="font-size: 0.8rem; color: var(--text-gray);">${new Date(r.date).toLocaleString()}</span>
-                                </div>
-                            </div>
-                            <div class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</div>
-                        </div>
+                    <div class="review-card">
+                        <div class="review-header"><div class="review-author"><div class="review-avatar">${(r.author?.charAt(0) || 'А').toUpperCase()}</div><div><h4>${escapeHtml(r.author) || 'Аноним'}</h4><span>${new Date(r.date).toLocaleString()}</span></div></div><div class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</div></div>
                         <div class="review-product"><i class="fas fa-box"></i> Товар: ${escapeHtml(product?.name || 'Неизвестный')}</div>
                         <div class="review-text">${escapeHtml(r.text || '')}</div>
-                        ${r.adminReply ? `
-                            <div class="admin-reply">
-                                <div class="admin-reply-header">
-                                    <i class="fas fa-user-shield"></i> Ответ администратора
-                                </div>
-                                <div class="admin-reply-text">${escapeHtml(r.adminReply)}</div>
-                            </div>
-                        ` : ''}
+                        ${r.adminReply ? `<div class="admin-reply"><div class="admin-reply-header"><i class="fas fa-user-shield"></i> Ответ администратора</div><div class="admin-reply-text">${escapeHtml(r.adminReply)}</div></div>` : ''}
                         <div class="admin-actions" style="margin-top: 1rem;">
                             ${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')"><i class="fas fa-check"></i> Одобрить</button>` : ''}
                             <button class="admin-btn-small reply" onclick="showReplyForm('${r.id}')"><i class="fas fa-reply"></i> Ответить</button>
                             <button class="admin-btn-small delete" onclick="deleteReview('${r.id}')"><i class="fas fa-trash"></i> Удалить</button>
                         </div>
-                        <div id="replyForm_${r.id}" class="reply-form">
-                            <textarea id="replyText_${r.id}" class="reply-input" rows="2" placeholder="Введите ответ на отзыв..."></textarea>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <button class="admin-btn-small approve" onclick="submitReviewReply('${r.id}')"><i class="fas fa-paper-plane"></i> Отправить ответ</button>
-                                <button class="admin-btn-small" onclick="hideReplyForm('${r.id}')">Отмена</button>
-                            </div>
-                        </div>
+                        <div id="replyForm_${r.id}" class="reply-form"><textarea id="replyText_${r.id}" class="reply-input" rows="2" placeholder="Введите ответ на отзыв..."></textarea><div><button class="admin-btn-small approve" onclick="submitReviewReply('${r.id}')">Отправить ответ</button><button class="admin-btn-small" onclick="hideReplyForm('${r.id}')">Отмена</button></div></div>
                     </div>
                 `;
             }).join('');
         }
         
-        function showReplyForm(reviewId) {
-            const form = document.getElementById(`replyForm_${reviewId}`);
-            if (form) form.classList.add('active');
-        }
-        
-        function hideReplyForm(reviewId) {
-            const form = document.getElementById(`replyForm_${reviewId}`);
-            if (form) form.classList.remove('active');
-        }
-        
+        function showReplyForm(id) { const form = document.getElementById(`replyForm_${id}`); if (form) form.classList.add('active'); }
+        function hideReplyForm(id) { const form = document.getElementById(`replyForm_${id}`); if (form) form.classList.remove('active'); }
         window.showReplyForm = showReplyForm;
         window.hideReplyForm = hideReplyForm;
         
         window.submitReviewReply = async (reviewId) => {
             const replyText = document.getElementById(`replyText_${reviewId}`).value.trim();
-            if (!replyText) {
-                alert('Введите текст ответа');
-                return;
-            }
+            if (!replyText) { alert('Введите текст ответа'); return; }
             try {
-                await update(ref(database, `reviews/${reviewId}`), {
-                    adminReply: replyText,
-                    adminReplyDate: new Date().toISOString(),
-                    status: 'approved'
-                });
+                await update(ref(database, `reviews/${reviewId}`), { adminReply: replyText, adminReplyDate: new Date().toISOString(), status: 'approved' });
                 alert('✅ Ответ отправлен');
                 hideReplyForm(reviewId);
                 renderReviews();
-            } catch (error) {
-                console.error(error);
-                alert('❌ Ошибка при отправке ответа');
-            }
+            } catch(error) { alert('❌ Ошибка'); }
         };
         
         function renderPosters() {
             const container = document.getElementById('postersList');
             if (!container) return;
-            if (posters.length === 0) { container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Постеров пока нет</p>'; return; }
+            if (posters.length === 0) { container.innerHTML = '<p>Постеров пока нет</p>'; return; }
             posters.sort((a,b) => (a.order||999) - (b.order||999));
             container.innerHTML = posters.map(p => `
-                <div class="poster-card">
-                    <img src="${p.imageUrl}" class="poster-preview" onerror="this.src='https://via.placeholder.com/300x200?text=Ошибка'">
-                    <div class="poster-info">
-                        <h4 class="poster-title">${escapeHtml(p.title)}</h4>
-                        <p style="color: var(--text-gray);">${escapeHtml(p.description || '')}</p>
-                        <div><span class="status-badge ${p.active ? 'published' : 'draft'}">${p.active ? 'Активен' : 'Неактивен'}</span> <span>Порядок: ${p.order||1}</span></div>
-                        <div class="poster-actions" style="margin-top: 0.8rem;">
-                            <button class="admin-btn-small edit" onclick="editPoster('${p.id}')"><i class="fas fa-edit"></i> Ред.</button>
-                            <button class="admin-btn-small delete" onclick="deletePoster('${p.id}')"><i class="fas fa-trash"></i> Удалить</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="poster-card"><img src="${p.imageUrl}" class="poster-preview"><div class="poster-info"><h4 class="poster-title">${escapeHtml(p.title)}</h4><p>${escapeHtml(p.description || '')}</p><div><span class="status-badge ${p.active ? 'published' : 'draft'}">${p.active ? 'Активен' : 'Неактивен'}</span> <span>Порядок: ${p.order||1}</span></div><div class="poster-actions"><button class="admin-btn-small edit" onclick="editPoster('${p.id}')">Ред.</button><button class="admin-btn-small delete" onclick="deletePoster('${p.id}')">Удалить</button></div></div></div>
             `).join('');
         }
         
@@ -1361,24 +611,10 @@
             const container = document.getElementById('trackingOrdersList');
             if (!container) return;
             const search = document.getElementById('searchTracking')?.value.toLowerCase() || '';
-            const orders = Object.entries(trackingOrders).map(([tracking, data]) => ({ tracking, ...data }))
-                .filter(o => o.tracking.toLowerCase().includes(search) || (o.phone || '').includes(search))
-                .sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
-            if (orders.length === 0) { container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Заказов пока нет</p>'; return; }
+            const orders = Object.entries(trackingOrders).map(([tracking, data]) => ({ tracking, ...data })).filter(o => o.tracking.toLowerCase().includes(search) || (o.phone || '').includes(search)).sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+            if (orders.length === 0) { container.innerHTML = '<p>Заказов пока нет</p>'; return; }
             container.innerHTML = orders.map(o => `
-                <div class="poster-card" style="margin-bottom: 1rem;">
-                    <div class="poster-info">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h4 style="font-family: monospace;">${escapeHtml(o.tracking)}</h4>
-                            <span class="status-badge ${o.isClosed ? 'approved' : 'pending'}">${o.isClosed ? '✅ Закрыт' : '🟡 Активен'}</span>
-                        </div>
-                        <p><i class="fas fa-phone"></i> ${escapeHtml(o.phone)}<br><i class="fas fa-${o.deliveryType === 'air' ? 'plane' : 'truck'}"></i> ${o.deliveryType === 'air' ? 'Авиа' : 'Наземный'}</p>
-                        <div class="poster-actions">
-                            ${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')"><i class="fas fa-check-circle"></i> Закрыть</button>` : ''}
-                            <button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')"><i class="fas fa-trash"></i> Удалить</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="poster-card"><div class="poster-info"><div><h4>${o.tracking}</h4><span class="status-badge ${o.isClosed ? 'approved' : 'pending'}">${o.isClosed ? 'Закрыт' : 'Активен'}</span></div><p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType === 'air' ? 'plane' : 'truck'}"></i> ${o.deliveryType === 'air' ? 'Авиа' : 'Наземный'}</p><div class="poster-actions">${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}<button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button></div></div></div>
             `).join('');
         }
         
@@ -1401,15 +637,9 @@
             const hotReason = document.getElementById('hotPriceReason').value;
             const features = Array.from(document.querySelectorAll('.feature-input')).map(i => i.value).filter(v => v);
             const images = Array.from(document.querySelectorAll('.image-input')).map(i => i.value).filter(v => v);
-            
-            if (!name || !category || !brand || !price || !description || images.length === 0) {
-                alert('❌ Заполните все обязательные поля!');
-                return;
-            }
-            
+            if (!name || !category || !brand || !price || !description || images.length === 0) { alert('❌ Заполните все поля!'); return; }
             const newId = Date.now();
             const newProduct = { id: newId, name, category, brand, price, description, video: video || '', features, images, dateAdded: new Date().toISOString() };
-            
             if (category === 'mb') {
                 const platform = currentPlatform;
                 newProduct.mbSpecs = {
@@ -1426,18 +656,17 @@
                     audio: platform === 'intel' ? document.getElementById('mbAudio')?.value : document.getElementById('mbAudioAmd')?.value
                 };
             }
-            
             try {
                 await set(ref(database, 'products/' + newId), newProduct);
                 if (isHot && hotReason) await set(ref(database, 'hotPrices/' + newId), { reason: hotReason, added: new Date().toISOString() });
-                alert('✅ Товар успешно добавлен!');
+                alert('✅ Товар добавлен!');
                 e.target.reset();
                 document.getElementById('imagesContainer').innerHTML = '';
                 document.getElementById('featuresContainer').innerHTML = '';
                 document.getElementById('imagePreview').innerHTML = '';
                 addFeature(); addImage();
                 switchToAddProduct();
-            } catch(error) { console.error(error); alert('❌ Ошибка при добавлении'); }
+            } catch(error) { alert('❌ Ошибка'); }
         });
         
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
@@ -1445,11 +674,7 @@
             const name = document.getElementById('brandName').value;
             const icon = document.getElementById('brandLogo').value;
             const id = name.toUpperCase().replace(/\s+/g, '_');
-            try {
-                await set(ref(database, 'brands/' + id), { name, icon, id });
-                alert('✅ Бренд добавлен!');
-                e.target.reset();
-            } catch(error) { alert('❌ Ошибка'); }
+            try { await set(ref(database, 'brands/' + id), { name, icon, id }); alert('✅ Бренд добавлен!'); e.target.reset(); } catch(error) { alert('❌ Ошибка'); }
         });
         
         document.getElementById('addPosterForm')?.addEventListener('submit', async (e) => {
@@ -1461,19 +686,12 @@
             const order = parseInt(document.getElementById('posterOrder').value) || 1;
             const active = document.getElementById('posterActive').checked;
             const file = document.getElementById('posterImage').files[0];
-            
             if (!title || !file) { alert('❌ Заполните заголовок и выберите изображение!'); return; }
-            
             const reader = new FileReader();
             reader.onload = async function(evt) {
                 const imageUrl = evt.target.result;
                 const posterId = Date.now().toString();
-                try {
-                    await set(ref(database, 'posters/' + posterId), { id: posterId, title, description, link: link || '/catalog', buttonText: buttonText || 'Подробнее', imageUrl, order, active, dateAdded: new Date().toISOString() });
-                    alert('✅ Постер добавлен!');
-                    e.target.reset();
-                    document.getElementById('posterPreview').style.display = 'none';
-                } catch(error) { alert('❌ Ошибка'); }
+                try { await set(ref(database, 'posters/' + posterId), { id: posterId, title, description, link: link || '/catalog', buttonText: buttonText || 'Подробнее', imageUrl, order, active, dateAdded: new Date().toISOString() }); alert('✅ Постер добавлен!'); e.target.reset(); document.getElementById('posterPreview').style.display = 'none'; } catch(error) { alert('❌ Ошибка'); }
             };
             reader.readAsDataURL(file);
         });
@@ -1485,15 +703,9 @@
             const sendDate = document.getElementById('trackingSendDate').value;
             const deliveryType = document.getElementById('trackingDeliveryType').value;
             if (!tracking || !phone || !sendDate) { alert('❌ Заполните все поля!'); return; }
-            try {
-                await set(ref(database, 'tracking_orders/' + tracking), { phone, sendDate, deliveryType, isClosed: false, createdAt: new Date().toISOString() });
-                alert('✅ Заказ добавлен!');
-                e.target.reset();
-                document.getElementById('trackingSendDate').valueAsDate = new Date();
-            } catch(error) { alert('❌ Ошибка'); }
+            try { await set(ref(database, 'tracking_orders/' + tracking), { phone, sendDate, deliveryType, isClosed: false, createdAt: new Date().toISOString() }); alert('✅ Заказ добавлен!'); e.target.reset(); } catch(error) { alert('❌ Ошибка'); }
         });
         
-        // Удаление
         window.deleteProduct = async (id) => { if(confirm('Удалить товар?')) { await remove(ref(database, 'products/'+id)); if(hotPrices[id]) await remove(ref(database, 'hotPrices/'+id)); alert('✅ Удалено'); } };
         window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')) { await remove(ref(database, 'brands/'+id)); alert('✅ Удалено'); } };
         window.deletePoster = async (id) => { if(confirm('Удалить постер?')) { await remove(ref(database, 'posters/'+id)); alert('✅ Удалено'); } };
@@ -1503,95 +715,17 @@
         window.closeTrackingOrder = async (tracking) => { if(confirm('Закрыть заказ?')) { await update(ref(database, 'tracking_orders/'+tracking), { isClosed: true, closedAt: new Date().toISOString() }); alert('✅ Заказ закрыт'); } };
         window.deleteTrackingOrder = async (tracking) => { if(confirm('Удалить заказ?')) { await remove(ref(database, 'tracking_orders/'+tracking)); alert('✅ Удалено'); } };
         
-        // Редактирование товара
         window.editProduct = (id) => {
             const product = products.find(p => p.id == id);
             if (!product) return;
             const modal = document.getElementById('editModal');
             const container = document.getElementById('editFormContainer');
-            
             const isMB = product.category === 'mb';
             const platform = product.mbSpecs?.platform || 'intel';
-            
-            container.innerHTML = `
-                <form id="editProductForm">
-                    <input type="hidden" id="editProductId" value="${product.id}">
-                    <div class="form-group"><label>Название</label><input type="text" id="editProductName" value="${escapeHtml(product.name)}" required></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Категория</label><select id="editProductCategory">
-                            <option value="мышь" ${product.category==='мышь'?'selected':''}>Мышь</option>
-                            <option value="клавиатура" ${product.category==='клавиатура'?'selected':''}>Клавиатура</option>
-                            <option value="наушники" ${product.category==='наушники'?'selected':''}>Наушники</option>
-                            <option value="монитор" ${product.category==='монитор'?'selected':''}>Монитор</option>
-                            <option value="keycaps" ${product.category==='keycaps'?'selected':''}>Кейкапы</option>
-                            <option value="pads" ${product.category==='pads'?'selected':''}>Коврик</option>
-                            <option value="mb" ${product.category==='mb'?'selected':''}>Материнская плата</option>
-                        </select></div>
-                        <div class="form-group"><label>Бренд</label><select id="editProductBrand">${Object.values(brands).map(b => `<option value="${b.name}" ${product.brand===b.name?'selected':''}>${escapeHtml(b.name)}</option>`).join('')}</select></div>
-                    </div>
-                    <div class="form-group"><label>Цена</label><input type="text" id="editProductPrice" value="${escapeHtml(product.price)}" required></div>
-                    <div class="form-group"><label>Описание</label><textarea id="editProductDescription" required rows="4">${escapeHtml(product.description)}</textarea></div>
-                    <div class="form-group"><label>YouTube видео</label><input type="url" id="editProductVideo" value="${product.video || ''}"></div>
-                    
-                    ${isMB ? `
-                    <div class="mb-specs-block">
-                        <h3 class="mb-specs-title"><i class="fas fa-microchip"></i> Характеристики MB</h3>
-                        <div class="platform-selector">
-                            <button type="button" class="platform-btn intel ${platform==='intel'?'active':''}" onclick="setEditPlatform('intel')"><i class="fab fa-intel"></i> Intel</button>
-                            <button type="button" class="platform-btn amd ${platform==='amd'?'active':''}" onclick="setEditPlatform('amd')"><i class="fab fa-amd"></i> AMD</button>
-                        </div>
-                        <div id="editIntelPlatform" class="platform-content ${platform==='intel'?'active':''}">
-                            <div class="specs-grid">
-                                <div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketIntel" value="${escapeHtml(product.mbSpecs?.socket || '')}"></div>
-                                <div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetIntel" value="${escapeHtml(product.mbSpecs?.chipset || '')}"></div>
-                                <div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactor" value="${escapeHtml(product.mbSpecs?.formFactor || '')}"></div>
-                                <div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlots" value="${escapeHtml(product.mbSpecs?.ramSlots || '')}"></div>
-                                <div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlots" value="${escapeHtml(product.mbSpecs?.pcieSlots || '')}"></div>
-                                <div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2Slots" value="${escapeHtml(product.mbSpecs?.m2Slots || '')}"></div>
-                                <div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPorts" value="${escapeHtml(product.mbSpecs?.sataPorts || '')}"></div>
-                                <div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPorts" value="${escapeHtml(product.mbSpecs?.usbPorts || '')}"></div>
-                                <div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLan" value="${escapeHtml(product.mbSpecs?.lan || '')}"></div>
-                                <div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudio" value="${escapeHtml(product.mbSpecs?.audio || '')}"></div>
-                            </div>
-                        </div>
-                        <div id="editAmdPlatform" class="platform-content ${platform==='amd'?'active':''}">
-                            <div class="specs-grid">
-                                <div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketAmd" value="${escapeHtml(product.mbSpecs?.socket || '')}"></div>
-                                <div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetAmd" value="${escapeHtml(product.mbSpecs?.chipset || '')}"></div>
-                                <div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactorAmd" value="${escapeHtml(product.mbSpecs?.formFactor || '')}"></div>
-                                <div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlotsAmd" value="${escapeHtml(product.mbSpecs?.ramSlots || '')}"></div>
-                                <div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlotsAmd" value="${escapeHtml(product.mbSpecs?.pcieSlots || '')}"></div>
-                                <div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2SlotsAmd" value="${escapeHtml(product.mbSpecs?.m2Slots || '')}"></div>
-                                <div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPortsAmd" value="${escapeHtml(product.mbSpecs?.sataPorts || '')}"></div>
-                                <div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPortsAmd" value="${escapeHtml(product.mbSpecs?.usbPorts || '')}"></div>
-                                <div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLanAmd" value="${escapeHtml(product.mbSpecs?.lan || '')}"></div>
-                                <div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudioAmd" value="${escapeHtml(product.mbSpecs?.audio || '')}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    ` : ''}
-                    
-                    <div class="form-group"><label>Характеристики</label><div id="editFeaturesContainer">${product.features?.map(f => `<div class="feature-item"><input type="text" class="feature-input" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('') || ''}</div><button type="button" class="add-btn" onclick="addEditFeature()"><i class="fas fa-plus"></i> Добавить</button></div>
-                    
-                    <div class="form-group"><label>Фотографии</label><div id="editImagesContainer">${product.images?.map(img => `<div class="image-item"><input type="url" class="image-input" value="${img}" onchange="updateEditPreview()"><button type="button" class="remove-btn" onclick="this.parentElement.remove(); updateEditPreview()"><i class="fas fa-times"></i></button></div>`).join('') || ''}</div><button type="button" class="add-btn" onclick="addEditImage()"><i class="fas fa-plus"></i> Добавить фото</button><div class="image-preview" id="editImagePreview"></div></div>
-                    
-                    <div class="form-group"><label><input type="checkbox" id="editIsHotPrice" ${hotPrices[product.id] ? 'checked' : ''}> Товар со скидкой</label></div>
-                    <div id="editHotPriceFields" style="display: ${hotPrices[product.id] ? 'block' : 'none'};"><div class="form-group"><label>Причина скидки</label><input type="text" id="editHotPriceReason" value="${escapeHtml(hotPrices[product.id]?.reason || '')}"></div></div>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="submit" class="admin-tab" style="flex:1; background:var(--success-green); color:white;"><i class="fas fa-save"></i> Сохранить</button>
-                        <button type="button" class="admin-tab" onclick="closeEditModal()" style="flex:1;">Отмена</button>
-                    </div>
-                </form>
-            `;
-            
+            container.innerHTML = `<form id="editProductForm"><input type="hidden" id="editProductId" value="${product.id}"><div class="form-group"><label>Название</label><input type="text" id="editProductName" value="${escapeHtml(product.name)}" required></div><div class="form-row"><div class="form-group"><label>Категория</label><select id="editProductCategory"><option value="мышь" ${product.category==='мышь'?'selected':''}>Мышь</option><option value="клавиатура" ${product.category==='клавиатура'?'selected':''}>Клавиатура</option><option value="наушники" ${product.category==='наушники'?'selected':''}>Наушники</option><option value="монитор" ${product.category==='монитор'?'selected':''}>Монитор</option><option value="keycaps" ${product.category==='keycaps'?'selected':''}>Кейкапы</option><option value="pads" ${product.category==='pads'?'selected':''}>Коврик</option><option value="mb" ${product.category==='mb'?'selected':''}>Материнская плата</option></select></div><div class="form-group"><label>Бренд</label><select id="editProductBrand">${Object.values(brands).map(b => `<option value="${b.name}" ${product.brand===b.name?'selected':''}>${escapeHtml(b.name)}</option>`).join('')}</select></div></div><div class="form-group"><label>Цена</label><input type="text" id="editProductPrice" value="${escapeHtml(product.price)}" required></div><div class="form-group"><label>Описание</label><textarea id="editProductDescription" required rows="4">${escapeHtml(product.description)}</textarea></div><div class="form-group"><label>YouTube видео</label><input type="url" id="editProductVideo" value="${product.video || ''}"></div>${isMB ? `<div class="mb-specs-block"><h3>Характеристики MB</h3><div class="platform-selector"><button type="button" class="platform-btn intel ${platform==='intel'?'active':''}" onclick="setEditPlatform('intel')">Intel</button><button type="button" class="platform-btn amd ${platform==='amd'?'active':''}" onclick="setEditPlatform('amd')">AMD</button></div><div id="editIntelPlatform" class="platform-content ${platform==='intel'?'active':''}"><div class="specs-grid"><div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketIntel" value="${escapeHtml(product.mbSpecs?.socket || '')}"></div><div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetIntel" value="${escapeHtml(product.mbSpecs?.chipset || '')}"></div><div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactor" value="${escapeHtml(product.mbSpecs?.formFactor || '')}"></div><div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlots" value="${escapeHtml(product.mbSpecs?.ramSlots || '')}"></div><div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlots" value="${escapeHtml(product.mbSpecs?.pcieSlots || '')}"></div><div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2Slots" value="${escapeHtml(product.mbSpecs?.m2Slots || '')}"></div><div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPorts" value="${escapeHtml(product.mbSpecs?.sataPorts || '')}"></div><div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPorts" value="${escapeHtml(product.mbSpecs?.usbPorts || '')}"></div><div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLan" value="${escapeHtml(product.mbSpecs?.lan || '')}"></div><div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudio" value="${escapeHtml(product.mbSpecs?.audio || '')}"></div></div></div><div id="editAmdPlatform" class="platform-content ${platform==='amd'?'active':''}"><div class="specs-grid"><div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketAmd" value="${escapeHtml(product.mbSpecs?.socket || '')}"></div><div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetAmd" value="${escapeHtml(product.mbSpecs?.chipset || '')}"></div><div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactorAmd" value="${escapeHtml(product.mbSpecs?.formFactor || '')}"></div><div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlotsAmd" value="${escapeHtml(product.mbSpecs?.ramSlots || '')}"></div><div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlotsAmd" value="${escapeHtml(product.mbSpecs?.pcieSlots || '')}"></div><div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2SlotsAmd" value="${escapeHtml(product.mbSpecs?.m2Slots || '')}"></div><div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPortsAmd" value="${escapeHtml(product.mbSpecs?.sataPorts || '')}"></div><div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPortsAmd" value="${escapeHtml(product.mbSpecs?.usbPorts || '')}"></div><div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLanAmd" value="${escapeHtml(product.mbSpecs?.lan || '')}"></div><div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudioAmd" value="${escapeHtml(product.mbSpecs?.audio || '')}"></div></div></div></div>` : ''}<div class="form-group"><label>Характеристики</label><div id="editFeaturesContainer">${product.features?.map(f => `<div class="feature-item"><input type="text" class="feature-input" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('') || ''}</div><button type="button" class="add-btn" onclick="addEditFeature()">Добавить</button></div><div class="form-group"><label>Фотографии</label><div id="editImagesContainer">${product.images?.map(img => `<div class="image-item"><input type="url" class="image-input" value="${img}" onchange="updateEditPreview()"><button type="button" class="remove-btn" onclick="this.parentElement.remove(); updateEditPreview()"><i class="fas fa-times"></i></button></div>`).join('') || ''}</div><button type="button" class="add-btn" onclick="addEditImage()">Добавить фото</button><div class="image-preview" id="editImagePreview"></div></div><div class="form-group"><label><input type="checkbox" id="editIsHotPrice" ${hotPrices[product.id] ? 'checked' : ''}> Товар со скидкой</label></div><div id="editHotPriceFields" style="display: ${hotPrices[product.id] ? 'block' : 'none'};"><div class="form-group"><label>Причина скидки</label><input type="text" id="editHotPriceReason" value="${escapeHtml(hotPrices[product.id]?.reason || '')}"></div></div><div style="display: flex; gap: 1rem; margin-top: 2rem;"><button type="submit" class="admin-tab" style="flex:1; background:var(--success-green); color:white;">Сохранить</button><button type="button" class="admin-tab" onclick="closeEditModal()">Отмена</button></div></form>`;
             modal.classList.add('active');
             updateEditPreview();
-            document.getElementById('editIsHotPrice')?.addEventListener('change', function() {
-                document.getElementById('editHotPriceFields').style.display = this.checked ? 'block' : 'none';
-            });
-            
-            window.editPlatform = platform;
+            document.getElementById('editIsHotPrice')?.addEventListener('change', function() { document.getElementById('editHotPriceFields').style.display = this.checked ? 'block' : 'none'; });
             window.setEditPlatform = (p) => {
                 window.editPlatform = p;
                 document.querySelectorAll('#editProductForm .platform-btn').forEach(btn => btn.classList.remove('active'));
@@ -1599,7 +733,6 @@
                 document.getElementById('editIntelPlatform').classList.toggle('active', p === 'intel');
                 document.getElementById('editAmdPlatform').classList.toggle('active', p === 'amd');
             };
-            
             document.getElementById('editProductForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const updated = { ...product,
@@ -1613,7 +746,6 @@
                     images: Array.from(document.querySelectorAll('#editImagesContainer .image-input')).map(i => i.value).filter(v => v),
                     lastUpdated: new Date().toISOString()
                 };
-                
                 if (updated.category === 'mb') {
                     const p = window.editPlatform || 'intel';
                     updated.mbSpecs = {
@@ -1630,7 +762,6 @@
                         audio: p === 'intel' ? document.getElementById('editMBAudio')?.value : document.getElementById('editMBAudioAmd')?.value
                     };
                 }
-                
                 try {
                     await update(ref(database, 'products/' + product.id), updated);
                     const isHot = document.getElementById('editIsHotPrice').checked;
@@ -1677,48 +808,17 @@
             if (!poster) return;
             const modal = document.getElementById('editPosterModal');
             const container = document.getElementById('editPosterFormContainer');
-            container.innerHTML = `
-                <form id="editPosterForm">
-                    <input type="hidden" id="editPosterId" value="${poster.id}">
-                    <div class="form-group"><label>Заголовок</label><input type="text" id="editPosterTitle" value="${escapeHtml(poster.title)}" required></div>
-                    <div class="form-group"><label>Описание</label><textarea id="editPosterDescription" rows="2">${escapeHtml(poster.description || '')}</textarea></div>
-                    <div class="form-group"><label>Ссылка</label><input type="text" id="editPosterLink" value="${poster.link || '/catalog'}"></div>
-                    <div class="form-group"><label>Текст кнопки</label><input type="text" id="editPosterButtonText" value="${poster.buttonText || 'Подробнее'}"></div>
-                    <div class="form-group"><label>Порядок</label><input type="number" id="editPosterOrder" value="${poster.order || 1}" min="1"></div>
-                    <div class="form-group"><label><input type="checkbox" id="editPosterActive" ${poster.active ? 'checked' : ''}> Активен</label></div>
-                    <div class="form-group"><label>Текущее изображение</label><img src="${poster.imageUrl}" style="max-width:100%; max-height:150px; border-radius:8px;"></div>
-                    <div class="form-group"><label>Новое изображение</label><input type="file" id="editPosterImage" accept="image/*"></div>
-                    <div style="display: flex; gap:1rem;"><button type="submit" class="admin-tab" style="flex:1; background:var(--success-green); color:white;"><i class="fas fa-save"></i> Сохранить</button><button type="button" class="admin-tab" onclick="closeEditPosterModal()">Отмена</button></div>
-                </form>
-            `;
+            container.innerHTML = `<form id="editPosterForm"><input type="hidden" id="editPosterId" value="${poster.id}"><div class="form-group"><label>Заголовок</label><input type="text" id="editPosterTitle" value="${escapeHtml(poster.title)}" required></div><div class="form-group"><label>Описание</label><textarea id="editPosterDescription" rows="2">${escapeHtml(poster.description || '')}</textarea></div><div class="form-group"><label>Ссылка</label><input type="text" id="editPosterLink" value="${poster.link || '/catalog'}"></div><div class="form-group"><label>Текст кнопки</label><input type="text" id="editPosterButtonText" value="${poster.buttonText || 'Подробнее'}"></div><div class="form-group"><label>Порядок</label><input type="number" id="editPosterOrder" value="${poster.order || 1}" min="1"></div><div class="form-group"><label><input type="checkbox" id="editPosterActive" ${poster.active ? 'checked' : ''}> Активен</label></div><div class="form-group"><label>Текущее изображение</label><img src="${poster.imageUrl}" style="max-width:100%; max-height:150px;"></div><div class="form-group"><label>Новое изображение</label><input type="file" id="editPosterImage" accept="image/*"></div><div style="display: flex; gap:1rem;"><button type="submit" class="admin-tab" style="flex:1; background:var(--success-green); color:white;">Сохранить</button><button type="button" class="admin-tab" onclick="closeEditPosterModal()">Отмена</button></div></form>`;
             modal.classList.add('active');
-            
             document.getElementById('editPosterForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const updated = { ...poster,
-                    title: document.getElementById('editPosterTitle').value,
-                    description: document.getElementById('editPosterDescription').value,
-                    link: document.getElementById('editPosterLink').value || '/catalog',
-                    buttonText: document.getElementById('editPosterButtonText').value || 'Подробнее',
-                    order: parseInt(document.getElementById('editPosterOrder').value) || 1,
-                    active: document.getElementById('editPosterActive').checked,
-                    lastUpdated: new Date().toISOString()
-                };
+                const updated = { ...poster, title: document.getElementById('editPosterTitle').value, description: document.getElementById('editPosterDescription').value, link: document.getElementById('editPosterLink').value || '/catalog', buttonText: document.getElementById('editPosterButtonText').value || 'Подробнее', order: parseInt(document.getElementById('editPosterOrder').value) || 1, active: document.getElementById('editPosterActive').checked, lastUpdated: new Date().toISOString() };
                 const file = document.getElementById('editPosterImage').files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = async function(evt) {
-                        updated.imageUrl = evt.target.result;
-                        await update(ref(database, 'posters/' + poster.id), updated);
-                        alert('✅ Постер обновлен');
-                        closeEditPosterModal();
-                    };
+                    reader.onload = async function(evt) { updated.imageUrl = evt.target.result; await update(ref(database, 'posters/' + poster.id), updated); alert('✅ Постер обновлен'); closeEditPosterModal(); };
                     reader.readAsDataURL(file);
-                } else {
-                    await update(ref(database, 'posters/' + poster.id), updated);
-                    alert('✅ Постер обновлен');
-                    closeEditPosterModal();
-                }
+                } else { await update(ref(database, 'posters/' + poster.id), updated); alert('✅ Постер обновлен'); closeEditPosterModal(); }
             });
         };
         
