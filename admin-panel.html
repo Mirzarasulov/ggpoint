@@ -89,6 +89,9 @@
         .monitor-spec-btn:hover { background: rgba(37, 99, 235, 0.2); }
         .monitor-spec-btn.active { background: var(--primary-blue); color: white; }
         
+        .dual-mode-fields { background: rgba(139, 92, 246, 0.1); border-radius: 12px; padding: 1rem; margin-top: 1rem; border: 1px solid #8b5cf6; }
+        .dual-mode-badge { background: linear-gradient(135deg, #8b5cf6, #ec4899); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; display: inline-block; margin-left: 0.5rem; }
+        
         .platform-selector { display: flex; gap: 1rem; margin-bottom: 1rem; }
         .platform-btn { padding: 0.6rem 1.5rem; background: transparent; border: 2px solid; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
         .platform-btn.intel { border-color: var(--intel-blue); color: var(--intel-blue); }
@@ -98,7 +101,6 @@
         .platform-content { display: none; }
         .platform-content.active { display: block; }
         
-        .features-list, .images-list { margin-bottom: 1rem; }
         .feature-item, .image-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
         .feature-item input, .image-item input { flex: 1; }
         .remove-btn { background: var(--sale-red); color: white; border: none; width: 36px; height: 36px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -256,35 +258,94 @@
                         </div>
                     </div>
                     
-                    <!-- БЛОК МОНИТОРОВ -->
+                    <!-- БЛОК МОНИТОРОВ (упрощённый - только важные поля, технологии в основном описании) -->
                     <div id="monitorSpecsBlock" style="display: none;">
                         <div class="specs-block" style="border-color: var(--success-green);">
                             <h3 class="specs-title"><i class="fas fa-desktop"></i> Характеристики монитора</h3>
-                            <div id="monitorSpecsContainer">
-                                <!-- Тип матрицы -->
-                                <div class="form-group"><label>Тип матрицы</label><div class="monitor-buttons-group" id="panelTypeGroup"></div><input type="hidden" id="monitorPanelType"></div>
-                                <!-- Разрешение -->
-                                <div class="form-group"><label>Разрешение</label><div class="monitor-buttons-group" id="resolutionGroup"></div><input type="hidden" id="monitorResolution"></div>
-                                <!-- Частота -->
-                                <div class="form-group"><label>Частота обновления (Гц)</label><div class="monitor-buttons-group" id="refreshRateGroup"></div><input type="hidden" id="monitorRefreshRate"></div>
-                                <div class="form-row">
-                                    <div class="form-group"><label>Диагональ (дюймы)</label><input type="text" id="monitorSize" placeholder="27, 32, 34"></div>
-                                    <div class="form-group"><label>Соотношение сторон</label><select id="monitorAspectRatio"><option value="">Выберите</option><option>16:9</option><option>16:10</option><option>21:9</option><option>32:9</option></select></div>
+                            <div class="form-group">
+                                <label>Тип матрицы</label>
+                                <div class="monitor-buttons-group" id="panelTypeGroup"></div>
+                                <input type="hidden" id="monitorPanelType">
+                            </div>
+                            <div class="form-group">
+                                <label>Разрешение</label>
+                                <div class="monitor-buttons-group" id="resolutionGroup"></div>
+                                <input type="hidden" id="monitorResolution">
+                            </div>
+                            
+                            <!-- DUAL MODE ЧАСТОТА -->
+                            <div class="form-group">
+                                <label>Частота обновления (Гц)</label>
+                                <div class="monitor-buttons-group" id="refreshRateGroup"></div>
+                                <input type="hidden" id="monitorRefreshRate">
+                                <div style="margin-top: 12px;">
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" id="isDualMode" onchange="toggleDualMode()"> 
+                                        <span>🎮 Dual Mode (два режима работы)</span>
+                                        <span style="font-size: 0.7rem; color: #8b5cf6;">— например: 4K 120Hz + FHD 300Hz</span>
+                                    </label>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group"><label>Яркость (кд/м²)</label><input type="text" id="monitorBrightness" placeholder="250, 350, 400"></div>
-                                    <div class="form-group"><label>Контрастность</label><input type="text" id="monitorContrast" placeholder="1000:1, 3000:1"></div>
+                                <div id="dualModeFields" style="display: none;" class="dual-mode-fields">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Режим 1 (Разрешение)</label>
+                                            <select id="dualModeRes1">
+                                                <option value="">Выберите</option>
+                                                <option value="4K">4K (3840x2160)</option>
+                                                <option value="2K">2K (2560x1440)</option>
+                                                <option value="FHD">FHD (1920x1080)</option>
+                                                <option value="UWHD">UWHD (2560x1080)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Частота 1 (Гц)</label>
+                                            <input type="text" id="dualModeHz1" placeholder="120Hz">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Режим 2 (Разрешение)</label>
+                                            <select id="dualModeRes2">
+                                                <option value="">Выберите</option>
+                                                <option value="4K">4K (3840x2160)</option>
+                                                <option value="2K">2K (2560x1440)</option>
+                                                <option value="FHD">FHD (1920x1080)</option>
+                                                <option value="UWHD">UWHD (2560x1080)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Частота 2 (Гц)</label>
+                                            <input type="text" id="dualModeHz2" placeholder="300Hz">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms"></div>
-                                    <div class="form-group"><label>Технологии</label><div class="monitor-buttons-group" id="techGroup"></div><input type="hidden" id="monitorTech"></div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group"><label>Диагональ (дюймы)</label><input type="text" id="monitorSize" placeholder="27, 32, 34"></div>
+                                <div class="form-group"><label>Соотношение сторон</label><select id="monitorAspectRatio"><option value="">Выберите</option><option>16:9</option><option>16:10</option><option>21:9</option><option>32:9</option></select></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Яркость (кд/м²)</label><input type="text" id="monitorBrightness" placeholder="250, 350, 400"></div>
+                                <div class="form-group"><label>Контрастность</label><input type="text" id="monitorContrast" placeholder="1000:1, 3000:1"></div>
+                            </div>
+                            <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms, 0.5ms"></div>
+                            
+                            <!-- Технологии и разъёмы - простые текстовые поля -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Технологии (G-Sync, FreeSync, HDR, HDR400, HDR600, HDR1000, Dolby Vision, Quantum Dot и т.д.)</label>
+                                    <input type="text" id="monitorTech" placeholder="G-Sync, FreeSync, HDR400, Quantum Dot">
                                 </div>
-                                <div class="form-group"><label>Разъёмы</label><div class="monitor-buttons-group" id="portsGroup"></div><input type="hidden" id="monitorPorts"></div>
+                                <div class="form-group">
+                                    <label>Разъёмы</label>
+                                    <input type="text" id="monitorPorts" placeholder="HDMI, DisplayPort, USB-C, DVI">
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group"><label>Характеристики</label><div id="featuresContainer"></div><button type="button" class="add-btn" onclick="addFeature()">+ Добавить</button></div>
+                    <div class="form-group"><label>Характеристики (подробно)</label><div id="featuresContainer"></div><button type="button" class="add-btn" onclick="addFeature()">+ Добавить</button></div>
                     <div class="form-group"><label>Фото (URL)</label><div id="imagesContainer"></div><button type="button" class="add-btn" onclick="addImage()">+ Добавить фото</button><div class="image-preview" id="imagePreview"></div></div>
                     <div class="form-group"><label><input type="checkbox" id="isHotPrice"> Скидка</label></div>
                     <div id="hotPriceFields" style="display:none;"><div class="form-group"><label>Причина скидки</label><input type="text" id="hotPriceReason"></div></div>
@@ -352,11 +413,9 @@
 
     <script>
         // Глобальные данные для мониторных кнопок
-        const panelTypes = ['IPS','Fast IPS', 'Mini LED', 'OLED', 'VA', 'TN'];
+        const panelTypes = ['IPS', 'Fast IPS', 'Mini LED', 'OLED', 'VA', 'TN'];
         const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', 'UWHD (2560x1080)'];
-        const refreshRates = ['60Hz', '75Hz', '120Hz', '144Hz', '165Hz', '240Hz','310Hz', '360Hz','400Hz','425Hz','500Hz','600Hz'];
-        const techOptions = ['G-Sync', 'FreeSync', 'HDR', 'HDR400', 'HDR600', 'HDR1000'];
-        const portOptions = ['HDMI', 'DisplayPort', 'USB-C', 'DVI', 'VGA'];
+        const refreshRates = ['60Hz', '75Hz', '120Hz', '144Hz', '165Hz', '240Hz', '360Hz'];
         
         let currentPlatform = 'intel';
         let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], trackingOrders = {};
@@ -385,13 +444,10 @@
         
         document.getElementById('logoutBtn')?.addEventListener('click', () => { sessionStorage.removeItem('adminLoggedIn'); location.reload(); });
         
-        // Инициализация кнопок для мониторов
         function initMonitorButtonsGroups() {
             createButtonGroup('panelTypeGroup', panelTypes, 'monitorPanelType', false);
             createButtonGroup('resolutionGroup', resolutions, 'monitorResolution', false);
             createButtonGroup('refreshRateGroup', refreshRates, 'monitorRefreshRate', false);
-            createButtonGroup('techGroup', techOptions, 'monitorTech', true);
-            createButtonGroup('portsGroup', portOptions, 'monitorPorts', true);
         }
         
         function createButtonGroup(containerId, options, hiddenInputId, multiSelect) {
@@ -419,49 +475,46 @@
             });
         }
         
-        function setMonitorValuesFromSpecs(specs, isEdit = false) {
-            if (!specs) return;
-            const groups = [
-                { id: 'panelTypeGroup', hidden: 'monitorPanelType', multi: false, value: specs.panelType },
-                { id: 'resolutionGroup', hidden: 'monitorResolution', multi: false, value: specs.resolution },
-                { id: 'refreshRateGroup', hidden: 'monitorRefreshRate', multi: false, value: specs.refreshRate },
-                { id: 'techGroup', hidden: 'monitorTech', multi: true, value: specs.tech },
-                { id: 'portsGroup', hidden: 'monitorPorts', multi: true, value: specs.ports }
-            ];
-            groups.forEach(g => {
-                const container = document.getElementById(g.id);
-                if (!container) return;
-                const hidden = document.getElementById(g.hidden);
-                if (!hidden) return;
-                if (g.multi && g.value) {
-                    const values = g.value.split(',').map(v => v.trim());
-                    container.querySelectorAll('.monitor-spec-btn').forEach(btn => {
-                        if (values.includes(btn.dataset.value)) {
-                            btn.classList.add('active');
-                        }
-                    });
-                    hidden.value = g.value;
-                } else if (g.value) {
-                    container.querySelectorAll('.monitor-spec-btn').forEach(btn => {
-                        if (btn.dataset.value === g.value) {
-                            btn.classList.add('active');
-                        }
-                    });
-                    hidden.value = g.value;
-                }
-            });
-            if (specs.size) document.getElementById('monitorSize') && (document.getElementById('monitorSize').value = specs.size || '');
-            if (specs.aspectRatio) document.getElementById('monitorAspectRatio') && (document.getElementById('monitorAspectRatio').value = specs.aspectRatio || '');
-            if (specs.brightness) document.getElementById('monitorBrightness') && (document.getElementById('monitorBrightness').value = specs.brightness || '');
-            if (specs.contrast) document.getElementById('monitorContrast') && (document.getElementById('monitorContrast').value = specs.contrast || '');
-            if (specs.responseTime) document.getElementById('monitorResponseTime') && (document.getElementById('monitorResponseTime').value = specs.responseTime || '');
-        }
+        window.toggleDualMode = function() {
+            const isChecked = document.getElementById('isDualMode').checked;
+            const dualFields = document.getElementById('dualModeFields');
+            const refreshGroup = document.getElementById('refreshRateGroup');
+            const refreshInput = document.getElementById('monitorRefreshRate');
+            
+            if (isChecked) {
+                dualFields.style.display = 'block';
+                refreshGroup.style.opacity = '0.5';
+                refreshGroup.style.pointerEvents = 'none';
+                refreshInput.disabled = true;
+            } else {
+                dualFields.style.display = 'none';
+                refreshGroup.style.opacity = '1';
+                refreshGroup.style.pointerEvents = 'auto';
+                refreshInput.disabled = false;
+            }
+        };
         
         function getMonitorSpecsFromForm() {
+            const isDual = document.getElementById('isDualMode').checked;
+            let refreshRate = '';
+            let dualMode = null;
+            
+            if (isDual) {
+                const res1 = document.getElementById('dualModeRes1').value;
+                const hz1 = document.getElementById('dualModeHz1').value;
+                const res2 = document.getElementById('dualModeRes2').value;
+                const hz2 = document.getElementById('dualModeHz2').value;
+                refreshRate = `${res1} ${hz1} / ${res2} ${hz2}`;
+                dualMode = { mode1: { resolution: res1, hz: hz1 }, mode2: { resolution: res2, hz: hz2 } };
+            } else {
+                refreshRate = document.getElementById('monitorRefreshRate').value;
+            }
+            
             return {
                 panelType: document.getElementById('monitorPanelType')?.value || '',
                 resolution: document.getElementById('monitorResolution')?.value || '',
-                refreshRate: document.getElementById('monitorRefreshRate')?.value || '',
+                refreshRate: refreshRate,
+                dualMode: dualMode,
                 size: document.getElementById('monitorSize')?.value || '',
                 aspectRatio: document.getElementById('monitorAspectRatio')?.value || '',
                 brightness: document.getElementById('monitorBrightness')?.value || '',
@@ -470,6 +523,42 @@
                 tech: document.getElementById('monitorTech')?.value || '',
                 ports: document.getElementById('monitorPorts')?.value || ''
             };
+        }
+        
+        function setMonitorValuesFromSpecs(specs) {
+            if (!specs) return;
+            
+            if (specs.panelType) {
+                const btn = document.querySelector(`#panelTypeGroup .monitor-spec-btn[data-value="${specs.panelType}"]`);
+                if (btn) btn.click();
+            }
+            if (specs.resolution) {
+                const btn = document.querySelector(`#resolutionGroup .monitor-spec-btn[data-value="${specs.resolution}"]`);
+                if (btn) btn.click();
+            }
+            if (specs.dualMode) {
+                document.getElementById('isDualMode').checked = true;
+                toggleDualMode();
+                if (specs.dualMode.mode1) {
+                    document.getElementById('dualModeRes1').value = specs.dualMode.mode1.resolution || '';
+                    document.getElementById('dualModeHz1').value = specs.dualMode.mode1.hz || '';
+                }
+                if (specs.dualMode.mode2) {
+                    document.getElementById('dualModeRes2').value = specs.dualMode.mode2.resolution || '';
+                    document.getElementById('dualModeHz2').value = specs.dualMode.mode2.hz || '';
+                }
+            } else if (specs.refreshRate && !specs.dualMode) {
+                const btn = document.querySelector(`#refreshRateGroup .monitor-spec-btn[data-value="${specs.refreshRate}"]`);
+                if (btn) btn.click();
+            }
+            
+            if (specs.size) document.getElementById('monitorSize').value = specs.size;
+            if (specs.aspectRatio) document.getElementById('monitorAspectRatio').value = specs.aspectRatio;
+            if (specs.brightness) document.getElementById('monitorBrightness').value = specs.brightness;
+            if (specs.contrast) document.getElementById('monitorContrast').value = specs.contrast;
+            if (specs.responseTime) document.getElementById('monitorResponseTime').value = specs.responseTime;
+            if (specs.tech) document.getElementById('monitorTech').value = specs.tech;
+            if (specs.ports) document.getElementById('monitorPorts').value = specs.ports;
         }
         
         window.setPlatform = function(p) { 
@@ -565,7 +654,7 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue, set, remove, update, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        import { getDatabase, ref, onValue, set, remove, update } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
@@ -613,7 +702,7 @@
             const filter = document.getElementById('filterCategory')?.value || 'all';
             const filtered = products.filter(p => p.name.toLowerCase().includes(search) && (filter==='all' || p.category===filter));
             if(filtered.length===0){ tbody.innerHTML = '<tr><td colspan="8">Товаров не найдено</td></tr>'; return; }
-            tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
+            tbody.innerHTML = filtered.map(p => `</table><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
         }
         
         function renderRecentProducts() {
@@ -625,7 +714,7 @@
         
         function renderBrands() {
             const tbody = document.getElementById('brandsTable'); if(!tbody) return;
-            if(Object.keys(brands).length===0){ tbody.innerHTML = '<td><td colspan="4">Нет брендов</td></tr>'; return; }
+            if(Object.keys(brands).length===0){ tbody.innerHTML = '<tr><td colspan="4">Нет брендов</td></tr>'; return; }
             tbody.innerHTML = Object.values(brands).map(b => `<tr><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain;" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
@@ -695,7 +784,6 @@
             try {
                 await set(ref(database,'products/'+newId), newProduct);
                 if(isHot && hotReason) await set(ref(database,'hotPrices/'+newId), { reason:hotReason, added:new Date().toISOString() });
-                else if(hotPrices[newId]) await remove(ref(database,'hotPrices/'+newId));
                 alert('✅ Товар добавлен');
                 e.target.reset();
                 document.getElementById('imagesContainer').innerHTML = '';
@@ -783,24 +871,67 @@
             
             let monitorSpecsHtml = '';
             if (isMonitor) {
+                const isDual = ms.dualMode ? true : false;
                 monitorSpecsHtml = `<div class="specs-block"><h3 class="specs-title">Характеристики монитора</h3>
-                <div id="editMonitorSpecsContainer">
-                    <div class="form-group"><label>Тип матрицы</label><div class="monitor-buttons-group" id="editPanelTypeGroup"></div><input type="hidden" id="editMonitorPanelType"></div>
-                    <div class="form-group"><label>Разрешение</label><div class="monitor-buttons-group" id="editResolutionGroup"></div><input type="hidden" id="editMonitorResolution"></div>
-                    <div class="form-group"><label>Частота обновления (Гц)</label><div class="monitor-buttons-group" id="editRefreshRateGroup"></div><input type="hidden" id="editMonitorRefreshRate"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Диагональ</label><input type="text" id="editMonitorSize" value="${escapeHtml(ms.size||'')}"></div>
-                        <div class="form-group"><label>Соотношение сторон</label><select id="editMonitorAspectRatio"><option value="">Выберите</option><option ${ms.aspectRatio==='16:9'?'selected':''}>16:9</option><option ${ms.aspectRatio==='16:10'?'selected':''}>16:10</option><option ${ms.aspectRatio==='21:9'?'selected':''}>21:9</option><option ${ms.aspectRatio==='32:9'?'selected':''}>32:9</option></select></div>
+                <div class="form-group"><label>Тип матрицы</label><div class="monitor-buttons-group" id="editPanelTypeGroup"></div><input type="hidden" id="editMonitorPanelType"></div>
+                <div class="form-group"><label>Разрешение</label><div class="monitor-buttons-group" id="editResolutionGroup"></div><input type="hidden" id="editMonitorResolution"></div>
+                <div class="form-group">
+                    <label>Частота обновления (Гц)</label>
+                    <div class="monitor-buttons-group" id="editRefreshRateGroup"></div>
+                    <input type="hidden" id="editMonitorRefreshRate">
+                    <div style="margin-top: 12px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="editIsDualMode" ${isDual ? 'checked' : ''} onchange="toggleEditDualMode()"> 
+                            <span>🎮 Dual Mode</span>
+                        </label>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Яркость</label><input type="text" id="editMonitorBrightness" value="${escapeHtml(ms.brightness||'')}"></div>
-                        <div class="form-group"><label>Контрастность</label><input type="text" id="editMonitorContrast" value="${escapeHtml(ms.contrast||'')}"></div>
+                    <div id="editDualModeFields" style="display: ${isDual ? 'block' : 'none'};" class="dual-mode-fields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Режим 1 (Разрешение)</label>
+                                <select id="editDualModeRes1">
+                                    <option value="">Выберите</option>
+                                    <option value="4K" ${ms.dualMode?.mode1?.resolution === '4K' ? 'selected' : ''}>4K (3840x2160)</option>
+                                    <option value="2K" ${ms.dualMode?.mode1?.resolution === '2K' ? 'selected' : ''}>2K (2560x1440)</option>
+                                    <option value="FHD" ${ms.dualMode?.mode1?.resolution === 'FHD' ? 'selected' : ''}>FHD (1920x1080)</option>
+                                    <option value="UWHD" ${ms.dualMode?.mode1?.resolution === 'UWHD' ? 'selected' : ''}>UWHD (2560x1080)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Частота 1 (Гц)</label>
+                                <input type="text" id="editDualModeHz1" value="${escapeHtml(ms.dualMode?.mode1?.hz || '')}" placeholder="120Hz">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Режим 2 (Разрешение)</label>
+                                <select id="editDualModeRes2">
+                                    <option value="">Выберите</option>
+                                    <option value="4K" ${ms.dualMode?.mode2?.resolution === '4K' ? 'selected' : ''}>4K (3840x2160)</option>
+                                    <option value="2K" ${ms.dualMode?.mode2?.resolution === '2K' ? 'selected' : ''}>2K (2560x1440)</option>
+                                    <option value="FHD" ${ms.dualMode?.mode2?.resolution === 'FHD' ? 'selected' : ''}>FHD (1920x1080)</option>
+                                    <option value="UWHD" ${ms.dualMode?.mode2?.resolution === 'UWHD' ? 'selected' : ''}>UWHD (2560x1080)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Частота 2 (Гц)</label>
+                                <input type="text" id="editDualModeHz2" value="${escapeHtml(ms.dualMode?.mode2?.hz || '')}" placeholder="300Hz">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Время отклика</label><input type="text" id="editMonitorResponseTime" value="${escapeHtml(ms.responseTime||'')}"></div>
-                        <div class="form-group"><label>Технологии</label><div class="monitor-buttons-group" id="editTechGroup"></div><input type="hidden" id="editMonitorTech"></div>
-                    </div>
-                    <div class="form-group"><label>Разъёмы</label><div class="monitor-buttons-group" id="editPortsGroup"></div><input type="hidden" id="editMonitorPorts"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Диагональ</label><input type="text" id="editMonitorSize" value="${escapeHtml(ms.size||'')}"></div>
+                    <div class="form-group"><label>Соотношение сторон</label><select id="editMonitorAspectRatio"><option value="">Выберите</option><option ${ms.aspectRatio==='16:9'?'selected':''}>16:9</option><option ${ms.aspectRatio==='16:10'?'selected':''}>16:10</option><option ${ms.aspectRatio==='21:9'?'selected':''}>21:9</option><option ${ms.aspectRatio==='32:9'?'selected':''}>32:9</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Яркость</label><input type="text" id="editMonitorBrightness" value="${escapeHtml(ms.brightness||'')}"></div>
+                    <div class="form-group"><label>Контрастность</label><input type="text" id="editMonitorContrast" value="${escapeHtml(ms.contrast||'')}"></div>
+                </div>
+                <div class="form-group"><label>Время отклика</label><input type="text" id="editMonitorResponseTime" value="${escapeHtml(ms.responseTime||'')}"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Технологии (G-Sync, FreeSync, HDR и т.д.)</label><input type="text" id="editMonitorTech" value="${escapeHtml(ms.tech||'')}"></div>
+                    <div class="form-group"><label>Разъёмы</label><input type="text" id="editMonitorPorts" value="${escapeHtml(ms.ports||'')}"></div>
                 </div>
                 </div>`;
             }
@@ -823,14 +954,29 @@
             
             modal.classList.add('active');
             
-            // Инициализация кнопок для монитора в редакторе
             if (isMonitor) {
                 createEditButtonGroup('editPanelTypeGroup', panelTypes, 'editMonitorPanelType', false, ms.panelType);
                 createEditButtonGroup('editResolutionGroup', resolutions, 'editMonitorResolution', false, ms.resolution);
-                createEditButtonGroup('editRefreshRateGroup', refreshRates, 'editMonitorRefreshRate', false, ms.refreshRate);
-                createEditButtonGroup('editTechGroup', techOptions, 'editMonitorTech', true, ms.tech);
-                createEditButtonGroup('editPortsGroup', portOptions, 'editMonitorPorts', true, ms.ports);
+                if (!ms.dualMode) {
+                    createEditButtonGroup('editRefreshRateGroup', refreshRates, 'editMonitorRefreshRate', false, ms.refreshRate);
+                }
             }
+            
+            window.toggleEditDualMode = function() {
+                const isChecked = document.getElementById('editIsDualMode').checked;
+                const dualFields = document.getElementById('editDualModeFields');
+                const refreshGroup = document.getElementById('editRefreshRateGroup');
+                const refreshInput = document.getElementById('editMonitorRefreshRate');
+                if (isChecked) {
+                    dualFields.style.display = 'block';
+                    if (refreshGroup) refreshGroup.style.display = 'none';
+                    if (refreshInput) refreshInput.disabled = true;
+                } else {
+                    dualFields.style.display = 'none';
+                    if (refreshGroup) refreshGroup.style.display = 'flex';
+                    if (refreshInput) refreshInput.disabled = false;
+                }
+            };
             
             document.getElementById('editHot')?.addEventListener('change', function(){ document.getElementById('editHotFields').style.display = this.checked ? 'block' : 'none'; });
             
@@ -855,10 +1001,26 @@
                 }
                 
                 if (updated.category === 'монитор') {
+                    const isDual = document.getElementById('editIsDualMode')?.checked || false;
+                    let refreshRate = '';
+                    let dualMode = null;
+                    
+                    if (isDual) {
+                        const res1 = document.getElementById('editDualModeRes1')?.value || '';
+                        const hz1 = document.getElementById('editDualModeHz1')?.value || '';
+                        const res2 = document.getElementById('editDualModeRes2')?.value || '';
+                        const hz2 = document.getElementById('editDualModeHz2')?.value || '';
+                        refreshRate = `${res1} ${hz1} / ${res2} ${hz2}`;
+                        dualMode = { mode1: { resolution: res1, hz: hz1 }, mode2: { resolution: res2, hz: hz2 } };
+                    } else {
+                        refreshRate = document.getElementById('editMonitorRefreshRate')?.value || '';
+                    }
+                    
                     updated.monitorSpecs = {
                         panelType: document.getElementById('editMonitorPanelType')?.value || '',
                         resolution: document.getElementById('editMonitorResolution')?.value || '',
-                        refreshRate: document.getElementById('editMonitorRefreshRate')?.value || '',
+                        refreshRate: refreshRate,
+                        dualMode: dualMode,
                         size: document.getElementById('editMonitorSize')?.value || '',
                         aspectRatio: document.getElementById('editMonitorAspectRatio')?.value || '',
                         brightness: document.getElementById('editMonitorBrightness')?.value || '',
@@ -907,7 +1069,8 @@
                 });
                 container.appendChild(btn);
             });
-            if (currentValue) document.getElementById(hiddenInputId).value = currentValue;
+            if (currentValue && !multiSelect) document.getElementById(hiddenInputId).value = currentValue;
+            if (currentValue && multiSelect) document.getElementById(hiddenInputId).value = currentValue;
         }
         
         window.addEditFeature = () => { const c = document.getElementById('editFeatures'); const d = document.createElement('div'); d.className = 'feature-item'; d.innerHTML = `<input type="text" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
