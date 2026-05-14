@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Каталог товаров - GGPoint</title>
     <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы, материнские платы.">
-    
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
@@ -103,6 +99,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            margin-top: 0.5rem;
         }
         .monitor-filter-btn {
             background: transparent;
@@ -117,7 +114,6 @@
         .monitor-filter-btn:hover { background: rgba(37, 99, 235, 0.2); }
         .monitor-filter-btn.active { background: var(--primary-blue); color: white; }
         
-        /* FIX: Блок активных фильтров больше не двигает страницу */
         .active-filters-container {
             min-height: 52px;
             margin-bottom: 1rem;
@@ -290,18 +286,18 @@
                     </div>
                     
                     <div id="monitorFilters" class="monitor-filters">
-                        <div class="filter-block" style="border-bottom: none;">
+                        <div class="filter-block">
                             <h4 class="filter-title"><i class="fas fa-tv"></i> Тип матрицы</h4>
                             <div class="monitor-filter-buttons" id="panelTypeFilters">
                                 <button class="monitor-filter-btn" data-panel="IPS">IPS</button>
-                                <button class="monitor-filter-btn" data-panel="IPS">Fast IPS</button>
+                                <button class="monitor-filter-btn" data-panel="Fast IPS">Fast IPS</button>
                                 <button class="monitor-filter-btn" data-panel="Mini LED">Mini LED</button>
                                 <button class="monitor-filter-btn" data-panel="OLED">OLED</button>
                                 <button class="monitor-filter-btn" data-panel="VA">VA</button>
                                 <button class="monitor-filter-btn" data-panel="TN">TN</button>
                             </div>
                         </div>
-                        <div class="filter-block" style="border-bottom: none;">
+                        <div class="filter-block">
                             <h4 class="filter-title"><i class="fas fa-expand"></i> Разрешение</h4>
                             <div class="monitor-filter-buttons" id="resolutionFilters">
                                 <button class="monitor-filter-btn" data-res="FHD">FHD (1920x1080)</button>
@@ -319,12 +315,12 @@
                                 <button class="monitor-filter-btn" data-refresh="144Hz">144Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="165Hz">165Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="240Hz">240Hz</button>
-                                <button class="monitor-filter-btn" data-refresh="240Hz">310Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="310Hz">310Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="360Hz">360Hz</button>
-                                <button class="monitor-filter-btn" data-refresh="240Hz">400Hz</button>
-                                <button class="monitor-filter-btn" data-refresh="240Hz">425Hz</button>
-                                <button class="monitor-filter-btn" data-refresh="240Hz">500Hz</button>
-                                <button class="monitor-filter-btn" data-refresh="240Hz">600Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="400Hz">400Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="425Hz">425Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="500Hz">500Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="600Hz">600Hz</button>
                             </div>
                         </div>
                     </div>
@@ -414,7 +410,6 @@
         let selectedResolutions = new Set();
         let selectedRefreshRates = new Set();
         
-        // Для сохранения позиции скролла
         let scrollPositionBeforeFilter = 0;
 
         function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
@@ -430,19 +425,8 @@
             return product.monitorSpecs?.[field] || null;
         }
         
-        // Сохраняем позицию до применения фильтра
-        function saveScrollPosition() {
-            scrollPositionBeforeFilter = window.scrollY;
-        }
-        
-        // Восстанавливаем позицию после применения фильтра
-        function restoreScrollPosition() {
-            if (scrollPositionBeforeFilter > 0) {
-                setTimeout(() => {
-                    window.scrollTo({ top: scrollPositionBeforeFilter, behavior: 'instant' });
-                }, 10);
-            }
-        }
+        function saveScrollPosition() { scrollPositionBeforeFilter = window.scrollY; }
+        function restoreScrollPosition() { if (scrollPositionBeforeFilter > 0) { setTimeout(() => { window.scrollTo({ top: scrollPositionBeforeFilter, behavior: 'instant' }); }, 10); } }
 
         async function loadData() {
             try {
@@ -478,18 +462,21 @@
             function updateMonitorFiltersVisibility() {
                 const selectedCategory = document.querySelector('input[name="category"]:checked')?.value;
                 monitorFiltersDiv.classList.toggle('show', selectedCategory === 'монитор');
+                // Если категория не монитор, очищаем мониторные фильтры
+                if (selectedCategory !== 'монитор') {
+                    selectedPanelTypes.clear();
+                    selectedResolutions.clear();
+                    selectedRefreshRates.clear();
+                    updateMonitorFilterButtons();
+                }
             }
             
             categoryRadios.forEach(radio => {
                 radio.addEventListener('change', () => {
+                    saveScrollPosition();
                     updateMonitorFiltersVisibility();
-                    if (radio.value !== 'монитор') {
-                        selectedPanelTypes.clear();
-                        selectedResolutions.clear();
-                        selectedRefreshRates.clear();
-                        updateMonitorFilterButtons();
-                        applyFilters();
-                    }
+                    applyFilters();
+                    restoreScrollPosition();
                 });
             });
             
@@ -509,7 +496,7 @@
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    saveScrollPosition();  // Сохраняем позицию перед изменением
+                    saveScrollPosition();
                     
                     const value = btn.getAttribute(dataAttr);
                     if (selectedSet.has(value)) {
@@ -520,7 +507,7 @@
                         btn.classList.add('active');
                     }
                     applyFilters();
-                    restoreScrollPosition();  // Восстанавливаем позицию
+                    restoreScrollPosition();
                 });
             });
         }
@@ -541,6 +528,10 @@
         }
         
         function applyMonitorFilters(filtered) {
+            // Если категория не монитор, пропускаем мониторные фильтры
+            const currentCategory = document.querySelector('input[name="category"]:checked')?.value;
+            if (currentCategory !== 'монитор') return filtered;
+            
             if (selectedPanelTypes.size === 0 && selectedResolutions.size === 0 && selectedRefreshRates.size === 0) {
                 return filtered;
             }
@@ -570,7 +561,7 @@
             select.innerHTML = '<option value="all">Все бренды</option>';
             if (brands && typeof brands === 'object') {
                 Object.values(brands).sort((a,b)=>a.name?.localeCompare(b.name)).forEach(b => { 
-                    select.innerHTML += `<option value="${b.name}">${b.name}</option>`; 
+                    select.innerHTML += `<option value="${escapeHtml(b.name)}">${escapeHtml(b.name)}</option>`; 
                 });
             }
         }
@@ -580,8 +571,6 @@
             const category = document.querySelector('input[name="category"]:checked')?.value;
             if (category && category !== 'all') filtered = filtered.filter(p => p.category === category);
             else if (categoryParam && categoryParam !== 'all') filtered = filtered.filter(p => p.category === categoryParam);
-            
-            filtered = applyMonitorFilters(filtered);
             
             const brand = document.getElementById('brandFilter')?.value;
             if (brand && brand !== 'all') filtered = filtered.filter(p => p.brand === brand);
@@ -595,6 +584,8 @@
             
             const searchQuery = document.getElementById('searchInput')?.value.toLowerCase();
             if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || (p.description || '').toLowerCase().includes(searchQuery));
+            
+            filtered = applyMonitorFilters(filtered);
             
             const sortBy = document.getElementById('sortSelect')?.value;
             if (sortBy === 'price_asc') filtered.sort((a,b) => parsePrice(a.price) - parsePrice(b.price));
@@ -682,7 +673,7 @@
         function renderRecentlyViewed() {
             const grid = document.getElementById('recentlyViewedGrid');
             if (!grid) return;
-            if (recentlyViewed.length === 0) { grid.innerHTML = ''; return; }
+            if (recentlyViewed.length === 0) { grid.innerHTML = '<div class="no-products" style="grid-column:1/-1; padding:1rem;">Нет просмотренных товаров</div>'; return; }
             grid.innerHTML = '';
             recentlyViewed.slice(0,4).forEach(p => {
                 const card = document.createElement('div');
@@ -708,7 +699,7 @@
                     btn.onclick = () => { saveScrollPosition(); currentPage=i; renderProducts(); restoreScrollPosition(); };
                     pag.appendChild(btn);
                 } else if(i===currentPage-3 || i===currentPage+3) { 
-                    const span = document.createElement('span'); span.className = 'pagination-btn'; span.textContent = '...'; span.disabled = true; 
+                    const span = document.createElement('span'); span.className = 'pagination-btn'; span.textContent = '...'; span.disabled = true; span.style.cursor = 'default'; span.style.opacity = '0.7';
                     pag.appendChild(span); 
                 }
             }
@@ -843,14 +834,22 @@
             restoreScrollPosition();
         });
         
-        document.getElementById('gridView')?.addEventListener('click',(e)=>{
+        const gridViewBtn = document.getElementById('gridView');
+        const listViewBtn = document.getElementById('listView');
+        const productsGrid = document.getElementById('productsGrid');
+        
+        gridViewBtn?.addEventListener('click',(e)=>{
             e.preventDefault();
-            document.getElementById('productsGrid').classList.remove('list-view');
+            productsGrid.classList.remove('list-view');
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
         });
         
-        document.getElementById('listView')?.addEventListener('click',(e)=>{
+        listViewBtn?.addEventListener('click',(e)=>{
             e.preventDefault();
-            document.getElementById('productsGrid').classList.add('list-view');
+            productsGrid.classList.add('list-view');
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
         });
         
         let ctrlClick=0, timer=null;
