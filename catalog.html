@@ -92,22 +92,12 @@
         .filter-option input { accent-color: #2563eb; cursor: pointer; }
         .filter-select { width: 100%; padding: 0.5rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; cursor: pointer; }
         
-        /* Монитор фильтры (скрыты по умолчанию) */
         .monitor-filters {
             display: none;
             margin-top: 0.5rem;
         }
         .monitor-filters.show {
             display: block;
-        }
-        .monitor-filter-group {
-            margin-bottom: 1rem;
-        }
-        .monitor-filter-group label {
-            display: block;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-bottom: 0.5rem;
         }
         .monitor-filter-buttons {
             display: flex;
@@ -124,23 +114,36 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .monitor-filter-btn:hover {
-            background: rgba(37, 99, 235, 0.2);
-        }
-        .monitor-filter-btn.active {
-            background: var(--primary-blue);
-            color: white;
-        }
+        .monitor-filter-btn:hover { background: rgba(37, 99, 235, 0.2); }
+        .monitor-filter-btn.active { background: var(--primary-blue); color: white; }
         
-        .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-        .filter-tag { background: rgba(37, 99, 235, 0.1); border: 1px solid #2563eb; color: #60a5fa; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        /* FIX: Блок активных фильтров больше не двигает страницу */
+        .active-filters-container {
+            min-height: 52px;
+            margin-bottom: 1rem;
+        }
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .filter-tag {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid #2563eb;
+            color: #60a5fa;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         .filter-tag i { cursor: pointer; }
         .filter-tag i:hover { color: #ef4444; }
         
         .price-inputs { display: flex; gap: 0.5rem; align-items: center; }
         .price-inputs input { width: 100%; padding: 0.5rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; }
         .apply-price-btn { width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: var(--gradient); color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
-        .apply-price-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         
         .catalog-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
         .search-box { display: flex; align-items: center; background: #1e293b; border-radius: 8px; padding: 0.5rem 1rem; border: 1px solid #334155; }
@@ -166,7 +169,6 @@
             border: 1px solid rgba(37, 99, 235, 0.2);
             position: relative;
         }
-        
         .product-card:hover { transform: translateY(-5px); border-color: #2563eb; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3); }
         
         .product-badge-sale, .product-badge-new { position: absolute; top: 10px; left: 10px; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; z-index: 1; }
@@ -209,7 +211,6 @@
         
         .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: var(--gradient); color: white; border: none; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 100; }
         .back-to-top.show { display: flex; }
-        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
         .modal-content { background: #1e293b; margin: 10% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(37, 99, 235, 0.3); }
@@ -221,10 +222,8 @@
         .btn-modal { background: var(--gradient); color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
         
         .no-products { text-align: center; padding: 3rem; color: #94a3b8; grid-column: 1/-1; }
-        .no-products i { font-size: 3rem; margin-bottom: 1rem; }
-        
         .loader { text-align: center; padding: 3rem; color: #94a3b8; grid-column: 1/-1; }
-        .loader i { font-size: 2rem; margin-bottom: 1rem; display: inline-block; animation: spin 1s linear infinite; }
+        .loader i { display: inline-block; animation: spin 1s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         @media (max-width: 768px) {
@@ -278,11 +277,10 @@
                         <h3>Фильтры</h3>
                         <button class="clear-filters" id="clearFilters"><i class="fas fa-times"></i> Сбросить</button>
                     </div>
-                    <div class="active-filters" id="activeFilters"></div>
                     
                     <div class="filter-block">
                         <h4 class="filter-title"><i class="fas fa-filter"></i> Категория</h4>
-                        <div class="filter-options" id="categoryFilters">
+                        <div class="filter-options">
                             <label class="filter-option"><input type="radio" name="category" value="all" checked> <span>Все категории</span></label>
                             <label class="filter-option"><input type="radio" name="category" value="мышь"> <span><i class="fas fa-mouse"></i> Мыши</span></label>
                             <label class="filter-option"><input type="radio" name="category" value="клавиатура"> <span><i class="fas fa-keyboard"></i> Клавиатуры</span></label>
@@ -291,7 +289,6 @@
                         </div>
                     </div>
                     
-                    <!-- ФИЛЬТРЫ ДЛЯ МОНИТОРОВ (появляются при выборе категории "монитор") -->
                     <div id="monitorFilters" class="monitor-filters">
                         <div class="filter-block" style="border-bottom: none;">
                             <h4 class="filter-title"><i class="fas fa-tv"></i> Тип матрицы</h4>
@@ -344,6 +341,10 @@
                 </aside>
                 
                 <div class="catalog-main">
+                    <div class="active-filters-container">
+                        <div class="active-filters" id="activeFilters"></div>
+                    </div>
+                    
                     <div class="catalog-toolbar">
                         <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Поиск..."></div>
                         <select class="sort-select" id="sortSelect">
@@ -403,10 +404,12 @@
         let urlParams = new URLSearchParams(window.location.search);
         let categoryParam = urlParams.get('category');
         
-        // Монитор фильтры
         let selectedPanelTypes = new Set();
         let selectedResolutions = new Set();
         let selectedRefreshRates = new Set();
+        
+        // Для сохранения позиции скролла
+        let scrollPositionBeforeFilter = 0;
 
         function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
         function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
@@ -418,10 +421,21 @@
         }
         
         function getMonitorSpecValue(product, field) {
-            if (product.monitorSpecs && product.monitorSpecs[field]) {
-                return product.monitorSpecs[field];
+            return product.monitorSpecs?.[field] || null;
+        }
+        
+        // Сохраняем позицию до применения фильтра
+        function saveScrollPosition() {
+            scrollPositionBeforeFilter = window.scrollY;
+        }
+        
+        // Восстанавливаем позицию после применения фильтра
+        function restoreScrollPosition() {
+            if (scrollPositionBeforeFilter > 0) {
+                setTimeout(() => {
+                    window.scrollTo({ top: scrollPositionBeforeFilter, behavior: 'instant' });
+                }, 10);
             }
-            return null;
         }
 
         async function loadData() {
@@ -446,31 +460,23 @@
                 const hotRes = await fetch('https://ggpoint-shop-default-rtdb.firebaseio.com/hotPrices.json');
                 hotPrices = await hotRes.json() || {};
                 
-                // Инициализация монитор фильтров
                 initMonitorFilters();
-                
                 applyFilters();
             } catch(e) { console.error(e); document.getElementById('productsGrid').innerHTML = '<div class="no-products"><i class="fas fa-exclamation-triangle"></i><h3>Ошибка загрузки</h3></div>'; }
         }
         
         function initMonitorFilters() {
-            // Показываем/скрываем фильтры мониторов в зависимости от выбранной категории
             const monitorFiltersDiv = document.getElementById('monitorFilters');
             const categoryRadios = document.querySelectorAll('input[name="category"]');
             
             function updateMonitorFiltersVisibility() {
                 const selectedCategory = document.querySelector('input[name="category"]:checked')?.value;
-                if (selectedCategory === 'монитор') {
-                    monitorFiltersDiv.classList.add('show');
-                } else {
-                    monitorFiltersDiv.classList.remove('show');
-                }
+                monitorFiltersDiv.classList.toggle('show', selectedCategory === 'монитор');
             }
             
             categoryRadios.forEach(radio => {
                 radio.addEventListener('change', () => {
                     updateMonitorFiltersVisibility();
-                    // При смене категории сбрасываем монитор фильтры
                     if (radio.value !== 'монитор') {
                         selectedPanelTypes.clear();
                         selectedResolutions.clear();
@@ -483,19 +489,22 @@
             
             updateMonitorFiltersVisibility();
             
-            // Настройка кнопок фильтров
-            setupFilterButtons('panelTypeFilters', selectedPanelTypes, 'data-panel', applyFilters);
-            setupFilterButtons('resolutionFilters', selectedResolutions, 'data-res', applyFilters);
-            setupFilterButtons('refreshRateFilters', selectedRefreshRates, 'data-refresh', applyFilters);
+            setupFilterButtons('panelTypeFilters', selectedPanelTypes, 'data-panel');
+            setupFilterButtons('resolutionFilters', selectedResolutions, 'data-res');
+            setupFilterButtons('refreshRateFilters', selectedRefreshRates, 'data-refresh');
         }
         
-        function setupFilterButtons(containerId, selectedSet, dataAttr, callback) {
+        function setupFilterButtons(containerId, selectedSet, dataAttr) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
-            const buttons = container.querySelectorAll('.monitor-filter-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => {
+            container.querySelectorAll('.monitor-filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    saveScrollPosition();  // Сохраняем позицию перед изменением
+                    
                     const value = btn.getAttribute(dataAttr);
                     if (selectedSet.has(value)) {
                         selectedSet.delete(value);
@@ -504,7 +513,8 @@
                         selectedSet.add(value);
                         btn.classList.add('active');
                     }
-                    callback();
+                    applyFilters();
+                    restoreScrollPosition();  // Восстанавливаем позицию
                 });
             });
         }
@@ -518,49 +528,33 @@
         function updateButtonActiveState(containerId, selectedSet, dataAttr) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            const buttons = container.querySelectorAll('.monitor-filter-btn');
-            buttons.forEach(btn => {
+            container.querySelectorAll('.monitor-filter-btn').forEach(btn => {
                 const value = btn.getAttribute(dataAttr);
-                if (selectedSet.has(value)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+                btn.classList.toggle('active', selectedSet.has(value));
             });
         }
         
-        function applyMonitorFilters(products) {
+        function applyMonitorFilters(filtered) {
             if (selectedPanelTypes.size === 0 && selectedResolutions.size === 0 && selectedRefreshRates.size === 0) {
-                return products;
+                return filtered;
             }
             
-            return products.filter(product => {
+            return filtered.filter(product => {
                 if (product.category !== 'монитор') return true;
-                
-                let matches = true;
                 
                 if (selectedPanelTypes.size > 0) {
                     const panelType = getMonitorSpecValue(product, 'panelType');
-                    if (!panelType || !selectedPanelTypes.has(panelType)) {
-                        matches = false;
-                    }
+                    if (!panelType || !selectedPanelTypes.has(panelType)) return false;
                 }
-                
-                if (matches && selectedResolutions.size > 0) {
+                if (selectedResolutions.size > 0) {
                     const resolution = getMonitorSpecValue(product, 'resolution');
-                    if (!resolution || !selectedResolutions.has(resolution)) {
-                        matches = false;
-                    }
+                    if (!resolution || !selectedResolutions.has(resolution)) return false;
                 }
-                
-                if (matches && selectedRefreshRates.size > 0) {
+                if (selectedRefreshRates.size > 0) {
                     const refreshRate = getMonitorSpecValue(product, 'refreshRate');
-                    if (!refreshRate || !selectedRefreshRates.has(refreshRate)) {
-                        matches = false;
-                    }
+                    if (!refreshRate || !selectedRefreshRates.has(refreshRate)) return false;
                 }
-                
-                return matches;
+                return true;
             });
         }
 
@@ -568,7 +562,11 @@
             const select = document.getElementById('brandFilter');
             if (!select) return;
             select.innerHTML = '<option value="all">Все бренды</option>';
-            Object.values(brands).sort((a,b)=>a.name.localeCompare(b.name)).forEach(b => { select.innerHTML += `<option value="${b.name}">${b.name}</option>`; });
+            if (brands && typeof brands === 'object') {
+                Object.values(brands).sort((a,b)=>a.name?.localeCompare(b.name)).forEach(b => { 
+                    select.innerHTML += `<option value="${b.name}">${b.name}</option>`; 
+                });
+            }
         }
 
         function applyFilters() {
@@ -577,7 +575,6 @@
             if (category && category !== 'all') filtered = filtered.filter(p => p.category === category);
             else if (categoryParam && categoryParam !== 'all') filtered = filtered.filter(p => p.category === categoryParam);
             
-            // Применяем монитор фильтры
             filtered = applyMonitorFilters(filtered);
             
             const brand = document.getElementById('brandFilter')?.value;
@@ -612,17 +609,20 @@
             const start = (currentPage-1)*itemsPerPage;
             const pageProducts = filteredProducts.slice(start, start+itemsPerPage);
             
-            if (pageProducts.length === 0) { grid.innerHTML = '<div class="no-products"><i class="fas fa-search"></i><h3>Товары не найдены</h3></div>'; renderPagination(); return; }
+            if (pageProducts.length === 0) { 
+                grid.innerHTML = '<div class="no-products"><i class="fas fa-search"></i><h3>Товары не найдены</h3></div>'; 
+                renderPagination(); 
+                return; 
+            }
             
             grid.innerHTML = '';
-            pageProducts.forEach((p, i) => {
+            pageProducts.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 const isHot = hotPrices[p.id];
                 const isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
                 const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
                 
-                // Добавляем информацию о мониторе в карточку если есть
                 let monitorSpecsHtml = '';
                 if (p.category === 'монитор' && p.monitorSpecs) {
                     const ms = p.monitorSpecs;
@@ -693,15 +693,21 @@
             const pag = document.getElementById('pagination');
             if (total <= 1) { pag.innerHTML = ''; return; }
             pag.innerHTML = '';
-            const prev = document.createElement('button'); prev.className = 'pagination-btn'; prev.innerHTML = '<i class="fas fa-chevron-left"></i>'; prev.onclick = () => { if(currentPage>1){currentPage--;renderProducts();window.scrollTo({top:0});} };
+            const prev = document.createElement('button'); prev.className = 'pagination-btn'; prev.innerHTML = '<i class="fas fa-chevron-left"></i>'; 
+            prev.onclick = () => { if(currentPage>1){ saveScrollPosition(); currentPage--; renderProducts(); restoreScrollPosition(); } };
             pag.appendChild(prev);
             for(let i=1; i<=total; i++) {
                 if(i===1 || i===total || (i>=currentPage-2 && i<=currentPage+2)) {
-                    const btn = document.createElement('button'); btn.className = `pagination-btn ${i===currentPage?'active':''}`; btn.textContent = i; btn.onclick = () => { currentPage=i; renderProducts(); window.scrollTo({top:0}); };
+                    const btn = document.createElement('button'); btn.className = `pagination-btn ${i===currentPage?'active':''}`; btn.textContent = i; 
+                    btn.onclick = () => { saveScrollPosition(); currentPage=i; renderProducts(); restoreScrollPosition(); };
                     pag.appendChild(btn);
-                } else if(i===currentPage-3 || i===currentPage+3) { const span = document.createElement('span'); span.className = 'pagination-btn'; span.textContent = '...'; span.disabled = true; pag.appendChild(span); }
+                } else if(i===currentPage-3 || i===currentPage+3) { 
+                    const span = document.createElement('span'); span.className = 'pagination-btn'; span.textContent = '...'; span.disabled = true; 
+                    pag.appendChild(span); 
+                }
             }
-            const next = document.createElement('button'); next.className = 'pagination-btn'; next.innerHTML = '<i class="fas fa-chevron-right"></i>'; next.onclick = () => { if(currentPage<total){currentPage++;renderProducts();window.scrollTo({top:0});} };
+            const next = document.createElement('button'); next.className = 'pagination-btn'; next.innerHTML = '<i class="fas fa-chevron-right"></i>'; 
+            next.onclick = () => { if(currentPage<total){ saveScrollPosition(); currentPage++; renderProducts(); restoreScrollPosition(); } };
             pag.appendChild(next);
         }
 
@@ -709,30 +715,77 @@
             const container = document.getElementById('activeFilters');
             container.innerHTML = '';
             const category = document.querySelector('input[name="category"]:checked')?.value;
-            if(category && category!=='all') addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { document.querySelector('input[name="category"][value="all"]').checked=true; applyFilters(); });
+            if(category && category!=='all') addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { 
+                saveScrollPosition();
+                document.querySelector('input[name="category"][value="all"]').checked=true; 
+                applyFilters();
+                restoreScrollPosition();
+            });
             
-            // Монитор фильтры
             if(selectedPanelTypes.size > 0) {
-                addFilterTag(container, `Матрица: ${Array.from(selectedPanelTypes).join(', ')}`, () => { selectedPanelTypes.clear(); updateMonitorFilterButtons(); applyFilters(); });
+                addFilterTag(container, `Матрица: ${Array.from(selectedPanelTypes).join(', ')}`, () => { 
+                    saveScrollPosition();
+                    selectedPanelTypes.clear(); 
+                    updateMonitorFilterButtons(); 
+                    applyFilters();
+                    restoreScrollPosition();
+                });
             }
             if(selectedResolutions.size > 0) {
-                addFilterTag(container, `Разрешение: ${Array.from(selectedResolutions).join(', ')}`, () => { selectedResolutions.clear(); updateMonitorFilterButtons(); applyFilters(); });
+                addFilterTag(container, `Разрешение: ${Array.from(selectedResolutions).join(', ')}`, () => { 
+                    saveScrollPosition();
+                    selectedResolutions.clear(); 
+                    updateMonitorFilterButtons(); 
+                    applyFilters();
+                    restoreScrollPosition();
+                });
             }
             if(selectedRefreshRates.size > 0) {
-                addFilterTag(container, `Частота: ${Array.from(selectedRefreshRates).join(', ')}`, () => { selectedRefreshRates.clear(); updateMonitorFilterButtons(); applyFilters(); });
+                addFilterTag(container, `Частота: ${Array.from(selectedRefreshRates).join(', ')}`, () => { 
+                    saveScrollPosition();
+                    selectedRefreshRates.clear(); 
+                    updateMonitorFilterButtons(); 
+                    applyFilters();
+                    restoreScrollPosition();
+                });
             }
             
             const brand = document.getElementById('brandFilter')?.value;
-            if(brand && brand!=='all') addFilterTag(container, `Бренд: ${brand}`, () => { document.getElementById('brandFilter').value='all'; applyFilters(); });
+            if(brand && brand!=='all') addFilterTag(container, `Бренд: ${brand}`, () => { 
+                saveScrollPosition();
+                document.getElementById('brandFilter').value='all'; 
+                applyFilters();
+                restoreScrollPosition();
+            });
             const search = document.getElementById('searchInput')?.value;
-            if(search) addFilterTag(container, `Поиск: ${search}`, () => { document.getElementById('searchInput').value=''; applyFilters(); });
-            if(document.getElementById('discountFilter')?.checked) addFilterTag(container, 'Со скидкой', () => { document.getElementById('discountFilter').checked=false; applyFilters(); });
+            if(search) addFilterTag(container, `Поиск: ${search}`, () => { 
+                saveScrollPosition();
+                document.getElementById('searchInput').value=''; 
+                applyFilters();
+                restoreScrollPosition();
+            });
+            if(document.getElementById('discountFilter')?.checked) addFilterTag(container, 'Со скидкой', () => { 
+                saveScrollPosition();
+                document.getElementById('discountFilter').checked=false; 
+                applyFilters();
+                restoreScrollPosition();
+            });
         }
 
-        function addFilterTag(container, text, onRemove) { const tag = document.createElement('span'); tag.className='filter-tag'; tag.innerHTML=`${text} <i class="fas fa-times"></i>`; tag.querySelector('i').onclick=onRemove; container.appendChild(tag); }
+        function addFilterTag(container, text, onRemove) { 
+            const tag = document.createElement('span'); 
+            tag.className='filter-tag'; 
+            tag.innerHTML=`${text} <i class="fas fa-times"></i>`; 
+            tag.querySelector('i').onclick=onRemove; 
+            container.appendChild(tag); 
+        }
 
+        // Обработчики событий
         document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href='tracking.html');
-        document.getElementById('clearFilters')?.addEventListener('click', () => {
+        
+        document.getElementById('clearFilters')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            saveScrollPosition();
             document.querySelector('input[name="category"][value="all"]').checked=true;
             document.getElementById('brandFilter').value='all';
             document.getElementById('minPrice').value='';
@@ -744,15 +797,55 @@
             selectedRefreshRates.clear();
             updateMonitorFilterButtons();
             applyFilters();
+            restoreScrollPosition();
         });
-        document.querySelectorAll('input[name="category"]').forEach(r=>r.addEventListener('change',()=>applyFilters()));
-        document.getElementById('brandFilter')?.addEventListener('change',()=>applyFilters());
-        document.getElementById('applyPriceFilter')?.addEventListener('click',()=>applyFilters());
-        document.getElementById('discountFilter')?.addEventListener('change',()=>applyFilters());
-        document.getElementById('searchInput')?.addEventListener('input',()=>applyFilters());
-        document.getElementById('sortSelect')?.addEventListener('change',()=>applyFilters());
-        document.getElementById('gridView')?.addEventListener('click',()=>{ document.getElementById('productsGrid').classList.remove('list-view'); });
-        document.getElementById('listView')?.addEventListener('click',()=>{ document.getElementById('productsGrid').classList.add('list-view'); });
+        
+        document.querySelectorAll('input[name="category"]').forEach(r=>r.addEventListener('change',()=>{
+            saveScrollPosition();
+            applyFilters();
+            restoreScrollPosition();
+        }));
+        
+        document.getElementById('brandFilter')?.addEventListener('change',()=>{
+            saveScrollPosition();
+            applyFilters();
+            restoreScrollPosition();
+        });
+        
+        document.getElementById('applyPriceFilter')?.addEventListener('click',(e)=>{
+            e.preventDefault();
+            saveScrollPosition();
+            applyFilters();
+            restoreScrollPosition();
+        });
+        
+        document.getElementById('discountFilter')?.addEventListener('change',()=>{
+            saveScrollPosition();
+            applyFilters();
+            restoreScrollPosition();
+        });
+        
+        document.getElementById('searchInput')?.addEventListener('input',()=>{
+            saveScrollPosition();
+            applyFilters();
+            restoreScrollPosition();
+        });
+        
+        document.getElementById('sortSelect')?.addEventListener('change',()=>{
+            saveScrollPosition();
+            applyFilters();
+            restoreScrollPosition();
+        });
+        
+        document.getElementById('gridView')?.addEventListener('click',(e)=>{
+            e.preventDefault();
+            document.getElementById('productsGrid').classList.remove('list-view');
+        });
+        
+        document.getElementById('listView')?.addEventListener('click',(e)=>{
+            e.preventDefault();
+            document.getElementById('productsGrid').classList.add('list-view');
+        });
         
         let ctrlClick=0, timer=null;
         document.addEventListener('click', e=>{ if(e.ctrlKey){ ctrlClick++; clearTimeout(timer); timer=setTimeout(()=>ctrlClick=0,800); if(ctrlClick===3){ document.getElementById('adminLoginModal').style.display='block'; ctrlClick=0; } } });
@@ -760,7 +853,7 @@
         window.addEventListener('click',e=>{ if(e.target===document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display='none'; });
         document.getElementById('adminLoginForm')?.addEventListener('submit',e=>{ e.preventDefault(); if(document.getElementById('adminLogin').value==='admin' && document.getElementById('adminPassword').value==='admin'){ document.getElementById('adminLoginModal').style.display='none'; window.location.href='admin-panel.html'; } else alert('Неверный логин или пароль!'); });
         
-        window.addEventListener('scroll',()=>{ const btn=document.getElementById('backToTop'); if(window.scrollY>300) btn.classList.add('show'); else btn.classList.remove('show'); });
+        window.addEventListener('scroll',()=>{ const btn=document.getElementById('backToTop'); btn.classList.toggle('show', window.scrollY>300); });
         document.getElementById('backToTop')?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
         
         loadData();
