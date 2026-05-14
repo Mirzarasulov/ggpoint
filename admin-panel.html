@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Админ-панель GGPoint</title>
-    
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
@@ -74,47 +71,24 @@
         .admin-btn-small.delete:hover { background: var(--sale-red); color: white; }
         .admin-btn-small.view { border-color: var(--success-green); color: var(--success-green); }
         .admin-btn-small.view:hover { background: var(--success-green); color: white; }
-        .admin-btn-small.approve { border-color: var(--success-green); color: var(--success-green); }
-        .admin-btn-small.approve:hover { background: var(--success-green); color: white; }
         
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-light); font-weight: 600; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); font-size: 1rem; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
         
-        .monitor-spec-btn.active { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
-        .monitor-buttons-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
-        
-        .features-list, .images-list { margin-bottom: 1rem; }
-        .feature-item, .image-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
-        .feature-item input, .image-item input { flex: 1; }
-        .remove-btn { background: var(--sale-red); color: white; border: none; width: 36px; height: 36px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .add-btn { background: var(--primary-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
-        .image-preview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
-        .preview-img { width: 80px; height: 80px; object-fit: contain; background: white; border-radius: 4px; padding: 0.2rem; border: 2px solid var(--primary-blue); }
-        
-        .poster-card { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #334155; }
-        .poster-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem; }
-        .status-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .status-badge.published { background: var(--success-green); color: white; }
-        .status-badge.draft { background: var(--text-gray); color: var(--dark-bg); }
-        .status-badge.pending { background: var(--warning-yellow); color: white; }
-        .status-badge.approved { background: var(--success-green); color: white; }
-        
-        .review-card { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #334155; }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; }
-        .review-author { display: flex; align-items: center; gap: 0.8rem; }
-        .review-avatar { width: 40px; height: 40px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
-        .review-rating { color: #ffd700; font-size: 1rem; }
-        .review-text { color: var(--text-gray); margin-top: 0.5rem; line-height: 1.5; }
-        .admin-reply { background: rgba(37,99,235,0.1); padding: 0.8rem; margin-top: 0.8rem; border-radius: 8px; border-left: 3px solid var(--primary-blue); }
-        
-        .mb-specs-block { background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 1.5rem; margin: 1rem 0; border: 1px solid var(--primary-blue); }
-        .mb-specs-title { font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-blue); display: inline-block; }
+        .specs-block { background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 1.5rem; margin: 1rem 0; border: 1px solid var(--primary-blue); }
+        .specs-title { font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-blue); display: inline-block; }
         .specs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
         .spec-item { display: flex; flex-direction: column; gap: 0.3rem; }
         .spec-item label { font-size: 0.85rem; color: var(--text-gray); font-weight: normal; }
         .spec-item input, .spec-item select { width: 100%; padding: 0.6rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); }
+        
+        .monitor-buttons-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .monitor-spec-btn { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); padding: 0.4rem 1rem; border-radius: 30px; cursor: pointer; transition: all 0.2s ease; font-size: 0.85rem; }
+        .monitor-spec-btn:hover { background: rgba(37, 99, 235, 0.2); }
+        .monitor-spec-btn.active { background: var(--primary-blue); color: white; }
+        
         .platform-selector { display: flex; gap: 1rem; margin-bottom: 1rem; }
         .platform-btn { padding: 0.6rem 1.5rem; background: transparent; border: 2px solid; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
         .platform-btn.intel { border-color: var(--intel-blue); color: var(--intel-blue); }
@@ -123,6 +97,14 @@
         .platform-btn.amd.active { background: var(--amd-orange); color: white; }
         .platform-content { display: none; }
         .platform-content.active { display: block; }
+        
+        .features-list, .images-list { margin-bottom: 1rem; }
+        .feature-item, .image-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+        .feature-item input, .image-item input { flex: 1; }
+        .remove-btn { background: var(--sale-red); color: white; border: none; width: 36px; height: 36px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .add-btn { background: var(--primary-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+        .image-preview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .preview-img { width: 80px; height: 80px; object-fit: contain; background: white; border-radius: 4px; padding: 0.2rem; border: 2px solid var(--primary-blue); }
         
         .login-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .login-box { background: var(--card-bg); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; border: 2px solid var(--primary-blue); text-align: center; }
@@ -133,7 +115,7 @@
         
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
-        .modal-content { background: var(--card-bg); border-radius: 20px; padding: 2rem; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto; border: 2px solid var(--primary-blue); }
+        .modal-content { background: var(--card-bg); border-radius: 20px; padding: 2rem; max-width: 900px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid var(--primary-blue); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .modal-header h2 { color: var(--primary-blue); }
         .modal-close { font-size: 2rem; cursor: pointer; color: var(--text-gray); }
@@ -161,7 +143,7 @@
         <div class="header-container">
             <div class="logo"><a href="index.html">GGPoint</a></div>
             <nav><ul class="nav-list"><li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> На сайт</a></li></ul></nav>
-            <div class="header-actions"><button class="admin-btn-small" id="logoutBtn" style="border-color: var(--sale-red); color: var(--sale-red); display: none;"><i class="fas fa-sign-out-alt"></i> Выход</button></div>
+            <div><button class="admin-btn-small" id="logoutBtn" style="border-color: var(--sale-red); color: var(--sale-red); display: none;"><i class="fas fa-sign-out-alt"></i> Выход</button></div>
         </div>
     </header>
 
@@ -170,7 +152,6 @@
             <h1><i class="fas fa-crown"></i> Админ-панель GGPoint</h1>
             <div class="admin-tabs" id="adminTabs">
                 <button class="admin-tab active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> Дашборд</button>
-                <button class="admin-tab" data-tab="posters"><i class="fas fa-images"></i> Постеры</button>
                 <button class="admin-tab" data-tab="products"><i class="fas fa-box"></i> Товары</button>
                 <button class="admin-tab" data-tab="add-product"><i class="fas fa-plus-circle"></i> Добавить</button>
                 <button class="admin-tab" data-tab="brands"><i class="fas fa-tags"></i> Бренды</button>
@@ -189,37 +170,15 @@
                     <div class="stat-card"><i class="fas fa-microchip"></i><div class="stat-value" id="totalMB">0</div><div class="stat-label">Материнские платы</div></div>
                     <div class="stat-card"><i class="fas fa-fire"></i><div class="stat-value" id="totalHotPrices">0</div><div class="stat-label">Со скидкой</div></div>
                     <div class="stat-card"><i class="fas fa-star"></i><div class="stat-value" id="totalReviews">0</div><div class="stat-label">Отзывов</div></div>
-                    <div class="stat-card"><i class="fas fa-images"></i><div class="stat-value" id="totalPosters">0</div><div class="stat-label">Постеры</div></div>
                 </div>
                 <h3>Последние товары</h3>
-                <table class="admin-table" id="recentProducts"><thead><tr><th>Фото</th><th>Название</th><th>Категория</th><th>Цена</th><th>Дата</th></tr></thead><tbody></tbody></table>
+                <table class="admin-table"><thead><tr><th>Фото</th><th>Название</th><th>Категория</th><th>Цена</th><th>Дата</th></tr></thead><tbody id="recentProducts"></tbody></table>
             </div>
 
-            <!-- ПОСТЕРЫ -->
-            <div class="admin-section" id="posters">
-                <h2>Постеры</h2>
-                <div id="postersList"></div>
-                <button class="admin-tab" onclick="showAddPosterForm()" style="margin-top:1rem; background:var(--success-green); color:white;"><i class="fas fa-plus"></i> Добавить постер</button>
-                <div id="addPosterForm" style="display:none; margin-top:1rem; background:rgba(0,0,0,0.2); padding:1rem; border-radius:12px;">
-                    <input type="text" id="posterTitle" placeholder="Заголовок" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
-                    <textarea id="posterDescription" rows="2" placeholder="Описание" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;"></textarea>
-                    <input type="text" id="posterLink" placeholder="Ссылка" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="/catalog">
-                    <input type="text" id="posterButtonText" placeholder="Текст кнопки" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="Подробнее">
-                    <input type="number" id="posterOrder" placeholder="Порядок" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="1">
-                    <label><input type="checkbox" id="posterActive" checked> Активен</label>
-                    <input type="file" id="posterImage" accept="image/*" style="margin:0.5rem 0;">
-                    <button onclick="addPoster()" class="admin-btn-small" style="background:var(--success-green); color:white;">Сохранить</button>
-                    <button onclick="hideAddPosterForm()" class="admin-btn-small">Отмена</button>
-                </div>
-            </div>
-            
             <!-- ТОВАРЫ -->
             <div class="admin-section" id="products">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2>Товары</h2>
-                    <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить товар</button>
-                </div>
-                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                <h2>Товары</h2>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
                     <input type="text" id="searchProducts" placeholder="Поиск..." style="flex:1; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
                     <select id="filterCategory" style="padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
                         <option value="all">Все</option>
@@ -231,14 +190,15 @@
                         <option value="pads">Коврики</option>
                         <option value="mb">Материнские платы</option>
                     </select>
+                    <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить</button>
                 </div>
-                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead><tbody></tbody></table>
+                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
             <!-- ДОБАВЛЕНИЕ ТОВАРА -->
             <div class="admin-section" id="add-product">
                 <h2>Добавить товар</h2>
-                <form id="addProductForm" class="admin-form">
+                <form id="addProductForm">
                     <div class="form-group"><label>Название *</label><input type="text" id="productName" required></div>
                     <div class="form-row">
                         <div class="form-group"><label>Категория *</label><select id="productCategory" required>
@@ -259,8 +219,8 @@
                     
                     <!-- БЛОК МАТЕРИНСКИХ ПЛАТ -->
                     <div id="mbSpecsBlock" style="display: none;">
-                        <div class="mb-specs-block">
-                            <h3 class="mb-specs-title"><i class="fas fa-microchip"></i> Характеристики материнской платы</h3>
+                        <div class="specs-block">
+                            <h3 class="specs-title"><i class="fas fa-microchip"></i> Характеристики MB</h3>
                             <div class="platform-selector">
                                 <button type="button" class="platform-btn intel active" onclick="setPlatform('intel')">Intel</button>
                                 <button type="button" class="platform-btn amd" onclick="setPlatform('amd')">AMD</button>
@@ -298,72 +258,28 @@
                     
                     <!-- БЛОК МОНИТОРОВ -->
                     <div id="monitorSpecsBlock" style="display: none;">
-                        <div class="mb-specs-block" style="border-color: var(--success-green);">
-                            <h3 class="mb-specs-title"><i class="fas fa-desktop"></i> Характеристики монитора</h3>
-                            <div class="form-group">
-                                <label>Тип матрицы</label>
-                                <div class="monitor-buttons-group" id="panelTypeGroup">
-                                    <button type="button" class="monitor-spec-btn" data-value="IPS" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">IPS</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="Mini LED" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">Mini LED</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="OLED" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">OLED</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="VA" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">VA</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="TN" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">TN</button>
+                        <div class="specs-block" style="border-color: var(--success-green);">
+                            <h3 class="specs-title"><i class="fas fa-desktop"></i> Характеристики монитора</h3>
+                            <div id="monitorSpecsContainer">
+                                <!-- Тип матрицы -->
+                                <div class="form-group"><label>Тип матрицы</label><div class="monitor-buttons-group" id="panelTypeGroup"></div><input type="hidden" id="monitorPanelType"></div>
+                                <!-- Разрешение -->
+                                <div class="form-group"><label>Разрешение</label><div class="monitor-buttons-group" id="resolutionGroup"></div><input type="hidden" id="monitorResolution"></div>
+                                <!-- Частота -->
+                                <div class="form-group"><label>Частота обновления (Гц)</label><div class="monitor-buttons-group" id="refreshRateGroup"></div><input type="hidden" id="monitorRefreshRate"></div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Диагональ (дюймы)</label><input type="text" id="monitorSize" placeholder="27, 32, 34"></div>
+                                    <div class="form-group"><label>Соотношение сторон</label><select id="monitorAspectRatio"><option value="">Выберите</option><option>16:9</option><option>16:10</option><option>21:9</option><option>32:9</option></select></div>
                                 </div>
-                                <input type="hidden" id="monitorPanelType" value="">
-                            </div>
-                            <div class="form-group">
-                                <label>Разрешение</label>
-                                <div class="monitor-buttons-group" id="resolutionGroup">
-                                    <button type="button" class="monitor-spec-btn" data-value="FHD (1920x1080)">FHD (1920x1080)</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="2K (2560x1440)">2K (2560x1440)</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="4K (3840x2160)">4K (3840x2160)</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="UWHD (2560x1080)">UWHD (2560x1080)</button>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Яркость (кд/м²)</label><input type="text" id="monitorBrightness" placeholder="250, 350, 400"></div>
+                                    <div class="form-group"><label>Контрастность</label><input type="text" id="monitorContrast" placeholder="1000:1, 3000:1"></div>
                                 </div>
-                                <input type="hidden" id="monitorResolution" value="">
-                            </div>
-                            <div class="form-group">
-                                <label>Частота обновления (Гц)</label>
-                                <div class="monitor-buttons-group" id="refreshRateGroup">
-                                    <button type="button" class="monitor-spec-btn" data-value="60Hz">60Hz</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="75Hz">75Hz</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="120Hz">120Hz</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="144Hz">144Hz</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="165Hz">165Hz</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="240Hz">240Hz</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="360Hz">360Hz</button>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms"></div>
+                                    <div class="form-group"><label>Технологии</label><div class="monitor-buttons-group" id="techGroup"></div><input type="hidden" id="monitorTech"></div>
                                 </div>
-                                <input type="hidden" id="monitorRefreshRate" value="">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group"><label>Диагональ (дюймы)</label><input type="text" id="monitorSize" placeholder="27, 32, 34"></div>
-                                <div class="form-group"><label>Соотношение сторон</label><select id="monitorAspectRatio"><option value="">Выберите</option><option>16:9</option><option>16:10</option><option>21:9</option><option>32:9</option></select></div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group"><label>Яркость (кд/м²)</label><input type="text" id="monitorBrightness" placeholder="250, 350, 400"></div>
-                                <div class="form-group"><label>Контрастность</label><input type="text" id="monitorContrast" placeholder="1000:1, 3000:1"></div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms"></div>
-                                <div class="form-group"><label>Технологии</label>
-                                    <div class="monitor-buttons-group" id="techGroup">
-                                        <button type="button" class="monitor-spec-btn" data-value="G-Sync">G-Sync</button>
-                                        <button type="button" class="monitor-spec-btn" data-value="FreeSync">FreeSync</button>
-                                        <button type="button" class="monitor-spec-btn" data-value="HDR">HDR</button>
-                                        <button type="button" class="monitor-spec-btn" data-value="HDR400">HDR400</button>
-                                        <button type="button" class="monitor-spec-btn" data-value="HDR600">HDR600</button>
-                                    </div>
-                                    <input type="hidden" id="monitorTech" value="">
-                                </div>
-                            </div>
-                            <div class="form-group"><label>Разъёмы</label>
-                                <div class="monitor-buttons-group" id="portsGroup">
-                                    <button type="button" class="monitor-spec-btn" data-value="HDMI">HDMI</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="DisplayPort">DisplayPort</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="USB-C">USB-C</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="DVI">DVI</button>
-                                    <button type="button" class="monitor-spec-btn" data-value="VGA">VGA</button>
-                                </div>
-                                <input type="hidden" id="monitorPorts" value="">
+                                <div class="form-group"><label>Разъёмы</label><div class="monitor-buttons-group" id="portsGroup"></div><input type="hidden" id="monitorPorts"></div>
                             </div>
                         </div>
                     </div>
@@ -371,8 +287,8 @@
                     <div class="form-group"><label>Характеристики</label><div id="featuresContainer"></div><button type="button" class="add-btn" onclick="addFeature()">+ Добавить</button></div>
                     <div class="form-group"><label>Фото (URL)</label><div id="imagesContainer"></div><button type="button" class="add-btn" onclick="addImage()">+ Добавить фото</button><div class="image-preview" id="imagePreview"></div></div>
                     <div class="form-group"><label><input type="checkbox" id="isHotPrice"> Скидка</label></div>
-                    <div id="hotPriceFields" style="display:none;"><div class="form-group"><label>Причина</label><input type="text" id="hotPriceReason"></div></div>
-                    <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить</button>
+                    <div id="hotPriceFields" style="display:none;"><div class="form-group"><label>Причина скидки</label><input type="text" id="hotPriceReason"></div></div>
+                    <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить товар</button>
                 </form>
             </div>
             
@@ -432,29 +348,192 @@
         </div>
     </div>
 
-    <div class="modal" id="editModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование</h2><span class="modal-close" onclick="closeEditModal()">&times;</span></div><div id="editFormContainer"></div></div></div>
+    <div class="modal" id="editModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование товара</h2><span class="modal-close" onclick="closeEditModal()">&times;</span></div><div id="editFormContainer"></div></div></div>
 
     <script>
-        // ===== TELEGRAM =====
-        const TG_BOT_TOKEN = '8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8';
-        const TG_CHAT_ID = '6040186314';
-        async function sendTelegramMessage(m) { try { await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ chat_id:TG_CHAT_ID, text:m, parse_mode:'HTML' }) }); } catch(e){} }
-        setTimeout(() => sendTelegramMessage('✅ Админка запущена'), 2000);
+        // Глобальные данные для мониторных кнопок
+        const panelTypes = ['IPS', 'Mini LED', 'OLED', 'VA', 'TN'];
+        const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', 'UWHD (2560x1080)'];
+        const refreshRates = ['60Hz', '75Hz', '120Hz', '144Hz', '165Hz', '240Hz', '360Hz'];
+        const techOptions = ['G-Sync', 'FreeSync', 'HDR', 'HDR400', 'HDR600', 'HDR1000'];
+        const portOptions = ['HDMI', 'DisplayPort', 'USB-C', 'DVI', 'VGA'];
+        
+        let currentPlatform = 'intel';
+        let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], trackingOrders = {};
         
         const ADMIN_PASSWORD = "Dilsh-221";
+        
         function checkPassword() {
             if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
                 document.getElementById('loginModal').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
-                document.getElementById('logoutBtn').style.display = 'flex';
+                document.getElementById('logoutBtn').style.display = 'block';
                 sessionStorage.setItem('adminLoggedIn', 'true');
-                if (typeof window.loadData === 'function') window.loadData();
+                if (typeof loadData === 'function') loadData();
             } else { document.getElementById('loginError').textContent = '❌ Неверный пароль'; }
         }
-        window.onload = () => { if (sessionStorage.getItem('adminLoggedIn') === 'true') { document.getElementById('loginModal').style.display = 'none'; document.getElementById('adminContent').style.display = 'block'; document.getElementById('logoutBtn').style.display = 'flex'; if (typeof window.loadData === 'function') window.loadData(); } };
+        
+        window.onload = () => {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
+                if (typeof loadData === 'function') loadData();
+            }
+            initMonitorButtonsGroups();
+        };
+        
         document.getElementById('logoutBtn')?.addEventListener('click', () => { sessionStorage.removeItem('adminLoggedIn'); location.reload(); });
         
-        // Переключение вкладок
+        // Инициализация кнопок для мониторов
+        function initMonitorButtonsGroups() {
+            createButtonGroup('panelTypeGroup', panelTypes, 'monitorPanelType', false);
+            createButtonGroup('resolutionGroup', resolutions, 'monitorResolution', false);
+            createButtonGroup('refreshRateGroup', refreshRates, 'monitorRefreshRate', false);
+            createButtonGroup('techGroup', techOptions, 'monitorTech', true);
+            createButtonGroup('portsGroup', portOptions, 'monitorPorts', true);
+        }
+        
+        function createButtonGroup(containerId, options, hiddenInputId, multiSelect) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'monitor-spec-btn';
+                btn.textContent = opt;
+                btn.dataset.value = opt;
+                btn.addEventListener('click', () => {
+                    if (multiSelect) {
+                        btn.classList.toggle('active');
+                        const selected = Array.from(container.querySelectorAll('.monitor-spec-btn.active')).map(b => b.dataset.value);
+                        document.getElementById(hiddenInputId).value = selected.join(', ');
+                    } else {
+                        container.querySelectorAll('.monitor-spec-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.getElementById(hiddenInputId).value = opt;
+                    }
+                });
+                container.appendChild(btn);
+            });
+        }
+        
+        function setMonitorValuesFromSpecs(specs, isEdit = false) {
+            if (!specs) return;
+            const groups = [
+                { id: 'panelTypeGroup', hidden: 'monitorPanelType', multi: false, value: specs.panelType },
+                { id: 'resolutionGroup', hidden: 'monitorResolution', multi: false, value: specs.resolution },
+                { id: 'refreshRateGroup', hidden: 'monitorRefreshRate', multi: false, value: specs.refreshRate },
+                { id: 'techGroup', hidden: 'monitorTech', multi: true, value: specs.tech },
+                { id: 'portsGroup', hidden: 'monitorPorts', multi: true, value: specs.ports }
+            ];
+            groups.forEach(g => {
+                const container = document.getElementById(g.id);
+                if (!container) return;
+                const hidden = document.getElementById(g.hidden);
+                if (!hidden) return;
+                if (g.multi && g.value) {
+                    const values = g.value.split(',').map(v => v.trim());
+                    container.querySelectorAll('.monitor-spec-btn').forEach(btn => {
+                        if (values.includes(btn.dataset.value)) {
+                            btn.classList.add('active');
+                        }
+                    });
+                    hidden.value = g.value;
+                } else if (g.value) {
+                    container.querySelectorAll('.monitor-spec-btn').forEach(btn => {
+                        if (btn.dataset.value === g.value) {
+                            btn.classList.add('active');
+                        }
+                    });
+                    hidden.value = g.value;
+                }
+            });
+            if (specs.size) document.getElementById('monitorSize') && (document.getElementById('monitorSize').value = specs.size || '');
+            if (specs.aspectRatio) document.getElementById('monitorAspectRatio') && (document.getElementById('monitorAspectRatio').value = specs.aspectRatio || '');
+            if (specs.brightness) document.getElementById('monitorBrightness') && (document.getElementById('monitorBrightness').value = specs.brightness || '');
+            if (specs.contrast) document.getElementById('monitorContrast') && (document.getElementById('monitorContrast').value = specs.contrast || '');
+            if (specs.responseTime) document.getElementById('monitorResponseTime') && (document.getElementById('monitorResponseTime').value = specs.responseTime || '');
+        }
+        
+        function getMonitorSpecsFromForm() {
+            return {
+                panelType: document.getElementById('monitorPanelType')?.value || '',
+                resolution: document.getElementById('monitorResolution')?.value || '',
+                refreshRate: document.getElementById('monitorRefreshRate')?.value || '',
+                size: document.getElementById('monitorSize')?.value || '',
+                aspectRatio: document.getElementById('monitorAspectRatio')?.value || '',
+                brightness: document.getElementById('monitorBrightness')?.value || '',
+                contrast: document.getElementById('monitorContrast')?.value || '',
+                responseTime: document.getElementById('monitorResponseTime')?.value || '',
+                tech: document.getElementById('monitorTech')?.value || '',
+                ports: document.getElementById('monitorPorts')?.value || ''
+            };
+        }
+        
+        window.setPlatform = function(p) { 
+            currentPlatform = p; 
+            document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active')); 
+            document.querySelector(`.platform-btn.${p}`).classList.add('active'); 
+            document.getElementById('intelPlatform').classList.toggle('active', p === 'intel'); 
+            document.getElementById('amdPlatform').classList.toggle('active', p === 'amd'); 
+        };
+        
+        window.setEditPlatform = function(p) { 
+            window.editPlatform = p; 
+            document.querySelectorAll('#editFormContainer .platform-btn').forEach(btn => btn.classList.remove('active')); 
+            document.querySelector(`#editFormContainer .platform-btn.${p}`).classList.add('active'); 
+            const intelDiv = document.getElementById('editIntelPlatform'); 
+            const amdDiv = document.getElementById('editAmdPlatform'); 
+            if (intelDiv) intelDiv.classList.toggle('active', p === 'intel'); 
+            if (amdDiv) amdDiv.classList.toggle('active', p === 'amd'); 
+        };
+        
+        function addFeature() { 
+            const c = document.getElementById('featuresContainer'); 
+            const d = document.createElement('div'); 
+            d.className = 'feature-item'; 
+            d.innerHTML = `<input type="text" class="feature-input" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; 
+            c.appendChild(d); 
+        }
+        
+        function addImage() { 
+            const c = document.getElementById('imagesContainer'); 
+            const d = document.createElement('div'); 
+            d.className = 'image-item'; 
+            d.innerHTML = `<input type="url" class="image-input" placeholder="https://..." onchange="updatePreview()"><button type="button" class="remove-btn" onclick="this.parentElement.remove(); updatePreview()"><i class="fas fa-times"></i></button>`; 
+            c.appendChild(d); 
+        }
+        
+        function updatePreview() { 
+            const p = document.getElementById('imagePreview'); 
+            if (!p) return; 
+            p.innerHTML = ''; 
+            document.querySelectorAll('.image-input').forEach(i => { 
+                if (i.value) { 
+                    const img = document.createElement('img'); 
+                    img.src = i.value; 
+                    img.className = 'preview-img'; 
+                    img.onerror = () => img.src = 'https://via.placeholder.com/80'; 
+                    p.appendChild(img); 
+                } 
+            }); 
+        }
+        
+        window.addFeature = addFeature; 
+        window.addImage = addImage; 
+        window.updatePreview = updatePreview;
+        window.closeEditModal = () => document.getElementById('editModal').classList.remove('active');
+        window.switchToAddProduct = function() {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            const addTab = document.querySelector('[data-tab="add-product"]');
+            if (addTab) addTab.classList.add('active');
+            const addSection = document.getElementById('add-product');
+            if (addSection) addSection.classList.add('active');
+        };
+        
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabId = tab.getAttribute('data-tab');
@@ -467,73 +546,26 @@
             });
         });
         
-        // Функция переключения на добавление товара
-        window.switchToAddProduct = function() {
-            console.log('Переключение на добавление товара');
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-            const addTab = document.querySelector('[data-tab="add-product"]');
-            if (addTab) addTab.classList.add('active');
-            const addSection = document.getElementById('add-product');
-            if (addSection) addSection.classList.add('active');
-            else console.error('Секция add-product не найдена!');
-        };
-        
-        window.closeEditModal = () => document.getElementById('editModal').classList.remove('active');
-        window.showAddPosterForm = () => document.getElementById('addPosterForm').style.display = 'block';
-        window.hideAddPosterForm = () => document.getElementById('addPosterForm').style.display = 'none';
-        
-        let currentPlatform = 'intel';
-        window.setPlatform = function(p) { currentPlatform = p; document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active')); document.querySelector(`.platform-btn.${p}`).classList.add('active'); document.getElementById('intelPlatform').classList.toggle('active', p === 'intel'); document.getElementById('amdPlatform').classList.toggle('active', p === 'amd'); };
-        
-        function initMonitorButtons() {
-            const groups = ['panelTypeGroup', 'resolutionGroup', 'refreshRateGroup', 'techGroup', 'portsGroup'];
-            groups.forEach(groupId => {
-                const container = document.getElementById(groupId);
-                if (!container) return;
-                const hiddenInput = document.getElementById(groupId === 'panelTypeGroup' ? 'monitorPanelType' : groupId === 'resolutionGroup' ? 'monitorResolution' : groupId === 'refreshRateGroup' ? 'monitorRefreshRate' : groupId === 'techGroup' ? 'monitorTech' : 'monitorPorts');
-                container.querySelectorAll('.monitor-spec-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (groupId === 'techGroup' || groupId === 'portsGroup') {
-                            btn.classList.toggle('active');
-                            if (btn.classList.contains('active')) btn.style.cssText = 'background: var(--primary-blue); color: white; border-color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
-                            else btn.style.cssText = 'background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
-                            const selected = Array.from(container.querySelectorAll('.monitor-spec-btn.active')).map(b => b.dataset.value);
-                            if (hiddenInput) hiddenInput.value = selected.join(', ');
-                        } else {
-                            container.querySelectorAll('.monitor-spec-btn').forEach(b => {
-                                b.classList.remove('active');
-                                b.style.cssText = 'background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
-                            });
-                            btn.classList.add('active');
-                            btn.style.cssText = 'background: var(--primary-blue); color: white; border-color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
-                            if (hiddenInput) hiddenInput.value = btn.dataset.value;
-                        }
-                    });
-                });
-            });
-        }
-        
-        function addFeature() { const c = document.getElementById('featuresContainer'); const d = document.createElement('div'); d.className = 'feature-item'; d.innerHTML = `<input type="text" class="feature-input" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); }
-        function addImage() { const c = document.getElementById('imagesContainer'); const d = document.createElement('div'); d.className = 'image-item'; d.innerHTML = `<input type="url" class="image-input" placeholder="https://..." onchange="updatePreview()"><button type="button" class="remove-btn" onclick="this.parentElement.remove(); updatePreview()"><i class="fas fa-times"></i></button>`; c.appendChild(d); }
-        function updatePreview() { const p = document.getElementById('imagePreview'); if(!p) return; p.innerHTML = ''; document.querySelectorAll('.image-input').forEach(i => { if(i.value) { const img = document.createElement('img'); img.src = i.value; img.className = 'preview-img'; img.onerror = () => img.src = 'https://via.placeholder.com/80'; p.appendChild(img); } }); }
-        window.addFeature = addFeature; window.addImage = addImage; window.updatePreview = updatePreview;
-        
         document.getElementById('productCategory')?.addEventListener('change', function() {
             const mbBlock = document.getElementById('mbSpecsBlock');
             const monitorBlock = document.getElementById('monitorSpecsBlock');
             if (mbBlock) mbBlock.style.display = this.value === 'mb' ? 'block' : 'none';
             if (monitorBlock) monitorBlock.style.display = this.value === 'монитор' ? 'block' : 'none';
-            if (this.value === 'монитор') setTimeout(initMonitorButtons, 50);
         });
         
-        document.getElementById('isHotPrice')?.addEventListener('change', function() { document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none'; });
-        setTimeout(() => { if(document.getElementById('featuresContainer')?.children.length === 0) addFeature(); if(document.getElementById('imagesContainer')?.children.length === 0) addImage(); }, 500);
+        document.getElementById('isHotPrice')?.addEventListener('change', function() { 
+            document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none'; 
+        });
+        
+        setTimeout(() => { 
+            if (document.getElementById('featuresContainer')?.children.length === 0) addFeature(); 
+            if (document.getElementById('imagesContainer')?.children.length === 0) addImage(); 
+        }, 500);
     </script>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-        import { getDatabase, ref, onValue, set, remove, update, push, get } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+        import { getDatabase, ref, onValue, set, remove, update, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
@@ -548,27 +580,23 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         
-        let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], posters = [], trackingOrders = {};
-        
-        async function sendTG(msg) { const TG_TOKEN='8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8', CHAT='6040186314'; try{ await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT,text:msg,parse_mode:'HTML'})}); } catch(e){} }
-        
         function escapeHtml(s) { if(!s) return ''; return String(s).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
         function getCategoryName(k) { const c={'мышь':'Мышь','клавиатура':'Клавиатура','наушники':'Наушники','монитор':'Монитор','keycaps':'Кейкапы','pads':'Коврик','mb':'Материнская плата'}; return c[k]||k; }
         
-        let lastReview=0, lastMsg=0, lastProd=0;
-        function checkNew() {
-            if(reviews.length>lastReview){ const r=reviews[reviews.length-1], p=products.find(pr=>pr.id==r.productId); sendTG(`🆕 НОВЫЙ ОТЗЫВ!\n📦 ${p?.name||r.productName}\n👤 ${r.author||'Аноним'}\n⭐ ${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}\n💬 ${(r.text||'').substring(0,200)}`); lastReview=reviews.length; }
-            if(messages.length>lastMsg){ const m=messages[messages.length-1]; sendTG(`📨 НОВОЕ СООБЩЕНИЕ!\n👤 ${m.name}\n📞 ${m.method}: ${m.contact}\n💬 ${(m.message||'').substring(0,300)}`); lastMsg=messages.length; }
-            if(products.length>lastProd){ const p=products[products.length-1]; sendTG(`🆕 НОВЫЙ ТОВАР!\n📦 ${p.name}\n🏷️ ${getCategoryName(p.category)}\n💵 ${p.price}`); lastProd=products.length; }
-        }
-        
         function loadData() {
-            onValue(ref(database,'products'), (s) => { products = s.val() ? Object.values(s.val()) : []; updateDashboard(); renderProducts(); renderRecentProducts(); renderBrands(); if(lastProd===0) lastProd=products.length; checkNew(); });
-            onValue(ref(database,'hotPrices'), (s) => { hotPrices = s.val() || {}; updateDashboard(); });
+            onValue(ref(database,'products'), (s) => { 
+                const data = s.val(); 
+                products = data ? Object.values(data) : []; 
+                updateDashboard(); 
+                renderProducts(); 
+                renderRecentProducts(); 
+                renderBrands(); 
+                updateBrandSelect(); 
+            });
+            onValue(ref(database,'hotPrices'), (s) => { hotPrices = s.val() || {}; updateDashboard(); renderProducts(); });
             onValue(ref(database,'brands'), (s) => { brands = s.val() || {}; updateDashboard(); renderBrands(); updateBrandSelect(); });
-            onValue(ref(database,'messages'), (s) => { const d=s.val(); messages = d ? Object.entries(d).map(([id,msg])=>({id,...msg})) : []; renderMessages(); if(lastMsg===0) lastMsg=messages.length; checkNew(); });
-            onValue(ref(database,'reviews'), (s) => { const d=s.val(); reviews = d ? Object.entries(d).map(([id,r])=>({id,...r})) : []; updateDashboard(); renderReviews(); if(lastReview===0) lastReview=reviews.length; checkNew(); });
-            onValue(ref(database,'posters'), (s) => { const d=s.val(); posters = d ? Object.entries(d).map(([id,p])=>({id,...p})) : []; renderPosters(); });
+            onValue(ref(database,'messages'), (s) => { const d=s.val(); messages = d ? Object.entries(d).map(([id,msg])=>({id,...msg})) : []; renderMessages(); });
+            onValue(ref(database,'reviews'), (s) => { const d=s.val(); reviews = d ? Object.entries(d).map(([id,r])=>({id,...r})) : []; updateDashboard(); renderReviews(); });
             onValue(ref(database,'tracking_orders'), (s) => { trackingOrders = s.val() || {}; renderTrackingOrders(); });
         }
         
@@ -577,7 +605,6 @@
             document.getElementById('totalMB').textContent = products.filter(p=>p.category==='mb').length;
             document.getElementById('totalHotPrices').textContent = Object.keys(hotPrices).length;
             document.getElementById('totalReviews').textContent = reviews.length;
-            document.getElementById('totalPosters').textContent = posters.length;
         }
         
         function renderProducts() {
@@ -585,21 +612,21 @@
             const search = document.getElementById('searchProducts')?.value.toLowerCase() || '';
             const filter = document.getElementById('filterCategory')?.value || 'all';
             const filtered = products.filter(p => p.name.toLowerCase().includes(search) && (filter==='all' || p.category===filter));
-            if(filtered.length===0){ tbody.innerHTML = '<tr><td colspan="9">Товаров не найдено</td></tr>'; return; }
-            tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td>${p.video?'✅':'❌'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
+            if(filtered.length===0){ tbody.innerHTML = '<tr><td colspan="8">Товаров не найдено</td></tr>'; return; }
+            tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
         }
         
         function renderRecentProducts() {
-            const tbody = document.querySelector('#recentProducts tbody'); if(!tbody) return;
+            const tbody = document.getElementById('recentProducts'); if(!tbody) return;
             const recent = [...products].sort((a,b)=>new Date(b.dateAdded||0)-new Date(a.dateAdded||0)).slice(0,5);
-            if(recent.length===0){ tbody.innerHTML = '<td><td colspan="5">Нет товаров</td></tr>'; return; }
+            if(recent.length===0){ tbody.innerHTML = '<tr><td colspan="5">Нет товаров</td></tr>'; return; }
             tbody.innerHTML = recent.map(p => `<tr><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.price)}</td><td>${p.dateAdded ? new Date(p.dateAdded).toLocaleDateString() : '-'}</td></tr>`).join('');
         }
         
         function renderBrands() {
             const tbody = document.getElementById('brandsTable'); if(!tbody) return;
-            if(Object.keys(brands).length===0){ tbody.innerHTML = '<tr><td colspan="4">Нет брендов</td></tr>'; return; }
-            tbody.innerHTML = Object.values(brands).map(b => `<td><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain; filter:brightness(0) invert(1);" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+            if(Object.keys(brands).length===0){ tbody.innerHTML = '<td><td colspan="4">Нет брендов</td></tr>'; return; }
+            tbody.innerHTML = Object.values(brands).map(b => `<tr><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain;" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
         window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
@@ -613,7 +640,7 @@
         function renderMessages() {
             const tbody = document.querySelector('#messagesTable tbody'); if(!tbody) return;
             if(messages.length===0){ tbody.innerHTML = '<tr><td colspan="5">Нет сообщений</td></tr>'; return; }
-            tbody.innerHTML = messages.map(m => `<tr><td>${new Date(m.date).toLocaleString()}</td><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.contact||m.method)}</td><td>${escapeHtml(m.message.substring(0,50))}...</td><td class="admin-actions"><button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\nКонтакт: ${escapeHtml(m.contact||m.method)}\n\nСообщение:\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button><button class="admin-btn-small delete" onclick="deleteMessage('${m.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+            tbody.innerHTML = messages.map(m => `<tr><td>${new Date(m.date).toLocaleString()}</td><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.contact||m.method)}</td><td>${escapeHtml(m.message.substring(0,50))}...</td><td class="admin-actions"><button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\\nКонтакт: ${escapeHtml(m.contact||m.method)}\\n\\nСообщение:\\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button><button class="admin-btn-small delete" onclick="deleteMessage('${m.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
         window.deleteMessage = async (id) => { if(confirm('Удалить сообщение?')){ await remove(ref(database,'messages/'+id)); alert('✅ Удалено'); location.reload(); } };
@@ -626,33 +653,23 @@
             if(status !== 'all') filtered = filtered.filter(r => r.status === status);
             if(search) filtered = filtered.filter(r => (r.author||'').toLowerCase().includes(search) || (r.text||'').toLowerCase().includes(search));
             if(filtered.length === 0){ container.innerHTML = '<p>Отзывов пока нет</p>'; return; }
-            container.innerHTML = filtered.map(r => { const p = products.find(pr => pr.id == r.productId); return `<div class="review-card"><div class="review-header"><div class="review-author"><div class="review-avatar">${(r.author?.charAt(0)||'А').toUpperCase()}</div><div><strong>${escapeHtml(r.author)||'Аноним'}</strong><br><small>${new Date(r.date).toLocaleString()}</small></div></div><div class="review-rating">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div></div><div><strong>Товар:</strong> ${escapeHtml(p?.name||'Неизвестный')}</div><div class="review-text">${escapeHtml(r.text)}</div>${r.adminReply ? `<div class="admin-reply"><strong>👑 Ответ:</strong><br>${escapeHtml(r.adminReply)}</div>` : ''}<div class="admin-actions" style="margin-top:0.8rem;">${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')"><i class="fas fa-check"></i> Одобрить</button>` : ''}<button class="admin-btn-small delete" onclick="deleteReview('${r.id}')"><i class="fas fa-trash"></i> Удалить</button></div></div>`; }).join('');
+            container.innerHTML = filtered.map(r => { const p = products.find(pr => pr.id == r.productId); return `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;"><div><strong>${escapeHtml(r.author)||'Аноним'}</strong> <small>${new Date(r.date).toLocaleString()}</small></div><div style="color:#ffd700;">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div></div><div><strong>Товар:</strong> ${escapeHtml(p?.name||'Неизвестный')}</div><div>${escapeHtml(r.text)}</div>${r.adminReply ? `<div style="background:rgba(37,99,235,0.2); padding:0.5rem; margin-top:0.5rem; border-radius:8px;"><strong>Ответ:</strong> ${escapeHtml(r.adminReply)}</div>` : ''}<div style="margin-top:0.5rem;">${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')">Одобрить</button>` : ''}<button class="admin-btn-small delete" onclick="deleteReview('${r.id}')">Удалить</button></div></div>`; }).join('');
         }
         
         window.approveReview = async (id) => { await update(ref(database,'reviews/'+id),{status:'approved'}); alert('✅ Одобрено'); location.reload(); };
         window.deleteReview = async (id) => { if(confirm('Удалить отзыв?')){ await remove(ref(database,'reviews/'+id)); alert('✅ Удалено'); location.reload(); } };
-        
-        function renderPosters() {
-            const container = document.getElementById('postersList'); if(!container) return;
-            if(posters.length === 0){ container.innerHTML = '<p>Постеров пока нет</p>'; return; }
-            posters.sort((a,b)=>(a.order||999)-(b.order||999));
-            container.innerHTML = posters.map(p => `<div class="poster-card"><img src="${p.imageUrl}" class="poster-preview"><div><strong>${escapeHtml(p.title)}</strong><br>${escapeHtml(p.description||'')}<br><span class="status-badge ${p.active?'published':'draft'}">${p.active?'Активен':'Неактивен'}</span> Порядок: ${p.order||1}<br><button class="admin-btn-small delete" onclick="deletePoster('${p.id}')">Удалить</button></div></div>`).join('');
-        }
-        
-        window.deletePoster = async (id) => { if(confirm('Удалить постер?')){ await remove(ref(database,'posters/'+id)); alert('✅ Удалено'); location.reload(); } };
         
         function renderTrackingOrders() {
             const container = document.getElementById('trackingOrdersList'); if(!container) return;
             const search = document.getElementById('searchTracking')?.value.toLowerCase() || '';
             const orders = Object.entries(trackingOrders).map(([track,data])=> ({ tracking:track, ...data })).filter(o => o.tracking.toLowerCase().includes(search) || (o.phone || '').includes(search)).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
             if(orders.length === 0){ container.innerHTML = '<p>Заказов пока нет</p>'; return; }
-            container.innerHTML = orders.map(o => `<div class="poster-card"><div><strong>${o.tracking}</strong> <span class="status-badge ${o.isClosed?'approved':'pending'}">${o.isClosed?'Закрыт':'Активен'}</span></div><p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType==='air'?'plane':'truck'}"></i> ${o.deliveryType==='air'?'Авиа':'Наземный'}<br>📅 ${o.sendDate}</p><div class="poster-actions">${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}<button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button></div></div>`).join('');
+            container.innerHTML = orders.map(o => `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div><strong>${o.tracking}</strong> <span style="display:inline-block; padding:0.2rem 0.5rem; border-radius:20px; font-size:0.8rem; background:${o.isClosed?'#10b981':'#f59e0b'};">${o.isClosed?'Закрыт':'Активен'}</span></div><p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType==='air'?'plane':'truck'}"></i> ${o.deliveryType==='air'?'Авиа':'Наземный'}<br>📅 ${o.sendDate}</p><div>${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}<button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button></div></div>`).join('');
         }
         
         window.closeTrackingOrder = async (track) => { if(confirm('Закрыть заказ?')){ await update(ref(database,'tracking_orders/'+track),{isClosed:true,closedAt:new Date().toISOString()}); alert('✅ Закрыт'); location.reload(); } };
         window.deleteTrackingOrder = async (track) => { if(confirm('Удалить заказ?')){ await remove(ref(database,'tracking_orders/'+track)); alert('✅ Удалено'); location.reload(); } };
         
-        // Добавление товара
         document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('productName').value;
@@ -670,32 +687,22 @@
             const newProduct = { id:newId, name, category, brand, price, description, video:video||'', features, images, dateAdded:new Date().toISOString() };
             
             if(category === 'mb'){
-                const platform = currentPlatform;
-                newProduct.mbSpecs = { platform, socket:platform==='intel'?document.getElementById('mbSocketIntel')?.value:document.getElementById('mbSocketAmd')?.value, chipset:platform==='intel'?document.getElementById('mbChipsetIntel')?.value:document.getElementById('mbChipsetAmd')?.value, formFactor:platform==='intel'?document.getElementById('mbFormFactor')?.value:document.getElementById('mbFormFactorAmd')?.value, ramSlots:platform==='intel'?document.getElementById('mbRamSlots')?.value:document.getElementById('mbRamSlotsAmd')?.value, pcieSlots:platform==='intel'?document.getElementById('mbPcieSlots')?.value:document.getElementById('mbPcieSlotsAmd')?.value, m2Slots:platform==='intel'?document.getElementById('mbM2Slots')?.value:document.getElementById('mbM2SlotsAmd')?.value, sataPorts:platform==='intel'?document.getElementById('mbSataPorts')?.value:document.getElementById('mbSataPortsAmd')?.value, usbPorts:platform==='intel'?document.getElementById('mbUsbPorts')?.value:document.getElementById('mbUsbPortsAmd')?.value, lan:platform==='intel'?document.getElementById('mbLan')?.value:document.getElementById('mbLanAmd')?.value, audio:platform==='intel'?document.getElementById('mbAudio')?.value:document.getElementById('mbAudioAmd')?.value };
+                newProduct.mbSpecs = { platform:currentPlatform, socket:currentPlatform==='intel'?document.getElementById('mbSocketIntel')?.value:document.getElementById('mbSocketAmd')?.value, chipset:currentPlatform==='intel'?document.getElementById('mbChipsetIntel')?.value:document.getElementById('mbChipsetAmd')?.value, formFactor:currentPlatform==='intel'?document.getElementById('mbFormFactor')?.value:document.getElementById('mbFormFactorAmd')?.value, ramSlots:currentPlatform==='intel'?document.getElementById('mbRamSlots')?.value:document.getElementById('mbRamSlotsAmd')?.value, pcieSlots:currentPlatform==='intel'?document.getElementById('mbPcieSlots')?.value:document.getElementById('mbPcieSlotsAmd')?.value, m2Slots:currentPlatform==='intel'?document.getElementById('mbM2Slots')?.value:document.getElementById('mbM2SlotsAmd')?.value, sataPorts:currentPlatform==='intel'?document.getElementById('mbSataPorts')?.value:document.getElementById('mbSataPortsAmd')?.value, usbPorts:currentPlatform==='intel'?document.getElementById('mbUsbPorts')?.value:document.getElementById('mbUsbPortsAmd')?.value, lan:currentPlatform==='intel'?document.getElementById('mbLan')?.value:document.getElementById('mbLanAmd')?.value, audio:currentPlatform==='intel'?document.getElementById('mbAudio')?.value:document.getElementById('mbAudioAmd')?.value };
             }
             if(category === 'монитор'){
-                const panelType = document.getElementById('monitorPanelType')?.value || '';
-                const resolution = document.getElementById('monitorResolution')?.value || '';
-                const refreshRate = document.getElementById('monitorRefreshRate')?.value || '';
-                const size = document.getElementById('monitorSize')?.value || '';
-                const aspectRatio = document.getElementById('monitorAspectRatio')?.value || '';
-                const brightness = document.getElementById('monitorBrightness')?.value || '';
-                const contrast = document.getElementById('monitorContrast')?.value || '';
-                const responseTime = document.getElementById('monitorResponseTime')?.value || '';
-                const tech = document.getElementById('monitorTech')?.value || '';
-                const ports = document.getElementById('monitorPorts')?.value || '';
-                newProduct.monitorSpecs = { panelType, resolution, refreshRate, size, aspectRatio, brightness, contrast, responseTime, tech, ports };
+                newProduct.monitorSpecs = getMonitorSpecsFromForm();
             }
             try {
                 await set(ref(database,'products/'+newId), newProduct);
                 if(isHot && hotReason) await set(ref(database,'hotPrices/'+newId), { reason:hotReason, added:new Date().toISOString() });
+                else if(hotPrices[newId]) await remove(ref(database,'hotPrices/'+newId));
                 alert('✅ Товар добавлен');
                 e.target.reset();
                 document.getElementById('imagesContainer').innerHTML = '';
                 document.getElementById('featuresContainer').innerHTML = '';
                 addFeature(); addImage();
                 switchToAddProduct();
-            } catch(error){ alert('❌ Ошибка'); }
+            } catch(error){ alert('❌ Ошибка: '+error.message); }
         });
         
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
@@ -715,20 +722,6 @@
             } catch(error){ alert('❌ Ошибка'); }
         });
         
-        window.addPoster = async () => {
-            const title = document.getElementById('posterTitle').value;
-            const desc = document.getElementById('posterDescription').value;
-            const link = document.getElementById('posterLink').value;
-            const btnText = document.getElementById('posterButtonText').value;
-            const order = parseInt(document.getElementById('posterOrder').value)||1;
-            const active = document.getElementById('posterActive').checked;
-            const file = document.getElementById('posterImage').files[0];
-            if(!title||!file){ alert('Заполните заголовок и выберите изображение'); return; }
-            const reader = new FileReader();
-            reader.onload = async (ev) => { const imgUrl = ev.target.result; const pid = Date.now().toString(); try{ await set(ref(database,'posters/'+pid),{ id:pid, title, description:desc, link:link||'/catalog', buttonText:btnText||'Подробнее', imageUrl:imgUrl, order, active, dateAdded:new Date().toISOString() }); alert('✅ Постер добавлен'); hideAddPosterForm(); location.reload(); } catch(e){ alert('❌ Ошибка'); } };
-            reader.readAsDataURL(file);
-        };
-        
         document.getElementById('addTrackingForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const track = document.getElementById('trackingNumber').value.trim().toUpperCase();
@@ -743,30 +736,179 @@
         
         window.editProduct = (id) => {
             const p = products.find(pr=>pr.id==id); if(!p) return;
-            const modal = document.getElementById('editModal'); const cont = document.getElementById('editFormContainer');
+            const modal = document.getElementById('editModal'); 
+            const cont = document.getElementById('editFormContainer');
             const isMB = p.category === 'mb';
             const platform = p.mbSpecs?.platform || 'intel';
             const isMonitor = p.category === 'монитор';
             const ms = p.monitorSpecs || {};
-            cont.innerHTML = `<form id="editProductForm"><input type="hidden" id="editId" value="${p.id}"><div class="form-group"><label>Название</label><input type="text" id="editName" value="${escapeHtml(p.name)}" required></div><div class="form-row"><div class="form-group"><label>Категория</label><select id="editCategory">${['мышь','клавиатура','наушники','монитор','keycaps','pads','mb'].map(c=>`<option value="${c}" ${p.category===c?'selected':''}>${getCategoryName(c)}</option>`).join('')}</select></div><div class="form-group"><label>Бренд</label><select id="editBrand">${Object.values(brands).map(b=>`<option value="${b.name}" ${p.brand===b.name?'selected':''}>${escapeHtml(b.name)}</option>`).join('')}</select></div></div><div class="form-group"><label>Цена</label><input type="text" id="editPrice" value="${escapeHtml(p.price)}" required></div><div class="form-group"><label>Описание</label><textarea id="editDesc" rows="4">${escapeHtml(p.description)}</textarea></div><div class="form-group"><label>YouTube</label><input type="url" id="editVideo" value="${p.video||''}"></div>${isMB?`<div class="mb-specs-block"><h3>Характеристики MB</h3><div class="platform-selector"><button type="button" class="platform-btn intel ${platform==='intel'?'active':''}" onclick="setEditPlatform('intel')">Intel</button><button type="button" class="platform-btn amd ${platform==='amd'?'active':''}" onclick="setEditPlatform('amd')">AMD</button></div><div id="editIntelPlatform" class="platform-content ${platform==='intel'?'active':''}"><div class="specs-grid"><div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketIntel" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div><div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetIntel" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div><div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactor" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div><div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlots" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div><div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlots" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div><div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2Slots" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div><div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPorts" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div><div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPorts" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div><div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLan" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div><div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudio" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div></div></div><div id="editAmdPlatform" class="platform-content ${platform==='amd'?'active':''}"><div class="specs-grid"><div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketAmd" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div><div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetAmd" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div><div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactorAmd" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div><div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlotsAmd" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div><div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlotsAmd" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div><div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2SlotsAmd" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div><div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPortsAmd" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div><div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPortsAmd" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div><div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLanAmd" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div><div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudioAmd" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div></div></div></div>`:''}${isMonitor?`<div class="mb-specs-block"><h3>Характеристики монитора</h3><div class="form-group"><label>Тип матрицы</label><input type="text" value="${escapeHtml(ms.panelType||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Разрешение</label><input type="text" value="${escapeHtml(ms.resolution||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Частота</label><input type="text" value="${escapeHtml(ms.refreshRate||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Диагональ</label><input type="text" value="${escapeHtml(ms.size||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Соотношение сторон</label><input type="text" value="${escapeHtml(ms.aspectRatio||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Яркость</label><input type="text" value="${escapeHtml(ms.brightness||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Контрастность</label><input type="text" value="${escapeHtml(ms.contrast||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Время отклика</label><input type="text" value="${escapeHtml(ms.responseTime||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Технологии</label><input type="text" value="${escapeHtml(ms.tech||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Разъёмы</label><input type="text" value="${escapeHtml(ms.ports||'')}" readonly style="background:#334155;"></div></div>`:''}<div class="form-group"><label>Характеристики</label><div id="editFeatures">${p.features?.map(f=>`<div class="feature-item"><input type="text" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditFeature()">Добавить</button></div><div class="form-group"><label>Фото</label><div id="editImages">${p.images?.map(img=>`<div class="image-item"><input type="url" value="${img}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditImage()">Добавить</button></div><div class="form-group"><label><input type="checkbox" id="editHot" ${hotPrices[p.id]?'checked':''}> Скидка</label></div><div id="editHotFields" style="display:${hotPrices[p.id]?'block':'none'}"><input type="text" id="editHotReason" value="${escapeHtml(hotPrices[p.id]?.reason||'')}"></div><button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить</button></form>`;
+            
+            let mbSpecsHtml = '';
+            if (isMB) {
+                mbSpecsHtml = `<div class="specs-block"><h3 class="specs-title">Характеристики MB</h3>
+                <div class="platform-selector">
+                    <button type="button" class="platform-btn intel ${platform==='intel'?'active':''}" onclick="setEditPlatform('intel')">Intel</button>
+                    <button type="button" class="platform-btn amd ${platform==='amd'?'active':''}" onclick="setEditPlatform('amd')">AMD</button>
+                </div>
+                <div id="editIntelPlatform" class="platform-content ${platform==='intel'?'active':''}">
+                    <div class="specs-grid">
+                        <div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketIntel" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div>
+                        <div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetIntel" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div>
+                        <div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactor" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div>
+                        <div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlots" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div>
+                        <div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlots" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div>
+                        <div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2Slots" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div>
+                        <div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPorts" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div>
+                        <div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPorts" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div>
+                        <div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLan" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div>
+                        <div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudio" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div>
+                    </div>
+                </div>
+                <div id="editAmdPlatform" class="platform-content ${platform==='amd'?'active':''}">
+                    <div class="specs-grid">
+                        <div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketAmd" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div>
+                        <div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetAmd" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div>
+                        <div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactorAmd" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div>
+                        <div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlotsAmd" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div>
+                        <div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlotsAmd" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div>
+                        <div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2SlotsAmd" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div>
+                        <div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPortsAmd" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div>
+                        <div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPortsAmd" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div>
+                        <div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLanAmd" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div>
+                        <div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudioAmd" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div>
+                    </div>
+                </div>
+                </div>`;
+            }
+            
+            let monitorSpecsHtml = '';
+            if (isMonitor) {
+                monitorSpecsHtml = `<div class="specs-block"><h3 class="specs-title">Характеристики монитора</h3>
+                <div id="editMonitorSpecsContainer">
+                    <div class="form-group"><label>Тип матрицы</label><div class="monitor-buttons-group" id="editPanelTypeGroup"></div><input type="hidden" id="editMonitorPanelType"></div>
+                    <div class="form-group"><label>Разрешение</label><div class="monitor-buttons-group" id="editResolutionGroup"></div><input type="hidden" id="editMonitorResolution"></div>
+                    <div class="form-group"><label>Частота обновления (Гц)</label><div class="monitor-buttons-group" id="editRefreshRateGroup"></div><input type="hidden" id="editMonitorRefreshRate"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Диагональ</label><input type="text" id="editMonitorSize" value="${escapeHtml(ms.size||'')}"></div>
+                        <div class="form-group"><label>Соотношение сторон</label><select id="editMonitorAspectRatio"><option value="">Выберите</option><option ${ms.aspectRatio==='16:9'?'selected':''}>16:9</option><option ${ms.aspectRatio==='16:10'?'selected':''}>16:10</option><option ${ms.aspectRatio==='21:9'?'selected':''}>21:9</option><option ${ms.aspectRatio==='32:9'?'selected':''}>32:9</option></select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Яркость</label><input type="text" id="editMonitorBrightness" value="${escapeHtml(ms.brightness||'')}"></div>
+                        <div class="form-group"><label>Контрастность</label><input type="text" id="editMonitorContrast" value="${escapeHtml(ms.contrast||'')}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Время отклика</label><input type="text" id="editMonitorResponseTime" value="${escapeHtml(ms.responseTime||'')}"></div>
+                        <div class="form-group"><label>Технологии</label><div class="monitor-buttons-group" id="editTechGroup"></div><input type="hidden" id="editMonitorTech"></div>
+                    </div>
+                    <div class="form-group"><label>Разъёмы</label><div class="monitor-buttons-group" id="editPortsGroup"></div><input type="hidden" id="editMonitorPorts"></div>
+                </div>
+                </div>`;
+            }
+            
+            cont.innerHTML = `<form id="editProductForm"><input type="hidden" id="editId" value="${p.id}">
+                <div class="form-group"><label>Название</label><input type="text" id="editName" value="${escapeHtml(p.name)}" required></div>
+                <div class="form-row"><div class="form-group"><label>Категория</label><select id="editCategory"><option value="мышь" ${p.category==='мышь'?'selected':''}>Мышь</option><option value="клавиатура" ${p.category==='клавиатура'?'selected':''}>Клавиатура</option><option value="наушники" ${p.category==='наушники'?'selected':''}>Наушники</option><option value="монитор" ${p.category==='монитор'?'selected':''}>Монитор</option><option value="keycaps" ${p.category==='keycaps'?'selected':''}>Кейкапы</option><option value="pads" ${p.category==='pads'?'selected':''}>Коврик</option><option value="mb" ${p.category==='mb'?'selected':''}>Материнская плата</option></select></div>
+                <div class="form-group"><label>Бренд</label><select id="editBrand">${Object.values(brands).map(b=>`<option value="${b.name}" ${p.brand===b.name?'selected':''}>${escapeHtml(b.name)}</option>`).join('')}</select></div></div>
+                <div class="form-group"><label>Цена</label><input type="text" id="editPrice" value="${escapeHtml(p.price)}" required></div>
+                <div class="form-group"><label>Описание</label><textarea id="editDesc" rows="4">${escapeHtml(p.description)}</textarea></div>
+                <div class="form-group"><label>YouTube видео</label><input type="url" id="editVideo" value="${p.video||''}"></div>
+                ${mbSpecsHtml}
+                ${monitorSpecsHtml}
+                <div class="form-group"><label>Характеристики</label><div id="editFeatures">${p.features?.map(f=>`<div class="feature-item"><input type="text" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditFeature()">+ Добавить</button></div>
+                <div class="form-group"><label>Фото</label><div id="editImages">${p.images?.map(img=>`<div class="image-item"><input type="url" value="${img}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditImage()">+ Добавить</button></div>
+                <div class="form-group"><label><input type="checkbox" id="editHot" ${hotPrices[p.id]?'checked':''}> Скидка</label></div>
+                <div id="editHotFields" style="display:${hotPrices[p.id]?'block':'none'}"><div class="form-group"><label>Причина скидки</label><input type="text" id="editHotReason" value="${escapeHtml(hotPrices[p.id]?.reason||'')}"></div></div>
+                <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить изменения</button>
+            </form>`;
+            
             modal.classList.add('active');
+            
+            // Инициализация кнопок для монитора в редакторе
+            if (isMonitor) {
+                createEditButtonGroup('editPanelTypeGroup', panelTypes, 'editMonitorPanelType', false, ms.panelType);
+                createEditButtonGroup('editResolutionGroup', resolutions, 'editMonitorResolution', false, ms.resolution);
+                createEditButtonGroup('editRefreshRateGroup', refreshRates, 'editMonitorRefreshRate', false, ms.refreshRate);
+                createEditButtonGroup('editTechGroup', techOptions, 'editMonitorTech', true, ms.tech);
+                createEditButtonGroup('editPortsGroup', portOptions, 'editMonitorPorts', true, ms.ports);
+            }
+            
             document.getElementById('editHot')?.addEventListener('change', function(){ document.getElementById('editHotFields').style.display = this.checked ? 'block' : 'none'; });
-            window.setEditPlatform = (p) => { window.editPlatform = p; document.querySelectorAll('#editProductForm .platform-btn').forEach(btn=>btn.classList.remove('active')); document.querySelector(`#editProductForm .platform-btn.${p}`).classList.add('active'); document.getElementById('editIntelPlatform').classList.toggle('active',p==='intel'); document.getElementById('editAmdPlatform').classList.toggle('active',p==='amd'); };
+            
             document.getElementById('editProductForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const updated = { ...p, name:document.getElementById('editName').value, category:document.getElementById('editCategory').value, brand:document.getElementById('editBrand').value, price:document.getElementById('editPrice').value, description:document.getElementById('editDesc').value, video:document.getElementById('editVideo').value||'', features:Array.from(document.querySelectorAll('#editFeatures .feature-item input')).map(i=>i.value).filter(v=>v), images:Array.from(document.querySelectorAll('#editImages .image-item input')).map(i=>i.value).filter(v=>v), lastUpdated:new Date().toISOString() };
+                const updated = { 
+                    ...p, 
+                    name: document.getElementById('editName').value,
+                    category: document.getElementById('editCategory').value,
+                    brand: document.getElementById('editBrand').value,
+                    price: document.getElementById('editPrice').value,
+                    description: document.getElementById('editDesc').value,
+                    video: document.getElementById('editVideo').value || '',
+                    features: Array.from(document.querySelectorAll('#editFeatures .feature-item input')).map(i=>i.value).filter(v=>v),
+                    images: Array.from(document.querySelectorAll('#editImages .image-item input')).map(i=>i.value).filter(v=>v),
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                if (updated.category === 'mb') {
+                    const platform = window.editPlatform || 'intel';
+                    updated.mbSpecs = { platform, socket:platform==='intel'?document.getElementById('editMBSocketIntel')?.value:document.getElementById('editMBSocketAmd')?.value, chipset:platform==='intel'?document.getElementById('editMBChipsetIntel')?.value:document.getElementById('editMBChipsetAmd')?.value, formFactor:platform==='intel'?document.getElementById('editMBFormFactor')?.value:document.getElementById('editMBFormFactorAmd')?.value, ramSlots:platform==='intel'?document.getElementById('editMBRamSlots')?.value:document.getElementById('editMBRamSlotsAmd')?.value, pcieSlots:platform==='intel'?document.getElementById('editMBPcieSlots')?.value:document.getElementById('editMBPcieSlotsAmd')?.value, m2Slots:platform==='intel'?document.getElementById('editMBM2Slots')?.value:document.getElementById('editMBM2SlotsAmd')?.value, sataPorts:platform==='intel'?document.getElementById('editMBSataPorts')?.value:document.getElementById('editMBSataPortsAmd')?.value, usbPorts:platform==='intel'?document.getElementById('editMBUsbPorts')?.value:document.getElementById('editMBUsbPortsAmd')?.value, lan:platform==='intel'?document.getElementById('editMBLan')?.value:document.getElementById('editMBLanAmd')?.value, audio:platform==='intel'?document.getElementById('editMBAudio')?.value:document.getElementById('editMBAudioAmd')?.value };
+                }
+                
+                if (updated.category === 'монитор') {
+                    updated.monitorSpecs = {
+                        panelType: document.getElementById('editMonitorPanelType')?.value || '',
+                        resolution: document.getElementById('editMonitorResolution')?.value || '',
+                        refreshRate: document.getElementById('editMonitorRefreshRate')?.value || '',
+                        size: document.getElementById('editMonitorSize')?.value || '',
+                        aspectRatio: document.getElementById('editMonitorAspectRatio')?.value || '',
+                        brightness: document.getElementById('editMonitorBrightness')?.value || '',
+                        contrast: document.getElementById('editMonitorContrast')?.value || '',
+                        responseTime: document.getElementById('editMonitorResponseTime')?.value || '',
+                        tech: document.getElementById('editMonitorTech')?.value || '',
+                        ports: document.getElementById('editMonitorPorts')?.value || ''
+                    };
+                }
+                
                 try {
                     await update(ref(database,'products/'+p.id), updated);
                     const isHot = document.getElementById('editHot').checked;
                     const hotReason = document.getElementById('editHotReason').value;
-                    if(isHot && hotReason) await set(ref(database,'hotPrices/'+p.id),{ reason:hotReason });
+                    if(isHot && hotReason) await set(ref(database,'hotPrices/'+p.id),{ reason:hotReason, updated:new Date().toISOString() });
                     else if(!isHot && hotPrices[p.id]) await remove(ref(database,'hotPrices/'+p.id));
                     alert('✅ Товар обновлен');
                     closeEditModal();
                     location.reload();
-                } catch(e){ alert('❌ Ошибка'); }
+                } catch(e){ alert('❌ Ошибка: '+e.message); }
             });
         };
+        
+        function createEditButtonGroup(containerId, options, hiddenInputId, multiSelect, currentValue) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'monitor-spec-btn';
+                btn.textContent = opt;
+                btn.dataset.value = opt;
+                if (multiSelect && currentValue && currentValue.split(',').map(v=>v.trim()).includes(opt)) btn.classList.add('active');
+                if (!multiSelect && currentValue === opt) btn.classList.add('active');
+                btn.addEventListener('click', () => {
+                    if (multiSelect) {
+                        btn.classList.toggle('active');
+                        const selected = Array.from(container.querySelectorAll('.monitor-spec-btn.active')).map(b => b.dataset.value);
+                        document.getElementById(hiddenInputId).value = selected.join(', ');
+                    } else {
+                        container.querySelectorAll('.monitor-spec-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.getElementById(hiddenInputId).value = opt;
+                    }
+                });
+                container.appendChild(btn);
+            });
+            if (currentValue) document.getElementById(hiddenInputId).value = currentValue;
+        }
         
         window.addEditFeature = () => { const c = document.getElementById('editFeatures'); const d = document.createElement('div'); d.className = 'feature-item'; d.innerHTML = `<input type="text" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
         window.addEditImage = () => { const c = document.getElementById('editImages'); const d = document.createElement('div'); d.className = 'image-item'; d.innerHTML = `<input type="url" placeholder="https://..."><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
