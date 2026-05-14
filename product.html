@@ -131,8 +131,53 @@
         .formatted-description strong {
             color: var(--text-light);
         }
-        .formatted-description .spec-section {
+        
+        /* Блок характеристик монитора */
+        .monitor-specs-block {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        .monitor-specs-title {
+            font-size: 1.1rem;
+            color: var(--primary-blue);
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .monitor-specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+        .monitor-spec-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.3rem;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed rgba(37, 99, 235, 0.2);
+        }
+        .monitor-spec-label {
+            font-weight: 600;
+            color: var(--text-light);
+            min-width: 110px;
+            font-size: 0.85rem;
+        }
+        .monitor-spec-value {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+        .spec-badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin: 0.2rem;
         }
         
         .youtube-section-bottom { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid var(--primary-blue); margin: 2rem 0; }
@@ -253,6 +298,7 @@
             .tracking-btn-main { padding: 0.5rem 0.8rem; }
             .nav-list { gap: 0.8rem; }
             .nav-text { font-size: 0.85rem; }
+            .monitor-specs-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -393,77 +439,6 @@
         let images = [];
         let selectedRating = 5;
 
-        // Функция форматирования описания с эмодзи и разделителями
-        function formatDescription(text) {
-            if (!text) return '<p>Нет описания</p>';
-            
-            // Разбиваем на строки
-            let lines = text.split(/\r?\n/);
-            let html = '';
-            let inList = false;
-            let currentList = [];
-            
-            for (let i = 0; i < lines.length; i++) {
-                let line = lines[i].trim();
-                if (line === '') continue;
-                
-                // Проверяем на разделитель (черточки)
-                if (line.match(/^[━\-=_]+$/)) {
-                    if (inList) {
-                        if (currentList.length > 0) {
-                            html += '<ul>' + currentList.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                            currentList = [];
-                        }
-                        inList = false;
-                    }
-                    continue;
-                }
-                
-                // Проверка на эмодзи в начале как заголовок
-                const emojiMatch = line.match(/^([🖥📺🎨⚡️🔌🛡⚙️🧠⭐️🎮💻🔧]+)\s+(.+)$/);
-                if (emojiMatch) {
-                    if (inList) {
-                        if (currentList.length > 0) {
-                            html += '<ul>' + currentList.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                            currentList = [];
-                        }
-                        inList = false;
-                    }
-                    html += `<h3>${emojiMatch[1]} ${emojiMatch[2]}</h3>`;
-                    continue;
-                }
-                
-                // Проверка на маркированный список (начинается с • или -)
-                if (line.startsWith('•') || line.startsWith('-') || line.startsWith('—')) {
-                    let content = line.substring(1).trim();
-                    // Обработка жирного текста **текст**
-                    content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                    currentList.push(content);
-                    inList = true;
-                    continue;
-                }
-                
-                // Обычный текст
-                if (inList) {
-                    if (currentList.length > 0) {
-                        html += '<ul>' + currentList.map(item => `<li>${item}</li>`).join('') + '</ul>';
-                        currentList = [];
-                    }
-                    inList = false;
-                }
-                
-                // Обработка жирного текста в обычной строке
-                let processedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                html += `<p>${processedLine}</p>`;
-            }
-            
-            if (inList && currentList.length > 0) {
-                html += '<ul>' + currentList.map(item => `<li>${item}</li>`).join('') + '</ul>';
-            }
-            
-            return html || '<p>Описание отсутствует</p>';
-        }
-
         function escapeHtml(str) {
             if (!str) return '';
             return String(str).replace(/[&<>]/g, function(m) {
@@ -472,6 +447,86 @@
                 if (m === '>') return '&gt;';
                 return m;
             });
+        }
+
+        function formatMonitorSpecs(specs) {
+            if (!specs) return '';
+            
+            let html = '<div class="monitor-specs-block"><div class="monitor-specs-title"><i class="fas fa-desktop"></i> Основные характеристики</div><div class="monitor-specs-grid">';
+            
+            if (specs.panelType) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Тип матрицы</span><span class="monitor-spec-value">${escapeHtml(specs.panelType)}</span></div>`;
+            }
+            if (specs.resolution) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Разрешение</span><span class="monitor-spec-value">${escapeHtml(specs.resolution)}</span></div>`;
+            }
+            if (specs.refreshRate) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Частота обновления</span><span class="monitor-spec-value">${escapeHtml(specs.refreshRate)}</span></div>`;
+            }
+            if (specs.size) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Диагональ</span><span class="monitor-spec-value">${escapeHtml(specs.size)}"</span></div>`;
+            }
+            if (specs.aspectRatio) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Соотношение сторон</span><span class="monitor-spec-value">${escapeHtml(specs.aspectRatio)}</span></div>`;
+            }
+            if (specs.brightness) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Яркость</span><span class="monitor-spec-value">${escapeHtml(specs.brightness)} кд/м²</span></div>`;
+            }
+            if (specs.contrast) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Контрастность</span><span class="monitor-spec-value">${escapeHtml(specs.contrast)}</span></div>`;
+            }
+            if (specs.responseTime) {
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Время отклика</span><span class="monitor-spec-value">${escapeHtml(specs.responseTime)}</span></div>`;
+            }
+            if (specs.tech) {
+                const techs = specs.tech.split(', ');
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Технологии</span><span class="monitor-spec-value">${techs.map(t => `<span class="spec-badge">${escapeHtml(t)}</span>`).join('')}</span></div>`;
+            }
+            if (specs.ports) {
+                const ports = specs.ports.split(', ');
+                html += `<div class="monitor-spec-item"><span class="monitor-spec-label">Разъёмы</span><span class="monitor-spec-value">${ports.map(p => `<span class="spec-badge">${escapeHtml(p)}</span>`).join('')}</span></div>`;
+            }
+            
+            html += '</div></div>';
+            return html;
+        }
+
+        function formatMonitorDescription(specs) {
+            if (!specs) return '';
+            
+            let html = '';
+            if (specs.panelType) {
+                html += `<div class="spec-section"><strong>🖥 Тип матрицы:</strong> ${escapeHtml(specs.panelType)}</div>`;
+            }
+            if (specs.resolution) {
+                html += `<div class="spec-section"><strong>📺 Разрешение:</strong> ${escapeHtml(specs.resolution)}</div>`;
+            }
+            if (specs.refreshRate) {
+                html += `<div class="spec-section"><strong>⚡ Частота обновления:</strong> ${escapeHtml(specs.refreshRate)}</div>`;
+            }
+            if (specs.size) {
+                html += `<div class="spec-section"><strong>📏 Диагональ:</strong> ${escapeHtml(specs.size)}"</div>`;
+            }
+            if (specs.aspectRatio) {
+                html += `<div class="spec-section"><strong>📐 Соотношение сторон:</strong> ${escapeHtml(specs.aspectRatio)}</div>`;
+            }
+            if (specs.brightness) {
+                html += `<div class="spec-section"><strong>💡 Яркость:</strong> ${escapeHtml(specs.brightness)} кд/м²</div>`;
+            }
+            if (specs.contrast) {
+                html += `<div class="spec-section"><strong>🎨 Контрастность:</strong> ${escapeHtml(specs.contrast)}</div>`;
+            }
+            if (specs.responseTime) {
+                html += `<div class="spec-section"><strong>⏱ Время отклика:</strong> ${escapeHtml(specs.responseTime)}</div>`;
+            }
+            if (specs.tech) {
+                html += `<div class="spec-section"><strong>🔧 Технологии:</strong> ${escapeHtml(specs.tech)}</div>`;
+            }
+            if (specs.ports) {
+                html += `<div class="spec-section"><strong>🔌 Разъёмы:</strong> ${escapeHtml(specs.ports)}</div>`;
+            }
+            
+            return html;
         }
 
         function showNotification(message) {
@@ -698,14 +753,26 @@
                 document.getElementById('discountInfo').textContent = '🔥 -30%';
             }
             
-            // Короткое описание (обрезаем до 200 символов)
+            // Короткое описание
             let shortDesc = product.description ? product.description.substring(0, 200) : '';
             if (shortDesc) shortDesc = shortDesc.replace(/[━\-=_]+/g, ' ').replace(/•/g, '').substring(0, 200);
             document.getElementById('productDescription').textContent = shortDesc + '...';
             
-            // Полное описание с форматированием
-            const formattedFullDesc = formatDescription(product.description);
-            document.getElementById('fullDescription').innerHTML = formattedFullDesc;
+            // Полное описание
+            let fullDescriptionHtml = '';
+            
+            // Добавляем блок характеристик монитора если есть
+            if (product.category === 'монитор' && product.monitorSpecs) {
+                fullDescriptionHtml += formatMonitorDescription(product.monitorSpecs);
+                fullDescriptionHtml += '<br>';
+            }
+            
+            // Добавляем основное описание
+            if (product.description) {
+                fullDescriptionHtml += product.description.replace(/[━\-=_]+/g, '<br>').replace(/•/g, '<br>•');
+            }
+            
+            document.getElementById('fullDescription').innerHTML = fullDescriptionHtml || '<p>Описание отсутствует</p>';
             
             // Характеристики features
             if (product.features && product.features.length > 0) {
@@ -721,6 +788,7 @@
                 <tr><td style="font-weight: 600; color: var(--text-light);">Артикул</td><td>${productId}</td></tr>
             `;
             
+            // Характеристики для MB
             if (product.category === 'mb' && product.mbSpecs) {
                 const s = product.mbSpecs;
                 const platformName = s.platform === 'intel' ? 'Intel' : 'AMD';
@@ -733,6 +801,21 @@
                     <tr><td style="font-weight: 600; color: var(--text-light);">Форм-фактор</td><td>${escapeHtml(s.formFactor || '-')}</td></tr>
                     <tr><td style="font-weight: 600; color: var(--text-light);">Слоты памяти</td><td>${escapeHtml(s.ramSlots || '-')}</td></tr>
                 `;
+            }
+            
+            // Характеристики для монитора
+            if (product.category === 'монитор' && product.monitorSpecs) {
+                const ms = product.monitorSpecs;
+                if (ms.panelType) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Тип матрицы</td><td>${escapeHtml(ms.panelType)}</td></tr>`;
+                if (ms.resolution) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Разрешение</td><td>${escapeHtml(ms.resolution)}</td></tr>`;
+                if (ms.refreshRate) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Частота обновления</td><td>${escapeHtml(ms.refreshRate)}</td></tr>`;
+                if (ms.size) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Диагональ</td><td>${escapeHtml(ms.size)}"</td></tr>`;
+                if (ms.aspectRatio) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Соотношение сторон</td><td>${escapeHtml(ms.aspectRatio)}</td></tr>`;
+                if (ms.brightness) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Яркость</td><td>${escapeHtml(ms.brightness)} кд/м²</td></tr>`;
+                if (ms.contrast) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Контрастность</td><td>${escapeHtml(ms.contrast)}</td></tr>`;
+                if (ms.responseTime) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Время отклика</td><td>${escapeHtml(ms.responseTime)}</td></tr>`;
+                if (ms.tech) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Технологии</td><td>${escapeHtml(ms.tech)}</td></tr>`;
+                if (ms.ports) specsHtml += `<tr><td style="font-weight: 600; color: var(--text-light);">Разъёмы</td><td>${escapeHtml(ms.ports)}</td></tr>`;
             } else if (product.features && product.features.length > 0) {
                 product.features.forEach(f => {
                     const parts = f.split(':');
