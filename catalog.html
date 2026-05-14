@@ -92,6 +92,46 @@
         .filter-option input { accent-color: #2563eb; cursor: pointer; }
         .filter-select { width: 100%; padding: 0.5rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; cursor: pointer; }
         
+        /* Монитор фильтры (скрыты по умолчанию) */
+        .monitor-filters {
+            display: none;
+            margin-top: 0.5rem;
+        }
+        .monitor-filters.show {
+            display: block;
+        }
+        .monitor-filter-group {
+            margin-bottom: 1rem;
+        }
+        .monitor-filter-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+        .monitor-filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .monitor-filter-btn {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .monitor-filter-btn:hover {
+            background: rgba(37, 99, 235, 0.2);
+        }
+        .monitor-filter-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
         .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
         .filter-tag { background: rgba(37, 99, 235, 0.1); border: 1px solid #2563eb; color: #60a5fa; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; }
         .filter-tag i { cursor: pointer; }
@@ -251,6 +291,41 @@
                         </div>
                     </div>
                     
+                    <!-- ФИЛЬТРЫ ДЛЯ МОНИТОРОВ (появляются при выборе категории "монитор") -->
+                    <div id="monitorFilters" class="monitor-filters">
+                        <div class="filter-block" style="border-bottom: none;">
+                            <h4 class="filter-title"><i class="fas fa-tv"></i> Тип матрицы</h4>
+                            <div class="monitor-filter-buttons" id="panelTypeFilters">
+                                <button class="monitor-filter-btn" data-panel="IPS">IPS</button>
+                                <button class="monitor-filter-btn" data-panel="Mini LED">Mini LED</button>
+                                <button class="monitor-filter-btn" data-panel="OLED">OLED</button>
+                                <button class="monitor-filter-btn" data-panel="VA">VA</button>
+                                <button class="monitor-filter-btn" data-panel="TN">TN</button>
+                            </div>
+                        </div>
+                        <div class="filter-block" style="border-bottom: none;">
+                            <h4 class="filter-title"><i class="fas fa-expand"></i> Разрешение</h4>
+                            <div class="monitor-filter-buttons" id="resolutionFilters">
+                                <button class="monitor-filter-btn" data-res="FHD">FHD (1920x1080)</button>
+                                <button class="monitor-filter-btn" data-res="2K">2K (2560x1440)</button>
+                                <button class="monitor-filter-btn" data-res="4K">4K (3840x2160)</button>
+                                <button class="monitor-filter-btn" data-res="UWHD">UWHD (2560x1080)</button>
+                            </div>
+                        </div>
+                        <div class="filter-block">
+                            <h4 class="filter-title"><i class="fas fa-chart-line"></i> Частота (Гц)</h4>
+                            <div class="monitor-filter-buttons" id="refreshRateFilters">
+                                <button class="monitor-filter-btn" data-refresh="60Hz">60Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="75Hz">75Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="120Hz">120Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="144Hz">144Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="165Hz">165Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="240Hz">240Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="360Hz">360Hz</button>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="filter-block">
                         <h4 class="filter-title"><i class="fas fa-tag"></i> Бренд</h4>
                         <select class="filter-select" id="brandFilter"><option value="all">Все бренды</option></select>
@@ -327,6 +402,11 @@
         let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
         let urlParams = new URLSearchParams(window.location.search);
         let categoryParam = urlParams.get('category');
+        
+        // Монитор фильтры
+        let selectedPanelTypes = new Set();
+        let selectedResolutions = new Set();
+        let selectedRefreshRates = new Set();
 
         function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
         function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
@@ -335,6 +415,13 @@
         function getCategoryName(key) {
             const cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' };
             return cats[key] || key;
+        }
+        
+        function getMonitorSpecValue(product, field) {
+            if (product.monitorSpecs && product.monitorSpecs[field]) {
+                return product.monitorSpecs[field];
+            }
+            return null;
         }
 
         async function loadData() {
@@ -359,8 +446,122 @@
                 const hotRes = await fetch('https://ggpoint-shop-default-rtdb.firebaseio.com/hotPrices.json');
                 hotPrices = await hotRes.json() || {};
                 
+                // Инициализация монитор фильтров
+                initMonitorFilters();
+                
                 applyFilters();
             } catch(e) { console.error(e); document.getElementById('productsGrid').innerHTML = '<div class="no-products"><i class="fas fa-exclamation-triangle"></i><h3>Ошибка загрузки</h3></div>'; }
+        }
+        
+        function initMonitorFilters() {
+            // Показываем/скрываем фильтры мониторов в зависимости от выбранной категории
+            const monitorFiltersDiv = document.getElementById('monitorFilters');
+            const categoryRadios = document.querySelectorAll('input[name="category"]');
+            
+            function updateMonitorFiltersVisibility() {
+                const selectedCategory = document.querySelector('input[name="category"]:checked')?.value;
+                if (selectedCategory === 'монитор') {
+                    monitorFiltersDiv.classList.add('show');
+                } else {
+                    monitorFiltersDiv.classList.remove('show');
+                }
+            }
+            
+            categoryRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    updateMonitorFiltersVisibility();
+                    // При смене категории сбрасываем монитор фильтры
+                    if (radio.value !== 'монитор') {
+                        selectedPanelTypes.clear();
+                        selectedResolutions.clear();
+                        selectedRefreshRates.clear();
+                        updateMonitorFilterButtons();
+                        applyFilters();
+                    }
+                });
+            });
+            
+            updateMonitorFiltersVisibility();
+            
+            // Настройка кнопок фильтров
+            setupFilterButtons('panelTypeFilters', selectedPanelTypes, 'data-panel', applyFilters);
+            setupFilterButtons('resolutionFilters', selectedResolutions, 'data-res', applyFilters);
+            setupFilterButtons('refreshRateFilters', selectedRefreshRates, 'data-refresh', applyFilters);
+        }
+        
+        function setupFilterButtons(containerId, selectedSet, dataAttr, callback) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const buttons = container.querySelectorAll('.monitor-filter-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const value = btn.getAttribute(dataAttr);
+                    if (selectedSet.has(value)) {
+                        selectedSet.delete(value);
+                        btn.classList.remove('active');
+                    } else {
+                        selectedSet.add(value);
+                        btn.classList.add('active');
+                    }
+                    callback();
+                });
+            });
+        }
+        
+        function updateMonitorFilterButtons() {
+            updateButtonActiveState('panelTypeFilters', selectedPanelTypes, 'data-panel');
+            updateButtonActiveState('resolutionFilters', selectedResolutions, 'data-res');
+            updateButtonActiveState('refreshRateFilters', selectedRefreshRates, 'data-refresh');
+        }
+        
+        function updateButtonActiveState(containerId, selectedSet, dataAttr) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const buttons = container.querySelectorAll('.monitor-filter-btn');
+            buttons.forEach(btn => {
+                const value = btn.getAttribute(dataAttr);
+                if (selectedSet.has(value)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+        
+        function applyMonitorFilters(products) {
+            if (selectedPanelTypes.size === 0 && selectedResolutions.size === 0 && selectedRefreshRates.size === 0) {
+                return products;
+            }
+            
+            return products.filter(product => {
+                if (product.category !== 'монитор') return true;
+                
+                let matches = true;
+                
+                if (selectedPanelTypes.size > 0) {
+                    const panelType = getMonitorSpecValue(product, 'panelType');
+                    if (!panelType || !selectedPanelTypes.has(panelType)) {
+                        matches = false;
+                    }
+                }
+                
+                if (matches && selectedResolutions.size > 0) {
+                    const resolution = getMonitorSpecValue(product, 'resolution');
+                    if (!resolution || !selectedResolutions.has(resolution)) {
+                        matches = false;
+                    }
+                }
+                
+                if (matches && selectedRefreshRates.size > 0) {
+                    const refreshRate = getMonitorSpecValue(product, 'refreshRate');
+                    if (!refreshRate || !selectedRefreshRates.has(refreshRate)) {
+                        matches = false;
+                    }
+                }
+                
+                return matches;
+            });
         }
 
         function updateBrandFilter() {
@@ -375,6 +576,9 @@
             const category = document.querySelector('input[name="category"]:checked')?.value;
             if (category && category !== 'all') filtered = filtered.filter(p => p.category === category);
             else if (categoryParam && categoryParam !== 'all') filtered = filtered.filter(p => p.category === categoryParam);
+            
+            // Применяем монитор фильтры
+            filtered = applyMonitorFilters(filtered);
             
             const brand = document.getElementById('brandFilter')?.value;
             if (brand && brand !== 'all') filtered = filtered.filter(p => p.brand === brand);
@@ -417,11 +621,34 @@
                 const isHot = hotPrices[p.id];
                 const isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
                 const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
+                
+                // Добавляем информацию о мониторе в карточку если есть
+                let monitorSpecsHtml = '';
+                if (p.category === 'монитор' && p.monitorSpecs) {
+                    const ms = p.monitorSpecs;
+                    if (ms.panelType || ms.resolution || ms.refreshRate) {
+                        monitorSpecsHtml = `<div style="display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.3rem;">
+                            ${ms.panelType ? `<span style="background: rgba(37,99,235,0.2); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem;">${escapeHtml(ms.panelType)}</span>` : ''}
+                            ${ms.resolution ? `<span style="background: rgba(37,99,235,0.2); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem;">${escapeHtml(ms.resolution)}</span>` : ''}
+                            ${ms.refreshRate ? `<span style="background: rgba(37,99,235,0.2); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem;">${escapeHtml(ms.refreshRate)}</span>` : ''}
+                        </div>`;
+                    }
+                }
+                
                 card.innerHTML = `
                     ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
                     ${isNew ? '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>' : ''}
                     <div class="product-image-container"><img src="${img}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/1e293b/2563eb?text=Ошибка'"></div>
-                    <div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><p class="product-description-short">${escapeHtml((p.description||'').substring(0,70))}...</p><div style="display:flex;justify-content:space-between;align-items:center;"><p class="product-price">${formatPrice(parsePrice(p.price))}</p><button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})"><i class="fas fa-shopping-cart"></i></button></div></div>
+                    <div class="product-info">
+                        <div class="product-category">${getCategoryName(p.category)}</div>
+                        <h3 class="product-name">${escapeHtml(p.name)}</h3>
+                        <p class="product-description-short">${escapeHtml((p.description||'').substring(0,70))}...</p>
+                        ${monitorSpecsHtml}
+                        <div style="display:flex;justify-content:space-between;align-items:center; margin-top: 0.5rem;">
+                            <p class="product-price">${formatPrice(parsePrice(p.price))}</p>
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
                 `;
                 card.onclick = () => { addToRecentlyViewed(p); window.location.href = `product.html?id=${p.id}`; };
                 grid.appendChild(card);
@@ -483,6 +710,18 @@
             container.innerHTML = '';
             const category = document.querySelector('input[name="category"]:checked')?.value;
             if(category && category!=='all') addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { document.querySelector('input[name="category"][value="all"]').checked=true; applyFilters(); });
+            
+            // Монитор фильтры
+            if(selectedPanelTypes.size > 0) {
+                addFilterTag(container, `Матрица: ${Array.from(selectedPanelTypes).join(', ')}`, () => { selectedPanelTypes.clear(); updateMonitorFilterButtons(); applyFilters(); });
+            }
+            if(selectedResolutions.size > 0) {
+                addFilterTag(container, `Разрешение: ${Array.from(selectedResolutions).join(', ')}`, () => { selectedResolutions.clear(); updateMonitorFilterButtons(); applyFilters(); });
+            }
+            if(selectedRefreshRates.size > 0) {
+                addFilterTag(container, `Частота: ${Array.from(selectedRefreshRates).join(', ')}`, () => { selectedRefreshRates.clear(); updateMonitorFilterButtons(); applyFilters(); });
+            }
+            
             const brand = document.getElementById('brandFilter')?.value;
             if(brand && brand!=='all') addFilterTag(container, `Бренд: ${brand}`, () => { document.getElementById('brandFilter').value='all'; applyFilters(); });
             const search = document.getElementById('searchInput')?.value;
@@ -500,6 +739,10 @@
             document.getElementById('maxPrice').value='';
             document.getElementById('discountFilter').checked=false;
             document.getElementById('searchInput').value='';
+            selectedPanelTypes.clear();
+            selectedResolutions.clear();
+            selectedRefreshRates.clear();
+            updateMonitorFilterButtons();
             applyFilters();
         });
         document.querySelectorAll('input[name="category"]').forEach(r=>r.addEventListener('change',()=>applyFilters()));
