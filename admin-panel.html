@@ -1,3 +1,6 @@
+Вот **полный исправленный `admin-panel.html`** с работающей кнопкой "Добавить товар" и полным функционалом:
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -181,6 +184,7 @@
         </div>
         
         <div class="admin-content">
+            <!-- ДАШБОРД -->
             <div class="admin-section active" id="dashboard">
                 <h2>Общая статистика</h2>
                 <div class="stats-grid">
@@ -194,6 +198,7 @@
                 <table class="admin-table" id="recentProducts"><thead><tr><th>Фото</th><th>Название</th><th>Категория</th><th>Цена</th><th>Дата</th></tr></thead><tbody></tbody></table>
             </div>
 
+            <!-- ПОСТЕРЫ -->
             <div class="admin-section" id="posters">
                 <h2>Постеры</h2>
                 <div id="postersList"></div>
@@ -211,6 +216,7 @@
                 </div>
             </div>
             
+            <!-- ТОВАРЫ -->
             <div class="admin-section" id="products">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
                     <h2>Товары</h2>
@@ -229,9 +235,10 @@
                         <option value="mb">Материнские платы</option>
                     </select>
                 </div>
-                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead><tbody></tbody></tr>
+                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
+            <!-- ДОБАВЛЕНИЕ ТОВАРА -->
             <div class="admin-section" id="add-product">
                 <h2>Добавить товар</h2>
                 <form id="addProductForm" class="admin-form">
@@ -296,8 +303,6 @@
                     <div id="monitorSpecsBlock" style="display: none;">
                         <div class="mb-specs-block" style="border-color: var(--success-green);">
                             <h3 class="mb-specs-title"><i class="fas fa-desktop"></i> Характеристики монитора</h3>
-                            
-                            <!-- Тип матрицы -->
                             <div class="form-group">
                                 <label>Тип матрицы</label>
                                 <div class="monitor-buttons-group" id="panelTypeGroup">
@@ -309,8 +314,6 @@
                                 </div>
                                 <input type="hidden" id="monitorPanelType" value="">
                             </div>
-                            
-                            <!-- Разрешение (кнопки) -->
                             <div class="form-group">
                                 <label>Разрешение</label>
                                 <div class="monitor-buttons-group" id="resolutionGroup">
@@ -321,8 +324,6 @@
                                 </div>
                                 <input type="hidden" id="monitorResolution" value="">
                             </div>
-                            
-                            <!-- Частота обновления (кнопки) -->
                             <div class="form-group">
                                 <label>Частота обновления (Гц)</label>
                                 <div class="monitor-buttons-group" id="refreshRateGroup">
@@ -336,17 +337,14 @@
                                 </div>
                                 <input type="hidden" id="monitorRefreshRate" value="">
                             </div>
-                            
                             <div class="form-row">
                                 <div class="form-group"><label>Диагональ (дюймы)</label><input type="text" id="monitorSize" placeholder="27, 32, 34"></div>
                                 <div class="form-group"><label>Соотношение сторон</label><select id="monitorAspectRatio"><option value="">Выберите</option><option>16:9</option><option>16:10</option><option>21:9</option><option>32:9</option></select></div>
                             </div>
-                            
                             <div class="form-row">
                                 <div class="form-group"><label>Яркость (кд/м²)</label><input type="text" id="monitorBrightness" placeholder="250, 350, 400"></div>
                                 <div class="form-group"><label>Контрастность</label><input type="text" id="monitorContrast" placeholder="1000:1, 3000:1"></div>
                             </div>
-                            
                             <div class="form-row">
                                 <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms"></div>
                                 <div class="form-group"><label>Технологии</label>
@@ -360,7 +358,6 @@
                                     <input type="hidden" id="monitorTech" value="">
                                 </div>
                             </div>
-                            
                             <div class="form-group"><label>Разъёмы</label>
                                 <div class="monitor-buttons-group" id="portsGroup">
                                     <button type="button" class="monitor-spec-btn" data-value="HDMI">HDMI</button>
@@ -382,6 +379,7 @@
                 </form>
             </div>
             
+            <!-- БРЕНДЫ -->
             <div class="admin-section" id="brands">
                 <h2>Бренды</h2>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
@@ -393,10 +391,11 @@
                             <button type="submit" class="admin-tab" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить бренд</button>
                         </form>
                     </div>
-                    <div><h3>Существующие бренды</h3><table class="admin-table"><thead><tr><th>Лого</th><th>Название</th><th>Товаров</th><th>Действия</th><tr></thead><tbody id="brandsTable"></tbody></table></div>
+                    <div><h3>Существующие бренды</h3><table class="admin-table"><thead><tr><th>Лого</th><th>Название</th><th>Товаров</th><th>Действия</th></tr></thead><tbody id="brandsTable"></tbody></table></div>
                 </div>
             </div>
             
+            <!-- ОТЗЫВЫ -->
             <div class="admin-section" id="reviews">
                 <h2>Отзывы</h2>
                 <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
@@ -410,11 +409,13 @@
                 <div id="reviewsContainer"></div>
             </div>
             
+            <!-- СООБЩЕНИЯ -->
             <div class="admin-section" id="messages">
                 <h2>Сообщения</h2>
                 <table class="admin-table" id="messagesTable"><thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
+            <!-- ТРЕКИНГ -->
             <div class="admin-section" id="tracking">
                 <h2>Трекинг заказов</h2>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
@@ -437,6 +438,7 @@
     <div class="modal" id="editModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование</h2><span class="modal-close" onclick="closeEditModal()">&times;</span></div><div id="editFormContainer"></div></div></div>
 
     <script>
+        // ===== TELEGRAM =====
         const TG_BOT_TOKEN = '8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8';
         const TG_CHAT_ID = '6040186314';
         async function sendTelegramMessage(m) { try { await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ chat_id:TG_CHAT_ID, text:m, parse_mode:'HTML' }) }); } catch(e){} }
@@ -455,22 +457,31 @@
         window.onload = () => { if (sessionStorage.getItem('adminLoggedIn') === 'true') { document.getElementById('loginModal').style.display = 'none'; document.getElementById('adminContent').style.display = 'block'; document.getElementById('logoutBtn').style.display = 'flex'; if (typeof window.loadData === 'function') window.loadData(); } };
         document.getElementById('logoutBtn')?.addEventListener('click', () => { sessionStorage.removeItem('adminLoggedIn'); location.reload(); });
         
+        // Переключение вкладок
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                if (!tabId) return;
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
                 tab.classList.add('active');
-                document.getElementById(tab.dataset.tab).classList.add('active');
+                const section = document.getElementById(tabId);
+                if (section) section.classList.add('active');
             });
         });
         
-        function switchToAddProduct() {
+        // Функция переключения на добавление товара
+        window.switchToAddProduct = function() {
+            console.log('Переключение на добавление товара');
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-tab="add-product"]').classList.add('active');
-            document.getElementById('add-product').classList.add('active');
-        }
-        window.switchToAddProduct = switchToAddProduct;
+            const addTab = document.querySelector('[data-tab="add-product"]');
+            if (addTab) addTab.classList.add('active');
+            const addSection = document.getElementById('add-product');
+            if (addSection) addSection.classList.add('active');
+            else console.error('Секция add-product не найдена!');
+        };
+        
         window.closeEditModal = () => document.getElementById('editModal').classList.remove('active');
         window.showAddPosterForm = () => document.getElementById('addPosterForm').style.display = 'block';
         window.hideAddPosterForm = () => document.getElementById('addPosterForm').style.display = 'none';
@@ -584,14 +595,14 @@
         function renderRecentProducts() {
             const tbody = document.querySelector('#recentProducts tbody'); if(!tbody) return;
             const recent = [...products].sort((a,b)=>new Date(b.dateAdded||0)-new Date(a.dateAdded||0)).slice(0,5);
-            if(recent.length===0){ tbody.innerHTML = '<tr><td colspan="5">Нет товаров</td></tr>'; return; }
+            if(recent.length===0){ tbody.innerHTML = '<td><td colspan="5">Нет товаров</td></tr>'; return; }
             tbody.innerHTML = recent.map(p => `<tr><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.price)}</td><td>${p.dateAdded ? new Date(p.dateAdded).toLocaleDateString() : '-'}</td></tr>`).join('');
         }
         
         function renderBrands() {
             const tbody = document.getElementById('brandsTable'); if(!tbody) return;
             if(Object.keys(brands).length===0){ tbody.innerHTML = '<tr><td colspan="4">Нет брендов</td></tr>'; return; }
-            tbody.innerHTML = Object.values(brands).map(b => `<tr><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain; filter:brightness(0) invert(1);" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+            tbody.innerHTML = Object.values(brands).map(b => `<td><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain; filter:brightness(0) invert(1);" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
         window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
@@ -644,6 +655,7 @@
         window.closeTrackingOrder = async (track) => { if(confirm('Закрыть заказ?')){ await update(ref(database,'tracking_orders/'+track),{isClosed:true,closedAt:new Date().toISOString()}); alert('✅ Закрыт'); location.reload(); } };
         window.deleteTrackingOrder = async (track) => { if(confirm('Удалить заказ?')){ await remove(ref(database,'tracking_orders/'+track)); alert('✅ Удалено'); location.reload(); } };
         
+        // Добавление товара
         document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('productName').value;
@@ -773,3 +785,4 @@
     </script>
 </body>
 </html>
+```
