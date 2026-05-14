@@ -123,6 +123,26 @@
         .modal-close { font-size: 2rem; cursor: pointer; color: var(--text-gray); }
         .modal-close:hover { color: var(--sale-red); }
         
+        /* Уведомление */
+        .toast-notify {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success-green);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 10000;
+            font-weight: 600;
+            animation: fadeOut 2s ease forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; bottom: 30px; }
+            70% { opacity: 1; }
+            100% { opacity: 0; bottom: 50px; visibility: hidden; }
+        }
+        
         @media (max-width: 768px) {
             .admin-header { flex-direction: column; gap: 1rem; }
             .form-row { grid-template-columns: 1fr; }
@@ -258,7 +278,7 @@
                         </div>
                     </div>
                     
-                    <!-- БЛОК МОНИТОРОВ (упрощённый - только важные поля, технологии в основном описании) -->
+                    <!-- БЛОК МОНИТОРОВ -->
                     <div id="monitorSpecsBlock" style="display: none;">
                         <div class="specs-block" style="border-color: var(--success-green);">
                             <h3 class="specs-title"><i class="fas fa-desktop"></i> Характеристики монитора</h3>
@@ -273,7 +293,6 @@
                                 <input type="hidden" id="monitorResolution">
                             </div>
                             
-                            <!-- DUAL MODE ЧАСТОТА -->
                             <div class="form-group">
                                 <label>Частота обновления (Гц)</label>
                                 <div class="monitor-buttons-group" id="refreshRateGroup"></div>
@@ -331,7 +350,6 @@
                             </div>
                             <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms, 0.5ms"></div>
                             
-                            <!-- Технологии и разъёмы - простые текстовые поля -->
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>Технологии (G-Sync, FreeSync, HDR, HDR400, HDR600, HDR1000, Dolby Vision, Quantum Dot и т.д.)</label>
@@ -422,12 +440,23 @@
         
         const ADMIN_PASSWORD = "Dilsh-221";
         
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notify';
+            toast.style.background = isError ? '#ef4444' : '#10b981';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+        
         function checkPassword() {
             if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
                 document.getElementById('loginModal').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
                 document.getElementById('logoutBtn').style.display = 'block';
                 sessionStorage.setItem('adminLoggedIn', 'true');
+                // Сохраняем активную вкладку
+                sessionStorage.setItem('activeTab', 'dashboard');
                 if (typeof loadData === 'function') loadData();
             } else { document.getElementById('loginError').textContent = '❌ Неверный пароль'; }
         }
@@ -440,9 +469,25 @@
                 if (typeof loadData === 'function') loadData();
             }
             initMonitorButtonsGroups();
+            
+            // Восстанавливаем активную вкладку после загрузки
+            const savedTab = sessionStorage.getItem('activeTab') || 'dashboard';
+            setTimeout(() => {
+                const tabBtn = document.querySelector(`.admin-tab[data-tab="${savedTab}"]`);
+                if (tabBtn) tabBtn.click();
+            }, 500);
         };
         
-        document.getElementById('logoutBtn')?.addEventListener('click', () => { sessionStorage.removeItem('adminLoggedIn'); location.reload(); });
+        // Функция для сохранения активной вкладки
+        function setActiveTab(tabId) {
+            sessionStorage.setItem('activeTab', tabId);
+        }
+        
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { 
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('activeTab');
+            location.reload(); 
+        });
         
         function initMonitorButtonsGroups() {
             createButtonGroup('panelTypeGroup', panelTypes, 'monitorPanelType', false);
@@ -621,6 +666,7 @@
             if (addTab) addTab.classList.add('active');
             const addSection = document.getElementById('add-product');
             if (addSection) addSection.classList.add('active');
+            setActiveTab('add-product');
         };
         
         document.querySelectorAll('.admin-tab').forEach(tab => {
@@ -632,6 +678,7 @@
                 tab.classList.add('active');
                 const section = document.getElementById(tabId);
                 if (section) section.classList.add('active');
+                setActiveTab(tabId);
             });
         });
         
@@ -702,7 +749,7 @@
             const filter = document.getElementById('filterCategory')?.value || 'all';
             const filtered = products.filter(p => p.name.toLowerCase().includes(search) && (filter==='all' || p.category===filter));
             if(filtered.length===0){ tbody.innerHTML = '<tr><td colspan="8">Товаров не найдено</td></tr>'; return; }
-            tbody.innerHTML = filtered.map(p => `</table><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
+            tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
         }
         
         function renderRecentProducts() {
@@ -719,7 +766,7 @@
         }
         
         window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
-        window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')){ await remove(ref(database,'brands/'+id)); alert('✅ Бренд удален'); location.reload(); } };
+        window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')){ await remove(ref(database,'brands/'+id)); showToast('✅ Бренд удален'); setTimeout(() => location.reload(), 500); } };
         
         function updateBrandSelect() {
             const select = document.getElementById('productBrand'); if(!select) return;
@@ -732,7 +779,7 @@
             tbody.innerHTML = messages.map(m => `<tr><td>${new Date(m.date).toLocaleString()}</td><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.contact||m.method)}</td><td>${escapeHtml(m.message.substring(0,50))}...</td><td class="admin-actions"><button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\\nКонтакт: ${escapeHtml(m.contact||m.method)}\\n\\nСообщение:\\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button><button class="admin-btn-small delete" onclick="deleteMessage('${m.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
-        window.deleteMessage = async (id) => { if(confirm('Удалить сообщение?')){ await remove(ref(database,'messages/'+id)); alert('✅ Удалено'); location.reload(); } };
+        window.deleteMessage = async (id) => { if(confirm('Удалить сообщение?')){ await remove(ref(database,'messages/'+id)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
         
         function renderReviews() {
             const container = document.getElementById('reviewsContainer'); if(!container) return;
@@ -745,8 +792,8 @@
             container.innerHTML = filtered.map(r => { const p = products.find(pr => pr.id == r.productId); return `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;"><div><strong>${escapeHtml(r.author)||'Аноним'}</strong> <small>${new Date(r.date).toLocaleString()}</small></div><div style="color:#ffd700;">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div></div><div><strong>Товар:</strong> ${escapeHtml(p?.name||'Неизвестный')}</div><div>${escapeHtml(r.text)}</div>${r.adminReply ? `<div style="background:rgba(37,99,235,0.2); padding:0.5rem; margin-top:0.5rem; border-radius:8px;"><strong>Ответ:</strong> ${escapeHtml(r.adminReply)}</div>` : ''}<div style="margin-top:0.5rem;">${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')">Одобрить</button>` : ''}<button class="admin-btn-small delete" onclick="deleteReview('${r.id}')">Удалить</button></div></div>`; }).join('');
         }
         
-        window.approveReview = async (id) => { await update(ref(database,'reviews/'+id),{status:'approved'}); alert('✅ Одобрено'); location.reload(); };
-        window.deleteReview = async (id) => { if(confirm('Удалить отзыв?')){ await remove(ref(database,'reviews/'+id)); alert('✅ Удалено'); location.reload(); } };
+        window.approveReview = async (id) => { await update(ref(database,'reviews/'+id),{status:'approved'}); showToast('✅ Одобрено'); setTimeout(() => location.reload(), 500); };
+        window.deleteReview = async (id) => { if(confirm('Удалить отзыв?')){ await remove(ref(database,'reviews/'+id)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
         
         function renderTrackingOrders() {
             const container = document.getElementById('trackingOrdersList'); if(!container) return;
@@ -756,8 +803,8 @@
             container.innerHTML = orders.map(o => `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div><strong>${o.tracking}</strong> <span style="display:inline-block; padding:0.2rem 0.5rem; border-radius:20px; font-size:0.8rem; background:${o.isClosed?'#10b981':'#f59e0b'};">${o.isClosed?'Закрыт':'Активен'}</span></div><p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType==='air'?'plane':'truck'}"></i> ${o.deliveryType==='air'?'Авиа':'Наземный'}<br>📅 ${o.sendDate}</p><div>${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}<button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button></div></div>`).join('');
         }
         
-        window.closeTrackingOrder = async (track) => { if(confirm('Закрыть заказ?')){ await update(ref(database,'tracking_orders/'+track),{isClosed:true,closedAt:new Date().toISOString()}); alert('✅ Закрыт'); location.reload(); } };
-        window.deleteTrackingOrder = async (track) => { if(confirm('Удалить заказ?')){ await remove(ref(database,'tracking_orders/'+track)); alert('✅ Удалено'); location.reload(); } };
+        window.closeTrackingOrder = async (track) => { if(confirm('Закрыть заказ?')){ await update(ref(database,'tracking_orders/'+track),{isClosed:true,closedAt:new Date().toISOString()}); showToast('✅ Закрыт'); setTimeout(() => location.reload(), 500); } };
+        window.deleteTrackingOrder = async (track) => { if(confirm('Удалить заказ?')){ await remove(ref(database,'tracking_orders/'+track)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
         
         document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -771,7 +818,7 @@
             const hotReason = document.getElementById('hotPriceReason').value;
             const features = Array.from(document.querySelectorAll('.feature-input')).map(i=>i.value).filter(v=>v);
             const images = Array.from(document.querySelectorAll('.image-input')).map(i=>i.value).filter(v=>v);
-            if(!name||!category||!brand||!price||!description||images.length===0){ alert('❌ Заполните все поля'); return; }
+            if(!name||!category||!brand||!price||!description||images.length===0){ showToast('❌ Заполните все поля', true); return; }
             const newId = Date.now();
             const newProduct = { id:newId, name, category, brand, price, description, video:video||'', features, images, dateAdded:new Date().toISOString() };
             
@@ -784,30 +831,33 @@
             try {
                 await set(ref(database,'products/'+newId), newProduct);
                 if(isHot && hotReason) await set(ref(database,'hotPrices/'+newId), { reason:hotReason, added:new Date().toISOString() });
-                alert('✅ Товар добавлен');
-                e.target.reset();
+                showToast('✅ Товар добавлен');
+                // Очищаем форму
+                document.getElementById('addProductForm').reset();
                 document.getElementById('imagesContainer').innerHTML = '';
                 document.getElementById('featuresContainer').innerHTML = '';
                 addFeature(); addImage();
-                switchToAddProduct();
-            } catch(error){ alert('❌ Ошибка: '+error.message); }
+                // Остаёмся на вкладке добавления
+                const addTab = document.querySelector('[data-tab="add-product"]');
+                if (addTab) addTab.click();
+            } catch(error){ showToast('❌ Ошибка: '+error.message, true); }
         });
         
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('brandName').value.trim();
             const icon = document.getElementById('brandLogo').value.trim();
-            if(!name||!icon){ alert('Заполните поля'); return; }
+            if(!name||!icon){ showToast('Заполните поля', true); return; }
             const id = name.toUpperCase().replace(/\s+/g,'_');
             try {
                 if(window.editingBrandId && window.editingBrandId !== id){ await set(ref(database,'brands/'+id),{name,icon,id}); await remove(ref(database,'brands/'+window.editingBrandId)); }
                 else { await set(ref(database,'brands/'+id),{name,icon,id}); }
-                alert('✅ Бренд сохранен');
+                showToast('✅ Бренд сохранен');
                 document.getElementById('brandName').value = '';
                 document.getElementById('brandLogo').value = '';
                 window.editingBrandId = null;
-                location.reload();
-            } catch(error){ alert('❌ Ошибка'); }
+                setTimeout(() => location.reload(), 500);
+            } catch(error){ showToast('❌ Ошибка', true); }
         });
         
         document.getElementById('addTrackingForm')?.addEventListener('submit', async (e) => {
@@ -816,11 +866,11 @@
             const phone = document.getElementById('trackingPhone').value.trim();
             const date = document.getElementById('trackingSendDate').value;
             const type = document.getElementById('trackingDeliveryType').value;
-            if(!track||!phone||!date){ alert('Заполните все поля'); return; }
-            try{ await set(ref(database,'tracking_orders/'+track),{ phone, sendDate:date, deliveryType:type, isClosed:false, createdAt:new Date().toISOString() }); alert('✅ Заказ добавлен'); e.target.reset(); location.reload(); } catch(e){ alert('❌ Ошибка'); }
+            if(!track||!phone||!date){ showToast('Заполните все поля', true); return; }
+            try{ await set(ref(database,'tracking_orders/'+track),{ phone, sendDate:date, deliveryType:type, isClosed:false, createdAt:new Date().toISOString() }); showToast('✅ Заказ добавлен'); e.target.reset(); setTimeout(() => location.reload(), 500); } catch(e){ showToast('❌ Ошибка', true); }
         });
         
-        window.deleteProduct = async (id) => { if(confirm('Удалить товар?')){ await remove(ref(database,'products/'+id)); if(hotPrices[id]) await remove(ref(database,'hotPrices/'+id)); alert('✅ Удалено'); location.reload(); } };
+        window.deleteProduct = async (id) => { if(confirm('Удалить товар?')){ await remove(ref(database,'products/'+id)); if(hotPrices[id]) await remove(ref(database,'hotPrices/'+id)); showToast('✅ Товар удален'); setTimeout(() => location.reload(), 500); } };
         
         window.editProduct = (id) => {
             const p = products.find(pr=>pr.id==id); if(!p) return;
@@ -930,7 +980,7 @@
                 </div>
                 <div class="form-group"><label>Время отклика</label><input type="text" id="editMonitorResponseTime" value="${escapeHtml(ms.responseTime||'')}"></div>
                 <div class="form-row">
-                    <div class="form-group"><label>Технологии (G-Sync, FreeSync, HDR и т.д.)</label><input type="text" id="editMonitorTech" value="${escapeHtml(ms.tech||'')}"></div>
+                    <div class="form-group"><label>Технологии</label><input type="text" id="editMonitorTech" value="${escapeHtml(ms.tech||'')}"></div>
                     <div class="form-group"><label>Разъёмы</label><input type="text" id="editMonitorPorts" value="${escapeHtml(ms.ports||'')}"></div>
                 </div>
                 </div>`;
@@ -1037,10 +1087,10 @@
                     const hotReason = document.getElementById('editHotReason').value;
                     if(isHot && hotReason) await set(ref(database,'hotPrices/'+p.id),{ reason:hotReason, updated:new Date().toISOString() });
                     else if(!isHot && hotPrices[p.id]) await remove(ref(database,'hotPrices/'+p.id));
-                    alert('✅ Товар обновлен');
+                    showToast('✅ Товар обновлен');
                     closeEditModal();
-                    location.reload();
-                } catch(e){ alert('❌ Ошибка: '+e.message); }
+                    setTimeout(() => location.reload(), 500);
+                } catch(e){ showToast('❌ Ошибка: '+e.message, true); }
             });
         };
         
