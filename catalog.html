@@ -178,7 +178,7 @@
         .product-info { padding: 1rem; }
         .product-category { font-size: 0.75rem; color: #60a5fa; margin-bottom: 0.5rem; }
         .product-name { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
-        .product-description-short { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem; }
+        .product-description { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem; line-height: 1.4; }
         .product-price { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-size: 1.2rem; }
         
         .cart-btn { width: 40px; height: 40px; background: var(--gradient); border: none; color: white; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
@@ -291,6 +291,7 @@
                             <div class="monitor-filter-buttons" id="panelTypeFilters">
                                 <button class="monitor-filter-btn" data-panel="IPS">IPS</button>
                                 <button class="monitor-filter-btn" data-panel="Fast IPS">Fast IPS</button>
+                                <button class="monitor-filter-btn" data-panel="Fast VA">Fast VA</button>
                                 <button class="monitor-filter-btn" data-panel="Mini LED">Mini LED</button>
                                 <button class="monitor-filter-btn" data-panel="OLED">OLED</button>
                                 <button class="monitor-filter-btn" data-panel="VA">VA</button>
@@ -314,6 +315,7 @@
                                 <button class="monitor-filter-btn" data-refresh="120Hz">120Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="144Hz">144Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="165Hz">165Hz</button>
+                                <button class="monitor-filter-btn" data-refresh="180Hz">180Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="240Hz">240Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="310Hz">310Hz</button>
                                 <button class="monitor-filter-btn" data-refresh="360Hz">360Hz</button>
@@ -462,7 +464,6 @@
             function updateMonitorFiltersVisibility() {
                 const selectedCategory = document.querySelector('input[name="category"]:checked')?.value;
                 monitorFiltersDiv.classList.toggle('show', selectedCategory === 'монитор');
-                // Если категория не монитор, очищаем мониторные фильтры
                 if (selectedCategory !== 'монитор') {
                     selectedPanelTypes.clear();
                     selectedResolutions.clear();
@@ -528,7 +529,6 @@
         }
         
         function applyMonitorFilters(filtered) {
-            // Если категория не монитор, пропускаем мониторные фильтры
             const currentCategory = document.querySelector('input[name="category"]:checked')?.value;
             if (currentCategory !== 'монитор') return filtered;
             
@@ -620,17 +620,8 @@
                 const isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
                 const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
                 
-                let monitorSpecsHtml = '';
-                if (p.category === 'монитор' && p.monitorSpecs) {
-                    const ms = p.monitorSpecs;
-                    if (ms.panelType || ms.resolution || ms.refreshRate) {
-                        monitorSpecsHtml = `<div style="display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.3rem;">
-                            ${ms.panelType ? `<span style="background: rgba(37,99,235,0.2); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem;">${escapeHtml(ms.panelType)}</span>` : ''}
-                            ${ms.resolution ? `<span style="background: rgba(37,99,235,0.2); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem;">${escapeHtml(ms.resolution)}</span>` : ''}
-                            ${ms.refreshRate ? `<span style="background: rgba(37,99,235,0.2); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem;">${escapeHtml(ms.refreshRate)}</span>` : ''}
-                        </div>`;
-                    }
-                }
+                // Полное описание товара - показываем полностью
+                const fullDescription = p.description || 'Описание отсутствует';
                 
                 card.innerHTML = `
                     ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
@@ -639,8 +630,7 @@
                     <div class="product-info">
                         <div class="product-category">${getCategoryName(p.category)}</div>
                         <h3 class="product-name">${escapeHtml(p.name)}</h3>
-                        <p class="product-description-short">${escapeHtml((p.description||'').substring(0,70))}...</p>
-                        ${monitorSpecsHtml}
+                        <div class="product-description">${escapeHtml(fullDescription)}</div>
                         <div style="display:flex;justify-content:space-between;align-items:center; margin-top: 0.5rem;">
                             <p class="product-price">${formatPrice(parsePrice(p.price))}</p>
                             <button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})"><i class="fas fa-shopping-cart"></i></button>
