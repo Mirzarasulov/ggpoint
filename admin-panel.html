@@ -6,21 +6,12 @@
     
     <title>Админ-панель GGPoint</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f172a;
-            color: #fff;
-            line-height: 1.6;
-        }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
         
         :root {
             --primary-blue: #2563eb;
@@ -46,7 +37,6 @@
             z-index: 100;
             border-bottom: 1px solid rgba(37, 99, 235, 0.3);
         }
-        
         .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-list { display: flex; gap: 1.5rem; list-style: none; }
@@ -86,13 +76,14 @@
         .admin-btn-small.view:hover { background: var(--success-green); color: white; }
         .admin-btn-small.approve { border-color: var(--success-green); color: var(--success-green); }
         .admin-btn-small.approve:hover { background: var(--success-green); color: white; }
-        .admin-btn-small.reply { border-color: var(--primary-blue); color: var(--primary-blue); }
-        .admin-btn-small.reply:hover { background: var(--primary-blue); color: white; }
         
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-light); font-weight: 600; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); font-size: 1rem; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        
+        .monitor-spec-btn.active { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+        .monitor-buttons-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
         
         .features-list, .images-list { margin-bottom: 1rem; }
         .feature-item, .image-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
@@ -102,51 +93,21 @@
         .image-preview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
         .preview-img { width: 80px; height: 80px; object-fit: contain; background: white; border-radius: 4px; padding: 0.2rem; border: 2px solid var(--primary-blue); }
         
-        .posters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .poster-card { background: rgba(0,0,0,0.2); border-radius: 16px; overflow: hidden; border: 2px solid #334155; transition: transform 0.3s ease; }
-        .poster-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
-        .poster-preview { width: 100%; height: 200px; object-fit: cover; background: #1e293b; }
-        .poster-info { padding: 1.5rem; }
-        .poster-title { color: var(--text-light); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .poster-card { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #334155; }
+        .poster-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem; }
         .status-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
         .status-badge.published { background: var(--success-green); color: white; }
         .status-badge.draft { background: var(--text-gray); color: var(--dark-bg); }
         .status-badge.pending { background: var(--warning-yellow); color: white; }
         .status-badge.approved { background: var(--success-green); color: white; }
         
-        .reviews-filters { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .reviews-filters input, .reviews-filters select { padding: 0.6rem 1rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); }
-        .reviews-filters input { flex: 1; }
-        .reviews-filters select { width: 200px; }
-        
-        .review-card { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border: 2px solid #334155; }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
-        .review-author { display: flex; align-items: center; gap: 1rem; }
-        .review-avatar { width: 50px; height: 50px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; }
-        .review-rating { color: #ffd700; font-size: 1.2rem; }
-        .review-product { background: rgba(37,99,235,0.1); padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
-        .review-text { color: var(--text-gray); line-height: 1.7; margin-bottom: 1rem; }
-        .admin-reply { background: rgba(37, 99, 235, 0.1); border-left: 3px solid var(--primary-blue); padding: 0.8rem 1rem; margin-top: 1rem; border-radius: 8px; }
-        .admin-reply-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--primary-blue); }
-        .admin-reply-text { color: var(--text-gray); font-size: 0.9rem; }
-        .reply-form { margin-top: 1rem; display: none; }
-        .reply-form.active { display: block; }
-        .reply-input { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); margin-bottom: 0.5rem; resize: vertical; }
-        
-        .login-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .login-box { background: var(--card-bg); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; border: 2px solid var(--primary-blue); text-align: center; }
-        .login-box h2 { color: var(--primary-blue); margin-bottom: 2rem; font-size: 2rem; }
-        .login-box input { width: 100%; padding: 1rem; margin-bottom: 1.5rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); font-size: 1.1rem; text-align: center; }
-        .login-box button { width: 100%; padding: 1rem; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-        .error-message { color: var(--sale-red); margin-top: 1rem; font-size: 0.9rem; }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--card-bg); border-radius: 20px; padding: 2rem; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto; border: 2px solid var(--primary-blue); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .modal-header h2 { color: var(--primary-blue); }
-        .modal-close { font-size: 2rem; cursor: pointer; color: var(--text-gray); }
-        .modal-close:hover { color: var(--sale-red); }
+        .review-card { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid #334155; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .review-author { display: flex; align-items: center; gap: 0.8rem; }
+        .review-avatar { width: 40px; height: 40px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .review-rating { color: #ffd700; font-size: 1rem; }
+        .review-text { color: var(--text-gray); margin-top: 0.5rem; line-height: 1.5; }
+        .admin-reply { background: rgba(37,99,235,0.1); padding: 0.8rem; margin-top: 0.8rem; border-radius: 8px; border-left: 3px solid var(--primary-blue); }
         
         .mb-specs-block { background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 1.5rem; margin: 1rem 0; border: 1px solid var(--primary-blue); }
         .mb-specs-title { font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-blue); display: inline-block; }
@@ -163,13 +124,26 @@
         .platform-content { display: none; }
         .platform-content.active { display: block; }
         
+        .login-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .login-box { background: var(--card-bg); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; border: 2px solid var(--primary-blue); text-align: center; }
+        .login-box h2 { color: var(--primary-blue); margin-bottom: 2rem; font-size: 2rem; }
+        .login-box input { width: 100%; padding: 1rem; margin-bottom: 1.5rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); font-size: 1.1rem; text-align: center; }
+        .login-box button { width: 100%; padding: 1rem; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .error-message { color: var(--sale-red); margin-top: 1rem; font-size: 0.9rem; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--card-bg); border-radius: 20px; padding: 2rem; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto; border: 2px solid var(--primary-blue); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-header h2 { color: var(--primary-blue); }
+        .modal-close { font-size: 2rem; cursor: pointer; color: var(--text-gray); }
+        .modal-close:hover { color: var(--sale-red); }
+        
         @media (max-width: 768px) {
             .admin-header { flex-direction: column; gap: 1rem; }
             .form-row { grid-template-columns: 1fr; }
             .specs-grid { grid-template-columns: 1fr; }
             .admin-tabs { justify-content: center; }
-            .reviews-filters { flex-direction: column; }
-            .reviews-filters select { width: 100%; }
         }
     </style>
 </head>
@@ -225,11 +199,11 @@
                 <div id="postersList"></div>
                 <button class="admin-tab" onclick="showAddPosterForm()" style="margin-top:1rem; background:var(--success-green); color:white;"><i class="fas fa-plus"></i> Добавить постер</button>
                 <div id="addPosterForm" style="display:none; margin-top:1rem; background:rgba(0,0,0,0.2); padding:1rem; border-radius:12px;">
-                    <input type="text" id="posterTitle" placeholder="Заголовок" style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
-                    <textarea id="posterDescription" rows="2" placeholder="Описание" style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;"></textarea>
-                    <input type="text" id="posterLink" placeholder="Ссылка" style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="/catalog">
-                    <input type="text" id="posterButtonText" placeholder="Текст кнопки" style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="Подробнее">
-                    <input type="number" id="posterOrder" placeholder="Порядок" style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="1">
+                    <input type="text" id="posterTitle" placeholder="Заголовок" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                    <textarea id="posterDescription" rows="2" placeholder="Описание" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;"></textarea>
+                    <input type="text" id="posterLink" placeholder="Ссылка" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="/catalog">
+                    <input type="text" id="posterButtonText" placeholder="Текст кнопки" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="Подробнее">
+                    <input type="number" id="posterOrder" placeholder="Порядок" style="width:100%; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;" value="1">
                     <label><input type="checkbox" id="posterActive" checked> Активен</label>
                     <input type="file" id="posterImage" accept="image/*" style="margin:0.5rem 0;">
                     <button onclick="addPoster()" class="admin-btn-small" style="background:var(--success-green); color:white;">Сохранить</button>
@@ -238,14 +212,14 @@
             </div>
             
             <div class="admin-section" id="products">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
                     <h2>Товары</h2>
                     <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить товар</button>
                 </div>
-                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                    <input type="text" id="searchProducts" placeholder="🔍 Поиск по названию..." style="flex:1; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;">
-                    <select id="filterCategory" style="padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;">
-                        <option value="all">Все категории</option>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <input type="text" id="searchProducts" placeholder="Поиск..." style="flex:1; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                    <select id="filterCategory" style="padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                        <option value="all">Все</option>
                         <option value="мышь">Мыши</option>
                         <option value="клавиатура">Клавиатуры</option>
                         <option value="наушники">Наушники</option>
@@ -255,27 +229,37 @@
                         <option value="mb">Материнские платы</option>
                     </select>
                 </div>
-                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead><tbody></tbody></table>
+                <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Видео</th><th>Действия</th></tr></thead><tbody></tbody></tr>
             </div>
             
             <div class="admin-section" id="add-product">
                 <h2>Добавить товар</h2>
                 <form id="addProductForm" class="admin-form">
-                    <div class="form-group"><label>Название товара *</label><input type="text" id="productName" required></div>
+                    <div class="form-group"><label>Название *</label><input type="text" id="productName" required></div>
                     <div class="form-row">
-                        <div class="form-group"><label>Категория *</label><select id="productCategory" required><option value="">Выберите категорию</option><option value="мышь">Игровая мышь</option><option value="клавиатура">Клавиатура</option><option value="наушники">Наушники</option><option value="монитор">Монитор</option><option value="keycaps">Кейкапы</option><option value="pads">Игровой коврик</option><option value="mb">Материнская плата</option></select></div>
-                        <div class="form-group"><label>Бренд *</label><select id="productBrand" required><option value="">Выберите бренд</option></select></div>
+                        <div class="form-group"><label>Категория *</label><select id="productCategory" required>
+                            <option value="">Выберите</option>
+                            <option value="мышь">Мышь</option>
+                            <option value="клавиатура">Клавиатура</option>
+                            <option value="наушники">Наушники</option>
+                            <option value="монитор">Монитор</option>
+                            <option value="keycaps">Кейкапы</option>
+                            <option value="pads">Коврик</option>
+                            <option value="mb">Материнская плата</option>
+                        </select></div>
+                        <div class="form-group"><label>Бренд *</label><select id="productBrand" required><option value="">Выберите</option></select></div>
                     </div>
-                    <div class="form-row"><div class="form-group"><label>Цена *</label><input type="text" id="productPrice" required></div><div class="form-group"><label>Количество</label><input type="number" id="productStock" value="10" min="0"></div></div>
-                    <div class="form-group"><label>Описание *</label><textarea id="productDescription" required rows="4"></textarea></div>
-                    <div class="form-group"><label>YouTube видео</label><input type="url" id="productVideo" placeholder="https://www.youtube.com/watch?v=..."></div>
+                    <div class="form-row"><div class="form-group"><label>Цена *</label><input type="text" id="productPrice" required></div><div class="form-group"><label>Кол-во</label><input type="number" id="productStock" value="10"></div></div>
+                    <div class="form-group"><label>Описание *</label><textarea id="productDescription" rows="4" required></textarea></div>
+                    <div class="form-group"><label>YouTube видео</label><input type="url" id="productVideo" placeholder="https://youtube.com/..."></div>
                     
+                    <!-- БЛОК МАТЕРИНСКИХ ПЛАТ -->
                     <div id="mbSpecsBlock" style="display: none;">
                         <div class="mb-specs-block">
                             <h3 class="mb-specs-title"><i class="fas fa-microchip"></i> Характеристики материнской платы</h3>
                             <div class="platform-selector">
-                                <button type="button" class="platform-btn intel active" onclick="setPlatform('intel')"><i class="fab fa-intel"></i> Intel</button>
-                                <button type="button" class="platform-btn amd" onclick="setPlatform('amd')"><i class="fab fa-amd"></i> AMD</button>
+                                <button type="button" class="platform-btn intel active" onclick="setPlatform('intel')">Intel</button>
+                                <button type="button" class="platform-btn amd" onclick="setPlatform('amd')">AMD</button>
                             </div>
                             <div id="intelPlatform" class="platform-content active">
                                 <div class="specs-grid">
@@ -308,11 +292,93 @@
                         </div>
                     </div>
                     
-                    <div class="form-group"><label>Характеристики</label><div id="featuresContainer" class="features-list"></div><button type="button" class="add-btn" onclick="addFeature()"><i class="fas fa-plus"></i> Добавить</button></div>
-                    <div class="form-group"><label>Фотографии товара *</label><div id="imagesContainer" class="images-list"></div><button type="button" class="add-btn" onclick="addImage()"><i class="fas fa-plus"></i> Добавить фото</button><div class="image-preview" id="imagePreview"></div></div>
-                    <div class="form-group"><label><input type="checkbox" id="isHotPrice"> <i class="fas fa-fire" style="color: #ff6b00;"></i> Товар со скидкой</label></div>
-                    <div id="hotPriceFields" style="display: none;"><div class="form-group"><label>Причина скидки</label><input type="text" id="hotPriceReason" placeholder="Акция недели, -30%"></div></div>
-                    <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white; padding: 1rem;"><i class="fas fa-save"></i> Сохранить товар</button>
+                    <!-- БЛОК МОНИТОРОВ -->
+                    <div id="monitorSpecsBlock" style="display: none;">
+                        <div class="mb-specs-block" style="border-color: var(--success-green);">
+                            <h3 class="mb-specs-title"><i class="fas fa-desktop"></i> Характеристики монитора</h3>
+                            
+                            <!-- Тип матрицы -->
+                            <div class="form-group">
+                                <label>Тип матрицы</label>
+                                <div class="monitor-buttons-group" id="panelTypeGroup">
+                                    <button type="button" class="monitor-spec-btn" data-value="IPS" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">IPS</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="Mini LED" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">Mini LED</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="OLED" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">OLED</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="VA" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">VA</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="TN" style="background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;">TN</button>
+                                </div>
+                                <input type="hidden" id="monitorPanelType" value="">
+                            </div>
+                            
+                            <!-- Разрешение (кнопки) -->
+                            <div class="form-group">
+                                <label>Разрешение</label>
+                                <div class="monitor-buttons-group" id="resolutionGroup">
+                                    <button type="button" class="monitor-spec-btn" data-value="FHD (1920x1080)">FHD (1920x1080)</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="2K (2560x1440)">2K (2560x1440)</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="4K (3840x2160)">4K (3840x2160)</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="UWHD (2560x1080)">UWHD (2560x1080)</button>
+                                </div>
+                                <input type="hidden" id="monitorResolution" value="">
+                            </div>
+                            
+                            <!-- Частота обновления (кнопки) -->
+                            <div class="form-group">
+                                <label>Частота обновления (Гц)</label>
+                                <div class="monitor-buttons-group" id="refreshRateGroup">
+                                    <button type="button" class="monitor-spec-btn" data-value="60Hz">60Hz</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="75Hz">75Hz</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="120Hz">120Hz</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="144Hz">144Hz</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="165Hz">165Hz</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="240Hz">240Hz</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="360Hz">360Hz</button>
+                                </div>
+                                <input type="hidden" id="monitorRefreshRate" value="">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group"><label>Диагональ (дюймы)</label><input type="text" id="monitorSize" placeholder="27, 32, 34"></div>
+                                <div class="form-group"><label>Соотношение сторон</label><select id="monitorAspectRatio"><option value="">Выберите</option><option>16:9</option><option>16:10</option><option>21:9</option><option>32:9</option></select></div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group"><label>Яркость (кд/м²)</label><input type="text" id="monitorBrightness" placeholder="250, 350, 400"></div>
+                                <div class="form-group"><label>Контрастность</label><input type="text" id="monitorContrast" placeholder="1000:1, 3000:1"></div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group"><label>Время отклика (мс)</label><input type="text" id="monitorResponseTime" placeholder="1ms, 4ms"></div>
+                                <div class="form-group"><label>Технологии</label>
+                                    <div class="monitor-buttons-group" id="techGroup">
+                                        <button type="button" class="monitor-spec-btn" data-value="G-Sync">G-Sync</button>
+                                        <button type="button" class="monitor-spec-btn" data-value="FreeSync">FreeSync</button>
+                                        <button type="button" class="monitor-spec-btn" data-value="HDR">HDR</button>
+                                        <button type="button" class="monitor-spec-btn" data-value="HDR400">HDR400</button>
+                                        <button type="button" class="monitor-spec-btn" data-value="HDR600">HDR600</button>
+                                    </div>
+                                    <input type="hidden" id="monitorTech" value="">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group"><label>Разъёмы</label>
+                                <div class="monitor-buttons-group" id="portsGroup">
+                                    <button type="button" class="monitor-spec-btn" data-value="HDMI">HDMI</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="DisplayPort">DisplayPort</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="USB-C">USB-C</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="DVI">DVI</button>
+                                    <button type="button" class="monitor-spec-btn" data-value="VGA">VGA</button>
+                                </div>
+                                <input type="hidden" id="monitorPorts" value="">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group"><label>Характеристики</label><div id="featuresContainer"></div><button type="button" class="add-btn" onclick="addFeature()">+ Добавить</button></div>
+                    <div class="form-group"><label>Фото (URL)</label><div id="imagesContainer"></div><button type="button" class="add-btn" onclick="addImage()">+ Добавить фото</button><div class="image-preview" id="imagePreview"></div></div>
+                    <div class="form-group"><label><input type="checkbox" id="isHotPrice"> Скидка</label></div>
+                    <div id="hotPriceFields" style="display:none;"><div class="form-group"><label>Причина</label><input type="text" id="hotPriceReason"></div></div>
+                    <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить</button>
                 </form>
             </div>
             
@@ -324,19 +390,19 @@
                         <form id="addBrandForm">
                             <div class="form-group"><label>Название</label><input type="text" id="brandName" required></div>
                             <div class="form-group"><label>URL логотипа</label><input type="url" id="brandLogo" required></div>
-                            <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить бренд</button>
+                            <button type="submit" class="admin-tab" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить бренд</button>
                         </form>
                     </div>
-                    <div><h3>Существующие бренды</h3><table class="admin-table"><thead><tr><th>Лого</th><th>Название</th><th>Товаров</th><th>Действия</th></tr></thead><tbody id="brandsTable"></tbody></table></div>
+                    <div><h3>Существующие бренды</h3><table class="admin-table"><thead><tr><th>Лого</th><th>Название</th><th>Товаров</th><th>Действия</th><tr></thead><tbody id="brandsTable"></tbody></table></div>
                 </div>
             </div>
             
             <div class="admin-section" id="reviews">
                 <h2>Отзывы</h2>
-                <div class="reviews-filters">
-                    <input type="text" id="searchReviews" placeholder="🔍 Поиск по автору или тексту...">
-                    <select id="reviewStatus">
-                        <option value="all">Все отзывы</option>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <input type="text" id="searchReviews" placeholder="Поиск..." style="flex:1; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                    <select id="reviewStatus" style="padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                        <option value="all">Все</option>
                         <option value="pending">На модерации</option>
                         <option value="approved">Одобренные</option>
                     </select>
@@ -346,78 +412,48 @@
             
             <div class="admin-section" id="messages">
                 <h2>Сообщения</h2>
-                <table class="admin-table" id="messagesTable"><thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Статус</th><th>Действия</th></tr></thead><tbody></tbody></table>
+                <table class="admin-table" id="messagesTable"><thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
             <div class="admin-section" id="tracking">
-                <h2>📦 Трекинг заказов</h2>
+                <h2>Трекинг заказов</h2>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
                     <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 16px;">
-                        <h3>➕ Добавить заказ</h3>
+                        <h3>Добавить заказ</h3>
                         <form id="addTrackingForm">
-                            <div class="form-group"><label>Трек-номер *</label><input type="text" id="trackingNumber" required placeholder="GG123456789"></div>
-                            <div class="form-group"><label>Телефон клиента *</label><input type="tel" id="trackingPhone" required></div>
-                            <div class="form-group"><label>Дата отправки *</label><input type="date" id="trackingSendDate" required></div>
+                            <div class="form-group"><label>Трек-номер</label><input type="text" id="trackingNumber" required></div>
+                            <div class="form-group"><label>Телефон</label><input type="tel" id="trackingPhone" required></div>
+                            <div class="form-group"><label>Дата отправки</label><input type="date" id="trackingSendDate" required></div>
                             <div class="form-group"><label>Тип доставки</label><select id="trackingDeliveryType"><option value="ground">Наземная</option><option value="air">Авиа</option></select></div>
-                            <button type="submit" class="admin-tab" style="width: 100%; background: var(--success-green); color: white;"><i class="fas fa-save"></i> Добавить</button>
+                            <button type="submit" class="admin-tab" style="background: var(--success-green); color: white;">Добавить</button>
                         </form>
                     </div>
-                    <div><h3>📋 Список заказов</h3><input type="text" id="searchTracking" placeholder="🔍 Поиск..." style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: white;"><div id="trackingOrdersList"></div></div>
+                    <div><h3>Список заказов</h3><input type="text" id="searchTracking" placeholder="Поиск..." style="width:100%; padding:0.5rem; margin-bottom:1rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;"><div id="trackingOrdersList"></div></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="editModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование товара</h2><span class="modal-close" onclick="closeEditModal()">&times;</span></div><div id="editFormContainer"></div></div></div>
-    <div class="modal" id="editPosterModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование постера</h2><span class="modal-close" onclick="closeEditPosterModal()">&times;</span></div><div id="editPosterFormContainer"></div></div></div>
+    <div class="modal" id="editModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование</h2><span class="modal-close" onclick="closeEditModal()">&times;</span></div><div id="editFormContainer"></div></div></div>
 
     <script>
-        // ===== TELEGRAM =====
         const TG_BOT_TOKEN = '8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8';
         const TG_CHAT_ID = '6040186314';
-
-        async function sendTelegramMessage(message) {
-            try {
-                await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TG_CHAT_ID, text: message, parse_mode: 'HTML', disable_web_page_preview: true })
-                });
-            } catch(e) { console.error('TG error:', e); }
-        }
-
-        setTimeout(() => sendTelegramMessage('✅ <b>GGPoint Админка</b>\nБот запущен!'), 3000);
-
-        const ADMIN_PASSWORD = "Dilsh-221";
+        async function sendTelegramMessage(m) { try { await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ chat_id:TG_CHAT_ID, text:m, parse_mode:'HTML' }) }); } catch(e){} }
+        setTimeout(() => sendTelegramMessage('✅ Админка запущена'), 2000);
         
+        const ADMIN_PASSWORD = "Dilsh-221";
         function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === ADMIN_PASSWORD) {
+            if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
                 document.getElementById('loginModal').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
                 document.getElementById('logoutBtn').style.display = 'flex';
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 if (typeof window.loadData === 'function') window.loadData();
-            } else {
-                document.getElementById('loginError').textContent = '❌ Неверный пароль';
-            }
+            } else { document.getElementById('loginError').textContent = '❌ Неверный пароль'; }
         }
-        
-        window.onload = function() {
-            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                document.getElementById('loginModal').style.display = 'none';
-                document.getElementById('adminContent').style.display = 'block';
-                document.getElementById('logoutBtn').style.display = 'flex';
-                if (typeof window.loadData === 'function') window.loadData();
-            }
-        };
-        
-        document.getElementById('logoutBtn')?.addEventListener('click', () => {
-            if (confirm('Выйти из админ-панели?')) {
-                sessionStorage.removeItem('adminLoggedIn');
-                location.reload();
-            }
-        });
+        window.onload = () => { if (sessionStorage.getItem('adminLoggedIn') === 'true') { document.getElementById('loginModal').style.display = 'none'; document.getElementById('adminContent').style.display = 'block'; document.getElementById('logoutBtn').style.display = 'flex'; if (typeof window.loadData === 'function') window.loadData(); } };
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { sessionStorage.removeItem('adminLoggedIn'); location.reload(); });
         
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -436,66 +472,55 @@
         }
         window.switchToAddProduct = switchToAddProduct;
         window.closeEditModal = () => document.getElementById('editModal').classList.remove('active');
-        window.closeEditPosterModal = () => document.getElementById('editPosterModal').classList.remove('active');
         window.showAddPosterForm = () => document.getElementById('addPosterForm').style.display = 'block';
         window.hideAddPosterForm = () => document.getElementById('addPosterForm').style.display = 'none';
         
         let currentPlatform = 'intel';
-        function setPlatform(platform) {
-            currentPlatform = platform;
-            document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.platform-btn.${platform}`).classList.add('active');
-            document.getElementById('intelPlatform').classList.toggle('active', platform === 'intel');
-            document.getElementById('amdPlatform').classList.toggle('active', platform === 'amd');
-        }
-        window.setPlatform = setPlatform;
+        window.setPlatform = function(p) { currentPlatform = p; document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active')); document.querySelector(`.platform-btn.${p}`).classList.add('active'); document.getElementById('intelPlatform').classList.toggle('active', p === 'intel'); document.getElementById('amdPlatform').classList.toggle('active', p === 'amd'); };
         
-        function addFeature() {
-            const container = document.getElementById('featuresContainer');
-            const div = document.createElement('div'); div.className = 'feature-item';
-            div.innerHTML = `<input type="text" class="feature-input" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`;
-            container.appendChild(div);
-        }
-        
-        function addImage() {
-            const container = document.getElementById('imagesContainer');
-            const div = document.createElement('div'); div.className = 'image-item';
-            div.innerHTML = `<input type="url" class="image-input" placeholder="https://example.com/image.jpg" onchange="updatePreview()"><button type="button" class="remove-btn" onclick="this.parentElement.remove(); updatePreview()"><i class="fas fa-times"></i></button>`;
-            container.appendChild(div);
-        }
-        
-        function updatePreview() {
-            const preview = document.getElementById('imagePreview');
-            if (!preview) return;
-            preview.innerHTML = '';
-            document.querySelectorAll('.image-input').forEach(input => {
-                if (input.value) {
-                    const img = document.createElement('img');
-                    img.src = input.value;
-                    img.className = 'preview-img';
-                    img.onerror = () => img.src = 'https://via.placeholder.com/80';
-                    preview.appendChild(img);
-                }
+        function initMonitorButtons() {
+            const groups = ['panelTypeGroup', 'resolutionGroup', 'refreshRateGroup', 'techGroup', 'portsGroup'];
+            groups.forEach(groupId => {
+                const container = document.getElementById(groupId);
+                if (!container) return;
+                const hiddenInput = document.getElementById(groupId === 'panelTypeGroup' ? 'monitorPanelType' : groupId === 'resolutionGroup' ? 'monitorResolution' : groupId === 'refreshRateGroup' ? 'monitorRefreshRate' : groupId === 'techGroup' ? 'monitorTech' : 'monitorPorts');
+                container.querySelectorAll('.monitor-spec-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (groupId === 'techGroup' || groupId === 'portsGroup') {
+                            btn.classList.toggle('active');
+                            if (btn.classList.contains('active')) btn.style.cssText = 'background: var(--primary-blue); color: white; border-color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
+                            else btn.style.cssText = 'background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
+                            const selected = Array.from(container.querySelectorAll('.monitor-spec-btn.active')).map(b => b.dataset.value);
+                            if (hiddenInput) hiddenInput.value = selected.join(', ');
+                        } else {
+                            container.querySelectorAll('.monitor-spec-btn').forEach(b => {
+                                b.classList.remove('active');
+                                b.style.cssText = 'background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
+                            });
+                            btn.classList.add('active');
+                            btn.style.cssText = 'background: var(--primary-blue); color: white; border-color: var(--primary-blue); border-radius: 30px; padding: 0.4rem 1rem; cursor: pointer;';
+                            if (hiddenInput) hiddenInput.value = btn.dataset.value;
+                        }
+                    });
+                });
             });
         }
         
-        window.addFeature = addFeature;
-        window.addImage = addImage;
-        window.updatePreview = updatePreview;
+        function addFeature() { const c = document.getElementById('featuresContainer'); const d = document.createElement('div'); d.className = 'feature-item'; d.innerHTML = `<input type="text" class="feature-input" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); }
+        function addImage() { const c = document.getElementById('imagesContainer'); const d = document.createElement('div'); d.className = 'image-item'; d.innerHTML = `<input type="url" class="image-input" placeholder="https://..." onchange="updatePreview()"><button type="button" class="remove-btn" onclick="this.parentElement.remove(); updatePreview()"><i class="fas fa-times"></i></button>`; c.appendChild(d); }
+        function updatePreview() { const p = document.getElementById('imagePreview'); if(!p) return; p.innerHTML = ''; document.querySelectorAll('.image-input').forEach(i => { if(i.value) { const img = document.createElement('img'); img.src = i.value; img.className = 'preview-img'; img.onerror = () => img.src = 'https://via.placeholder.com/80'; p.appendChild(img); } }); }
+        window.addFeature = addFeature; window.addImage = addImage; window.updatePreview = updatePreview;
         
         document.getElementById('productCategory')?.addEventListener('change', function() {
             const mbBlock = document.getElementById('mbSpecsBlock');
+            const monitorBlock = document.getElementById('monitorSpecsBlock');
             if (mbBlock) mbBlock.style.display = this.value === 'mb' ? 'block' : 'none';
+            if (monitorBlock) monitorBlock.style.display = this.value === 'монитор' ? 'block' : 'none';
+            if (this.value === 'монитор') setTimeout(initMonitorButtons, 50);
         });
         
-        document.getElementById('isHotPrice')?.addEventListener('change', function() {
-            document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none';
-        });
-        
-        setTimeout(() => {
-            if (document.getElementById('featuresContainer')?.children.length === 0) addFeature();
-            if (document.getElementById('imagesContainer')?.children.length === 0) addImage();
-        }, 500);
+        document.getElementById('isHotPrice')?.addEventListener('change', function() { document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none'; });
+        setTimeout(() => { if(document.getElementById('featuresContainer')?.children.length === 0) addFeature(); if(document.getElementById('imagesContainer')?.children.length === 0) addImage(); }, 500);
     </script>
 
     <script type="module">
@@ -515,369 +540,110 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         
-        let products = [];
-        let hotPrices = {};
-        let brands = {};
-        let messages = [];
-        let reviews = [];
-        let posters = [];
-        let trackingOrders = {};
-
-        async function sendTG(msg) {
-            const TG_TOKEN = '8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8';
-            const TG_CHAT_ID = '6040186314';
-            try {
-                await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TG_CHAT_ID, text: msg, parse_mode: 'HTML', disable_web_page_preview: true })
-                });
-            } catch(e) { console.error('TG error:', e); }
+        let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], posters = [], trackingOrders = {};
+        
+        async function sendTG(msg) { const TG_TOKEN='8363480259:AAGdvm9BnLK4qrKQSFvJ-90eP0KuDDejUS8', CHAT='6040186314'; try{ await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT,text:msg,parse_mode:'HTML'})}); } catch(e){} }
+        
+        function escapeHtml(s) { if(!s) return ''; return String(s).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+        function getCategoryName(k) { const c={'мышь':'Мышь','клавиатура':'Клавиатура','наушники':'Наушники','монитор':'Монитор','keycaps':'Кейкапы','pads':'Коврик','mb':'Материнская плата'}; return c[k]||k; }
+        
+        let lastReview=0, lastMsg=0, lastProd=0;
+        function checkNew() {
+            if(reviews.length>lastReview){ const r=reviews[reviews.length-1], p=products.find(pr=>pr.id==r.productId); sendTG(`🆕 НОВЫЙ ОТЗЫВ!\n📦 ${p?.name||r.productName}\n👤 ${r.author||'Аноним'}\n⭐ ${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}\n💬 ${(r.text||'').substring(0,200)}`); lastReview=reviews.length; }
+            if(messages.length>lastMsg){ const m=messages[messages.length-1]; sendTG(`📨 НОВОЕ СООБЩЕНИЕ!\n👤 ${m.name}\n📞 ${m.method}: ${m.contact}\n💬 ${(m.message||'').substring(0,300)}`); lastMsg=messages.length; }
+            if(products.length>lastProd){ const p=products[products.length-1]; sendTG(`🆕 НОВЫЙ ТОВАР!\n📦 ${p.name}\n🏷️ ${getCategoryName(p.category)}\n💵 ${p.price}`); lastProd=products.length; }
         }
-
-        function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
-        function getCategoryName(key) {
-            const cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'keycaps':'Кейкапы', 'pads':'Коврик', 'mb':'Материнская плата' };
-            return cats[key] || key;
-        }
-
-        let lastReviewCount = 0, lastMessageCount = 0, lastProductCount = 0;
-
-        function checkNewData() {
-            if (reviews.length > lastReviewCount) {
-                const r = reviews[reviews.length - 1];
-                const p = products.find(p => p.id == r.productId);
-                sendTG(`🆕 НОВЫЙ ОТЗЫВ!\n📦 ${p?.name || r.productName}\n👤 ${r.author || 'Аноним'}\n⭐ ${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}\n💬 ${(r.text||'').substring(0,200)}`);
-                lastReviewCount = reviews.length;
-            }
-            if (messages.length > lastMessageCount) {
-                const m = messages[messages.length - 1];
-                sendTG(`📨 НОВОЕ СООБЩЕНИЕ!\n👤 ${m.name}\n📞 ${m.method}: ${m.contact}\n💬 ${(m.message||'').substring(0,300)}`);
-                lastMessageCount = messages.length;
-            }
-            if (products.length > lastProductCount) {
-                const p = products[products.length - 1];
-                sendTG(`🆕 НОВЫЙ ТОВАР!\n📦 ${p.name}\n🏷️ ${getCategoryName(p.category)}\n💵 ${p.price}`);
-                lastProductCount = products.length;
-            }
-        }
-
+        
         function loadData() {
-            onValue(ref(database, 'products'), (s) => { 
-                products = s.val() ? Object.values(s.val()) : []; 
-                updateDashboard(); renderProducts(); renderRecentProducts(); renderBrands();
-                if (lastProductCount === 0) lastProductCount = products.length;
-                checkNewData();
-            });
-            onValue(ref(database, 'hotPrices'), (s) => { hotPrices = s.val() || {}; updateDashboard(); });
-            onValue(ref(database, 'brands'), (s) => { 
-                brands = s.val() || {}; 
-                updateDashboard(); 
-                renderBrands(); 
-                updateBrandSelect(); 
-            });
-            onValue(ref(database, 'messages'), (s) => { 
-                const d = s.val(); 
-                messages = d ? Object.entries(d).map(([id, msg]) => ({ id, ...msg })) : []; 
-                renderMessages();
-                if (lastMessageCount === 0) lastMessageCount = messages.length;
-                checkNewData();
-            });
-            onValue(ref(database, 'reviews'), (s) => { 
-                const d = s.val(); 
-                reviews = d ? Object.entries(d).map(([id, r]) => ({ id, ...r })) : []; 
-                updateDashboard(); renderReviews();
-                if (lastReviewCount === 0) lastReviewCount = reviews.length;
-                checkNewData();
-            });
-            onValue(ref(database, 'posters'), (s) => { 
-                const d = s.val(); 
-                posters = d ? Object.entries(d).map(([id, p]) => ({ id, ...p })) : []; 
-                renderPosters(); 
-            });
-            onValue(ref(database, 'tracking_orders'), (s) => { 
-                trackingOrders = s.val() || {}; 
-                renderTrackingOrders(); 
-            });
+            onValue(ref(database,'products'), (s) => { products = s.val() ? Object.values(s.val()) : []; updateDashboard(); renderProducts(); renderRecentProducts(); renderBrands(); if(lastProd===0) lastProd=products.length; checkNew(); });
+            onValue(ref(database,'hotPrices'), (s) => { hotPrices = s.val() || {}; updateDashboard(); });
+            onValue(ref(database,'brands'), (s) => { brands = s.val() || {}; updateDashboard(); renderBrands(); updateBrandSelect(); });
+            onValue(ref(database,'messages'), (s) => { const d=s.val(); messages = d ? Object.entries(d).map(([id,msg])=>({id,...msg})) : []; renderMessages(); if(lastMsg===0) lastMsg=messages.length; checkNew(); });
+            onValue(ref(database,'reviews'), (s) => { const d=s.val(); reviews = d ? Object.entries(d).map(([id,r])=>({id,...r})) : []; updateDashboard(); renderReviews(); if(lastReview===0) lastReview=reviews.length; checkNew(); });
+            onValue(ref(database,'posters'), (s) => { const d=s.val(); posters = d ? Object.entries(d).map(([id,p])=>({id,...p})) : []; renderPosters(); });
+            onValue(ref(database,'tracking_orders'), (s) => { trackingOrders = s.val() || {}; renderTrackingOrders(); });
         }
         
         function updateDashboard() {
             document.getElementById('totalProducts').textContent = products.length;
-            document.getElementById('totalMB').textContent = products.filter(p => p.category === 'mb').length;
+            document.getElementById('totalMB').textContent = products.filter(p=>p.category==='mb').length;
             document.getElementById('totalHotPrices').textContent = Object.keys(hotPrices).length;
             document.getElementById('totalReviews').textContent = reviews.length;
             document.getElementById('totalPosters').textContent = posters.length;
         }
         
         function renderProducts() {
-            const tbody = document.querySelector('#productsTable tbody');
-            if (!tbody) return;
+            const tbody = document.querySelector('#productsTable tbody'); if(!tbody) return;
             const search = document.getElementById('searchProducts')?.value.toLowerCase() || '';
             const filter = document.getElementById('filterCategory')?.value || 'all';
-            const filtered = products.filter(p => p.name.toLowerCase().includes(search) && (filter === 'all' || p.category === filter));
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center;">Товаров не найдено</td></tr>';
-                return;
-            }
-            tbody.innerHTML = filtered.map(p => `
-                <tr>
-                    <td>${p.id}</td>
-                    <td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" width="50" height="50" style="object-fit:contain;" onerror="this.src='https://via.placeholder.com/50'"></td>
-                    <td>${escapeHtml(p.name)}</td>
-                    <td>${getCategoryName(p.category)}</td>
-                    <td>${escapeHtml(p.brand || '-')}</td>
-                    <td>${escapeHtml(p.price)}</td>
-                    <td>${hotPrices[p.id] ? '🔥 Да' : 'Нет'}</td>
-                    <td>${p.video ? '✅' : '❌'}</td>
-                    <td class="admin-actions">
-                        <button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i> Ред.</button>
-                        <button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
-                        <button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}', '_blank')"><i class="fas fa-eye"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+            const filtered = products.filter(p => p.name.toLowerCase().includes(search) && (filter==='all' || p.category===filter));
+            if(filtered.length===0){ tbody.innerHTML = '<tr><td colspan="9">Товаров не найдено</td></tr>'; return; }
+            tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td>${p.video?'✅':'❌'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
         }
         
         function renderRecentProducts() {
-            const tbody = document.querySelector('#recentProducts tbody');
-            if (!tbody) return;
-            const recent = [...products].sort((a,b) => new Date(b.dateAdded||0) - new Date(a.dateAdded||0)).slice(0,5);
-            if (recent.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Нет товаров</td></tr>';
-                return;
-            }
-            tbody.innerHTML = recent.map(p => `
-                <tr>
-                    <td><img src="${p.images?.[0] || 'https://via.placeholder.com/50'}" width="50" style="object-fit:contain;"></td>
-                    <td>${escapeHtml(p.name)}</td>
-                    <td>${getCategoryName(p.category)}</td>
-                    <td>${escapeHtml(p.price)}</td>
-                    <td>${p.dateAdded ? new Date(p.dateAdded).toLocaleDateString() : '-'}</td>
-                </tr>
-            `).join('');
+            const tbody = document.querySelector('#recentProducts tbody'); if(!tbody) return;
+            const recent = [...products].sort((a,b)=>new Date(b.dateAdded||0)-new Date(a.dateAdded||0)).slice(0,5);
+            if(recent.length===0){ tbody.innerHTML = '<tr><td colspan="5">Нет товаров</td></tr>'; return; }
+            tbody.innerHTML = recent.map(p => `<tr><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.price)}</td><td>${p.dateAdded ? new Date(p.dateAdded).toLocaleDateString() : '-'}</td></tr>`).join('');
         }
         
         function renderBrands() {
-            const tbody = document.getElementById('brandsTable');
-            if (!tbody) return;
-            if (Object.keys(brands).length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Нет брендов</td></tr>';
-                return;
-            }
-            tbody.innerHTML = Object.values(brands).map(b => `
-                <tr>
-                    <td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain; filter:brightness(0) invert(1);" onerror="this.style.display='none'"></td>
-                    <td>${escapeHtml(b.name)}</td>
-                    <td>${products.filter(p => p.brand === b.name).length}</td>
-                    <td class="admin-actions">
-                        <button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button>
-                        <button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+            const tbody = document.getElementById('brandsTable'); if(!tbody) return;
+            if(Object.keys(brands).length===0){ tbody.innerHTML = '<tr><td colspan="4">Нет брендов</td></tr>'; return; }
+            tbody.innerHTML = Object.values(brands).map(b => `<tr><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain; filter:brightness(0) invert(1);" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
-        window.editBrand = (id) => {
-            const brand = brands[id];
-            if (!brand) {
-                alert('Бренд не найден');
-                return;
-            }
-            document.getElementById('brandName').value = brand.name;
-            document.getElementById('brandLogo').value = brand.icon;
-            window.editingBrandId = id;
-            document.querySelector('#brands .admin-tab[style*="background"]')?.scrollIntoView({ behavior: 'smooth' });
-        };
-        
-        window.deleteBrand = async (id) => {
-            if (!confirm('❌ Удалить бренд? Товары этого бренда останутся без бренда.')) return;
-            try {
-                await remove(ref(database, 'brands/' + id));
-                alert('✅ Бренд удален');
-                const snapshot = await get(ref(database, 'brands'));
-                brands = snapshot.val() || {};
-                renderBrands();
-                updateBrandSelect();
-            } catch(error) {
-                console.error(error);
-                alert('❌ Ошибка при удалении');
-            }
-        };
+        window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
+        window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')){ await remove(ref(database,'brands/'+id)); alert('✅ Бренд удален'); location.reload(); } };
         
         function updateBrandSelect() {
-            const select = document.getElementById('productBrand');
-            if (!select) return;
+            const select = document.getElementById('productBrand'); if(!select) return;
             select.innerHTML = '<option value="">Выберите бренд</option>' + Object.values(brands).sort((a,b)=>a.name.localeCompare(b.name)).map(b => `<option value="${escapeHtml(b.name)}">${escapeHtml(b.name)}</option>`).join('');
-            const editSelect = document.getElementById('editProductBrand');
-            if (editSelect) {
-                editSelect.innerHTML = '<option value="">Выберите бренд</option>' + Object.values(brands).sort((a,b)=>a.name.localeCompare(b.name)).map(b => `<option value="${escapeHtml(b.name)}">${escapeHtml(b.name)}</option>`).join('');
-            }
         }
         
         function renderMessages() {
-            const tbody = document.querySelector('#messagesTable tbody');
-            if (!tbody) return;
-            if (messages.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Нет сообщений</td></tr>';
-                return;
-            }
-            tbody.innerHTML = messages.map(m => `
-                <tr>
-                    <td>${new Date(m.date).toLocaleString()}</td>
-                    <td>${escapeHtml(m.name)}</td>
-                    <td>${escapeHtml(m.contact || m.method)}</td>
-                    <td>${escapeHtml(m.message.substring(0,50))}...</td>
-                    <td><span class="status-badge ${m.status||'new'}">${m.status==='new'?'Новое':'Прочитано'}</span></td>
-                    <td class="admin-actions">
-                        <button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\nКонтакт: ${escapeHtml(m.contact||m.method)}\n\nСообщение:\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button>
-                        <button class="admin-btn-small delete" onclick="deleteMessage('${m.id}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+            const tbody = document.querySelector('#messagesTable tbody'); if(!tbody) return;
+            if(messages.length===0){ tbody.innerHTML = '<tr><td colspan="5">Нет сообщений</td></tr>'; return; }
+            tbody.innerHTML = messages.map(m => `<tr><td>${new Date(m.date).toLocaleString()}</td><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.contact||m.method)}</td><td>${escapeHtml(m.message.substring(0,50))}...</td><td class="admin-actions"><button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\nКонтакт: ${escapeHtml(m.contact||m.method)}\n\nСообщение:\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button><button class="admin-btn-small delete" onclick="deleteMessage('${m.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
         
-        window.deleteMessage = async (id) => {
-            if (!confirm('Удалить сообщение?')) return;
-            try {
-                await remove(ref(database, 'messages/' + id));
-                alert('✅ Сообщение удалено');
-                const snapshot = await get(ref(database, 'messages'));
-                messages = snapshot.val() ? Object.entries(snapshot.val()).map(([id, msg]) => ({ id, ...msg })) : [];
-                renderMessages();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
+        window.deleteMessage = async (id) => { if(confirm('Удалить сообщение?')){ await remove(ref(database,'messages/'+id)); alert('✅ Удалено'); location.reload(); } };
         
         function renderReviews() {
-            const container = document.getElementById('reviewsContainer');
-            if (!container) return;
+            const container = document.getElementById('reviewsContainer'); if(!container) return;
             const status = document.getElementById('reviewStatus')?.value || 'all';
             const search = document.getElementById('searchReviews')?.value.toLowerCase() || '';
             let filtered = [...reviews];
-            if (status !== 'all') filtered = filtered.filter(r => r.status === status);
-            if (search) filtered = filtered.filter(r => (r.author || '').toLowerCase().includes(search) || (r.text || '').toLowerCase().includes(search));
-            if (filtered.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Отзывов пока нет</p>';
-                return;
-            }
-            container.innerHTML = filtered.map(r => {
-                const product = products.find(p => p.id == r.productId);
-                return `
-                    <div class="review-card">
-                        <div class="review-header"><div class="review-author"><div class="review-avatar">${(r.author?.charAt(0) || 'А').toUpperCase()}</div><div><h4>${escapeHtml(r.author) || 'Аноним'}</h4><span>${new Date(r.date).toLocaleString()}</span></div></div><div class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</div></div>
-                        <div class="review-product"><i class="fas fa-box"></i> Товар: ${escapeHtml(product?.name || 'Неизвестный')}</div>
-                        <div class="review-text">${escapeHtml(r.text || '')}</div>
-                        ${r.adminReply ? `<div class="admin-reply"><div class="admin-reply-header"><i class="fas fa-user-shield"></i> Ответ администратора</div><div class="admin-reply-text">${escapeHtml(r.adminReply)}</div></div>` : ''}
-                        <div class="admin-actions" style="margin-top: 1rem;">
-                            ${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')"><i class="fas fa-check"></i> Одобрить</button>` : ''}
-                            <button class="admin-btn-small delete" onclick="deleteReview('${r.id}')"><i class="fas fa-trash"></i> Удалить</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            if(status !== 'all') filtered = filtered.filter(r => r.status === status);
+            if(search) filtered = filtered.filter(r => (r.author||'').toLowerCase().includes(search) || (r.text||'').toLowerCase().includes(search));
+            if(filtered.length === 0){ container.innerHTML = '<p>Отзывов пока нет</p>'; return; }
+            container.innerHTML = filtered.map(r => { const p = products.find(pr => pr.id == r.productId); return `<div class="review-card"><div class="review-header"><div class="review-author"><div class="review-avatar">${(r.author?.charAt(0)||'А').toUpperCase()}</div><div><strong>${escapeHtml(r.author)||'Аноним'}</strong><br><small>${new Date(r.date).toLocaleString()}</small></div></div><div class="review-rating">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div></div><div><strong>Товар:</strong> ${escapeHtml(p?.name||'Неизвестный')}</div><div class="review-text">${escapeHtml(r.text)}</div>${r.adminReply ? `<div class="admin-reply"><strong>👑 Ответ:</strong><br>${escapeHtml(r.adminReply)}</div>` : ''}<div class="admin-actions" style="margin-top:0.8rem;">${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')"><i class="fas fa-check"></i> Одобрить</button>` : ''}<button class="admin-btn-small delete" onclick="deleteReview('${r.id}')"><i class="fas fa-trash"></i> Удалить</button></div></div>`; }).join('');
         }
         
-        window.approveReview = async (id) => {
-            try {
-                await update(ref(database, 'reviews/' + id), { status: 'approved' });
-                alert('✅ Отзыв одобрен');
-                const snapshot = await get(ref(database, 'reviews'));
-                reviews = snapshot.val() ? Object.entries(snapshot.val()).map(([id, r]) => ({ id, ...r })) : [];
-                renderReviews();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
-        
-        window.deleteReview = async (id) => {
-            if (!confirm('Удалить отзыв?')) return;
-            try {
-                await remove(ref(database, 'reviews/' + id));
-                alert('✅ Отзыв удален');
-                const snapshot = await get(ref(database, 'reviews'));
-                reviews = snapshot.val() ? Object.entries(snapshot.val()).map(([id, r]) => ({ id, ...r })) : [];
-                renderReviews();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
+        window.approveReview = async (id) => { await update(ref(database,'reviews/'+id),{status:'approved'}); alert('✅ Одобрено'); location.reload(); };
+        window.deleteReview = async (id) => { if(confirm('Удалить отзыв?')){ await remove(ref(database,'reviews/'+id)); alert('✅ Удалено'); location.reload(); } };
         
         function renderPosters() {
-            const container = document.getElementById('postersList');
-            if (!container) return;
-            if (posters.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Постеров пока нет</p>';
-                return;
-            }
-            posters.sort((a,b) => (a.order||999) - (b.order||999));
-            container.innerHTML = posters.map(p => `
-                <div class="poster-card">
-                    <img src="${p.imageUrl}" class="poster-preview" onerror="this.src='https://via.placeholder.com/300x200?text=Ошибка'">
-                    <div class="poster-info">
-                        <h4 class="poster-title">${escapeHtml(p.title)}</h4>
-                        <p style="color: var(--text-gray);">${escapeHtml(p.description || '')}</p>
-                        <div><span class="status-badge ${p.active ? 'published' : 'draft'}">${p.active ? 'Активен' : 'Неактивен'}</span> Порядок: ${p.order||1}</div>
-                        <div class="poster-actions" style="margin-top: 0.8rem;">
-                            <button class="admin-btn-small delete" onclick="deletePoster('${p.id}')"><i class="fas fa-trash"></i> Удалить</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            const container = document.getElementById('postersList'); if(!container) return;
+            if(posters.length === 0){ container.innerHTML = '<p>Постеров пока нет</p>'; return; }
+            posters.sort((a,b)=>(a.order||999)-(b.order||999));
+            container.innerHTML = posters.map(p => `<div class="poster-card"><img src="${p.imageUrl}" class="poster-preview"><div><strong>${escapeHtml(p.title)}</strong><br>${escapeHtml(p.description||'')}<br><span class="status-badge ${p.active?'published':'draft'}">${p.active?'Активен':'Неактивен'}</span> Порядок: ${p.order||1}<br><button class="admin-btn-small delete" onclick="deletePoster('${p.id}')">Удалить</button></div></div>`).join('');
         }
         
-        window.deletePoster = async (id) => {
-            if (!confirm('Удалить постер?')) return;
-            try {
-                await remove(ref(database, 'posters/' + id));
-                alert('✅ Постер удален');
-                const snapshot = await get(ref(database, 'posters'));
-                posters = snapshot.val() ? Object.entries(snapshot.val()).map(([id, p]) => ({ id, ...p })) : [];
-                renderPosters();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
+        window.deletePoster = async (id) => { if(confirm('Удалить постер?')){ await remove(ref(database,'posters/'+id)); alert('✅ Удалено'); location.reload(); } };
         
         function renderTrackingOrders() {
-            const container = document.getElementById('trackingOrdersList');
-            if (!container) return;
+            const container = document.getElementById('trackingOrdersList'); if(!container) return;
             const search = document.getElementById('searchTracking')?.value.toLowerCase() || '';
-            const orders = Object.entries(trackingOrders).map(([track, data]) => ({ tracking: track, ...data }))
-                .filter(o => o.tracking.toLowerCase().includes(search) || (o.phone || '').includes(search))
-                .sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
-            if (orders.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Заказов пока нет</p>';
-                return;
-            }
-            container.innerHTML = orders.map(o => `
-                <div class="poster-card">
-                    <div class="poster-info">
-                        <div><strong>${o.tracking}</strong> <span class="status-badge ${o.isClosed ? 'approved' : 'pending'}">${o.isClosed ? 'Закрыт' : 'Активен'}</span></div>
-                        <p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType === 'air' ? 'plane' : 'truck'}"></i> ${o.deliveryType === 'air' ? 'Авиа' : 'Наземный'}<br>📅 Отправлен: ${o.sendDate}</p>
-                        <div class="poster-actions">
-                            ${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}
-                            <button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            const orders = Object.entries(trackingOrders).map(([track,data])=> ({ tracking:track, ...data })).filter(o => o.tracking.toLowerCase().includes(search) || (o.phone || '').includes(search)).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+            if(orders.length === 0){ container.innerHTML = '<p>Заказов пока нет</p>'; return; }
+            container.innerHTML = orders.map(o => `<div class="poster-card"><div><strong>${o.tracking}</strong> <span class="status-badge ${o.isClosed?'approved':'pending'}">${o.isClosed?'Закрыт':'Активен'}</span></div><p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType==='air'?'plane':'truck'}"></i> ${o.deliveryType==='air'?'Авиа':'Наземный'}<br>📅 ${o.sendDate}</p><div class="poster-actions">${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}<button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button></div></div>`).join('');
         }
         
-        window.closeTrackingOrder = async (tracking) => {
-            if (!confirm('Закрыть заказ?')) return;
-            try {
-                await update(ref(database, 'tracking_orders/' + tracking), { isClosed: true, closedAt: new Date().toISOString() });
-                alert('✅ Заказ закрыт');
-                const snapshot = await get(ref(database, 'tracking_orders'));
-                trackingOrders = snapshot.val() || {};
-                renderTrackingOrders();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
+        window.closeTrackingOrder = async (track) => { if(confirm('Закрыть заказ?')){ await update(ref(database,'tracking_orders/'+track),{isClosed:true,closedAt:new Date().toISOString()}); alert('✅ Закрыт'); location.reload(); } };
+        window.deleteTrackingOrder = async (track) => { if(confirm('Удалить заказ?')){ await remove(ref(database,'tracking_orders/'+track)); alert('✅ Удалено'); location.reload(); } };
         
-        window.deleteTrackingOrder = async (tracking) => {
-            if (!confirm('Удалить заказ?')) return;
-            try {
-                await remove(ref(database, 'tracking_orders/' + tracking));
-                alert('✅ Заказ удален');
-                const snapshot = await get(ref(database, 'tracking_orders'));
-                trackingOrders = snapshot.val() || {};
-                renderTrackingOrders();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
-        
-        // Добавление товара
         document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('productName').value;
@@ -888,207 +654,113 @@
             const video = document.getElementById('productVideo').value;
             const isHot = document.getElementById('isHotPrice').checked;
             const hotReason = document.getElementById('hotPriceReason').value;
-            const features = Array.from(document.querySelectorAll('.feature-input')).map(i => i.value).filter(v => v);
-            const images = Array.from(document.querySelectorAll('.image-input')).map(i => i.value).filter(v => v);
-            if (!name || !category || !brand || !price || !description || images.length === 0) {
-                alert('❌ Заполните все поля!');
-                return;
-            }
+            const features = Array.from(document.querySelectorAll('.feature-input')).map(i=>i.value).filter(v=>v);
+            const images = Array.from(document.querySelectorAll('.image-input')).map(i=>i.value).filter(v=>v);
+            if(!name||!category||!brand||!price||!description||images.length===0){ alert('❌ Заполните все поля'); return; }
             const newId = Date.now();
-            const newProduct = { id: newId, name, category, brand, price, description, video: video || '', features, images, dateAdded: new Date().toISOString() };
-            if (category === 'mb') {
+            const newProduct = { id:newId, name, category, brand, price, description, video:video||'', features, images, dateAdded:new Date().toISOString() };
+            
+            if(category === 'mb'){
                 const platform = currentPlatform;
-                newProduct.mbSpecs = {
-                    platform: platform,
-                    socket: platform === 'intel' ? document.getElementById('mbSocketIntel')?.value : document.getElementById('mbSocketAmd')?.value,
-                    chipset: platform === 'intel' ? document.getElementById('mbChipsetIntel')?.value : document.getElementById('mbChipsetAmd')?.value,
-                    formFactor: platform === 'intel' ? document.getElementById('mbFormFactor')?.value : document.getElementById('mbFormFactorAmd')?.value,
-                    ramSlots: platform === 'intel' ? document.getElementById('mbRamSlots')?.value : document.getElementById('mbRamSlotsAmd')?.value,
-                    pcieSlots: platform === 'intel' ? document.getElementById('mbPcieSlots')?.value : document.getElementById('mbPcieSlotsAmd')?.value,
-                    m2Slots: platform === 'intel' ? document.getElementById('mbM2Slots')?.value : document.getElementById('mbM2SlotsAmd')?.value,
-                    sataPorts: platform === 'intel' ? document.getElementById('mbSataPorts')?.value : document.getElementById('mbSataPortsAmd')?.value,
-                    usbPorts: platform === 'intel' ? document.getElementById('mbUsbPorts')?.value : document.getElementById('mbUsbPortsAmd')?.value,
-                    lan: platform === 'intel' ? document.getElementById('mbLan')?.value : document.getElementById('mbLanAmd')?.value,
-                    audio: platform === 'intel' ? document.getElementById('mbAudio')?.value : document.getElementById('mbAudioAmd')?.value
-                };
+                newProduct.mbSpecs = { platform, socket:platform==='intel'?document.getElementById('mbSocketIntel')?.value:document.getElementById('mbSocketAmd')?.value, chipset:platform==='intel'?document.getElementById('mbChipsetIntel')?.value:document.getElementById('mbChipsetAmd')?.value, formFactor:platform==='intel'?document.getElementById('mbFormFactor')?.value:document.getElementById('mbFormFactorAmd')?.value, ramSlots:platform==='intel'?document.getElementById('mbRamSlots')?.value:document.getElementById('mbRamSlotsAmd')?.value, pcieSlots:platform==='intel'?document.getElementById('mbPcieSlots')?.value:document.getElementById('mbPcieSlotsAmd')?.value, m2Slots:platform==='intel'?document.getElementById('mbM2Slots')?.value:document.getElementById('mbM2SlotsAmd')?.value, sataPorts:platform==='intel'?document.getElementById('mbSataPorts')?.value:document.getElementById('mbSataPortsAmd')?.value, usbPorts:platform==='intel'?document.getElementById('mbUsbPorts')?.value:document.getElementById('mbUsbPortsAmd')?.value, lan:platform==='intel'?document.getElementById('mbLan')?.value:document.getElementById('mbLanAmd')?.value, audio:platform==='intel'?document.getElementById('mbAudio')?.value:document.getElementById('mbAudioAmd')?.value };
+            }
+            if(category === 'монитор'){
+                const panelType = document.getElementById('monitorPanelType')?.value || '';
+                const resolution = document.getElementById('monitorResolution')?.value || '';
+                const refreshRate = document.getElementById('monitorRefreshRate')?.value || '';
+                const size = document.getElementById('monitorSize')?.value || '';
+                const aspectRatio = document.getElementById('monitorAspectRatio')?.value || '';
+                const brightness = document.getElementById('monitorBrightness')?.value || '';
+                const contrast = document.getElementById('monitorContrast')?.value || '';
+                const responseTime = document.getElementById('monitorResponseTime')?.value || '';
+                const tech = document.getElementById('monitorTech')?.value || '';
+                const ports = document.getElementById('monitorPorts')?.value || '';
+                newProduct.monitorSpecs = { panelType, resolution, refreshRate, size, aspectRatio, brightness, contrast, responseTime, tech, ports };
             }
             try {
-                await set(ref(database, 'products/' + newId), newProduct);
-                if (isHot && hotReason) await set(ref(database, 'hotPrices/' + newId), { reason: hotReason, added: new Date().toISOString() });
-                alert('✅ Товар добавлен!');
+                await set(ref(database,'products/'+newId), newProduct);
+                if(isHot && hotReason) await set(ref(database,'hotPrices/'+newId), { reason:hotReason, added:new Date().toISOString() });
+                alert('✅ Товар добавлен');
                 e.target.reset();
                 document.getElementById('imagesContainer').innerHTML = '';
                 document.getElementById('featuresContainer').innerHTML = '';
                 addFeature(); addImage();
                 switchToAddProduct();
-            } catch(error) { alert('❌ Ошибка'); }
+            } catch(error){ alert('❌ Ошибка'); }
         });
         
-        // Добавление бренда (с редактированием)
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('brandName').value.trim();
             const icon = document.getElementById('brandLogo').value.trim();
-            if (!name || !icon) {
-                alert('❌ Заполните название и URL логотипа');
-                return;
-            }
-            const id = name.toUpperCase().replace(/\s+/g, '_');
+            if(!name||!icon){ alert('Заполните поля'); return; }
+            const id = name.toUpperCase().replace(/\s+/g,'_');
             try {
-                if (window.editingBrandId && window.editingBrandId !== id) {
-                    await set(ref(database, 'brands/' + id), { name, icon, id });
-                    await remove(ref(database, 'brands/' + window.editingBrandId));
-                } else {
-                    await set(ref(database, 'brands/' + id), { name, icon, id });
-                }
-                alert('✅ Бренд сохранен!');
+                if(window.editingBrandId && window.editingBrandId !== id){ await set(ref(database,'brands/'+id),{name,icon,id}); await remove(ref(database,'brands/'+window.editingBrandId)); }
+                else { await set(ref(database,'brands/'+id),{name,icon,id}); }
+                alert('✅ Бренд сохранен');
                 document.getElementById('brandName').value = '';
                 document.getElementById('brandLogo').value = '';
                 window.editingBrandId = null;
-                const snapshot = await get(ref(database, 'brands'));
-                brands = snapshot.val() || {};
-                renderBrands();
-                updateBrandSelect();
-            } catch(error) {
-                console.error(error);
-                alert('❌ Ошибка при сохранении бренда');
-            }
+                location.reload();
+            } catch(error){ alert('❌ Ошибка'); }
         });
         
-        // Добавление постера
         window.addPoster = async () => {
             const title = document.getElementById('posterTitle').value;
-            const description = document.getElementById('posterDescription').value;
+            const desc = document.getElementById('posterDescription').value;
             const link = document.getElementById('posterLink').value;
-            const buttonText = document.getElementById('posterButtonText').value;
-            const order = parseInt(document.getElementById('posterOrder').value) || 1;
+            const btnText = document.getElementById('posterButtonText').value;
+            const order = parseInt(document.getElementById('posterOrder').value)||1;
             const active = document.getElementById('posterActive').checked;
             const file = document.getElementById('posterImage').files[0];
-            if (!title || !file) {
-                alert('❌ Заполните заголовок и выберите изображение');
-                return;
-            }
+            if(!title||!file){ alert('Заполните заголовок и выберите изображение'); return; }
             const reader = new FileReader();
-            reader.onload = async (evt) => {
-                const imageUrl = evt.target.result;
-                const posterId = Date.now().toString();
-                try {
-                    await set(ref(database, 'posters/' + posterId), { id: posterId, title, description, link: link || '/catalog', buttonText: buttonText || 'Подробнее', imageUrl, order, active, dateAdded: new Date().toISOString() });
-                    alert('✅ Постер добавлен!');
-                    hideAddPosterForm();
-                    const snapshot = await get(ref(database, 'posters'));
-                    posters = snapshot.val() ? Object.entries(snapshot.val()).map(([id, p]) => ({ id, ...p })) : [];
-                    renderPosters();
-                } catch(error) { alert('❌ Ошибка'); }
-            };
+            reader.onload = async (ev) => { const imgUrl = ev.target.result; const pid = Date.now().toString(); try{ await set(ref(database,'posters/'+pid),{ id:pid, title, description:desc, link:link||'/catalog', buttonText:btnText||'Подробнее', imageUrl:imgUrl, order, active, dateAdded:new Date().toISOString() }); alert('✅ Постер добавлен'); hideAddPosterForm(); location.reload(); } catch(e){ alert('❌ Ошибка'); } };
             reader.readAsDataURL(file);
         };
         
-        // Добавление трекинга
         document.getElementById('addTrackingForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const tracking = document.getElementById('trackingNumber').value.trim().toUpperCase();
+            const track = document.getElementById('trackingNumber').value.trim().toUpperCase();
             const phone = document.getElementById('trackingPhone').value.trim();
-            const sendDate = document.getElementById('trackingSendDate').value;
-            const deliveryType = document.getElementById('trackingDeliveryType').value;
-            if (!tracking || !phone || !sendDate) {
-                alert('❌ Заполните все поля');
-                return;
-            }
-            try {
-                await set(ref(database, 'tracking_orders/' + tracking), { phone, sendDate, deliveryType, isClosed: false, createdAt: new Date().toISOString() });
-                alert('✅ Заказ добавлен!');
-                document.getElementById('trackingNumber').value = '';
-                document.getElementById('trackingPhone').value = '';
-                document.getElementById('trackingSendDate').value = '';
-                const snapshot = await get(ref(database, 'tracking_orders'));
-                trackingOrders = snapshot.val() || {};
-                renderTrackingOrders();
-            } catch(error) { alert('❌ Ошибка'); }
+            const date = document.getElementById('trackingSendDate').value;
+            const type = document.getElementById('trackingDeliveryType').value;
+            if(!track||!phone||!date){ alert('Заполните все поля'); return; }
+            try{ await set(ref(database,'tracking_orders/'+track),{ phone, sendDate:date, deliveryType:type, isClosed:false, createdAt:new Date().toISOString() }); alert('✅ Заказ добавлен'); e.target.reset(); location.reload(); } catch(e){ alert('❌ Ошибка'); }
         });
         
-        // Удаление товара
-        window.deleteProduct = async (id) => {
-            if (!confirm('Удалить товар?')) return;
-            try {
-                await remove(ref(database, 'products/' + id));
-                if (hotPrices[id]) await remove(ref(database, 'hotPrices/' + id));
-                alert('✅ Товар удален');
-                const snapshot = await get(ref(database, 'products'));
-                products = snapshot.val() ? Object.values(snapshot.val()) : [];
-                renderProducts();
-                renderRecentProducts();
-                updateDashboard();
-            } catch(e) { alert('❌ Ошибка'); }
-        };
+        window.deleteProduct = async (id) => { if(confirm('Удалить товар?')){ await remove(ref(database,'products/'+id)); if(hotPrices[id]) await remove(ref(database,'hotPrices/'+id)); alert('✅ Удалено'); location.reload(); } };
         
-        // Редактирование товара
         window.editProduct = (id) => {
-            const product = products.find(p => p.id == id);
-            if (!product) return;
-            const modal = document.getElementById('editModal');
-            const container = document.getElementById('editFormContainer');
-            container.innerHTML = `
-                <form id="editProductForm">
-                    <input type="hidden" id="editId" value="${product.id}">
-                    <div class="form-group"><label>Название</label><input type="text" id="editName" value="${escapeHtml(product.name)}" required></div>
-                    <div class="form-row"><div class="form-group"><label>Категория</label><select id="editCategory">${['мышь','клавиатура','наушники','монитор','keycaps','pads','mb'].map(c => `<option value="${c}" ${product.category===c ? 'selected' : ''}>${getCategoryName(c)}</option>`).join('')}</select></div><div class="form-group"><label>Бренд</label><select id="editBrand">${Object.values(brands).map(b => `<option value="${b.name}" ${product.brand===b.name ? 'selected' : ''}>${escapeHtml(b.name)}</option>`).join('')}</select></div></div>
-                    <div class="form-group"><label>Цена</label><input type="text" id="editPrice" value="${escapeHtml(product.price)}" required></div>
-                    <div class="form-group"><label>Описание</label><textarea id="editDescription" rows="4">${escapeHtml(product.description)}</textarea></div>
-                    <div class="form-group"><label>YouTube</label><input type="url" id="editVideo" value="${product.video || ''}"></div>
-                    <div class="form-group"><label>Характеристики</label><div id="editFeatures">${product.features?.map(f => `<div class="feature-item"><input type="text" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('') || ''}</div><button type="button" class="add-btn" onclick="addEditFeature()">Добавить</button></div>
-                    <div class="form-group"><label>Фото</label><div id="editImages">${product.images?.map(img => `<div class="image-item"><input type="url" value="${img}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('') || ''}</div><button type="button" class="add-btn" onclick="addEditImage()">Добавить</button></div>
-                    <div class="form-group"><label><input type="checkbox" id="editHot" ${hotPrices[product.id] ? 'checked' : ''}> Скидка</label></div>
-                    <div id="editHotFields" style="display:${hotPrices[product.id] ? 'block' : 'none'}"><input type="text" id="editHotReason" placeholder="Причина скидки" value="${escapeHtml(hotPrices[product.id]?.reason || '')}"></div>
-                    <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить</button>
-                </form>
-            `;
+            const p = products.find(pr=>pr.id==id); if(!p) return;
+            const modal = document.getElementById('editModal'); const cont = document.getElementById('editFormContainer');
+            const isMB = p.category === 'mb';
+            const platform = p.mbSpecs?.platform || 'intel';
+            const isMonitor = p.category === 'монитор';
+            const ms = p.monitorSpecs || {};
+            cont.innerHTML = `<form id="editProductForm"><input type="hidden" id="editId" value="${p.id}"><div class="form-group"><label>Название</label><input type="text" id="editName" value="${escapeHtml(p.name)}" required></div><div class="form-row"><div class="form-group"><label>Категория</label><select id="editCategory">${['мышь','клавиатура','наушники','монитор','keycaps','pads','mb'].map(c=>`<option value="${c}" ${p.category===c?'selected':''}>${getCategoryName(c)}</option>`).join('')}</select></div><div class="form-group"><label>Бренд</label><select id="editBrand">${Object.values(brands).map(b=>`<option value="${b.name}" ${p.brand===b.name?'selected':''}>${escapeHtml(b.name)}</option>`).join('')}</select></div></div><div class="form-group"><label>Цена</label><input type="text" id="editPrice" value="${escapeHtml(p.price)}" required></div><div class="form-group"><label>Описание</label><textarea id="editDesc" rows="4">${escapeHtml(p.description)}</textarea></div><div class="form-group"><label>YouTube</label><input type="url" id="editVideo" value="${p.video||''}"></div>${isMB?`<div class="mb-specs-block"><h3>Характеристики MB</h3><div class="platform-selector"><button type="button" class="platform-btn intel ${platform==='intel'?'active':''}" onclick="setEditPlatform('intel')">Intel</button><button type="button" class="platform-btn amd ${platform==='amd'?'active':''}" onclick="setEditPlatform('amd')">AMD</button></div><div id="editIntelPlatform" class="platform-content ${platform==='intel'?'active':''}"><div class="specs-grid"><div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketIntel" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div><div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetIntel" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div><div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactor" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div><div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlots" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div><div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlots" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div><div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2Slots" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div><div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPorts" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div><div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPorts" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div><div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLan" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div><div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudio" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div></div></div><div id="editAmdPlatform" class="platform-content ${platform==='amd'?'active':''}"><div class="specs-grid"><div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketAmd" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div><div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetAmd" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div><div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactorAmd" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div><div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlotsAmd" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div><div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlotsAmd" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div><div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2SlotsAmd" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div><div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPortsAmd" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div><div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPortsAmd" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div><div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLanAmd" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div><div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudioAmd" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div></div></div></div>`:''}${isMonitor?`<div class="mb-specs-block"><h3>Характеристики монитора</h3><div class="form-group"><label>Тип матрицы</label><input type="text" value="${escapeHtml(ms.panelType||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Разрешение</label><input type="text" value="${escapeHtml(ms.resolution||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Частота</label><input type="text" value="${escapeHtml(ms.refreshRate||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Диагональ</label><input type="text" value="${escapeHtml(ms.size||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Соотношение сторон</label><input type="text" value="${escapeHtml(ms.aspectRatio||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Яркость</label><input type="text" value="${escapeHtml(ms.brightness||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Контрастность</label><input type="text" value="${escapeHtml(ms.contrast||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Время отклика</label><input type="text" value="${escapeHtml(ms.responseTime||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Технологии</label><input type="text" value="${escapeHtml(ms.tech||'')}" readonly style="background:#334155;"></div><div class="form-group"><label>Разъёмы</label><input type="text" value="${escapeHtml(ms.ports||'')}" readonly style="background:#334155;"></div></div>`:''}<div class="form-group"><label>Характеристики</label><div id="editFeatures">${p.features?.map(f=>`<div class="feature-item"><input type="text" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditFeature()">Добавить</button></div><div class="form-group"><label>Фото</label><div id="editImages">${p.images?.map(img=>`<div class="image-item"><input type="url" value="${img}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditImage()">Добавить</button></div><div class="form-group"><label><input type="checkbox" id="editHot" ${hotPrices[p.id]?'checked':''}> Скидка</label></div><div id="editHotFields" style="display:${hotPrices[p.id]?'block':'none'}"><input type="text" id="editHotReason" value="${escapeHtml(hotPrices[p.id]?.reason||'')}"></div><button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить</button></form>`;
             modal.classList.add('active');
-            document.getElementById('editHot')?.addEventListener('change', function() {
-                document.getElementById('editHotFields').style.display = this.checked ? 'block' : 'none';
-            });
+            document.getElementById('editHot')?.addEventListener('change', function(){ document.getElementById('editHotFields').style.display = this.checked ? 'block' : 'none'; });
+            window.setEditPlatform = (p) => { window.editPlatform = p; document.querySelectorAll('#editProductForm .platform-btn').forEach(btn=>btn.classList.remove('active')); document.querySelector(`#editProductForm .platform-btn.${p}`).classList.add('active'); document.getElementById('editIntelPlatform').classList.toggle('active',p==='intel'); document.getElementById('editAmdPlatform').classList.toggle('active',p==='amd'); };
             document.getElementById('editProductForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const updated = { ...product,
-                    name: document.getElementById('editName').value,
-                    category: document.getElementById('editCategory').value,
-                    brand: document.getElementById('editBrand').value,
-                    price: document.getElementById('editPrice').value,
-                    description: document.getElementById('editDescription').value,
-                    video: document.getElementById('editVideo').value || '',
-                    features: Array.from(document.querySelectorAll('#editFeatures .feature-item input')).map(i => i.value).filter(v => v),
-                    images: Array.from(document.querySelectorAll('#editImages .image-item input')).map(i => i.value).filter(v => v),
-                    lastUpdated: new Date().toISOString()
-                };
+                const updated = { ...p, name:document.getElementById('editName').value, category:document.getElementById('editCategory').value, brand:document.getElementById('editBrand').value, price:document.getElementById('editPrice').value, description:document.getElementById('editDesc').value, video:document.getElementById('editVideo').value||'', features:Array.from(document.querySelectorAll('#editFeatures .feature-item input')).map(i=>i.value).filter(v=>v), images:Array.from(document.querySelectorAll('#editImages .image-item input')).map(i=>i.value).filter(v=>v), lastUpdated:new Date().toISOString() };
                 try {
-                    await update(ref(database, 'products/' + product.id), updated);
+                    await update(ref(database,'products/'+p.id), updated);
                     const isHot = document.getElementById('editHot').checked;
                     const hotReason = document.getElementById('editHotReason').value;
-                    if (isHot && hotReason) await set(ref(database, 'hotPrices/' + product.id), { reason: hotReason });
-                    else if (!isHot && hotPrices[product.id]) await remove(ref(database, 'hotPrices/' + product.id));
+                    if(isHot && hotReason) await set(ref(database,'hotPrices/'+p.id),{ reason:hotReason });
+                    else if(!isHot && hotPrices[p.id]) await remove(ref(database,'hotPrices/'+p.id));
                     alert('✅ Товар обновлен');
                     closeEditModal();
-                    const snapshot = await get(ref(database, 'products'));
-                    products = snapshot.val() ? Object.values(snapshot.val()) : [];
-                    renderProducts();
-                    renderRecentProducts();
-                } catch(e) { alert('❌ Ошибка'); }
+                    location.reload();
+                } catch(e){ alert('❌ Ошибка'); }
             });
         };
         
-        window.addEditFeature = () => {
-            const container = document.getElementById('editFeatures');
-            const div = document.createElement('div'); div.className = 'feature-item';
-            div.innerHTML = `<input type="text" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`;
-            container.appendChild(div);
-        };
-        
-        window.addEditImage = () => {
-            const container = document.getElementById('editImages');
-            const div = document.createElement('div'); div.className = 'image-item';
-            div.innerHTML = `<input type="url" placeholder="https://..."><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`;
-            container.appendChild(div);
-        };
+        window.addEditFeature = () => { const c = document.getElementById('editFeatures'); const d = document.createElement('div'); d.className = 'feature-item'; d.innerHTML = `<input type="text" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
+        window.addEditImage = () => { const c = document.getElementById('editImages'); const d = document.createElement('div'); d.className = 'image-item'; d.innerHTML = `<input type="url" placeholder="https://..."><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
         
         document.getElementById('searchProducts')?.addEventListener('input', renderProducts);
         document.getElementById('filterCategory')?.addEventListener('change', renderProducts);
