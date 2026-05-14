@@ -419,7 +419,7 @@
 
         function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
         function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
-        function formatPrice(price) { return price.toLocaleString() + ' UZS'; }
+        function formatPrice(price) { return price.toLocaleString() + '$'; }
         
         function getCategoryName(key) {
             const cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' };
