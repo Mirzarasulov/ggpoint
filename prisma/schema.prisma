@@ -1,0 +1,12 @@
+// Prisma schema for ggpoint.
+// Connection URL is configured in prisma.config.ts (loaded from .env.local).
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
