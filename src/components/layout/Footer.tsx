@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { Container } from "./Container";
-import { mainNav } from "@/lib/site-config";
+import { getAllCategories } from "@/server/catalog";
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  const allCategories = await getAllCategories();
+  // Показываем первые 5 категорий в подвале.
+  const footerCategories = allCategories.slice(0, 5);
 
   return (
     <footer className="mt-24 border-t border-border bg-surface/30">
@@ -23,13 +26,13 @@ export function Footer() {
               Каталог
             </h3>
             <ul className="space-y-2 text-sm">
-              {mainNav.slice(1, 5).map((item) => (
-                <li key={item.href}>
+              {footerCategories.map((c) => (
+                <li key={c.slug}>
                   <Link
-                    href={item.href}
+                    href={`/catalog/${c.slug}`}
                     className="text-muted hover:text-foreground transition-colors"
                   >
-                    {item.label}
+                    {c.name}
                   </Link>
                 </li>
               ))}

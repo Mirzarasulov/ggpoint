@@ -13,19 +13,19 @@ import { Container } from "@/components/layout/Container";
 
 const categories = [
   {
-    href: "/keycaps",
+    href: "/catalog/keycaps",
     title: "Кейкапы",
     description: "PBT, ABS, тематические наборы",
     icon: Keyboard,
   },
   {
-    href: "/pads",
+    href: "/catalog/pads",
     title: "Коврики",
     description: "От компактных до полноразмерных XL",
     icon: MousePointer2,
   },
   {
-    href: "/motherboards",
+    href: "/catalog/motherboards",
     title: "Материнские платы",
     description: "Intel и AMD, актуальные сокеты",
     icon: Cpu,
