@@ -7,25 +7,37 @@
     
     <title id="metaTitle">GGPoint - Игровая периферия в Узбекистане</title>
     <meta name="description" id="metaDescription" content="Игровые мыши, клавиатуры, мониторы. Оригинальная продукция. Доставка по Ташкенту и Узбекистану.">
+    <meta name="keywords" id="metaKeywords" content="игровая периферия, купить, Узбекистан, Ташкент, GGPoint">
     <link rel="canonical" id="canonicalLink" href="https://ggpoint.uz/product.html">
+    
+    <meta property="og:type" content="product">
+    <meta property="og:title" id="ogTitle" content="GGPoint">
+    <meta property="og:description" id="ogDescription" content="Игровая периферия в Узбекистане">
+    <meta property="og:image" id="ogImage" content="https://ggpoint.uz/images/logo.png">
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0f172a;
             color: #fff;
             line-height: 1.6;
         }
+        
         :root {
             --primary-blue: #2563eb;
             --primary-purple: #7c3aed;
             --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
             --card-bg: #1e293b;
+            --dark-bg: #0f172a;
+            --text-light: #f1f5f9;
             --text-gray: #94a3b8;
+            --success-green: #10b981;
+            --sale-red: #ef4444;
         }
         
         header {
@@ -37,6 +49,7 @@
             z-index: 100;
             border-bottom: 1px solid rgba(37, 99, 235, 0.3);
         }
+        
         .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-list { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
@@ -48,12 +61,13 @@
         .tracking-btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         
         .product-page { padding: 6rem 2rem 4rem; max-width: 1400px; margin: 0 auto; position: relative; }
-        .back-button { position: absolute; top: 6rem; left: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: var(--card-bg); border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; cursor: pointer; z-index: 10; }
+        .back-button { position: absolute; top: 6rem; left: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: var(--card-bg); border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 30px; cursor: pointer; transition: all 0.3s ease; z-index: 10; }
         .back-button:hover { background: var(--primary-blue); color: white; transform: translateX(-5px); }
-        .close-button { position: absolute; top: 6rem; right: 2rem; width: 40px; height: 40px; background: var(--card-bg); border: 2px solid #ef4444; color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
-        .close-button:hover { background: #ef4444; color: white; transform: scale(1.1); }
+        .close-button { position: absolute; top: 6rem; right: 2rem; width: 40px; height: 40px; background: var(--card-bg); border: 2px solid var(--sale-red); color: var(--sale-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+        .close-button:hover { background: var(--sale-red); color: white; transform: scale(1.1); }
         
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
+        
         .product-gallery { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; border: 2px solid #334155; }
         .main-image-container { position: relative; width: 100%; height: 500px; background: white; border-radius: 12px; overflow: hidden; margin-bottom: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .main-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
@@ -130,7 +144,7 @@
         .add-review-form h3 { margin-bottom: 1rem; font-size: 1.2rem; }
         .star-rating { display: flex; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer; }
         .star-rating i { font-size: 1.8rem; color: #ffd700; transition: all 0.2s ease; }
-        .review-input, .review-name-input { width: 100%; padding: 0.8rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: #fff; margin-bottom: 1rem; font-family: inherit; }
+        .review-input, .review-name-input { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); margin-bottom: 1rem; font-family: inherit; }
         .review-input:focus, .review-name-input:focus { outline: none; border-color: var(--primary-blue); }
         .submit-review-btn { background: var(--gradient); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
         .submit-review-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
@@ -155,7 +169,7 @@
         .fullscreen-image { max-width: 90%; max-height: 90%; object-fit: contain; cursor: pointer; }
         .fullscreen-image.zoomed { transform: scale(2); cursor: zoom-out; }
         .fullscreen-close { position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; background: rgba(255,255,255,0.1); border: 2px solid white; border-radius: 50%; color: white; font-size: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 3001; }
-        .fullscreen-close:hover { background: #ef4444; transform: scale(1.1); }
+        .fullscreen-close:hover { background: var(--sale-red); transform: scale(1.1); }
         .fullscreen-nav { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 2rem; pointer-events: none; z-index: 3001; }
         .fullscreen-nav-btn { width: 60px; height: 60px; background: rgba(255,255,255,0.1); border: 2px solid white; border-radius: 50%; color: white; font-size: 1.5rem; cursor: pointer; pointer-events: all; transition: all 0.3s ease; }
         .fullscreen-nav-btn:hover { background: var(--primary-blue); transform: scale(1.1); }
@@ -201,6 +215,65 @@
     </style>
 </head>
 <body>
+    <!-- ===== АВТОМАТИЧЕСКИЙ РЕДИРЕКТ СО СТАРЫХ ССЫЛОК ?id= НА НОВЫЕ ЧПУ ===== -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const productName = urlParams.get('name');
+            
+            // Если есть id и нет name — редиректим на ЧПУ
+            if (productId && !productName) {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+                    authDomain: "ggpoint-shop.firebaseapp.com",
+                    databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+                    projectId: "ggpoint-shop",
+                    storageBucket: "ggpoint-shop.firebasestorage.app",
+                    messagingSenderId: "182227173652",
+                    appId: "1:182227173652:web:0949e2edae9900afd98201"
+                };
+                
+                async function redirectToSlug() {
+                    try {
+                        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js');
+                        const { getDatabase, ref, get } = await import('https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js');
+                        
+                        const app = initializeApp(firebaseConfig);
+                        const database = getDatabase(app);
+                        const productRef = ref(database, 'products/' + productId);
+                        const snapshot = await get(productRef);
+                        const product = snapshot.val();
+                        
+                        if (product && product.name) {
+                            // Функция транслитерации
+                            const map = {
+                                'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e',
+                                'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+                                'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+                                'ф':'f','х':'h','ц':'ts','ч':'ch','ш':'sh','щ':'sch','ъ':'',
+                                'ы':'y','ь':'','э':'e','ю':'yu','я':'ya',' ':'-','_':'-'
+                            };
+                            const slugify = (text) => text.toLowerCase().split('').map(c => map[c] || (c.match(/[a-z0-9-]/i) ? c : '')).join('').replace(/-+/g, '-').replace(/^-|-$/g, '');
+                            
+                            let slug = '';
+                            if (product.category) slug += slugify(product.category) + '-';
+                            if (product.brand) slug += slugify(product.brand) + '-';
+                            slug += slugify(product.name);
+                            
+                            // Перенаправляем на новый ЧПУ-адрес
+                            window.location.replace(`/product/${slug}`);
+                        }
+                    } catch (error) {
+                        console.error('Ошибка редиректа:', error);
+                    }
+                }
+                
+                redirectToSlug();
+            }
+        })();
+    </script>
+
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">GGPoint</a></div>
@@ -320,7 +393,7 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // ========== ФУНКЦИИ ДЛЯ ЧПУ ==========
+        // ========== ФУНКЦИИ ДЛЯ РАБОТЫ С ЧПУ ==========
         function slugify(text) {
             const map = {
                 'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e',
@@ -341,18 +414,22 @@
             return slug;
         }
         
-        // Получаем slug из URL (ЧПУ-формат /product/название-товара)
-        let productSlug = null;
+        // Получаем ID/параметры из URL
+        let productId = null;
+        let productSlugFromUrl = null;
+        
         const pathname = window.location.pathname;
         if (pathname.includes('/product/')) {
-            productSlug = pathname.split('/product/')[1]?.split('?')[0]?.split('#')[0];
-            if (productSlug) productSlug = decodeURIComponent(productSlug);
+            const slugPart = pathname.split('/product/')[1]?.split('?')[0]?.split('#')[0];
+            if (slugPart && slugPart.length > 0) {
+                productSlugFromUrl = decodeURIComponent(slugPart);
+                console.log('🔍 Поиск по slug:', productSlugFromUrl);
+            }
         }
         
-        // Если нет slug в URL — перенаправляем на каталог
-        if (!productSlug) {
-            window.location.href = '/catalog.html';
-        }
+        const urlParams = new URLSearchParams(window.location.search);
+        productId = urlParams.get('id');
+        const productNameParam = urlParams.get('name');
         
         let currentProduct = null;
         let allProducts = [];
@@ -366,6 +443,12 @@
         function escapeHtml(str) {
             if (!str) return '';
             return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+        }
+        
+        async function findProductById(id) {
+            if (!id) return null;
+            const snapshot = await get(ref(database, 'products/' + id));
+            return snapshot.val();
         }
         
         async function loadAllProducts() {
@@ -382,19 +465,43 @@
         }
         
         async function loadProduct() {
-            await loadAllProducts();
-            
-            if (productSlug) {
-                currentProduct = findProductBySlug(allProducts, productSlug);
+            if (productId) {
+                currentProduct = await findProductById(productId);
                 if (currentProduct) {
-                    console.log('✅ Товар найден по slug:', productSlug);
+                    currentProduct.id = productId;
+                    console.log('✅ Товар найден по ID:', productId);
                     renderProduct();
                     updateMetaTags();
                     return;
                 }
             }
             
-            console.error('❌ Товар не найден по slug:', productSlug);
+            await loadAllProducts();
+            
+            if (productSlugFromUrl) {
+                currentProduct = findProductBySlug(allProducts, productSlugFromUrl);
+                if (currentProduct) {
+                    productId = currentProduct.id;
+                    console.log('✅ Товар найден по slug:', productSlugFromUrl);
+                    renderProduct();
+                    updateMetaTags();
+                    return;
+                }
+            }
+            
+            if (productNameParam) {
+                const slugFromName = slugify(productNameParam);
+                currentProduct = findProductBySlug(allProducts, slugFromName);
+                if (currentProduct) {
+                    productId = currentProduct.id;
+                    console.log('✅ Товар найден по name:', productNameParam);
+                    renderProduct();
+                    updateMetaTags();
+                    return;
+                }
+            }
+            
+            console.error('❌ Товар не найден');
             showProductNotFound();
         }
         
@@ -409,16 +516,20 @@
             
             const title = `${currentProduct.name} | Купить в GGPoint Узбекистан`;
             const description = `✅ Оригинальный ${currentProduct.name}. Доставка по Ташкенту и всему Узбекистану. Лучшая цена — ${currentProduct.price} сум.`;
-            const imageUrl = currentProduct.images?.[0] || 'https://ggpoint.store/images/logo.png';
+            const keywords = `${currentProduct.name}, ${currentProduct.brand}, ${currentProduct.category}, купить, цена, Узбекистан, Ташкент, GGPoint`;
+            const imageUrl = currentProduct.images?.[0] || 'https://ggpoint.uz/images/logo.png';
             const canonicalUrl = `https://ggpoint.store/product/${getProductSlug(currentProduct)}`;
             
             document.title = title;
+            const metaTitle = document.querySelector('#metaTitle');
+            if (metaTitle) metaTitle.setAttribute('content', title);
             const metaDesc = document.querySelector('#metaDescription');
             if (metaDesc) metaDesc.setAttribute('content', description);
+            const metaKeywords = document.querySelector('#metaKeywords');
+            if (metaKeywords) metaKeywords.setAttribute('content', keywords);
             const canonicalLink = document.querySelector('#canonicalLink');
             if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
             
-            // Schema.org разметка
             const schemaScript = document.createElement('script');
             schemaScript.type = 'application/ld+json';
             schemaScript.textContent = JSON.stringify({
@@ -427,6 +538,7 @@
                 "name": currentProduct.name,
                 "image": currentProduct.images?.[0] || '',
                 "description": currentProduct.description?.substring(0, 300) || '',
+                "sku": currentProduct.id,
                 "brand": { "@type": "Brand", "name": currentProduct.brand || "GGPoint" },
                 "offers": {
                     "@type": "Offer",
@@ -624,7 +736,7 @@
             notification.style.cssText = `
                 position: fixed; top: 20px; right: 20px; background: #10b981; color: white;
                 padding: 0.8rem 1.2rem; border-radius: 8px; font-weight: 600; z-index: 9999;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 10000;
             `;
             notification.textContent = message;
             document.body.appendChild(notification);
