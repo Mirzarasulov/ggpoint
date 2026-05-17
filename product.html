@@ -215,6 +215,65 @@
     </style>
 </head>
 <body>
+    <!-- ===== АВТОМАТИЧЕСКИЙ РЕДИРЕКТ СО СТАРЫХ ССЫЛОК ?id= НА НОВЫЕ ЧПУ ===== -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const productName = urlParams.get('name');
+            
+            // Если есть id и нет name — редиректим на ЧПУ
+            if (productId && !productName) {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDcyOWAF7TA8h8P36Sk5EbDPzA9sEFuTXo",
+                    authDomain: "ggpoint-shop.firebaseapp.com",
+                    databaseURL: "https://ggpoint-shop-default-rtdb.firebaseio.com",
+                    projectId: "ggpoint-shop",
+                    storageBucket: "ggpoint-shop.firebasestorage.app",
+                    messagingSenderId: "182227173652",
+                    appId: "1:182227173652:web:0949e2edae9900afd98201"
+                };
+                
+                async function redirectToSlug() {
+                    try {
+                        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js');
+                        const { getDatabase, ref, get } = await import('https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js');
+                        
+                        const app = initializeApp(firebaseConfig);
+                        const database = getDatabase(app);
+                        const productRef = ref(database, 'products/' + productId);
+                        const snapshot = await get(productRef);
+                        const product = snapshot.val();
+                        
+                        if (product && product.name) {
+                            // Функция транслитерации
+                            const map = {
+                                'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e',
+                                'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+                                'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+                                'ф':'f','х':'h','ц':'ts','ч':'ch','ш':'sh','щ':'sch','ъ':'',
+                                'ы':'y','ь':'','э':'e','ю':'yu','я':'ya',' ':'-','_':'-'
+                            };
+                            const slugify = (text) => text.toLowerCase().split('').map(c => map[c] || (c.match(/[a-z0-9-]/i) ? c : '')).join('').replace(/-+/g, '-').replace(/^-|-$/g, '');
+                            
+                            let slug = '';
+                            if (product.category) slug += slugify(product.category) + '-';
+                            if (product.brand) slug += slugify(product.brand) + '-';
+                            slug += slugify(product.name);
+                            
+                            // Перенаправляем на новый ЧПУ-адрес
+                            window.location.replace(`/product/${slug}`);
+                        }
+                    } catch (error) {
+                        console.error('Ошибка редиректа:', error);
+                    }
+                }
+                
+                redirectToSlug();
+            }
+        })();
+    </script>
+
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">GGPoint</a></div>
@@ -334,91 +393,78 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // ========== УМНЫЙ ПОИСК ТОВАРА ==========
-        // Поддерживаемые форматы ссылок:
-        // 1. /product.html?id=XXXX (старый формат — работает)
-        // 2. /product/monitor-legion-2141oled (новый ЧПУ-формат)
-        // 3. /product.html?name=monitor-legion&id=XXXX (резервный)
-        
+        // ========== ФУНКЦИИ ДЛЯ РАБОТЫ С ЧПУ ==========
         function slugify(text) {
-            // Транслитерация для создания ЧПУ
             const map = {
-                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e',
-                'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
-                'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
-                'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '',
-                'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
-                ' ': '-', '_': '-', '/': '-', '\\': '-'
+                'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e',
+                'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+                'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+                'ф':'f','х':'h','ц':'ts','ч':'ch','ш':'sh','щ':'sch','ъ':'',
+                'ы':'y','ь':'','э':'e','ю':'yu','я':'ya',' ':'-','_':'-'
             };
             return text.toLowerCase().split('').map(c => map[c] || (c.match(/[a-z0-9-]/i) ? c : '')).join('').replace(/-+/g, '-').replace(/^-|-$/g, '');
         }
         
         function getProductSlug(product) {
-            // Генерирует красивый slug: категория-бренд-название-артикул
             if (!product) return '';
-            const category = product.category || '';
-            const brand = product.brand || '';
-            const name = product.name || '';
-            const id = product.id || '';
             let slug = '';
-            if (category) slug += slugify(category) + '-';
-            if (brand) slug += slugify(brand) + '-';
-            slug += slugify(name);
-            // Артикул НЕ добавляем в slug — он скрыт, но система найдёт по нему
+            if (product.category) slug += slugify(product.category) + '-';
+            if (product.brand) slug += slugify(product.brand) + '-';
+            slug += slugify(product.name);
             return slug;
         }
         
-        // Получаем ID товара из URL (поддерживаем разные форматы)
+        // Получаем ID/параметры из URL
         let productId = null;
         let productSlugFromUrl = null;
         
-        // Способ 1: из pathname (например /product/monitor-legion-2141oled)
         const pathname = window.location.pathname;
         if (pathname.includes('/product/')) {
             const slugPart = pathname.split('/product/')[1]?.split('?')[0]?.split('#')[0];
             if (slugPart && slugPart.length > 0) {
                 productSlugFromUrl = decodeURIComponent(slugPart);
-                console.log('🔍 Поиск по slug из URL:', productSlugFromUrl);
+                console.log('🔍 Поиск по slug:', productSlugFromUrl);
             }
         }
         
-        // Способ 2: из параметров URL (?id=... или ?name=...&id=...)
         const urlParams = new URLSearchParams(window.location.search);
         productId = urlParams.get('id');
         const productNameParam = urlParams.get('name');
         
-        // Функция для поиска товара по slug
-        function findProductBySlug(productsArray, slug) {
-            if (!slug || !productsArray) return null;
-            // Ищем совпадение: slug генерируем и сравниваем
-            return productsArray.find(p => getProductSlug(p) === slug);
+        let currentProduct = null;
+        let allProducts = [];
+        let hotPrices = {};
+        let brands = {};
+        let reviews = [];
+        let currentImageIndex = 0;
+        let images = [];
+        let selectedRating = 5;
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
         }
         
-        // Функция для поиска товара по ID (быстрый поиск)
         async function findProductById(id) {
             if (!id) return null;
-            const productRef = ref(database, 'products/' + id);
-            const snapshot = await get(productRef);
+            const snapshot = await get(ref(database, 'products/' + id));
             return snapshot.val();
         }
         
-        // Глобальная переменная для товара
-        let currentProduct = null;
-        let allProducts = [];
-        
-        // Загружаем все товары для поиска по slug
         async function loadAllProducts() {
-            const productsRef = ref(database, 'products');
-            const snapshot = await get(productsRef);
+            const snapshot = await get(ref(database, 'products'));
             if (snapshot.exists()) {
                 allProducts = Object.entries(snapshot.val()).map(([id, data]) => ({ ...data, id }));
             }
             return allProducts;
         }
         
-        // Главная функция загрузки товара
+        function findProductBySlug(productsArray, slug) {
+            if (!slug || !productsArray) return null;
+            return productsArray.find(p => getProductSlug(p) === slug);
+        }
+        
         async function loadProduct() {
-            // Сначала пытаемся найти по прямому ID (самый быстрый)
             if (productId) {
                 currentProduct = await findProductById(productId);
                 if (currentProduct) {
@@ -430,7 +476,6 @@
                 }
             }
             
-            // Если ID не сработал или нет ID, пробуем по slug
             await loadAllProducts();
             
             if (productSlugFromUrl) {
@@ -444,20 +489,18 @@
                 }
             }
             
-            // Если есть name параметр, пробуем найти по нему
             if (productNameParam) {
                 const slugFromName = slugify(productNameParam);
                 currentProduct = findProductBySlug(allProducts, slugFromName);
                 if (currentProduct) {
                     productId = currentProduct.id;
-                    console.log('✅ Товар найден по name параметру:', productNameParam);
+                    console.log('✅ Товар найден по name:', productNameParam);
                     renderProduct();
                     updateMetaTags();
                     return;
                 }
             }
             
-            // Ничего не нашли
             console.error('❌ Товар не найден');
             showProductNotFound();
         }
@@ -468,23 +511,6 @@
             document.getElementById('fullDescription').innerHTML = '<p>Товар не найден в базе данных.</p>';
         }
         
-        let hotPrices = {};
-        let brands = {};
-        let reviews = [];
-        let currentImageIndex = 0;
-        let images = [];
-        let selectedRating = 5;
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str).replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
         function updateMetaTags() {
             if (!currentProduct) return;
             
@@ -492,19 +518,18 @@
             const description = `✅ Оригинальный ${currentProduct.name}. Доставка по Ташкенту и всему Узбекистану. Лучшая цена — ${currentProduct.price} сум.`;
             const keywords = `${currentProduct.name}, ${currentProduct.brand}, ${currentProduct.category}, купить, цена, Узбекистан, Ташкент, GGPoint`;
             const imageUrl = currentProduct.images?.[0] || 'https://ggpoint.uz/images/logo.png';
-            const canonicalUrl = `https://ggpoint.uz/product/${getProductSlug(currentProduct)}`;
+            const canonicalUrl = `https://ggpoint.store/product/${getProductSlug(currentProduct)}`;
             
             document.title = title;
-            document.querySelector('#metaTitle')?.setAttribute('content', title);
-            document.querySelector('#metaDescription')?.setAttribute('content', description);
-            document.querySelector('#metaKeywords')?.setAttribute('content', keywords);
-            document.querySelector('#canonicalLink')?.setAttribute('href', canonicalUrl);
-            document.querySelector('#ogTitle')?.setAttribute('content', title);
-            document.querySelector('#ogDescription')?.setAttribute('content', description);
-            document.querySelector('#ogImage')?.setAttribute('content', imageUrl);
-            document.querySelector('#ogUrl')?.setAttribute('content', canonicalUrl);
+            const metaTitle = document.querySelector('#metaTitle');
+            if (metaTitle) metaTitle.setAttribute('content', title);
+            const metaDesc = document.querySelector('#metaDescription');
+            if (metaDesc) metaDesc.setAttribute('content', description);
+            const metaKeywords = document.querySelector('#metaKeywords');
+            if (metaKeywords) metaKeywords.setAttribute('content', keywords);
+            const canonicalLink = document.querySelector('#canonicalLink');
+            if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
             
-            // Schema.org разметка для Google
             const schemaScript = document.createElement('script');
             schemaScript.type = 'application/ld+json';
             schemaScript.textContent = JSON.stringify({
@@ -532,6 +557,10 @@
         function parsePrice(priceStr) {
             if (!priceStr) return 0;
             return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
+        }
+        
+        function formatPrice(price) {
+            return price.toLocaleString() + ' UZS';
         }
         
         function renderProduct() {
@@ -570,7 +599,6 @@
             
             document.getElementById('fullDescription').innerHTML = currentProduct.description || '<p>Описание отсутствует</p>';
             
-            // Таблица характеристик
             let specsHtml = `
                 <tr><td style="font-weight:600;">Бренд</td><td>${escapeHtml(currentProduct.brand || '-')}</td></tr>
                 <tr><td style="font-weight:600;">Категория</td><td>${categoryName}</td></tr>
@@ -587,7 +615,6 @@
             }
             
             document.getElementById('specsTable').innerHTML = specsHtml;
-            
             renderYouTubeVideoBottom();
             renderGallery();
         }
@@ -685,7 +712,6 @@
                 const imageUrl = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
                 card.innerHTML = `${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}<div class="product-image-container"><img src="${imageUrl}" class="product-image" alt="${escapeHtml(p.name)}" loading="lazy"></div><div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><p class="product-price">${p.price}</p></div>`;
                 card.addEventListener('click', () => {
-                    // Открываем по новому ЧПУ-формату
                     window.location.href = `/product/${getProductSlug(p)}`;
                 });
                 grid.appendChild(card);
@@ -705,16 +731,12 @@
             return categories[key] || key;
         }
         
-        function formatPrice(price) {
-            return price.toLocaleString() + ' UZS';
-        }
-        
         function showNotification(message) {
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed; top: 20px; right: 20px; background: #10b981; color: white;
                 padding: 0.8rem 1.2rem; border-radius: 8px; font-weight: 600; z-index: 9999;
-                animation: slideIn 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 10000;
             `;
             notification.textContent = message;
             document.body.appendChild(notification);
@@ -781,7 +803,7 @@
             });
         }
         
-        // Глобальные функции для onclick
+        // Глобальные функции
         window.goBack = () => {
             if (document.referrer) window.history.back();
             else window.location.href = 'catalog.html';
@@ -827,27 +849,6 @@
         };
         window.submitReview = submitReview;
         
-        // Загрузка дополнительных данных
-        async function loadAdditionalData() {
-            const hotPricesRef = ref(database, 'hotPrices');
-            onValue(hotPricesRef, (snapshot) => { hotPrices = snapshot.val() || {}; renderProduct(); });
-            
-            const brandsRef = ref(database, 'brands');
-            onValue(brandsRef, (snapshot) => { brands = snapshot.val() || {}; renderProduct(); });
-            
-            const reviewsRef = ref(database, 'reviews');
-            onValue(reviewsRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data && currentProduct) {
-                    reviews = Object.values(data).filter(r => r.productId == currentProduct.id && r.status === 'approved');
-                    renderReviews();
-                } else {
-                    reviews = [];
-                    renderReviews();
-                }
-            });
-        }
-        
         // Инициализация
         document.getElementById('mainImageContainer')?.addEventListener('click', function() {
             document.getElementById('mainImage').classList.toggle('zoomed');
@@ -881,7 +882,7 @@
             }
         });
         
-        // Админка (Ctrl + тройной клик)
+        // Админка
         let ctrlClickCount = 0, ctrlClickTimer = null;
         document.addEventListener('click', function(e) {
             if (e.ctrlKey) {
@@ -916,10 +917,30 @@
             }
         });
         
+        async function loadAdditionalData() {
+            const hotPricesRef = ref(database, 'hotPrices');
+            onValue(hotPricesRef, (snapshot) => { hotPrices = snapshot.val() || {}; renderProduct(); });
+            
+            const brandsRef = ref(database, 'brands');
+            onValue(brandsRef, (snapshot) => { brands = snapshot.val() || {}; renderProduct(); });
+            
+            const reviewsRef = ref(database, 'reviews');
+            onValue(reviewsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data && currentProduct) {
+                    reviews = Object.values(data).filter(r => r.productId == currentProduct.id && r.status === 'approved');
+                    renderReviews();
+                } else {
+                    reviews = [];
+                    renderReviews();
+                }
+            });
+        }
+        
         // Запуск
         initStarRating();
-        loadProduct();
-        loadAdditionalData();
+        await loadProduct();
+        await loadAdditionalData();
     </script>
 </body>
 </html>
