@@ -416,6 +416,27 @@
         
         let scrollPositionBeforeFilter = 0;
 
+        // ========== ФУНКЦИИ ДЛЯ ЧПУ-ССЫЛОК ==========
+        function slugify(text) {
+            const map = {
+                'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e',
+                'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+                'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+                'ф':'f','х':'h','ц':'ts','ч':'ch','ш':'sh','щ':'sch','ъ':'',
+                'ы':'y','ь':'','э':'e','ю':'yu','я':'ya',' ':'-','_':'-'
+            };
+            return text.toLowerCase().split('').map(c => map[c] || (c.match(/[a-z0-9-]/i) ? c : '')).join('').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        }
+        
+        function getProductSlug(product) {
+            if (!product) return '';
+            let slug = '';
+            if (product.category) slug += slugify(product.category) + '-';
+            if (product.brand) slug += slugify(product.brand) + '-';
+            slug += slugify(product.name);
+            return slug;
+        }
+
         function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
         function parsePrice(priceStr) { if (!priceStr) return 0; return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0; }
         function formatPrice(price) { return price.toLocaleString() + '$'; }
@@ -425,7 +446,6 @@
             return cats[key] || key;
         }
         
-        // Функция для получения значения характеристики монитора (из админки)
         function getMonitorSpec(product, field) {
             if (product.monitorSpecs && product.monitorSpecs[field]) {
                 return product.monitorSpecs[field];
@@ -533,33 +553,26 @@
             });
         }
         
-        // ГЛАВНАЯ ФУНКЦИЯ ФИЛЬТРАЦИИ МОНИТОРОВ — ИСПРАВЛЕНА
         function applyMonitorFilters(filtered) {
             const currentCategory = document.querySelector('input[name="category"]:checked')?.value;
-            // Если выбрана не категория мониторов — не применяем монитор-фильтры
             if (currentCategory !== 'монитор') return filtered;
             
-            // Если ни один фильтр не выбран — возвращаем как есть
             if (selectedPanelTypes.size === 0 && selectedResolutions.size === 0 && selectedRefreshRates.size === 0) {
                 return filtered;
             }
             
             return filtered.filter(product => {
-                // Пропускаем товары не из категории мониторов
                 if (product.category !== 'монитор') return true;
                 
-                // Фильтр по типу матрицы
                 if (selectedPanelTypes.size > 0) {
                     const panelType = getMonitorSpec(product, 'panelType');
                     if (!panelType || !selectedPanelTypes.has(panelType)) return false;
                 }
                 
-                // Фильтр по разрешению
                 if (selectedResolutions.size > 0) {
                     const resolution = getMonitorSpec(product, 'resolution');
                     if (!resolution) return false;
                     
-                    // Сравниваем: ищем частичное совпадение (например "FHD" в "FHD (1920x1080)")
                     let matched = false;
                     for (const res of selectedResolutions) {
                         if (resolution.includes(res) || res.includes(resolution)) {
@@ -570,7 +583,6 @@
                     if (!matched) return false;
                 }
                 
-                // Фильтр по частоте
                 if (selectedRefreshRates.size > 0) {
                     const refreshRate = getMonitorSpec(product, 'refreshRate');
                     if (!refreshRate) return false;
@@ -603,7 +615,6 @@
         function applyFilters() {
             let filtered = [...products];
             
-            // Фильтр по категории
             const category = document.querySelector('input[name="category"]:checked')?.value;
             if (category && category !== 'all') {
                 filtered = filtered.filter(p => p.category === category);
@@ -611,24 +622,20 @@
                 filtered = filtered.filter(p => p.category === categoryParam);
             }
             
-            // Фильтр по бренду
             const brand = document.getElementById('brandFilter')?.value;
             if (brand && brand !== 'all') {
                 filtered = filtered.filter(p => p.brand === brand);
             }
             
-            // Фильтр по цене
             const minPrice = document.getElementById('minPrice')?.value;
             const maxPrice = document.getElementById('maxPrice')?.value;
             if (minPrice) filtered = filtered.filter(p => parsePrice(p.price) >= Number(minPrice));
             if (maxPrice) filtered = filtered.filter(p => parsePrice(p.price) <= Number(maxPrice));
             
-            // Фильтр по скидке
             if (document.getElementById('discountFilter')?.checked) {
                 filtered = filtered.filter(p => hotPrices[p.id]);
             }
             
-            // Поиск по названию и описанию
             const searchQuery = document.getElementById('searchInput')?.value.toLowerCase();
             if (searchQuery) {
                 filtered = filtered.filter(p => 
@@ -637,10 +644,8 @@
                 );
             }
             
-            // ПРИМЕНЯЕМ ФИЛЬТРЫ МОНИТОРОВ
             filtered = applyMonitorFilters(filtered);
             
-            // Сортировка
             const sortBy = document.getElementById('sortSelect')?.value;
             if (sortBy === 'price_asc') {
                 filtered.sort((a,b) => parsePrice(a.price) - parsePrice(b.price));
@@ -680,12 +685,10 @@
                 const isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
                 const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
                 
-                // Описание — обрезаем до 100 символов, чтобы не ломало вёрстку
                 const shortDescription = p.description ? 
                     (p.description.length > 100 ? p.description.substring(0, 100) + '...' : p.description) : 
                     'Описание отсутствует';
                 
-                // Спецификации монитора для отображения (если есть)
                 let specsHtml = '';
                 if (p.category === 'монитор' && p.monitorSpecs) {
                     const ms = p.monitorSpecs;
@@ -697,6 +700,9 @@
                         specsHtml = `<div class="product-specs">${specs.map(s => `<span class="product-spec-badge">${escapeHtml(s)}</span>`).join('')}</div>`;
                     }
                 }
+                
+                // ========== ГЛАВНОЕ: ссылка на товар в НОВОМ ЧПУ-ФОРМАТЕ ==========
+                const productSlug = getProductSlug(p);
                 
                 card.innerHTML = `
                     ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
@@ -713,7 +719,11 @@
                         </div>
                     </div>
                 `;
-                card.onclick = () => { addToRecentlyViewed(p); window.location.href = `product.html?id=${p.id}`; };
+                // НОВАЯ ССЫЛКА — ЧПУ-ФОРМАТ
+                card.onclick = () => { 
+                    addToRecentlyViewed(p); 
+                    window.location.href = `/product/${productSlug}`; 
+                };
                 grid.appendChild(card);
             });
             renderPagination();
@@ -748,8 +758,9 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
+                const productSlug = getProductSlug(p);
                 card.innerHTML = `<div class="product-image-container" style="height:150px;"><img src="${img}" class="product-image" loading="lazy"></div><div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name" style="font-size:0.9rem;">${escapeHtml(p.name)}</h3><p class="product-price" style="font-size:1rem;">${p.price}</p></div>`;
-                card.onclick = () => window.location.href = `product.html?id=${p.id}`;
+                card.onclick = () => window.location.href = `/product/${productSlug}`;
                 grid.appendChild(card);
             });
         }
