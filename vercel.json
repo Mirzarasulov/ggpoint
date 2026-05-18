@@ -1,34 +1,44 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/каталог", "destination": "/catalog.html" },
-    { "source": "/katalog", "destination": "/catalog.html" },
-    { "source": "/товар/:id", "destination": "/product.html?id=:id" },
-    { "source": "/tovar/:id", "destination": "/product.html?id=:id" },
-    { "source": "/админ", "destination": "/admin-panel.html" },
-    { "source": "/admin", "destination": "/admin-panel.html" },
-    { "source": "/трекинг", "destination": "/tracking.html" },
-    { "source": "/treking", "destination": "/tracking.html" },
-    { "source": "/кейкапы", "destination": "/keycaps.html" },
-    { "source": "/keycaps", "destination": "/keycaps.html" },
-    { "source": "/коврики", "destination": "/pads.html" },
-    { "source": "/kovriki", "destination": "/pads.html" },
-    { "source": "/матплаты", "destination": "/mb.html" },
-    { "source": "/matplaty", "destination": "/mb.html" },
-    { "source": "/о-нас", "destination": "/about.html" },
-    { "source": "/o-nas", "destination": "/about.html" },
-    { "source": "/контакты", "destination": "/contacts.html" },
-    { "source": "/kontakty", "destination": "/contacts.html" }
-  ],
-  "headers": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=86400"
-        }
-      ]
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/о-нас",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/каталог",
+      "destination": "/catalog.html"
+    },
+    {
+      "source": "/контакты",
+      "destination": "/contacts.html"
+    },
+    {
+      "source": "/товар/:id",
+      "destination": "/product.html?id=:id"
+    },
+    {
+      "source": "/админ",
+      "destination": "/admin-panel.html"
+    },
+    {
+      "source": "/трекинг",
+      "destination": "/tracking.html"
+    },
+    {
+      "source": "/кейкапы",
+      "destination": "/keycaps.html"
+    },
+    {
+      "source": "/коврики",
+      "destination": "/pads.html"
+    },
+    {
+      "source": "/матплаты",
+      "destination": "/mb.html"
     }
   ]
 }
