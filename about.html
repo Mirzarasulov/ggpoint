@@ -637,52 +637,52 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">GGPoint</a>
+                <a href="/">GGPoint</a>
             </div>
             
             <nav id="mainNav">
                 <ul class="nav-list">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link">
+                        <a href="/" class="nav-link">
                             <i class="fas fa-home"></i>
                             <span class="nav-text">Главная</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="catalog.html" class="nav-link">
+                        <a href="/каталог" class="nav-link">
                             <i class="fas fa-th-large"></i>
                             <span class="nav-text">Каталог</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="keycaps.html" class="nav-link">
+                        <a href="/кейкапы" class="nav-link">
                             <i class="fas fa-keyboard"></i>
                             <span class="nav-text">Кейкапы</span>
                             <span class="beta-badge">Коллекция</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pads.html" class="nav-link">
+                        <a href="/коврики" class="nav-link">
                             <i class="fas fa-mouse-pointer"></i>
                             <span class="nav-text">Коврики</span>
                             <span class="beta-badge">Новинка</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="mb.html" class="nav-link">
+                        <a href="/матплаты" class="nav-link">
                             <i class="fas fa-microchip"></i>
                             <span class="nav-text">MB</span>
                             <span class="beta-badge">Материнские платы</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="about.html" class="nav-link active">
+                        <a href="/о-нас" class="nav-link active">
                             <i class="fas fa-info-circle"></i>
                             <span class="nav-text">О нас</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="contacts.html" class="nav-link">
+                        <a href="/контакты" class="nav-link">
                             <i class="fas fa-phone"></i>
                             <span class="nav-text">Контакты</span>
                         </a>
@@ -703,7 +703,7 @@
         <div class="container">
             <h1>О нас</h1>
             <div class="breadcrumbs">
-                <a href="index.html">Главная</a>
+                <a href="/">Главная</a>
                 <i class="fas fa-chevron-right"></i>
                 <span>О нас</span>
             </div>
@@ -888,26 +888,26 @@
             <div class="footer-section">
                 <h4>Навигация</h4>
                 <ul class="footer-links">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">MB</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/каталог">Каталог</a></li>
+                    <li><a href="/кейкапы">Кейкапы</a></li>
+                    <li><a href="/коврики">Коврики</a></li>
+                    <li><a href="/матплаты">MB</a></li>
+                    <li><a href="/о-нас">О нас</a></li>
+                    <li><a href="/контакты">Контакты</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
                 <h4>Категории</h4>
                 <ul class="footer-links">
-                    <li><a href="catalog.html?category=мышь">Игровые мыши</a></li>
-                    <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
-                    <li><a href="catalog.html?category=наушники">Наушники</a></li>
-                    <li><a href="catalog.html?category=монитор">Мониторы</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">Материнские платы</a></li>
+                    <li><a href="/каталог?category=мышь">Игровые мыши</a></li>
+                    <li><a href="/каталог?category=клавиатура">Клавиатуры</a></li>
+                    <li><a href="/каталог?category=наушники">Наушники</a></li>
+                    <li><a href="/каталог?category=монитор">Мониторы</a></li>
+                    <li><a href="/кейкапы">Кейкапы</a></li>
+                    <li><a href="/коврики">Коврики</a></li>
+                    <li><a href="/матплаты">Материнские платы</a></li>
                 </ul>
             </div>
             
@@ -1008,7 +1008,7 @@
         const trackingBtn = document.getElementById('trackingBtn');
         if (trackingBtn) {
             trackingBtn.addEventListener('click', () => {
-                window.location.href = 'tracking.html';
+                window.location.href = '/трекинг';
             });
         }
 
@@ -1072,7 +1072,7 @@
                 
                 if (login === 'admin' && password === 'admin') {
                     adminModal.style.display = 'none';
-                    window.location.href = 'admin-panel.html';
+                    window.location.href = '/админ';
                 } else {
                     alert('Неверный логин или пароль!');
                 }
