@@ -1,89 +1,24 @@
 {
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/katalog",
-      "destination": "/catalog.html"
-    },
-    {
-      "source": "/каталог",
-      "destination": "/catalog.html"
-    },
-    {
-      "source": "/tovar",
-      "destination": "/product.html"
-    },
-    {
-      "source": "/товар",
-      "destination": "/product.html"
-    },
-    {
-      "source": "/tovar/:id",
-      "destination": "/product.html?id=:id"
-    },
-    {
-      "source": "/товар/:id",
-      "destination": "/product.html?id=:id"
-    },
-    {
-      "source": "/admin",
-      "destination": "/admin-panel.html"
-    },
-    {
-      "source": "/админ",
-      "destination": "/admin-panel.html"
-    },
-    {
-      "source": "/treking",
-      "destination": "/tracking.html"
-    },
-    {
-      "source": "/трекинг",
-      "destination": "/tracking.html"
-    },
-    {
-      "source": "/keycaps",
-      "destination": "/keycaps.html"
-    },
-    {
-      "source": "/кейкапы",
-      "destination": "/keycaps.html"
-    },
-    {
-      "source": "/kovriki",
-      "destination": "/pads.html"
-    },
-    {
-      "source": "/коврики",
-      "destination": "/pads.html"
-    },
-    {
-      "source": "/matplaty",
-      "destination": "/mb.html"
-    },
-    {
-      "source": "/матплаты",
-      "destination": "/mb.html"
-    },
-    {
-      "source": "/o-nas",
-      "destination": "/about.html"
-    },
-    {
-      "source": "/о-нас",
-      "destination": "/about.html"
-    },
-    {
-      "source": "/kontakty",
-      "destination": "/contacts.html"
-    },
-    {
-      "source": "/контакты",
-      "destination": "/contacts.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/каталог", "destination": "/catalog.html" },
+    { "source": "/katalog", "destination": "/catalog.html" },
+    { "source": "/товар/:id", "destination": "/product.html?id=:id" },
+    { "source": "/tovar/:id", "destination": "/product.html?id=:id" },
+    { "source": "/админ", "destination": "/admin-panel.html" },
+    { "source": "/admin", "destination": "/admin-panel.html" },
+    { "source": "/трекинг", "destination": "/tracking.html" },
+    { "source": "/treking", "destination": "/tracking.html" },
+    { "source": "/кейкапы", "destination": "/keycaps.html" },
+    { "source": "/keycaps", "destination": "/keycaps.html" },
+    { "source": "/коврики", "destination": "/pads.html" },
+    { "source": "/kovriki", "destination": "/pads.html" },
+    { "source": "/матплаты", "destination": "/mb.html" },
+    { "source": "/matplaty", "destination": "/mb.html" },
+    { "source": "/о-нас", "destination": "/about.html" },
+    { "source": "/o-nas", "destination": "/about.html" },
+    { "source": "/контакты", "destination": "/contacts.html" },
+    { "source": "/kontakty", "destination": "/contacts.html" }
   ],
   "headers": [
     {
