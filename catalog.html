@@ -7,12 +7,10 @@
     <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы, материнские платы.">
     <meta name="theme-color" content="#0f172a">
     
-    <!-- Preconnect для быстрой загрузки -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://ggpoint-shop-default-rtdb.firebaseio.com">
     
-    <!-- CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -30,7 +28,6 @@
         
         .container { max-width: 1400px; margin: 0 auto; padding: 0 1rem; }
         
-        /* Header */
         header {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -62,13 +59,11 @@
         .tracking-btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
         .header-actions { display: flex; align-items: center; gap: 8px; }
         
-        /* Page Header */
         .page-header { background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1)); padding: 2rem 0; text-align: center; }
         .page-header h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
         .breadcrumbs { display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #94a3b8; font-size: 0.85rem; }
         .breadcrumbs a { color: #60a5fa; text-decoration: none; }
         
-        /* Catalog Layout */
         .catalog-layout { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         
         .catalog-sidebar {
@@ -126,7 +121,7 @@
             top: -6px !important;
         }
         .noUi-handle:before, .noUi-handle:after { display: none; }
-        .noUi-tooltip { background: #1e293b; color: #fff; border: 1px solid var(--primary-blue); font-size: 10px; padding: 2px 5px; }
+        .noUi-tooltip { background: #1e293b; color: #fff; border: 1px solid var(--primary-blue); font-size: 10px; padding: 2px 5px; display: none; }
         
         .active-filters-container { min-height: 40px; margin-bottom: 0.8rem; }
         .active-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -417,7 +412,7 @@
         let selectedPanelTypes = new Set();
         let selectedResolutions = new Set();
         let refreshRange = { min: 0, max: DEFAULT_MAX_REFRESH };
-        let isRefreshFilterActive = false; // Флаг для отслеживания, двигал ли пользователь слайдер
+        let isRefreshFilterActive = false;
         
         let scrollPositionBeforeFilter = 0;
         let refreshSlider = null;
@@ -425,7 +420,7 @@
         // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
         const escapeHtml = (str) => str ? String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;') : '';
         const parsePrice = (priceStr) => priceStr ? parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0 : 0;
-        const formatPrice = (price) => price.toLocaleString() + ' $';
+        const formatPrice = (price) => price.toLocaleString() + ' UZS';
         const getCategoryName = (key) => ({ 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' }[key] || key);
         const getMonitorSpec = (product, field) => product.monitorSpecs?.[field] || null;
         const parseRefreshRate = (refreshStr) => refreshStr ? (parseInt(String(refreshStr).match(/(\d+)/)?.[0]) || 0) : 0;
@@ -453,7 +448,7 @@
             if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || (p.description || '').toLowerCase().includes(searchQuery));
             
             const currentCategory = document.querySelector('input[name="category"]:checked')?.value;
-            if (currentCategory === 'монитор' && isRefreshFilterActive) {
+            if (currentCategory === 'монитор') {
                 filtered = filtered.filter(product => {
                     if (selectedPanelTypes.size > 0) {
                         const panelType = getMonitorSpec(product, 'panelType');
@@ -466,22 +461,10 @@
                         for (const res of selectedResolutions) if (resolution.includes(res)) { matched = true; break; }
                         if (!matched) return false;
                     }
-                    const refreshValue = parseRefreshRate(getMonitorSpec(product, 'refreshRate'));
-                    if (refreshValue > 0) return refreshValue >= refreshRange.min && refreshValue <= refreshRange.max;
-                    return false;
-                });
-            } else if (currentCategory === 'монитор') {
-                filtered = filtered.filter(product => {
-                    if (selectedPanelTypes.size > 0) {
-                        const panelType = getMonitorSpec(product, 'panelType');
-                        if (!panelType || !selectedPanelTypes.has(panelType)) return false;
-                    }
-                    if (selectedResolutions.size > 0) {
-                        const resolution = getMonitorSpec(product, 'resolution');
-                        if (!resolution) return false;
-                        let matched = false;
-                        for (const res of selectedResolutions) if (resolution.includes(res)) { matched = true; break; }
-                        if (!matched) return false;
+                    if (isRefreshFilterActive) {
+                        const refreshValue = parseRefreshRate(getMonitorSpec(product, 'refreshRate'));
+                        if (refreshValue > 0) return refreshValue >= refreshRange.min && refreshValue <= refreshRange.max;
+                        return false;
                     }
                     return true;
                 });
@@ -637,12 +620,11 @@
                 restoreScrollPosition();
             });
             
-            // 🔧 ТЕПЕРЬ ТЕГ ПОЯВЛЯЕТСЯ ТОЛЬКО ЕСЛИ ПОЛЬЗОВАТЕЛЬ ДВИГАЛ СЛАЙДЕР
-            if (isRefreshFilterActive && (refreshRange.min !== 0 || refreshRange.max !== DEFAULT_MAX_REFRESH)) {
+            if (isRefreshFilterActive) {
                 addFilterTag(container, `Частота: ${refreshRange.min} - ${refreshRange.max} Гц`, () => { 
                     saveScrollPosition();
-                    refreshRange = { min: 0, max: DEFAULT_MAX_REFRESH };
                     isRefreshFilterActive = false;
+                    refreshRange = { min: 0, max: DEFAULT_MAX_REFRESH };
                     if (refreshSlider) {
                         const allRefreshValues = [];
                         products.forEach(p => {
@@ -655,8 +637,6 @@
                         let maxHz = allRefreshValues.length ? Math.max(...allRefreshValues) : DEFAULT_MAX_REFRESH;
                         refreshSlider.set([minHz, maxHz]);
                     }
-                    document.getElementById('refreshMinValue').innerText = '0 Гц';
-                    document.getElementById('refreshMaxValue').innerText = `${DEFAULT_MAX_REFRESH} Гц`;
                     applyFilters();
                     restoreScrollPosition();
                 });
@@ -698,6 +678,7 @@
             const sliderElement = document.getElementById('refreshSlider');
             if (!sliderElement) return;
             
+            // Получаем все частоты из мониторов
             let allRefreshValues = [];
             products.forEach(p => {
                 if (p.category === 'монитор' && p.monitorSpecs?.refreshRate) {
@@ -706,32 +687,41 @@
                 }
             });
             
-            let minHz = allRefreshValues.length ? Math.min(...allRefreshValues) : 0;
-            let maxHz = allRefreshValues.length ? Math.max(...allRefreshValues) : DEFAULT_MAX_REFRESH;
+            // Если нет мониторов с частотами, скрываем слайдер
+            if (allRefreshValues.length === 0) {
+                sliderElement.style.opacity = '0.5';
+                sliderElement.style.pointerEvents = 'none';
+                return;
+            }
+            
+            let minHz = Math.min(...allRefreshValues);
+            let maxHz = Math.max(...allRefreshValues);
             minHz = Math.floor(minHz / 10) * 10;
             maxHz = Math.ceil(maxHz / 10) * 10;
             if (maxHz > DEFAULT_MAX_REFRESH) maxHz = DEFAULT_MAX_REFRESH;
             if (minHz < 0) minHz = 0;
             
+            // Создаем слайдер
             noUiSlider.create(sliderElement, {
                 start: [minHz, maxHz],
                 connect: true,
                 step: 1,
                 range: { min: minHz, max: maxHz },
-                tooltips: true,
-                format: { to: value => Math.round(value) + ' Гц', from: value => Number(value.replace(' Гц', '')) }
+                tooltips: false
             });
             
             refreshSlider = sliderElement;
             
-            sliderElement.noUiSlider.on('update', (values) => {
+            // Обновляем отображаемые значения
+            const updateValues = (values) => {
                 document.getElementById('refreshMinValue').innerText = Math.round(values[0]) + ' Гц';
                 document.getElementById('refreshMaxValue').innerText = Math.round(values[1]) + ' Гц';
-            });
+            };
             
-            // При изменении слайдера — активируем фильтр и обновляем refreshRange
-            sliderElement.noUiSlider.on('change', () => {
-                const values = refreshSlider.get();
+            sliderElement.noUiSlider.on('update', updateValues);
+            
+            // При изменении слайдера — применяем фильтр
+            sliderElement.noUiSlider.on('change', (values) => {
                 refreshRange = { min: parseInt(values[0]), max: parseInt(values[1]) };
                 isRefreshFilterActive = true;
                 saveScrollPosition();
@@ -772,6 +762,8 @@
                 }
                 
                 hotPrices = await hotRes.json() || {};
+                
+                // Инициализируем фильтры ПОСЛЕ загрузки товаров
                 initMonitorFilters();
                 initRefreshSlider();
                 applyFilters();
@@ -792,6 +784,7 @@
                     selectedPanelTypes.clear();
                     selectedResolutions.clear();
                     updateMonitorFilterButtons();
+                    applyFilters();
                 }
             };
             
@@ -816,8 +809,13 @@
                     e.stopPropagation();
                     saveScrollPosition();
                     const value = btn.getAttribute(dataAttr);
-                    selectedSet.has(value) ? selectedSet.delete(value) : selectedSet.add(value);
-                    btn.classList.toggle('active', selectedSet.has(value));
+                    if (selectedSet.has(value)) {
+                        selectedSet.delete(value);
+                        btn.classList.remove('active');
+                    } else {
+                        selectedSet.add(value);
+                        btn.classList.add('active');
+                    }
                     applyFilters();
                     restoreScrollPosition();
                 });
@@ -825,16 +823,17 @@
         }
         
         function updateMonitorFilterButtons() {
-            const updateButtons = (id, selectedSet) => {
+            const updateButtons = (id, selectedSet, attr) => {
                 const container = document.getElementById(id);
                 if (!container) return;
                 container.querySelectorAll('.monitor-filter-btn').forEach(btn => {
-                    const value = btn.getAttribute('data-panel') || btn.getAttribute('data-res');
-                    btn.classList.toggle('active', selectedSet.has(value));
+                    const value = btn.getAttribute(attr);
+                    if (selectedSet.has(value)) btn.classList.add('active');
+                    else btn.classList.remove('active');
                 });
             };
-            updateButtons('panelTypeFilters', selectedPanelTypes);
-            updateButtons('resolutionFilters', selectedResolutions);
+            updateButtons('panelTypeFilters', selectedPanelTypes, 'data-panel');
+            updateButtons('resolutionFilters', selectedResolutions, 'data-res');
         }
         
         // ========== ОБРАБОТЧИКИ ==========
@@ -853,6 +852,7 @@
             selectedResolutions.clear();
             isRefreshFilterActive = false;
             refreshRange = { min: 0, max: DEFAULT_MAX_REFRESH };
+            
             if (refreshSlider) {
                 const allRefreshValues = [];
                 products.forEach(p => {
@@ -861,10 +861,13 @@
                         if (val > 0 && val <= DEFAULT_MAX_REFRESH) allRefreshValues.push(val);
                     }
                 });
-                let minHz = allRefreshValues.length ? Math.min(...allRefreshValues) : 0;
-                let maxHz = allRefreshValues.length ? Math.max(...allRefreshValues) : DEFAULT_MAX_REFRESH;
-                refreshSlider.set([minHz, maxHz]);
+                if (allRefreshValues.length > 0) {
+                    let minHz = Math.min(...allRefreshValues);
+                    let maxHz = Math.max(...allRefreshValues);
+                    refreshSlider.set([minHz, maxHz]);
+                }
             }
+            
             updateMonitorFilterButtons();
             applyFilters();
             restoreScrollPosition();
