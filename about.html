@@ -60,11 +60,6 @@
             to { opacity: 1; transform: scale(1); }
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
         @keyframes glow {
             0%, 100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.3); }
             50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.5); }
@@ -73,6 +68,16 @@
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
         }
         
         .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
@@ -123,6 +128,7 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            z-index: 101;
         }
         
         .nav-list {
@@ -298,6 +304,14 @@
             border-radius: 16px;
             border: 1px solid rgba(37, 99, 235, 0.2);
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .stat.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
         }
         
         .stat:hover {
@@ -312,6 +326,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
         
         .stat-label {
@@ -431,6 +446,7 @@
         .value-card.visible {
             opacity: 1;
             transform: translateY(0);
+            transition: all 0.6s ease;
         }
         
         .value-card:hover {
@@ -558,11 +574,6 @@
             height: 200%;
             background: radial-gradient(circle, rgba(37, 99, 235, 0.1), transparent);
             animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
         
         .cta-content {
@@ -771,6 +782,7 @@
             color: #fff;
         }
         
+        /* Mobile */
         @media (max-width: 768px) {
             .container {
                 padding: 0 1rem;
@@ -786,12 +798,13 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: rgba(10, 15, 26, 0.95);
+                background: rgba(10, 15, 26, 0.98);
                 backdrop-filter: blur(20px);
                 flex-direction: column;
                 padding: 1rem;
                 gap: 1rem;
                 border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+                z-index: 99;
             }
             
             .nav-list.show {
@@ -896,11 +909,11 @@
                     
                     <div class="about-stats">
                         <div class="stat">
-                            <div class="stat-number" id="clientsCount">350+</div>
+                            <div class="stat-number" id="clientsCount">350</div>
                             <div class="stat-label">довольных клиентов</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number" id="brandsCount">50+</div>
+                            <div class="stat-number" id="brandsCount">50</div>
                             <div class="stat-label">брендов</div>
                         </div>
                         <div class="stat">
@@ -1126,19 +1139,52 @@
         onValue(productsRef, (snapshot) => {
             const products = snapshot.val() ? Object.values(snapshot.val()) : [];
             const productsCount = document.getElementById('productsCount');
-            if (productsCount) productsCount.textContent = products.length + '+';
+            if (productsCount) {
+                productsCount.textContent = products.length;
+            }
         });
 
         const brandsRef = ref(database, 'brands');
         onValue(brandsRef, (snapshot) => {
             const brands = snapshot.val() ? Object.keys(snapshot.val()).length : 0;
             const brandsCount = document.getElementById('brandsCount');
-            if (brandsCount) brandsCount.textContent = brands + '+';
+            if (brandsCount) {
+                brandsCount.textContent = brands;
+            }
         });
     </script>
     
     <script>
-        // Анимация при скролле
+        // Анимация статистики при скролле
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Анимация цифр
+                    const numberElement = entry.target.querySelector('.stat-number');
+                    if (numberElement && !numberElement.dataset.animated) {
+                        numberElement.dataset.animated = 'true';
+                        const target = parseInt(numberElement.textContent);
+                        let current = 0;
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                numberElement.textContent = target + '+';
+                                clearInterval(timer);
+                            } else {
+                                numberElement.textContent = Math.floor(current);
+                            }
+                        }, 20);
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        document.querySelectorAll('.stat').forEach(stat => statObserver.observe(stat));
+        
+        // Анимация при скролле для value cards
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1168,18 +1214,28 @@
         // Мобильное меню
         const menuToggle = document.getElementById('menuToggle');
         const navList = document.getElementById('navList');
+        let isMenuOpen = false;
         
         if (menuToggle && navList) {
             menuToggle.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
                 navList.classList.toggle('show');
                 const icon = menuToggle.querySelector('i');
-                if (icon) icon.classList.toggle('fa-times');
+                if (icon) {
+                    icon.classList.remove('fa-bars', 'fa-times');
+                    icon.classList.add(isMenuOpen ? 'fa-times' : 'fa-bars');
+                }
             });
             
             navList.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     navList.classList.remove('show');
-                    if (menuToggle.querySelector('i')) menuToggle.querySelector('i').classList.add('fa-bars');
+                    isMenuOpen = false;
+                    const icon = menuToggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
                 });
             });
         }
