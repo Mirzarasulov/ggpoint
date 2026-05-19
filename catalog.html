@@ -7,6 +7,11 @@
     <meta name="description" content="Каталог игровой периферии GGPoint. Мыши, клавиатуры, наушники, мониторы, материнские платы.">
     <meta name="theme-color" content="#0f172a">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://ggpoint-shop-default-rtdb.firebaseio.com">
@@ -26,7 +31,6 @@
             overflow-x: hidden;
         }
         
-        /* Анимированный фон */
         body::before {
             content: '';
             position: fixed;
@@ -40,7 +44,6 @@
             z-index: -1;
         }
         
-        /* Анимации */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -72,7 +75,6 @@
         
         .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
         
-        /* Header */
         header {
             background: rgba(10, 15, 26, 0.8);
             backdrop-filter: blur(20px);
@@ -193,7 +195,6 @@
             gap: 12px;
         }
         
-        /* Page Header */
         .page-header {
             padding: 4rem 0;
             text-align: center;
@@ -242,7 +243,6 @@
             color: #2563eb;
         }
         
-        /* Catalog Layout */
         .catalog-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -250,7 +250,6 @@
             margin: 2rem 0;
         }
         
-        /* Sidebar */
         .catalog-sidebar {
             background: rgba(30, 41, 59, 0.3);
             backdrop-filter: blur(10px);
@@ -372,8 +371,8 @@
         
         .monitor-filter-btn {
             background: transparent;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
+            border: 2px solid #2563eb;
+            color: #2563eb;
             padding: 0.3rem 0.8rem;
             border-radius: 30px;
             font-size: 0.75rem;
@@ -387,7 +386,7 @@
         }
         
         .monitor-filter-btn.active {
-            background: var(--primary-blue);
+            background: #2563eb;
             color: white;
         }
         
@@ -418,13 +417,13 @@
         }
         
         .noUi-connect {
-            background: var(--gradient);
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
         }
         
         .noUi-handle {
             background: #fff;
             border-radius: 50%;
-            border: 2px solid var(--primary-blue);
+            border: 2px solid #2563eb;
             cursor: pointer;
             width: 16px !important;
             height: 16px !important;
@@ -477,7 +476,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
-        /* Active Filters */
         .active-filters-container {
             min-height: 45px;
             margin-bottom: 1rem;
@@ -512,7 +510,6 @@
             color: #ef4444;
         }
         
-        /* Toolbar */
         .catalog-toolbar {
             display: flex;
             justify-content: space-between;
@@ -597,7 +594,6 @@
             font-size: 0.9rem;
         }
         
-        /* Products Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -745,7 +741,6 @@
             transform: scale(1.1);
         }
         
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -770,7 +765,6 @@
             border-color: transparent;
         }
         
-        /* Recently Viewed */
         .section-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -785,7 +779,6 @@
             -webkit-text-fill-color: transparent;
         }
         
-        /* Footer */
         footer {
             background: #0a0f1a;
             border-top: 1px solid rgba(37, 99, 235, 0.2);
@@ -874,7 +867,6 @@
             font-size: 0.8rem;
         }
         
-        /* Back to top */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -903,7 +895,6 @@
             display: flex;
         }
         
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -985,16 +976,9 @@
             animation: spin 1s linear infinite;
         }
         
-        /* Mobile */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
+            .container { padding: 0 1rem; }
+            .menu-toggle { display: block; }
             .nav-list {
                 display: none;
                 position: absolute;
@@ -1008,93 +992,34 @@
                 gap: 1rem;
                 border-bottom: 1px solid rgba(37, 99, 235, 0.3);
             }
-            
-            .nav-list.show {
-                display: flex;
-            }
-            
-            .catalog-layout {
-                grid-template-columns: 1fr;
-            }
-            
-            .catalog-sidebar {
-                position: static;
-            }
-            
-            .catalog-toolbar {
-                flex-direction: column;
-            }
-            
-            .search-box input {
-                width: 100%;
-            }
-            
-            .sort-select {
-                width: 100%;
-            }
-            
-            .tracking-btn-main span {
-                display: none;
-            }
-            
-            .tracking-btn-main {
-                padding: 0.5rem 0.8rem;
-            }
-            
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.8rem;
-            }
-            
-            .product-image-container {
-                height: 140px;
-            }
-            
-            .product-name {
-                font-size: 0.8rem;
-            }
-            
-            .product-price {
-                font-size: 0.85rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 1.5rem;
-            }
-            
-            .contact-item {
-                justify-content: center;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
+            .nav-list.show { display: flex; }
+            .catalog-layout { grid-template-columns: 1fr; }
+            .catalog-sidebar { position: static; }
+            .catalog-toolbar { flex-direction: column; }
+            .search-box input { width: 100%; }
+            .sort-select { width: 100%; }
+            .tracking-btn-main span { display: none; }
+            .tracking-btn-main { padding: 0.5rem 0.8rem; }
+            .page-header h1 { font-size: 2rem; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .product-image-container { height: 140px; }
+            .product-name { font-size: 0.8rem; }
+            .product-price { font-size: 0.85rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; }
+            .contact-item { justify-content: center; }
+            .social-links { justify-content: center; }
         }
         
         @media (min-width: 769px) and (max-width: 1024px) {
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
     <header id="mainHeader">
         <div class="header-container">
-            <div class="logo">
-                <a href="index.html">GGPoint</a>
-            </div>
-            
-            <button class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            
+            <div class="logo"><a href="index.html">GGPoint</a></div>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
             <nav>
                 <ul class="nav-list" id="navList">
                     <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i>Главная</a></li>
@@ -1106,12 +1031,8 @@
                     <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i>Контакты</a></li>
                 </ul>
             </nav>
-            
             <div class="header-actions">
-                <button class="tracking-btn-main" id="trackingBtn">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Отследить</span>
-                </button>
+                <button class="tracking-btn-main" id="trackingBtn"><i class="fas fa-map-marker-alt"></i><span>Отследить</span></button>
             </div>
         </div>
     </header>
@@ -1119,11 +1040,7 @@
     <section class="page-header">
         <div class="container">
             <h1>Каталог товаров</h1>
-            <div class="breadcrumbs">
-                <a href="index.html">Главная</a>
-                <i class="fas fa-chevron-right"></i>
-                <span>Каталог</span>
-            </div>
+            <div class="breadcrumbs"><a href="index.html">Главная</a> <i class="fas fa-chevron-right"></i> <span>Каталог</span></div>
         </div>
     </section>
 
@@ -1172,10 +1089,7 @@
                         <div class="filter-block">
                             <h4 class="filter-title"><i class="fas fa-chart-line"></i> Частота (Гц)</h4>
                             <div class="refresh-slider-container">
-                                <div class="slider-values">
-                                    <span id="refreshMinValue">0 Гц</span>
-                                    <span id="refreshMaxValue">500 Гц</span>
-                                </div>
+                                <div class="slider-values"><span id="refreshMinValue">0 Гц</span><span id="refreshMaxValue">500 Гц</span></div>
                                 <div id="refreshSlider" class="refresh-slider"></div>
                             </div>
                         </div>
@@ -1199,10 +1113,7 @@
                 </aside>
                 
                 <div class="catalog-main">
-                    <div class="active-filters-container">
-                        <div class="active-filters" id="activeFilters"></div>
-                    </div>
-                    
+                    <div class="active-filters-container"><div class="active-filters" id="activeFilters"></div></div>
                     <div class="catalog-toolbar">
                         <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Поиск..."></div>
                         <select class="sort-select" id="sortSelect">
@@ -1218,7 +1129,6 @@
                             <button class="view-btn" id="listView"><i class="fas fa-list"></i></button>
                         </div>
                     </div>
-                    
                     <div class="products-count" id="productsCount">Загрузка...</div>
                     <div class="products-grid" id="productsGrid"><div class="loader"><i class="fas fa-spinner fa-spin"></i><br>Загрузка товаров...</div></div>
                     <div class="pagination" id="pagination"></div>
@@ -1236,48 +1146,10 @@
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>GGPoint</h3>
-                <p>Ваш надежный магазин игровой периферии в Узбекистане.</p>
-                <div class="social-links">
-                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h4>Навигация</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">MB</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Категории</h4>
-                <ul class="footer-links">
-                    <li><a href="catalog.html?category=мышь">Мыши</a></li>
-                    <li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li>
-                    <li><a href="catalog.html?category=наушники">Наушники</a></li>
-                    <li><a href="catalog.html?category=монитор">Мониторы</a></li>
-                    <li><a href="keycaps.html">Кейкапы</a></li>
-                    <li><a href="pads.html">Коврики</a></li>
-                    <li><a href="mb.html">Материнские платы</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <div class="contact-info">
-                    <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
-                    <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div>
-                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Ташкент, Узбекистан</span></div>
-                    <div class="contact-item"><i class="fas fa-clock"></i><span>Ежедневно 10:00 - 22:00</span></div>
-                </div>
-            </div>
+            <div class="footer-section"><h3>GGPoint</h3><p>Ваш надежный магазин игровой периферии в Узбекистане.</p><div class="social-links"><a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a></div></div>
+            <div class="footer-section"><h4>Навигация</h4><ul class="footer-links"><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">MB</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
+            <div class="footer-section"><h4>Категории</h4><ul class="footer-links"><li><a href="catalog.html?category=мышь">Мыши</a></li><li><a href="catalog.html?category=клавиатура">Клавиатуры</a></li><li><a href="catalog.html?category=наушники">Наушники</a></li><li><a href="catalog.html?category=монитор">Мониторы</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">Материнские платы</a></li></ul></div>
+            <div class="footer-section"><h4>Контакты</h4><div class="contact-info"><div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div><div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div></div></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
     </footer>
@@ -1287,17 +1159,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
     <script>
-        // ========== КОНФИГУРАЦИЯ ==========
         const FIREBASE_URL = 'https://ggpoint-shop-default-rtdb.firebaseio.com';
         const DEFAULT_MAX_REFRESH = 500;
         
-        // ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ==========
-        let products = [];
-        let filteredProducts = [];
-        let hotPrices = {};
-        let brands = {};
-        let currentPage = 1;
-        let itemsPerPage = 12;
+        let products = [], filteredProducts = [], hotPrices = {}, brands = {};
+        let currentPage = 1, itemsPerPage = 12;
         let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
         let urlParams = new URLSearchParams(window.location.search);
         let categoryParam = urlParams.get('category');
@@ -1310,12 +1176,11 @@
         let scrollPositionBeforeFilter = 0;
         let refreshSlider = null;
         
-        // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
-        const escapeHtml = (str) => str ? String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;') : '';
-        const parsePrice = (priceStr) => priceStr ? parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0 : 0;
-        const formatPrice = (price) => price.toLocaleString() + ' $ ';
-        const getCategoryName = (key) => ({ 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' }[key] || key);
-        const getMonitorSpec = (product, field) => product.monitorSpecs?.[field] || null;
+        function escapeHtml(str) { return str ? String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;') : ''; }
+        function parsePrice(p) { return p ? parseInt(String(p).replace(/[^\d]/g, '')) || 0 : 0; }
+        function formatPrice(p) { return p.toLocaleString() + ' UZS'; }
+        function getCategoryName(k) { return { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' }[k] || k; }
+        function getMonitorSpec(p, f) { return p.monitorSpecs?.[f] || null; }
         
         function getAllRefreshRates(monitorSpecs) {
             if (!monitorSpecs) return [];
@@ -1339,14 +1204,12 @@
         
         function matchesRefreshRange(monitorSpecs, minHz, maxHz) {
             const rates = getAllRefreshRates(monitorSpecs);
-            if (rates.length === 0) return false;
-            return rates.some(rate => rate >= minHz && rate <= maxHz);
+            return rates.length > 0 && rates.some(rate => rate >= minHz && rate <= maxHz);
         }
         
         const saveScrollPosition = () => scrollPositionBeforeFilter = window.scrollY;
         const restoreScrollPosition = () => { if (scrollPositionBeforeFilter > 0) setTimeout(() => window.scrollTo({ top: scrollPositionBeforeFilter, behavior: 'auto' }), 50); };
         
-        // ========== ОСНОВНЫЕ ФУНКЦИИ ==========
         function applyFilters() {
             let filtered = [...products];
             const category = document.querySelector('input[name="category"]:checked')?.value;
@@ -1515,31 +1378,38 @@
         
         function updateActiveFilters() {
             const container = document.getElementById('activeFilters');
+            if (!container) return;
             container.innerHTML = '';
             
             const category = document.querySelector('input[name="category"]:checked')?.value;
-            if (category && category !== 'all') addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { 
-                saveScrollPosition();
-                document.querySelector('input[name="category"][value="all"]').checked = true;
-                applyFilters();
-                restoreScrollPosition();
-            });
+            if (category && category !== 'all') {
+                addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { 
+                    saveScrollPosition();
+                    document.querySelector('input[name="category"][value="all"]').checked = true;
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
             
-            if (selectedPanelTypes.size > 0) addFilterTag(container, `Матрица: ${Array.from(selectedPanelTypes).join(', ')}`, () => { 
-                saveScrollPosition();
-                selectedPanelTypes.clear();
-                updateMonitorFilterButtons();
-                applyFilters();
-                restoreScrollPosition();
-            });
+            if (selectedPanelTypes.size > 0) {
+                addFilterTag(container, `Матрица: ${Array.from(selectedPanelTypes).join(', ')}`, () => { 
+                    saveScrollPosition();
+                    selectedPanelTypes.clear();
+                    updateMonitorFilterButtons();
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
             
-            if (selectedResolutions.size > 0) addFilterTag(container, `Разрешение: ${Array.from(selectedResolutions).join(', ')}`, () => { 
-                saveScrollPosition();
-                selectedResolutions.clear();
-                updateMonitorFilterButtons();
-                applyFilters();
-                restoreScrollPosition();
-            });
+            if (selectedResolutions.size > 0) {
+                addFilterTag(container, `Разрешение: ${Array.from(selectedResolutions).join(', ')}`, () => { 
+                    saveScrollPosition();
+                    selectedResolutions.clear();
+                    updateMonitorFilterButtons();
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
             
             if (isRefreshFilterActive) {
                 addFilterTag(container, `Частота: ${refreshRange.min} - ${refreshRange.max} Гц`, () => { 
@@ -1554,9 +1424,11 @@
                                 rates.forEach(r => { if (r > 0 && r <= DEFAULT_MAX_REFRESH) allRefreshValues.push(r); });
                             }
                         });
-                        let minHz = allRefreshValues.length ? Math.min(...allRefreshValues) : 0;
-                        let maxHz = allRefreshValues.length ? Math.max(...allRefreshValues) : DEFAULT_MAX_REFRESH;
-                        refreshSlider.set([minHz, maxHz]);
+                        if (allRefreshValues.length > 0) {
+                            let minHz = Math.min(...allRefreshValues);
+                            let maxHz = Math.max(...allRefreshValues);
+                            refreshSlider.set([minHz, maxHz]);
+                        }
                     }
                     applyFilters();
                     restoreScrollPosition();
@@ -1564,34 +1436,44 @@
             }
             
             const brand = document.getElementById('brandFilter')?.value;
-            if (brand && brand !== 'all') addFilterTag(container, `Бренд: ${brand}`, () => { 
-                saveScrollPosition();
-                document.getElementById('brandFilter').value = 'all';
-                applyFilters();
-                restoreScrollPosition();
-            });
+            if (brand && brand !== 'all') {
+                addFilterTag(container, `Бренд: ${brand}`, () => { 
+                    saveScrollPosition();
+                    document.getElementById('brandFilter').value = 'all';
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
             
             const search = document.getElementById('searchInput')?.value;
-            if (search) addFilterTag(container, `Поиск: ${search}`, () => { 
-                saveScrollPosition();
-                document.getElementById('searchInput').value = '';
-                applyFilters();
-                restoreScrollPosition();
-            });
+            if (search) {
+                addFilterTag(container, `Поиск: ${search}`, () => { 
+                    saveScrollPosition();
+                    document.getElementById('searchInput').value = '';
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
             
-            if (document.getElementById('discountFilter')?.checked) addFilterTag(container, 'Со скидкой', () => { 
-                saveScrollPosition();
-                document.getElementById('discountFilter').checked = false;
-                applyFilters();
-                restoreScrollPosition();
-            });
+            if (document.getElementById('discountFilter')?.checked) {
+                addFilterTag(container, 'Со скидкой', () => { 
+                    saveScrollPosition();
+                    document.getElementById('discountFilter').checked = false;
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
         }
         
         function addFilterTag(container, text, onRemove) {
             const tag = document.createElement('span');
             tag.className = 'filter-tag';
             tag.innerHTML = `${text} <i class="fas fa-times"></i>`;
-            tag.querySelector('i').onclick = onRemove;
+            const closeIcon = tag.querySelector('i');
+            closeIcon.onclick = (e) => {
+                e.stopPropagation();
+                onRemove();
+            };
             container.appendChild(tag);
         }
         
@@ -1753,9 +1635,11 @@
         // ========== ОБРАБОТЧИКИ ==========
         document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
         
+        // 🔧 ИСПРАВЛЕНА КНОПКА СБРОСИТЬ
         document.getElementById('clearFilters')?.addEventListener('click', (e) => {
             e.preventDefault();
             saveScrollPosition();
+            
             document.querySelector('input[name="category"][value="all"]').checked = true;
             document.getElementById('brandFilter').value = 'all';
             document.getElementById('minPrice').value = '';
@@ -1779,6 +1663,10 @@
                     let minHz = Math.min(...allRefreshValues);
                     let maxHz = Math.max(...allRefreshValues);
                     refreshSlider.set([minHz, maxHz]);
+                    document.getElementById('refreshMinValue').innerText = minHz + ' Гц';
+                    document.getElementById('refreshMaxValue').innerText = maxHz + ' Гц';
+                } else {
+                    refreshSlider.set([0, DEFAULT_MAX_REFRESH]);
                 }
             }
             
@@ -1804,25 +1692,6 @@
         gridViewBtn?.addEventListener('click', () => { productsGrid.classList.remove('list-view'); gridViewBtn.classList.add('active'); listViewBtn.classList.remove('active'); });
         listViewBtn?.addEventListener('click', () => { productsGrid.classList.add('list-view'); listViewBtn.classList.add('active'); gridViewBtn.classList.remove('active'); });
         
-        let ctrlClick = 0, timer = null;
-        document.addEventListener('click', e => {
-            if (e.ctrlKey) {
-                ctrlClick++;
-                clearTimeout(timer);
-                timer = setTimeout(() => ctrlClick = 0, 800);
-                if (ctrlClick === 3) { document.getElementById('adminLoginModal').style.display = 'block'; ctrlClick = 0; }
-            }
-        });
-        document.getElementById('closeAdminModal')?.addEventListener('click', () => document.getElementById('adminLoginModal').style.display = 'none');
-        window.addEventListener('click', e => { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
-        document.getElementById('adminLoginForm')?.addEventListener('submit', e => {
-            e.preventDefault();
-            if (document.getElementById('adminLogin').value === 'admin' && document.getElementById('adminPassword').value === 'admin') {
-                document.getElementById('adminLoginModal').style.display = 'none';
-                window.location.href = 'admin-panel.html';
-            } else alert('Неверный логин или пароль!');
-        });
-        
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
             if (window.scrollY > 50) header.classList.add('scrolled');
@@ -1847,6 +1716,26 @@
                 });
             });
         }
+        
+        // Админка
+        let ctrlClick = 0, timer = null;
+        document.addEventListener('click', e => {
+            if (e.ctrlKey) {
+                ctrlClick++;
+                clearTimeout(timer);
+                timer = setTimeout(() => ctrlClick = 0, 800);
+                if (ctrlClick === 3) { document.getElementById('adminLoginModal').style.display = 'block'; ctrlClick = 0; }
+            }
+        });
+        document.getElementById('closeAdminModal')?.addEventListener('click', () => document.getElementById('adminLoginModal').style.display = 'none');
+        window.addEventListener('click', e => { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
+        document.getElementById('adminLoginForm')?.addEventListener('submit', e => {
+            e.preventDefault();
+            if (document.getElementById('adminLogin').value === 'admin' && document.getElementById('adminPassword').value === 'admin') {
+                document.getElementById('adminLoginModal').style.display = 'none';
+                window.location.href = 'admin-panel.html';
+            } else alert('Неверный логин или пароль!');
+        });
         
         loadData();
     </script>
