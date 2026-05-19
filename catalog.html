@@ -1159,11 +1159,17 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
     <script>
+        // ========== КОНФИГУРАЦИЯ ==========
         const FIREBASE_URL = 'https://ggpoint-shop-default-rtdb.firebaseio.com';
         const DEFAULT_MAX_REFRESH = 500;
         
-        let products = [], filteredProducts = [], hotPrices = {}, brands = {};
-        let currentPage = 1, itemsPerPage = 12;
+        // ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ==========
+        let products = [];
+        let filteredProducts = [];
+        let hotPrices = {};
+        let brands = {};
+        let currentPage = 1;
+        let itemsPerPage = 12;
         let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
         let urlParams = new URLSearchParams(window.location.search);
         let categoryParam = urlParams.get('category');
@@ -1176,71 +1182,121 @@
         let scrollPositionBeforeFilter = 0;
         let refreshSlider = null;
         
-        function escapeHtml(str) { return str ? String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;') : ''; }
-        function parsePrice(p) { return p ? parseInt(String(p).replace(/[^\d]/g, '')) || 0 : 0; }
-        function formatPrice(p) { return p.toLocaleString() + ' UZS'; }
-        function getCategoryName(k) { return { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' }[k] || k; }
-        function getMonitorSpec(p, f) { return p.monitorSpecs?.[f] || null; }
+        // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        function parsePrice(priceStr) {
+            if (!priceStr) return 0;
+            return parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0;
+        }
+        
+        function formatPrice(price) {
+            return price.toLocaleString() + ' UZS';
+        }
+        
+        function getCategoryName(key) {
+            var cats = { 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' };
+            return cats[key] || key;
+        }
+        
+        function getMonitorSpec(product, field) {
+            return product.monitorSpecs ? product.monitorSpecs[field] : null;
+        }
         
         function getAllRefreshRates(monitorSpecs) {
             if (!monitorSpecs) return [];
-            const rates = [];
+            var rates = [];
             if (monitorSpecs.refreshRate && !monitorSpecs.dualMode) {
-                const val = parseInt(String(monitorSpecs.refreshRate).match(/(\d+)/)?.[0]) || 0;
+                var match = String(monitorSpecs.refreshRate).match(/(\d+)/);
+                var val = match ? parseInt(match[0]) : 0;
                 if (val > 0) rates.push(val);
             }
             if (monitorSpecs.dualMode) {
-                if (monitorSpecs.dualMode.mode1?.hz) {
-                    const val = parseInt(String(monitorSpecs.dualMode.mode1.hz).match(/(\d+)/)?.[0]) || 0;
-                    if (val > 0) rates.push(val);
+                if (monitorSpecs.dualMode.mode1 && monitorSpecs.dualMode.mode1.hz) {
+                    var match1 = String(monitorSpecs.dualMode.mode1.hz).match(/(\d+)/);
+                    var val1 = match1 ? parseInt(match1[0]) : 0;
+                    if (val1 > 0) rates.push(val1);
                 }
-                if (monitorSpecs.dualMode.mode2?.hz) {
-                    const val = parseInt(String(monitorSpecs.dualMode.mode2.hz).match(/(\d+)/)?.[0]) || 0;
-                    if (val > 0) rates.push(val);
+                if (monitorSpecs.dualMode.mode2 && monitorSpecs.dualMode.mode2.hz) {
+                    var match2 = String(monitorSpecs.dualMode.mode2.hz).match(/(\d+)/);
+                    var val2 = match2 ? parseInt(match2[0]) : 0;
+                    if (val2 > 0) rates.push(val2);
                 }
             }
             return rates;
         }
         
         function matchesRefreshRange(monitorSpecs, minHz, maxHz) {
-            const rates = getAllRefreshRates(monitorSpecs);
-            return rates.length > 0 && rates.some(rate => rate >= minHz && rate <= maxHz);
+            var rates = getAllRefreshRates(monitorSpecs);
+            if (rates.length === 0) return false;
+            for (var i = 0; i < rates.length; i++) {
+                if (rates[i] >= minHz && rates[i] <= maxHz) return true;
+            }
+            return false;
         }
         
-        const saveScrollPosition = () => scrollPositionBeforeFilter = window.scrollY;
-        const restoreScrollPosition = () => { if (scrollPositionBeforeFilter > 0) setTimeout(() => window.scrollTo({ top: scrollPositionBeforeFilter, behavior: 'auto' }), 50); };
+        function saveScrollPosition() { scrollPositionBeforeFilter = window.scrollY; }
+        function restoreScrollPosition() { 
+            if (scrollPositionBeforeFilter > 0) { 
+                setTimeout(function() { window.scrollTo({ top: scrollPositionBeforeFilter, behavior: 'auto' }); }, 50); 
+            } 
+        }
         
+        // ========== ОСНОВНЫЕ ФУНКЦИИ ==========
         function applyFilters() {
-            let filtered = [...products];
-            const category = document.querySelector('input[name="category"]:checked')?.value;
-            if (category && category !== 'all') filtered = filtered.filter(p => p.category === category);
-            else if (categoryParam && categoryParam !== 'all') filtered = filtered.filter(p => p.category === categoryParam);
+            var filtered = products.slice();
+            var category = document.querySelector('input[name="category"]:checked')?.value;
+            if (category && category !== 'all') {
+                filtered = filtered.filter(function(p) { return p.category === category; });
+            } else if (categoryParam && categoryParam !== 'all') {
+                filtered = filtered.filter(function(p) { return p.category === categoryParam; });
+            }
             
-            const brand = document.getElementById('brandFilter')?.value;
-            if (brand && brand !== 'all') filtered = filtered.filter(p => p.brand === brand);
+            var brand = document.getElementById('brandFilter')?.value;
+            if (brand && brand !== 'all') {
+                filtered = filtered.filter(function(p) { return p.brand === brand; });
+            }
             
-            const minPrice = document.getElementById('minPrice')?.value;
-            const maxPrice = document.getElementById('maxPrice')?.value;
-            if (minPrice) filtered = filtered.filter(p => parsePrice(p.price) >= Number(minPrice));
-            if (maxPrice) filtered = filtered.filter(p => parsePrice(p.price) <= Number(maxPrice));
+            var minPrice = document.getElementById('minPrice')?.value;
+            var maxPrice = document.getElementById('maxPrice')?.value;
+            if (minPrice) filtered = filtered.filter(function(p) { return parsePrice(p.price) >= Number(minPrice); });
+            if (maxPrice) filtered = filtered.filter(function(p) { return parsePrice(p.price) <= Number(maxPrice); });
             
-            if (document.getElementById('discountFilter')?.checked) filtered = filtered.filter(p => hotPrices[p.id]);
+            if (document.getElementById('discountFilter')?.checked) {
+                filtered = filtered.filter(function(p) { return hotPrices[p.id]; });
+            }
             
-            const searchQuery = document.getElementById('searchInput')?.value.toLowerCase().trim();
-            if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || (p.description || '').toLowerCase().includes(searchQuery));
+            var searchQuery = document.getElementById('searchInput')?.value.toLowerCase().trim();
+            if (searchQuery) {
+                filtered = filtered.filter(function(p) { 
+                    return p.name.toLowerCase().indexOf(searchQuery) !== -1 || 
+                           (p.description || '').toLowerCase().indexOf(searchQuery) !== -1;
+                });
+            }
             
-            const currentCategory = document.querySelector('input[name="category"]:checked')?.value;
+            var currentCategory = document.querySelector('input[name="category"]:checked')?.value;
             if (currentCategory === 'монитор') {
-                filtered = filtered.filter(product => {
+                filtered = filtered.filter(function(product) {
                     if (selectedPanelTypes.size > 0) {
-                        const panelType = getMonitorSpec(product, 'panelType');
+                        var panelType = getMonitorSpec(product, 'panelType');
                         if (!panelType || !selectedPanelTypes.has(panelType)) return false;
                     }
                     if (selectedResolutions.size > 0) {
-                        const resolution = getMonitorSpec(product, 'resolution');
+                        var resolution = getMonitorSpec(product, 'resolution');
                         if (!resolution) return false;
-                        let matched = false;
-                        for (const res of selectedResolutions) if (resolution.includes(res)) { matched = true; break; }
+                        var matched = false;
+                        var resArray = Array.from(selectedResolutions);
+                        for (var r = 0; r < resArray.length; r++) {
+                            if (resolution.indexOf(resArray[r]) !== -1) { matched = true; break; }
+                        }
                         if (!matched) return false;
                     }
                     if (isRefreshFilterActive) {
@@ -1250,24 +1306,30 @@
                 });
             }
             
-            const sortBy = document.getElementById('sortSelect')?.value;
-            if (sortBy === 'price_asc') filtered.sort((a,b) => parsePrice(a.price) - parsePrice(b.price));
-            else if (sortBy === 'price_desc') filtered.sort((a,b) => parsePrice(b.price) - parsePrice(a.price));
-            else if (sortBy === 'name_asc') filtered.sort((a,b) => a.name.localeCompare(b.name));
-            else if (sortBy === 'name_desc') filtered.sort((a,b) => b.name.localeCompare(a.name));
-            else if (sortBy === 'newest') filtered.sort((a,b) => new Date(b.dateAdded||0) - new Date(a.dateAdded||0));
+            var sortBy = document.getElementById('sortSelect')?.value;
+            if (sortBy === 'price_asc') {
+                filtered.sort(function(a,b) { return parsePrice(a.price) - parsePrice(b.price); });
+            } else if (sortBy === 'price_desc') {
+                filtered.sort(function(a,b) { return parsePrice(b.price) - parsePrice(a.price); });
+            } else if (sortBy === 'name_asc') {
+                filtered.sort(function(a,b) { return a.name.localeCompare(b.name); });
+            } else if (sortBy === 'name_desc') {
+                filtered.sort(function(a,b) { return b.name.localeCompare(a.name); });
+            } else if (sortBy === 'newest') {
+                filtered.sort(function(a,b) { return new Date(b.dateAdded||0) - new Date(a.dateAdded||0); });
+            }
             
             filteredProducts = filtered;
             currentPage = 1;
-            document.getElementById('productsCount').textContent = `Найдено товаров: ${filteredProducts.length}`;
+            document.getElementById('productsCount').textContent = 'Найдено товаров: ' + filteredProducts.length;
             renderProducts();
             updateActiveFilters();
         }
         
         function renderProducts() {
-            const start = (currentPage-1)*itemsPerPage;
-            const pageProducts = filteredProducts.slice(start, start+itemsPerPage);
-            const grid = document.getElementById('productsGrid');
+            var start = (currentPage-1)*itemsPerPage;
+            var pageProducts = filteredProducts.slice(start, start+itemsPerPage);
+            var grid = document.getElementById('productsGrid');
             
             if (pageProducts.length === 0) {
                 grid.innerHTML = '<div class="no-products"><i class="fas fa-search"></i><h3>Товары не найдены</h3><p>Попробуйте изменить параметры фильтрации</p></div>';
@@ -1275,70 +1337,84 @@
                 return;
             }
             
-            grid.innerHTML = pageProducts.map((p, idx) => {
-                const isHot = hotPrices[p.id];
-                const isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
-                const img = p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
-                const shortDescription = p.description ? (p.description.length > 80 ? p.description.substring(0, 80) + '...' : p.description) : 'Описание отсутствует';
+            var html = '';
+            for (var i = 0; i < pageProducts.length; i++) {
+                var p = pageProducts[i];
+                var isHot = hotPrices[p.id];
+                var isNew = p.dateAdded && (new Date() - new Date(p.dateAdded)) < 30*24*60*60*1000;
+                var img = p.images && p.images[0] ? p.images[0] : 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
+                var shortDescription = p.description ? (p.description.length > 80 ? p.description.substring(0, 80) + '...' : p.description) : 'Описание отсутствует';
                 
-                let specsHtml = '';
+                var specsHtml = '';
                 if (p.category === 'монитор' && p.monitorSpecs) {
-                    const ms = p.monitorSpecs;
-                    const specs = [];
+                    var ms = p.monitorSpecs;
+                    var specs = [];
                     if (ms.panelType) specs.push(ms.panelType);
                     if (ms.resolution) specs.push(ms.resolution);
                     if (ms.refreshRate && !ms.dualMode) specs.push(ms.refreshRate);
-                    if (ms.dualMode) specs.push(`Dual Mode: ${ms.dualMode.mode1?.resolution || ''} ${ms.dualMode.mode1?.hz || ''} / ${ms.dualMode.mode2?.resolution || ''} ${ms.dualMode.mode2?.hz || ''}`);
-                    if (specs.length) specsHtml = `<div class="product-specs">${specs.map(s => `<span class="product-spec-badge">${escapeHtml(s)}</span>`).join('')}</div>`;
+                    if (ms.dualMode) specs.push('Dual Mode: ' + (ms.dualMode.mode1?.resolution || '') + ' ' + (ms.dualMode.mode1?.hz || '') + ' / ' + (ms.dualMode.mode2?.resolution || '') + ' ' + (ms.dualMode.mode2?.hz || ''));
+                    if (specs.length) {
+                        var badges = '';
+                        for (var s = 0; s < specs.length; s++) {
+                            badges += '<span class="product-spec-badge">' + escapeHtml(specs[s]) + '</span>';
+                        }
+                        specsHtml = '<div class="product-specs">' + badges + '</div>';
+                    }
                 }
                 
-                return `
-                    <div class="product-card" data-id="${p.id}" style="animation-delay: ${idx * 0.05}s">
-                        ${isHot ? '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>' : ''}
-                        ${isNew ? '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>' : ''}
-                        <div class="product-image-container"><img src="${img}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/1e293b/2563eb?text=Ошибка'"></div>
-                        <div class="product-info">
-                            <div class="product-category">${getCategoryName(p.category)}</div>
-                            <h3 class="product-name">${escapeHtml(p.name)}</h3>
-                            <div class="product-description">${escapeHtml(shortDescription)}</div>
-                            ${specsHtml}
-                            <div style="display:flex;justify-content:space-between;align-items:center; margin-top: 0.5rem;">
-                                <p class="product-price">${formatPrice(parsePrice(p.price))}</p>
-                                <button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})"><i class="fas fa-shopping-cart"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+                html += '<div class="product-card" data-id="' + p.id + '" style="animation-delay: ' + (i * 0.05) + 's">';
+                if (isHot) html += '<div class="product-badge-sale"><i class="fas fa-fire"></i> Скидка</div>';
+                if (isNew) html += '<div class="product-badge-new"><i class="fas fa-star"></i> Новинка</div>';
+                html += '<div class="product-image-container"><img src="' + img + '" class="product-image" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x200/1e293b/2563eb?text=Ошибка\'"></div>';
+                html += '<div class="product-info">';
+                html += '<div class="product-category">' + getCategoryName(p.category) + '</div>';
+                html += '<h3 class="product-name">' + escapeHtml(p.name) + '</h3>';
+                html += '<div class="product-description">' + escapeHtml(shortDescription) + '</div>';
+                html += specsHtml;
+                html += '<div style="display:flex;justify-content:space-between;align-items:center; margin-top: 0.5rem;">';
+                html += '<p class="product-price">' + formatPrice(parsePrice(p.price)) + '</p>';
+                html += '<button class="cart-btn" onclick="event.stopPropagation(); addToCart(' + JSON.stringify(p).replace(/"/g, '&quot;') + ')"><i class="fas fa-shopping-cart"></i></button>';
+                html += '</div></div></div>';
+            }
+            grid.innerHTML = html;
             
-            document.querySelectorAll('.product-card').forEach(card => {
-                const productId = card.dataset.id;
-                const product = products.find(p => p.id == productId);
-                if (product) card.onclick = () => { addToRecentlyViewed(product); window.location.href = `product.html?id=${product.id}`; };
-            });
+            var cards = document.querySelectorAll('.product-card');
+            for (var c = 0; c < cards.length; c++) {
+                var card = cards[c];
+                var productId = card.getAttribute('data-id');
+                var product = null;
+                for (var pr = 0; pr < products.length; pr++) {
+                    if (products[pr].id == productId) { product = products[pr]; break; }
+                }
+                if (product) {
+                card.onclick = function(prod) {
+                    return function() { addToRecentlyViewed(prod); window.location.href = 'product.html?id=' + prod.id; };
+                }(product);
+                }
+            }
             
             renderPagination();
             renderRecentlyViewed();
         }
         
         function renderPagination() {
-            const total = Math.ceil(filteredProducts.length / itemsPerPage);
-            const pag = document.getElementById('pagination');
+            var total = Math.ceil(filteredProducts.length / itemsPerPage);
+            var pag = document.getElementById('pagination');
             if (total <= 1) { pag.innerHTML = ''; return; }
             
-            let html = `<button class="pagination-btn" onclick="changePage(${currentPage-1})" ${currentPage===1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
-            for (let i = 1; i <= total; i++) {
+            var html = '<button class="pagination-btn" onclick="changePage(' + (currentPage-1) + ')" ' + (currentPage===1 ? 'disabled' : '') + '><i class="fas fa-chevron-left"></i></button>';
+            for (var i = 1; i <= total; i++) {
                 if (i === 1 || i === total || (i >= currentPage-2 && i <= currentPage+2)) {
-                    html += `<button class="pagination-btn ${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</button>`;
+                    html += '<button class="pagination-btn ' + (i===currentPage?'active':'') + '" onclick="changePage(' + i + ')">' + i + '</button>';
                 } else if (i === currentPage-3 || i === currentPage+3) {
-                    html += `<span class="pagination-btn" style="cursor:default; opacity:0.7">...</span>`;
+                    html += '<span class="pagination-btn" style="cursor:default; opacity:0.7">...</span>';
                 }
             }
-            html += `<button class="pagination-btn" onclick="changePage(${currentPage+1})" ${currentPage===total ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+            html += '<button class="pagination-btn" onclick="changePage(' + (currentPage+1) + ')" ' + (currentPage===total ? 'disabled' : '') + '><i class="fas fa-chevron-right"></i></button>';
             pag.innerHTML = html;
         }
         
-        window.changePage = (page) => {
+        window.changePage = function(page) {
             if (page < 1 || page > Math.ceil(filteredProducts.length / itemsPerPage)) return;
             saveScrollPosition();
             currentPage = page;
@@ -1347,43 +1423,59 @@
         };
         
         function addToCart(product) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let existing = cart.find(i => i.id === product.id);
-            existing ? existing.quantity = (existing.quantity||1)+1 : cart.push({...product, quantity:1});
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            var existing = null;
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id === product.id) { existing = cart[i]; break; }
+            }
+            if (existing) {
+                existing.quantity = (existing.quantity||1)+1;
+            } else {
+                cart.push({id: product.id, name: product.name, price: product.price, images: product.images, quantity: 1});
+            }
             localStorage.setItem('cart', JSON.stringify(cart));
             alert('✅ Товар добавлен в корзину');
         }
         
         function addToRecentlyViewed(p) {
-            recentlyViewed = recentlyViewed.filter(i => i.id !== p.id);
-            recentlyViewed.unshift(p);
-            if (recentlyViewed.length > 6) recentlyViewed.pop();
+            var newList = [];
+            for (var i = 0; i < recentlyViewed.length; i++) {
+                if (recentlyViewed[i].id !== p.id) newList.push(recentlyViewed[i]);
+            }
+            newList.unshift(p);
+            if (newList.length > 6) newList.pop();
+            recentlyViewed = newList;
             localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
         }
         
         function renderRecentlyViewed() {
-            const grid = document.getElementById('recentlyViewedGrid');
+            var grid = document.getElementById('recentlyViewedGrid');
             if (!grid) return;
             if (recentlyViewed.length === 0) {
                 grid.innerHTML = '<div class="no-products" style="grid-column:1/-1; padding:2rem;">Нет просмотренных товаров</div>';
                 return;
             }
-            grid.innerHTML = recentlyViewed.slice(0,4).map(p => `
-                <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
-                    <div class="product-image-container" style="height:130px;"><img src="${p.images?.[0] || 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото'}" class="product-image" loading="lazy"></div>
-                    <div class="product-info"><div class="product-category">${getCategoryName(p.category)}</div><h3 class="product-name" style="font-size:0.85rem;">${escapeHtml(p.name)}</h3><p class="product-price" style="font-size:0.9rem;">${p.price}</p></div>
-                </div>
-            `).join('');
+            var html = '';
+            for (var i = 0; i < Math.min(4, recentlyViewed.length); i++) {
+                var p = recentlyViewed[i];
+                var img = p.images && p.images[0] ? p.images[0] : 'https://via.placeholder.com/300x200/1e293b/2563eb?text=Нет+фото';
+                html += '<div class="product-card" onclick="window.location.href=\'product.html?id=' + p.id + '\'">';
+                html += '<div class="product-image-container" style="height:130px;"><img src="' + img + '" class="product-image" loading="lazy"></div>';
+                html += '<div class="product-info"><div class="product-category">' + getCategoryName(p.category) + '</div>';
+                html += '<h3 class="product-name" style="font-size:0.85rem;">' + escapeHtml(p.name) + '</h3>';
+                html += '<p class="product-price" style="font-size:0.9rem;">' + p.price + '</p></div></div>';
+            }
+            grid.innerHTML = html;
         }
         
         function updateActiveFilters() {
-            const container = document.getElementById('activeFilters');
+            var container = document.getElementById('activeFilters');
             if (!container) return;
             container.innerHTML = '';
             
-            const category = document.querySelector('input[name="category"]:checked')?.value;
+            var category = document.querySelector('input[name="category"]:checked')?.value;
             if (category && category !== 'all') {
-                addFilterTag(container, `Категория: ${getCategoryName(category)}`, () => { 
+                addFilterTag(container, 'Категория: ' + getCategoryName(category), function() { 
                     saveScrollPosition();
                     document.querySelector('input[name="category"][value="all"]').checked = true;
                     applyFilters();
@@ -1392,7 +1484,13 @@
             }
             
             if (selectedPanelTypes.size > 0) {
-                addFilterTag(container, `Матрица: ${Array.from(selectedPanelTypes).join(', ')}`, () => { 
+                var panelList = '';
+                var panels = Array.from(selectedPanelTypes);
+                for (var p = 0; p < panels.length; p++) {
+                    if (p > 0) panelList += ', ';
+                    panelList += panels[p];
+                }
+                addFilterTag(container, 'Матрица: ' + panelList, function() { 
                     saveScrollPosition();
                     selectedPanelTypes.clear();
                     updateMonitorFilterButtons();
@@ -1402,7 +1500,13 @@
             }
             
             if (selectedResolutions.size > 0) {
-                addFilterTag(container, `Разрешение: ${Array.from(selectedResolutions).join(', ')}`, () => { 
+                var resList = '';
+                var reses = Array.from(selectedResolutions);
+                for (var r = 0; r < reses.length; r++) {
+                    if (r > 0) resList += ', ';
+                    resList += reses[r];
+                }
+                addFilterTag(container, 'Разрешение: ' + resList, function() { 
                     saveScrollPosition();
                     selectedResolutions.clear();
                     updateMonitorFilterButtons();
@@ -1412,21 +1516,24 @@
             }
             
             if (isRefreshFilterActive) {
-                addFilterTag(container, `Частота: ${refreshRange.min} - ${refreshRange.max} Гц`, () => { 
+                addFilterTag(container, 'Частота: ' + refreshRange.min + ' - ' + refreshRange.max + ' Гц', function() { 
                     saveScrollPosition();
                     isRefreshFilterActive = false;
                     refreshRange = { min: 0, max: DEFAULT_MAX_REFRESH };
                     if (refreshSlider) {
-                        const allRefreshValues = [];
-                        products.forEach(p => {
-                            if (p.category === 'монитор' && p.monitorSpecs) {
-                                const rates = getAllRefreshRates(p.monitorSpecs);
-                                rates.forEach(r => { if (r > 0 && r <= DEFAULT_MAX_REFRESH) allRefreshValues.push(r); });
+                        var allRefreshValues = [];
+                        for (var pr = 0; pr < products.length; pr++) {
+                            var prod = products[pr];
+                            if (prod.category === 'монитор' && prod.monitorSpecs) {
+                                var rates = getAllRefreshRates(prod.monitorSpecs);
+                                for (var rt = 0; rt < rates.length; rt++) {
+                                    if (rates[rt] > 0 && rates[rt] <= DEFAULT_MAX_REFRESH) allRefreshValues.push(rates[rt]);
+                                }
                             }
-                        });
+                        }
                         if (allRefreshValues.length > 0) {
-                            let minHz = Math.min(...allRefreshValues);
-                            let maxHz = Math.max(...allRefreshValues);
+                            var minHz = Math.min.apply(null, allRefreshValues);
+                            var maxHz = Math.max.apply(null, allRefreshValues);
                             refreshSlider.set([minHz, maxHz]);
                         }
                     }
@@ -1435,9 +1542,9 @@
                 });
             }
             
-            const brand = document.getElementById('brandFilter')?.value;
+            var brand = document.getElementById('brandFilter')?.value;
             if (brand && brand !== 'all') {
-                addFilterTag(container, `Бренд: ${brand}`, () => { 
+                addFilterTag(container, 'Бренд: ' + brand, function() { 
                     saveScrollPosition();
                     document.getElementById('brandFilter').value = 'all';
                     applyFilters();
@@ -1445,9 +1552,9 @@
                 });
             }
             
-            const search = document.getElementById('searchInput')?.value;
+            var search = document.getElementById('searchInput')?.value;
             if (search) {
-                addFilterTag(container, `Поиск: ${search}`, () => { 
+                addFilterTag(container, 'Поиск: ' + search, function() { 
                     saveScrollPosition();
                     document.getElementById('searchInput').value = '';
                     applyFilters();
@@ -1456,7 +1563,7 @@
             }
             
             if (document.getElementById('discountFilter')?.checked) {
-                addFilterTag(container, 'Со скидкой', () => { 
+                addFilterTag(container, 'Со скидкой', function() { 
                     saveScrollPosition();
                     document.getElementById('discountFilter').checked = false;
                     applyFilters();
@@ -1466,28 +1573,34 @@
         }
         
         function addFilterTag(container, text, onRemove) {
-            const tag = document.createElement('span');
+            var tag = document.createElement('span');
             tag.className = 'filter-tag';
-            tag.innerHTML = `${text} <i class="fas fa-times"></i>`;
-            const closeIcon = tag.querySelector('i');
-            closeIcon.onclick = (e) => {
+            tag.innerHTML = text + ' <i class="fas fa-times"></i>';
+            
+            var closeIcon = tag.querySelector('i');
+            closeIcon.onclick = function(e) {
+                e.preventDefault();
                 e.stopPropagation();
-                onRemove();
+                if (onRemove) onRemove();
+                return false;
             };
+            
             container.appendChild(tag);
         }
         
         function initRefreshSlider() {
-            const sliderElement = document.getElementById('refreshSlider');
+            var sliderElement = document.getElementById('refreshSlider');
             if (!sliderElement) return;
             
-            let allRefreshValues = [];
-            products.forEach(p => {
-                if (p.category === 'монитор' && p.monitorSpecs) {
-                    const rates = getAllRefreshRates(p.monitorSpecs);
-                    rates.forEach(r => { if (r > 0 && r <= DEFAULT_MAX_REFRESH) allRefreshValues.push(r); });
+            var allRefreshValues = [];
+            for (var p = 0; p < products.length; p++) {
+                if (products[p].category === 'монитор' && products[p].monitorSpecs) {
+                    var rates = getAllRefreshRates(products[p].monitorSpecs);
+                    for (var r = 0; r < rates.length; r++) {
+                        if (rates[r] > 0 && rates[r] <= DEFAULT_MAX_REFRESH) allRefreshValues.push(rates[r]);
+                    }
                 }
-            });
+            }
             
             if (allRefreshValues.length === 0) {
                 sliderElement.style.opacity = '0.5';
@@ -1495,8 +1608,8 @@
                 return;
             }
             
-            let minHz = Math.min(...allRefreshValues);
-            let maxHz = Math.max(...allRefreshValues);
+            var minHz = Math.min.apply(null, allRefreshValues);
+            var maxHz = Math.max.apply(null, allRefreshValues);
             minHz = Math.floor(minHz / 10) * 10;
             maxHz = Math.ceil(maxHz / 10) * 10;
             if (maxHz > DEFAULT_MAX_REFRESH) maxHz = DEFAULT_MAX_REFRESH;
@@ -1512,13 +1625,13 @@
             
             refreshSlider = sliderElement;
             
-            const updateValues = (values) => {
+            var updateValues = function(values) {
                 document.getElementById('refreshMinValue').innerText = Math.round(values[0]) + ' Гц';
                 document.getElementById('refreshMaxValue').innerText = Math.round(values[1]) + ' Гц';
             };
             
             sliderElement.noUiSlider.on('update', updateValues);
-            sliderElement.noUiSlider.on('change', (values) => {
+            sliderElement.noUiSlider.on('change', function(values) {
                 refreshRange = { min: parseInt(values[0]), max: parseInt(values[1]) };
                 isRefreshFilterActive = true;
                 saveScrollPosition();
@@ -1529,32 +1642,32 @@
         
         async function loadData() {
             try {
-                const [productsRes, brandsRes, hotRes] = await Promise.all([
-                    fetch(`${FIREBASE_URL}/products.json`),
-                    fetch(`${FIREBASE_URL}/brands.json`),
-                    fetch(`${FIREBASE_URL}/hotPrices.json`)
-                ]);
+                var productsRes = await fetch(FIREBASE_URL + '/products.json');
+                var brandsRes = await fetch(FIREBASE_URL + '/brands.json');
+                var hotRes = await fetch(FIREBASE_URL + '/hotPrices.json');
                 
-                const productsData = await productsRes.json();
+                var productsData = await productsRes.json();
                 products = [];
-                for (const id in productsData) {
-                    const p = productsData[id];
+                for (var id in productsData) {
+                    var p = productsData[id];
                     if (p.category !== 'keycaps' && p.category !== 'pads') {
                         p.id = id;
                         products.push(p);
                     }
                 }
                 
-                const brandsData = await brandsRes.json();
+                var brandsData = await brandsRes.json();
                 brands = brandsData || {};
                 
-                const brandSelect = document.getElementById('brandFilter');
+                var brandSelect = document.getElementById('brandFilter');
                 if (brandSelect) {
                     brandSelect.innerHTML = '<option value="all">Все бренды</option>';
                     if (brands && typeof brands === 'object') {
-                        Object.values(brands).sort((a,b) => a.name?.localeCompare(b.name)).forEach(b => {
-                            brandSelect.innerHTML += `<option value="${escapeHtml(b.name)}">${escapeHtml(b.name)}</option>`;
-                        });
+                        var brandList = Object.values(brands);
+                        brandList.sort(function(a,b) { return (a.name || '').localeCompare(b.name || ''); });
+                        for (var b = 0; b < brandList.length; b++) {
+                            brandSelect.innerHTML += '<option value="' + escapeHtml(brandList[b].name) + '">' + escapeHtml(brandList[b].name) + '</option>';
+                        }
                     }
                 }
                 
@@ -1570,26 +1683,29 @@
         }
         
         function initMonitorFilters() {
-            const monitorFiltersDiv = document.getElementById('monitorFilters');
-            const categoryRadios = document.querySelectorAll('input[name="category"]');
+            var monitorFiltersDiv = document.getElementById('monitorFilters');
+            var categoryRadios = document.querySelectorAll('input[name="category"]');
             
-            const updateMonitorFiltersVisibility = () => {
-                const selectedCategory = document.querySelector('input[name="category"]:checked')?.value;
-                monitorFiltersDiv.classList.toggle('show', selectedCategory === 'монитор');
-                if (selectedCategory !== 'монитор') {
+            function updateMonitorFiltersVisibility() {
+                var selectedCategory = document.querySelector('input[name="category"]:checked')?.value;
+                if (selectedCategory === 'монитор') {
+                    monitorFiltersDiv.classList.add('show');
+                } else {
+                    monitorFiltersDiv.classList.remove('show');
                     selectedPanelTypes.clear();
                     selectedResolutions.clear();
                     updateMonitorFilterButtons();
-                    applyFilters();
                 }
-            };
+            }
             
-            categoryRadios.forEach(radio => radio.addEventListener('change', () => {
-                saveScrollPosition();
-                updateMonitorFiltersVisibility();
-                applyFilters();
-                restoreScrollPosition();
-            }));
+            for (var r = 0; r < categoryRadios.length; r++) {
+                categoryRadios[r].addEventListener('change', function() {
+                    saveScrollPosition();
+                    updateMonitorFiltersVisibility();
+                    applyFilters();
+                    restoreScrollPosition();
+                });
+            }
             
             updateMonitorFiltersVisibility();
             setupFilterButtons('panelTypeFilters', selectedPanelTypes, 'data-panel');
@@ -1597,46 +1713,52 @@
         }
         
         function setupFilterButtons(containerId, selectedSet, dataAttr) {
-            const container = document.getElementById(containerId);
+            var container = document.getElementById(containerId);
             if (!container) return;
-            container.querySelectorAll('.monitor-filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+            var btns = container.querySelectorAll('.monitor-filter-btn');
+            for (var b = 0; b < btns.length; b++) {
+                var btn = btns[b];
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     saveScrollPosition();
-                    const value = btn.getAttribute(dataAttr);
+                    var value = this.getAttribute(dataAttr);
                     if (selectedSet.has(value)) {
                         selectedSet.delete(value);
-                        btn.classList.remove('active');
+                        this.classList.remove('active');
                     } else {
                         selectedSet.add(value);
-                        btn.classList.add('active');
+                        this.classList.add('active');
                     }
                     applyFilters();
                     restoreScrollPosition();
                 });
-            });
+            }
         }
         
         function updateMonitorFilterButtons() {
-            const updateButtons = (id, selectedSet, attr) => {
-                const container = document.getElementById(id);
+            function updateButtons(id, selectedSet, attr) {
+                var container = document.getElementById(id);
                 if (!container) return;
-                container.querySelectorAll('.monitor-filter-btn').forEach(btn => {
-                    const value = btn.getAttribute(attr);
-                    if (selectedSet.has(value)) btn.classList.add('active');
-                    else btn.classList.remove('active');
-                });
-            };
+                var btns = container.querySelectorAll('.monitor-filter-btn');
+                for (var b = 0; b < btns.length; b++) {
+                    var btn = btns[b];
+                    var value = btn.getAttribute(attr);
+                    if (selectedSet.has(value)) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            }
             updateButtons('panelTypeFilters', selectedPanelTypes, 'data-panel');
             updateButtons('resolutionFilters', selectedResolutions, 'data-res');
         }
         
         // ========== ОБРАБОТЧИКИ ==========
-        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+        document.getElementById('trackingBtn')?.addEventListener('click', function() { window.location.href = 'tracking.html'; });
         
-        // 🔧 ИСПРАВЛЕНА КНОПКА СБРОСИТЬ
-        document.getElementById('clearFilters')?.addEventListener('click', (e) => {
+        document.getElementById('clearFilters')?.addEventListener('click', function(e) {
             e.preventDefault();
             saveScrollPosition();
             
@@ -1652,16 +1774,18 @@
             refreshRange = { min: 0, max: DEFAULT_MAX_REFRESH };
             
             if (refreshSlider) {
-                const allRefreshValues = [];
-                products.forEach(p => {
-                    if (p.category === 'монитор' && p.monitorSpecs) {
-                        const rates = getAllRefreshRates(p.monitorSpecs);
-                        rates.forEach(r => { if (r > 0 && r <= DEFAULT_MAX_REFRESH) allRefreshValues.push(r); });
+                var allRefreshValues = [];
+                for (var p = 0; p < products.length; p++) {
+                    if (products[p].category === 'монитор' && products[p].monitorSpecs) {
+                        var rates = getAllRefreshRates(products[p].monitorSpecs);
+                        for (var r = 0; r < rates.length; r++) {
+                            if (rates[r] > 0 && rates[r] <= DEFAULT_MAX_REFRESH) allRefreshValues.push(rates[r]);
+                        }
                     }
-                });
+                }
                 if (allRefreshValues.length > 0) {
-                    let minHz = Math.min(...allRefreshValues);
-                    let maxHz = Math.max(...allRefreshValues);
+                    var minHz = Math.min.apply(null, allRefreshValues);
+                    var maxHz = Math.max.apply(null, allRefreshValues);
                     refreshSlider.set([minHz, maxHz]);
                     document.getElementById('refreshMinValue').innerText = minHz + ' Гц';
                     document.getElementById('refreshMaxValue').innerText = maxHz + ' Гц';
@@ -1675,61 +1799,79 @@
             restoreScrollPosition();
         });
         
-        document.getElementById('brandFilter')?.addEventListener('change', () => { saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
-        document.getElementById('applyPriceFilter')?.addEventListener('click', (e) => { e.preventDefault(); saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
-        document.getElementById('discountFilter')?.addEventListener('change', () => { saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
-        document.getElementById('sortSelect')?.addEventListener('change', () => { saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
+        document.getElementById('brandFilter')?.addEventListener('change', function() { saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
+        document.getElementById('applyPriceFilter')?.addEventListener('click', function(e) { e.preventDefault(); saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
+        document.getElementById('discountFilter')?.addEventListener('change', function() { saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
+        document.getElementById('sortSelect')?.addEventListener('change', function() { saveScrollPosition(); applyFilters(); restoreScrollPosition(); });
         
-        let searchTimeout;
-        document.getElementById('searchInput')?.addEventListener('input', () => {
+        var searchTimeout;
+        document.getElementById('searchInput')?.addEventListener('input', function() {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => { saveScrollPosition(); applyFilters(); restoreScrollPosition(); }, 300);
+            searchTimeout = setTimeout(function() { saveScrollPosition(); applyFilters(); restoreScrollPosition(); }, 300);
         });
         
-        const gridViewBtn = document.getElementById('gridView');
-        const listViewBtn = document.getElementById('listView');
-        const productsGrid = document.getElementById('productsGrid');
-        gridViewBtn?.addEventListener('click', () => { productsGrid.classList.remove('list-view'); gridViewBtn.classList.add('active'); listViewBtn.classList.remove('active'); });
-        listViewBtn?.addEventListener('click', () => { productsGrid.classList.add('list-view'); listViewBtn.classList.add('active'); gridViewBtn.classList.remove('active'); });
-        
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('mainHeader');
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-            document.getElementById('backToTop').classList.toggle('show', window.scrollY > 300);
-        });
-        document.getElementById('backToTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        
-        // Мобильное меню
-        const menuToggle = document.getElementById('menuToggle');
-        const navList = document.getElementById('navList');
-        if (menuToggle && navList) {
-            menuToggle.addEventListener('click', () => {
-                navList.classList.toggle('show');
-                const icon = menuToggle.querySelector('i');
-                if (icon) icon.classList.toggle('fa-times');
+        var gridViewBtn = document.getElementById('gridView');
+        var listViewBtn = document.getElementById('listView');
+        var productsGrid = document.getElementById('productsGrid');
+        if (gridViewBtn) {
+            gridViewBtn.addEventListener('click', function() { 
+                productsGrid.classList.remove('list-view'); 
+                gridViewBtn.classList.add('active'); 
+                listViewBtn.classList.remove('active'); 
             });
-            navList.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navList.classList.remove('show');
-                    if (menuToggle.querySelector('i')) menuToggle.querySelector('i').classList.add('fa-bars');
-                });
+        }
+        if (listViewBtn) {
+            listViewBtn.addEventListener('click', function() { 
+                productsGrid.classList.add('list-view'); 
+                listViewBtn.classList.add('active'); 
+                gridViewBtn.classList.remove('active'); 
             });
         }
         
+        window.addEventListener('scroll', function() {
+            var header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+            var btt = document.getElementById('backToTop');
+            if (btt) btt.classList.toggle('show', window.scrollY > 300);
+        });
+        
+        document.getElementById('backToTop')?.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        
+        // Мобильное меню
+        var menuToggle = document.getElementById('menuToggle');
+        var navList = document.getElementById('navList');
+        if (menuToggle && navList) {
+            menuToggle.addEventListener('click', function() {
+                navList.classList.toggle('show');
+                var icon = menuToggle.querySelector('i');
+                if (icon) icon.classList.toggle('fa-times');
+            });
+            var links = navList.querySelectorAll('a');
+            for (var l = 0; l < links.length; l++) {
+                links[l].addEventListener('click', function() {
+                    navList.classList.remove('show');
+                    if (menuToggle.querySelector('i')) menuToggle.querySelector('i').classList.add('fa-bars');
+                });
+            }
+        }
+        
         // Админка
-        let ctrlClick = 0, timer = null;
-        document.addEventListener('click', e => {
+        var ctrlClick = 0, timer = null;
+        document.addEventListener('click', function(e) {
             if (e.ctrlKey) {
                 ctrlClick++;
                 clearTimeout(timer);
-                timer = setTimeout(() => ctrlClick = 0, 800);
-                if (ctrlClick === 3) { document.getElementById('adminLoginModal').style.display = 'block'; ctrlClick = 0; }
+                timer = setTimeout(function() { ctrlClick = 0; }, 800);
+                if (ctrlClick === 3) {
+                    document.getElementById('adminLoginModal').style.display = 'block';
+                    ctrlClick = 0;
+                }
             }
         });
-        document.getElementById('closeAdminModal')?.addEventListener('click', () => document.getElementById('adminLoginModal').style.display = 'none');
-        window.addEventListener('click', e => { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
-        document.getElementById('adminLoginForm')?.addEventListener('submit', e => {
+        document.getElementById('closeAdminModal')?.addEventListener('click', function() { document.getElementById('adminLoginModal').style.display = 'none'; });
+        window.addEventListener('click', function(e) { if (e.target === document.getElementById('adminLoginModal')) document.getElementById('adminLoginModal').style.display = 'none'; });
+        document.getElementById('adminLoginForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             if (document.getElementById('adminLogin').value === 'admin' && document.getElementById('adminPassword').value === 'admin') {
                 document.getElementById('adminLoginModal').style.display = 'none';
