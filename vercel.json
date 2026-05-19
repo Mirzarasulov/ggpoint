@@ -9,6 +9,10 @@
     { "source": "/mb", "destination": "/mb.html" },
     { "source": "/tracking", "destination": "/tracking.html" },
     { "source": "/admin", "destination": "/admin-panel.html" },
-    { "source": "/product/:id", "destination": "/product.html?id=:id" }
-  ]
+    { "source": "/product/:id", "destination": "/product.html?id=:id" },
+    { "source": "/catalog.html", "destination": "/catalog.html" },
+    { "source": "/about.html", "destination": "/about.html" }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
