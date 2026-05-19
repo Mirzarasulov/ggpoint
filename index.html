@@ -8,6 +8,11 @@
     <meta name="description" content="GGPoint – оригинальная игровая периферия. Мыши, клавиатуры, наушники, кейкапы, материнские платы и коврики. Быстрая доставка по Ташкенту и Узбекистану.">
     <meta name="theme-color" content="#0f172a">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://ggpoint-shop-default-rtdb.firebaseio.com">
@@ -66,6 +71,15 @@
             to { opacity: 1; transform: scale(1); }
         }
         
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
         
         /* Стеклянный эффект для header */
@@ -107,11 +121,6 @@
             -webkit-text-fill-color: transparent;
             animation: gradientShift 3s ease infinite;
             letter-spacing: -0.5px;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
         
         .nav-list { display: flex; gap: 2rem; list-style: none; }
@@ -718,10 +727,6 @@
             animation: spin 1s linear infinite;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
         /* Адаптив */
         @media (max-width: 768px) {
             .container {
@@ -1095,6 +1100,10 @@
             } else {
                 header.classList.remove('scrolled');
             }
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) {
+                backToTop.classList.toggle('show', window.scrollY > 300);
+            }
         });
         
         // Мобильное меню
@@ -1124,6 +1133,20 @@
         
         // Кнопка отслеживания
         document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+        
+        // Кнопка наверх
+        const backToTop = document.getElementById('backToTop');
+        backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // Категории
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', (e) => { 
+                if (e.target.tagName !== 'A') { 
+                    const link = card.querySelector('.category-link'); 
+                    if (link) window.location.href = link.href; 
+                } 
+            });
+        });
         
         // Скрытый вход в админку
         let ctrlClickCount = 0;
@@ -1177,27 +1200,6 @@
                 }
             });
         }
-        
-        // Кнопка наверх
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
-        });
-        backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        
-        // Категории
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', (e) => { 
-                if (e.target.tagName !== 'A') { 
-                    const link = card.querySelector('.category-link'); 
-                    if (link) window.location.href = link.href; 
-                } 
-            });
-        });
     </script>
 </body>
 </html>
