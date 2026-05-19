@@ -56,10 +56,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
         header {
             background: rgba(10, 15, 26, 0.8);
             backdrop-filter: blur(20px);
@@ -197,8 +193,8 @@
             padding: 0.6rem 1.2rem;
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(10px);
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
+            border: 2px solid #2563eb;
+            color: #2563eb;
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
@@ -208,7 +204,7 @@
         }
         
         .back-button:hover {
-            background: var(--primary-blue);
+            background: #2563eb;
             color: white;
             transform: translateX(-5px);
         }
@@ -323,7 +319,7 @@
         }
         
         .gallery-btn:hover:not(:disabled) {
-            background: var(--primary-blue);
+            background: #2563eb;
             transform: scale(1.1);
         }
         
@@ -353,11 +349,11 @@
         
         .thumbnail:hover {
             transform: translateY(-2px);
-            border-color: var(--primary-blue);
+            border-color: #2563eb;
         }
         
         .thumbnail.active {
-            border-color: var(--primary-blue);
+            border-color: #2563eb;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
         }
         
@@ -369,14 +365,14 @@
             padding: 0.5rem 1rem;
             background: rgba(37, 99, 235, 0.1);
             border-radius: 8px;
-            color: var(--text-gray);
+            color: #94a3b8;
             font-size: 0.8rem;
         }
         
         .fullscreen-btn {
             background: transparent;
-            border: 1px solid var(--primary-blue);
-            color: var(--primary-blue);
+            border: 1px solid #2563eb;
+            color: #2563eb;
             padding: 0.3rem 1rem;
             border-radius: 20px;
             cursor: pointer;
@@ -388,7 +384,7 @@
         }
         
         .fullscreen-btn:hover {
-            background: var(--primary-blue);
+            background: #2563eb;
             color: white;
         }
         
@@ -430,7 +426,7 @@
         }
         
         .product-category {
-            color: var(--primary-blue);
+            color: #2563eb;
             background: rgba(37, 99, 235, 0.1);
             padding: 0.3rem 1rem;
             border-radius: 20px;
@@ -439,7 +435,7 @@
         }
         
         .product-brand {
-            color: var(--text-gray);
+            color: #94a3b8;
             font-size: 0.85rem;
             display: flex;
             align-items: center;
@@ -461,12 +457,12 @@
         .current-price {
             font-size: 2rem;
             font-weight: bold;
-            color: var(--primary-blue);
+            color: #2563eb;
         }
         
         .old-price {
             font-size: 1.2rem;
-            color: var(--text-gray);
+            color: #94a3b8;
             text-decoration: line-through;
             margin-left: 0.8rem;
         }
@@ -483,9 +479,88 @@
         
         .product-description {
             margin-bottom: 1.5rem;
-            color: var(--text-gray);
+            color: #94a3b8;
             line-height: 1.6;
             font-size: 0.9rem;
+        }
+        
+        /* YouTube секция */
+        .youtube-section-bottom {
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            margin: 1.5rem 0;
+        }
+        
+        .youtube-header-bottom {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .youtube-icon-large {
+            width: 50px;
+            height: 50px;
+            background: #ff0000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .youtube-title h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            color: #f1f5f9;
+        }
+        
+        .youtube-title p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        
+        .youtube-badge {
+            background: rgba(255,0,0,0.1);
+            color: #ff0000;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 1px solid #ff0000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .video-container-bottom {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            min-height: 200px;
+        }
+        
+        .video-container-bottom iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            display: block;
+        }
+        
+        .no-video-bottom {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+            color: #94a3b8;
+            border: 1px dashed #ff0000;
         }
         
         .product-tabs {
@@ -509,7 +584,7 @@
             padding: 0.8rem 1.5rem;
             background: transparent;
             border: none;
-            color: var(--text-gray);
+            color: #94a3b8;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -523,17 +598,17 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: var(--primary-blue);
+            background: #2563eb;
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
         
         .tab-btn:hover {
-            color: var(--primary-blue);
+            color: #2563eb;
         }
         
         .tab-btn.active {
-            color: var(--primary-blue);
+            color: #2563eb;
         }
         
         .tab-btn.active::after {
@@ -550,7 +625,7 @@
         }
         
         .formatted-description {
-            color: var(--text-gray);
+            color: #94a3b8;
             line-height: 1.7;
             font-size: 0.9rem;
         }
@@ -570,7 +645,7 @@
         
         .specs-table td {
             padding: 0.8rem;
-            color: var(--text-gray);
+            color: #94a3b8;
             font-size: 0.85rem;
         }
         
@@ -646,7 +721,7 @@
         
         .review-date {
             font-size: 0.7rem;
-            color: var(--text-gray);
+            color: #94a3b8;
         }
         
         .review-rating {
@@ -655,7 +730,7 @@
         }
         
         .review-text {
-            color: var(--text-gray);
+            color: #94a3b8;
             line-height: 1.6;
             margin-top: 0.5rem;
             font-size: 0.85rem;
@@ -675,17 +750,17 @@
         }
         
         .admin-reply-header i {
-            color: var(--primary-blue);
+            color: #2563eb;
         }
         
         .admin-reply-header span {
             font-weight: 600;
-            color: var(--primary-blue);
+            color: #2563eb;
             font-size: 0.8rem;
         }
         
         .admin-reply-text {
-            color: var(--text-gray);
+            color: #94a3b8;
             font-size: 0.85rem;
             line-height: 1.5;
         }
@@ -693,7 +768,7 @@
         .no-reviews {
             text-align: center;
             padding: 2rem;
-            color: var(--text-gray);
+            color: #94a3b8;
         }
         
         .add-review-form {
@@ -736,7 +811,7 @@
         
         .review-input:focus, .review-name-input:focus {
             outline: none;
-            border-color: var(--primary-blue);
+            border-color: #2563eb;
         }
         
         .submit-review-btn {
@@ -941,7 +1016,7 @@
         }
         
         .fullscreen-nav-btn:hover {
-            background: var(--primary-blue);
+            background: #2563eb;
             transform: scale(1.1);
         }
         
@@ -1220,6 +1295,15 @@
                 height: 40px;
                 font-size: 1rem;
             }
+            
+            .video-container-bottom iframe {
+                height: 250px;
+            }
+            
+            .youtube-header-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -1292,6 +1376,21 @@
             </div>
         </div>
         
+        <!-- YouTube секция -->
+        <div class="youtube-section-bottom" id="youtubeSectionBottom">
+            <div class="youtube-header-bottom">
+                <div class="youtube-icon-large"><i class="fab fa-youtube"></i></div>
+                <div class="youtube-title">
+                    <h3>Видеообзор товара</h3>
+                    <p>Смотрите подробный обзор на YouTube канале</p>
+                </div>
+                <div class="youtube-badge"><i class="fas fa-play"></i><span>Смотреть</span></div>
+            </div>
+            <div id="videoContainerBottom" class="video-container-bottom">
+                <div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видеообзор скоро появится</h4></div>
+            </div>
+        </div>
+        
         <div class="product-tabs">
             <div class="tabs-header">
                 <button class="tab-btn active" data-tab="desc">Полное описание</button>
@@ -1308,7 +1407,7 @@
         <div class="reviews-section" id="reviewsSection">
             <div class="reviews-title">
                 <i class="fas fa-star" style="color:#ffd700;"></i> 
-                Отзывы о товаре <span id="reviewsCount" style="font-size:0.9rem; color:var(--text-gray);"></span>
+                Отзывы о товаре <span id="reviewsCount" style="font-size:0.9rem; color:#94a3b8;"></span>
             </div>
             <div class="reviews-list" id="reviewsList">
                 <div class="no-reviews">Загрузка отзывов...</div>
@@ -1442,6 +1541,34 @@
             return cats[key] || key;
         }
 
+        function getYouTubeId(url) {
+            if (!url) return null;
+            if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/i,
+                /youtube\.com\/shorts\/([^?]+)/i
+            ];
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
+        }
+
+        function renderYouTubeVideoBottom() {
+            const videoContainer = document.getElementById('videoContainerBottom');
+            if (!product?.video) {
+                videoContainer.innerHTML = '<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видеообзор скоро появится</h4></div>';
+                return;
+            }
+            const videoId = getYouTubeId(product.video);
+            if (videoId) {
+                videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+            } else {
+                videoContainer.innerHTML = '<div class="no-video-bottom"><i class="fab fa-youtube"></i><h4>Видео временно недоступно</h4></div>';
+            }
+        }
+
         function loadData() {
             const productRef = ref(database, 'products/' + productId);
             onValue(productRef, (snapshot) => {
@@ -1450,6 +1577,7 @@
                 product.id = productId;
                 document.title = `${product.name} - GGPoint`;
                 renderProduct();
+                renderYouTubeVideoBottom();
             });
 
             onValue(ref(database, 'products'), (snapshot) => {
@@ -1508,26 +1636,26 @@
             document.getElementById('fullDescription').innerHTML = fullDesc || '<p>Описание отсутствует</p>';
             
             let specsHtml = `
-                <tr><td>Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr>
-                <tr><td>Категория</td><td>${getCategoryName(product.category)}</td></tr>
-                <tr><td>Артикул</td><td>${productId}</td></tr>
+                <tr><td style="font-weight: 600; color: #f1f5f9;">Бренд</td><td>${escapeHtml(product.brand || '-')}</td></tr>
+                <tr><td style="font-weight: 600; color: #f1f5f9;">Категория</td><td>${getCategoryName(product.category)}</td></tr>
+                <tr><td style="font-weight: 600; color: #f1f5f9;">Артикул</td><td>${productId}</td></tr>
             `;
             
             if (product.category === 'mb' && product.mbSpecs) {
                 const s = product.mbSpecs;
-                specsHtml += `<tr><td>Платформа</td><td>${s.platform === 'intel' ? 'Intel' : 'AMD'}</td></tr>
-                             <tr><td>Сокет</td><td>${escapeHtml(s.socket || '-')}</td></tr>
-                             <tr><td>Чипсет</td><td>${escapeHtml(s.chipset || '-')}</td></tr>
-                             <tr><td>Форм-фактор</td><td>${escapeHtml(s.formFactor || '-')}</td></tr>`;
+                specsHtml += `<tr><td style="font-weight: 600; color: #f1f5f9;">Платформа</td><td>${s.platform === 'intel' ? 'Intel' : 'AMD'}</td></tr>
+                              <tr><td style="font-weight: 600; color: #f1f5f9;">Сокет</td><td>${escapeHtml(s.socket || '-')}</td></tr>
+                              <tr><td style="font-weight: 600; color: #f1f5f9;">Чипсет</td><td>${escapeHtml(s.chipset || '-')}</td></tr>
+                              <tr><td style="font-weight: 600; color: #f1f5f9;">Форм-фактор</td><td>${escapeHtml(s.formFactor || '-')}</td></tr>`;
             }
             
             if (product.category === 'монитор' && product.monitorSpecs) {
                 const ms = product.monitorSpecs;
-                if (ms.panelType) specsHtml += `<tr><td>Тип матрицы</td><td>${escapeHtml(ms.panelType)}</td></tr>`;
-                if (ms.resolution) specsHtml += `<tr><td>Разрешение</td><td>${escapeHtml(ms.resolution)}</td></tr>`;
-                if (ms.refreshRate) specsHtml += `<tr><td>Частота</td><td>${escapeHtml(ms.refreshRate)}</td></tr>`;
-                if (ms.size) specsHtml += `<tr><td>Диагональ</td><td>${escapeHtml(ms.size)}"</td></tr>`;
-                if (ms.responseTime) specsHtml += `<tr><td>Время отклика</td><td>${escapeHtml(ms.responseTime)}</td></tr>`;
+                if (ms.panelType) specsHtml += `<tr><td style="font-weight: 600; color: #f1f5f9;">Тип матрицы</td><td>${escapeHtml(ms.panelType)}</td></tr>`;
+                if (ms.resolution) specsHtml += `<tr><td style="font-weight: 600; color: #f1f5f9;">Разрешение</td><td>${escapeHtml(ms.resolution)}</td></tr>`;
+                if (ms.refreshRate) specsHtml += `<tr><td style="font-weight: 600; color: #f1f5f9;">Частота</td><td>${escapeHtml(ms.refreshRate)}</td></tr>`;
+                if (ms.size) specsHtml += `<tr><td style="font-weight: 600; color: #f1f5f9;">Диагональ</td><td>${escapeHtml(ms.size)}"</td></tr>`;
+                if (ms.responseTime) specsHtml += `<tr><td style="font-weight: 600; color: #f1f5f9;">Время отклика</td><td>${escapeHtml(ms.responseTime)}</td></tr>`;
             }
             
             document.getElementById('specsTable').innerHTML = specsHtml;
@@ -1585,7 +1713,7 @@
             if (!grid) return;
             
             if (related.length === 0) {
-                grid.innerHTML = '<p style="color: var(--text-gray);">Похожих товаров не найдено</p>';
+                grid.innerHTML = '<p style="color: #94a3b8;">Похожих товаров не найдено</p>';
                 return;
             }
             
