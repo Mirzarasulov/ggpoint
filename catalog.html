@@ -1313,7 +1313,7 @@
         // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
         const escapeHtml = (str) => str ? String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;') : '';
         const parsePrice = (priceStr) => priceStr ? parseInt(String(priceStr).replace(/[^\d]/g, '')) || 0 : 0;
-        const formatPrice = (price) => price.toLocaleString() + ' UZS';
+        const formatPrice = (price) => price.toLocaleString() + ' $ ';
         const getCategoryName = (key) => ({ 'мышь':'Мышь', 'клавиатура':'Клавиатура', 'наушники':'Наушники', 'монитор':'Монитор', 'mb':'Материнская плата' }[key] || key);
         const getMonitorSpec = (product, field) => product.monitorSpecs?.[field] || null;
         
