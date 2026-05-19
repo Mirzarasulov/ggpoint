@@ -2,35 +2,92 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
     <title>Материнские платы - GGPoint</title>
-    <meta name="description" content="Материнские платы для Intel и AMD">
+    <meta name="description" content="Материнские платы для Intel и AMD. Выберите идеальную основу для вашего ПК.">
+    <meta name="theme-color" content="#0f172a">
     
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; line-height: 1.6; }
         
-        :root {
-            --primary-blue: #2563eb;
-            --primary-purple: #7c3aed;
-            --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
-            --card-bg: #1e293b;
-            --intel-blue: #0071c5;
-            --amd-orange: #ed1c24;
-            --text-gray: #94a3b8;
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0f1a;
+            color: #fff;
+            line-height: 1.5;
+            overflow-x: hidden;
         }
         
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1), transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        
         header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 15, 26, 0.8);
+            backdrop-filter: blur(20px);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0.7rem 2rem;
+            background: rgba(10, 15, 26, 0.95);
         }
         
         .header-container {
@@ -39,25 +96,140 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 1rem;
+            flex-wrap: wrap;
         }
         
-        .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            background: linear-gradient(135deg, #2563eb, #7c3aed, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
         
-        .nav-list { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
-        .nav-link { color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-weight: 500; white-space: nowrap; }
-        .nav-link:hover, .nav-link.active { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
         
-        .beta-badge { background: linear-gradient(135deg, #2563eb, #7c3aed); font-size: 0.6rem; padding: 0.2rem 0.5rem; border-radius: 4px; margin-left: 0.3rem; }
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
         
-        .header-actions { display: flex; align-items: center; gap: 12px; }
-        .tracking-btn-main { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
-        .tracking-btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); }
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
         
-        .mb-hero { background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); padding: 4rem 2rem; text-align: center; color: white; }
-        .mb-hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .mb-hero p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+        }
+        
+        .beta-badge {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            font-size: 0.55rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            margin-left: 0.3rem;
+        }
+        
+        .tracking-btn-main {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .tracking-btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .mb-hero {
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mb-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            z-index: -1;
+        }
+        
+        .mb-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #2563eb, #7c3aed);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 0.6s ease, gradientShift 3s ease infinite;
+        }
+        
+        .mb-hero p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease;
+        }
         
         .catalog-layout {
             display: grid;
@@ -69,7 +241,7 @@
         }
         
         .filters-sidebar {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.3);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 1.5rem;
@@ -77,6 +249,11 @@
             height: fit-content;
             position: sticky;
             top: 100px;
+            transition: all 0.3s ease;
+        }
+        
+        .filters-sidebar:hover {
+            border-color: rgba(37, 99, 235, 0.4);
         }
         
         .filters-header {
@@ -88,9 +265,26 @@
             border-bottom: 1px solid rgba(37, 99, 235, 0.2);
         }
         
-        .filters-header h3 { font-size: 1.2rem; }
-        .clear-filters { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 0.85rem; transition: color 0.2s; }
-        .clear-filters:hover { color: #ef4444; }
+        .filters-header h3 {
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .clear-filters {
+            background: none;
+            border: none;
+            color: #60a5fa;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-filters:hover {
+            color: #ef4444;
+        }
         
         .filter-block {
             margin-bottom: 1.5rem;
@@ -99,11 +293,12 @@
         }
         
         .filter-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: #cbd5e1;
         }
         
         .filter-options {
@@ -118,11 +313,22 @@
             gap: 0.5rem;
             cursor: pointer;
             color: #94a3b8;
-            transition: color 0.2s;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
         }
         
-        .filter-option:hover { color: #60a5fa; }
-        .filter-option input { cursor: pointer; accent-color: #2563eb; width: 16px; height: 16px; margin: 0; }
+        .filter-option:hover {
+            color: #60a5fa;
+            transform: translateX(5px);
+        }
+        
+        .filter-option input {
+            cursor: pointer;
+            accent-color: #2563eb;
+            width: 16px;
+            height: 16px;
+            margin: 0;
+        }
         
         .active-filters {
             display: flex;
@@ -133,20 +339,27 @@
         }
         
         .filter-tag {
-            background: rgba(37, 99, 235, 0.1);
+            background: rgba(37, 99, 235, 0.15);
             border: 1px solid #2563eb;
             color: #60a5fa;
             padding: 0.3rem 1rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
         
-        .filter-tag i { cursor: pointer; font-size: 0.75rem; }
-        .filter-tag i:hover { color: #ef4444; }
+        .filter-tag i {
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: color 0.2s;
+        }
+        
+        .filter-tag i:hover {
+            color: #ef4444;
+        }
         
         .price-inputs {
             display: flex;
@@ -159,23 +372,35 @@
             padding: 0.5rem;
             background: #0f172a;
             border: 2px solid #334155;
-            border-radius: 8px;
+            border-radius: 10px;
             color: #fff;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .price-inputs input:focus {
+            outline: none;
+            border-color: #2563eb;
         }
         
         .apply-price-btn {
             width: 100%;
             margin-top: 0.5rem;
             padding: 0.5rem;
-            background: var(--gradient);
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
         
-        .apply-price-btn:hover { opacity: 0.9; }
+        .apply-price-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
         
         .catalog-toolbar {
             display: flex;
@@ -189,28 +414,60 @@
         .search-box {
             display: flex;
             align-items: center;
-            background: #1e293b;
-            border-radius: 8px;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
             padding: 0.5rem 1rem;
             border: 1px solid #334155;
             flex: 1;
             max-width: 300px;
+            transition: all 0.3s ease;
         }
         
-        .search-box i { color: #64748b; margin-right: 0.5rem; }
-        .search-box input { background: none; border: none; color: #fff; outline: none; width: 100%; }
-        .search-box input::placeholder { color: #64748b; }
+        .search-box:focus-within {
+            border-color: #2563eb;
+        }
+        
+        .search-box i {
+            color: #64748b;
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .search-box input {
+            background: none;
+            border: none;
+            color: #fff;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        
+        .search-box input::placeholder {
+            color: #64748b;
+        }
         
         .sort-select {
             padding: 0.5rem 1rem;
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
             border: 2px solid #334155;
-            border-radius: 8px;
+            border-radius: 12px;
             color: #fff;
             cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
         }
         
-        .products-count { margin-bottom: 1rem; color: #94a3b8; font-size: 0.9rem; }
+        .sort-select:hover {
+            border-color: #2563eb;
+        }
+        
+        .products-count {
+            margin-bottom: 1rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
         
         .products-grid {
             display: grid;
@@ -220,102 +477,455 @@
         }
         
         .product-card {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.3);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s ease;
             border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
             position: relative;
         }
         
-        .product-card:hover { transform: translateY(-5px); border-color: #7c3aed; box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2); }
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #7c3aed;
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+        }
         
-        .product-badge { position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #7c3aed, #ec4899); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2; }
-        .product-platform-badge { position: absolute; top: 15px; left: 15px; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; z-index: 2; }
-        .product-platform-badge.intel { background: var(--intel-blue); color: white; }
-        .product-platform-badge.amd { background: var(--amd-orange); color: white; }
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
         
-        .product-image-container { width: 100%; height: 280px; overflow: hidden; background: #1a1a2e; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-        .product-image { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; }
-        .product-card:hover .product-image { transform: scale(1.05); }
+        .product-platform-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+        }
         
-        .product-info { padding: 1.5rem; }
-        .product-name { font-size: 1.2rem; margin-bottom: 0.5rem; color: #f1f5f9; font-weight: 600; }
-        .product-meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
-        .product-chipset { background: rgba(124, 58, 237, 0.2); color: #7c3aed; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .product-socket { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .product-ram { background: rgba(236, 72, 153, 0.2); color: #ec4899; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .product-status { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .product-price { font-size: 1.3rem; background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; margin: 0.5rem 0; }
+        .product-platform-badge.intel {
+            background: #0071c5;
+            color: white;
+        }
         
-        .loader { text-align: center; padding: 4rem; color: #94a3b8; grid-column: 1/-1; }
-        .loader i { font-size: 3rem; margin-bottom: 1rem; display: inline-block; animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .product-platform-badge.amd {
+            background: #ed1c24;
+            color: white;
+        }
         
-        .empty-message { text-align: center; padding: 4rem; color: #94a3b8; grid-column: 1/-1; }
-        .empty-message i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.6; }
+        .product-image-container {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
         
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal-content { background: #1e293b; margin: 10% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(37, 99, 235, 0.3); }
-        .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #94a3b8; }
-        .close-modal:hover { color: #fff; }
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
         
-        footer { background: #0f172a; border-top: 1px solid rgba(37, 99, 235, 0.3); margin-top: 2rem; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
-        .footer-section h3 { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; margin-bottom: 1rem; }
-        .footer-section h4 { margin-bottom: 1rem; color: #f1f5f9; }
-        .footer-section ul { list-style: none; }
-        .footer-section ul li { margin-bottom: 0.5rem; }
-        .footer-section ul li a { color: #94a3b8; text-decoration: none; transition: color 0.2s; }
-        .footer-section ul li a:hover { color: #60a5fa; }
-        .contact-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #94a3b8; }
-        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
-        .social-link { width: 40px; height: 40px; background: rgba(37, 99, 235, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; border: 1px solid rgba(37, 99, 235, 0.3); }
-        .social-link:hover { background: linear-gradient(135deg, #2563eb, #7c3aed); transform: translateY(-3px); }
-        .footer-bottom { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(37, 99, 235, 0.2); color: #64748b; }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+        
+        .product-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .product-chipset {
+            background: rgba(124, 58, 237, 0.2);
+            color: #7c3aed;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .product-socket {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .product-ram {
+            background: rgba(236, 72, 153, 0.2);
+            color: #ec4899;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .product-status {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        
+        .loader {
+            text-align: center;
+            padding: 3rem;
+            color: #94a3b8;
+            grid-column: 1/-1;
+        }
+        
+        .loader i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            color: #94a3b8;
+            grid-column: 1/-1;
+        }
+        
+        .empty-message i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+        
+        footer {
+            background: #0a0f1a;
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-section h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #60a5fa;
+            padding-left: 5px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(37, 99, 235, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transform: translateY(-3px) rotate(360deg);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: #1e293b;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            animation: scaleIn 0.3s ease;
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #94a3b8;
+        }
+        
+        .close-modal:hover {
+            color: #fff;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            color: #fff;
+        }
         
         @media (max-width: 768px) {
-            .catalog-layout { grid-template-columns: 1fr; }
-            .filters-sidebar { position: static; }
-            .tracking-btn-main span { display: none; }
-            .tracking-btn-main { padding: 0.5rem 0.8rem; }
-            .nav-list { gap: 0.8rem; }
-            .nav-text { font-size: 0.85rem; }
-            .mb-hero { padding: 2rem 1rem; }
-            .mb-hero h1 { font-size: 1.8rem; }
-            .products-grid { grid-template-columns: 1fr; }
-            .search-box { max-width: 100%; }
-            .catalog-toolbar { flex-direction: column; align-items: stretch; }
-            .sort-select { width: 100%; }
+            .catalog-layout {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .filters-sidebar {
+                position: static;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-list {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 15, 26, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+                border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+                z-index: 99;
+            }
+            
+            .nav-list.show {
+                display: flex;
+            }
+            
+            .tracking-btn-main span {
+                display: none;
+            }
+            
+            .tracking-btn-main {
+                padding: 0.5rem 0.8rem;
+            }
+            
+            .mb-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .catalog-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .sort-select {
+                width: 100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="mainHeader">
         <div class="header-container">
-            <div class="logo"><a href="index.html">GGPoint</a></div>
+            <div class="logo">
+                <a href="index.html">GGPoint</a>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
             <nav>
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span class="nav-text">Главная</span></a></li>
-                    <li><a href="catalog.html" class="nav-link"><i class="fas fa-th-large"></i><span class="nav-text">Каталог</span></a></li>
-                    <li><a href="keycaps.html" class="nav-link"><i class="fas fa-keyboard"></i><span class="nav-text">Кейкапы</span><span class="beta-badge">Коллекция</span></a></li>
-                    <li><a href="pads.html" class="nav-link"><i class="fas fa-mouse-pointer"></i><span class="nav-text">Коврики</span><span class="beta-badge">Новинка</span></a></li>
-                    <li><a href="mb.html" class="nav-link active"><i class="fas fa-microchip"></i><span class="nav-text">MB</span><span class="beta-badge">Материнские платы</span></a></li>
-                    <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i><span class="nav-text">О нас</span></a></li>
-                    <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i><span class="nav-text">Контакты</span></a></li>
+                <ul class="nav-list" id="navList">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i>Главная</a></li>
+                    <li><a href="catalog.html" class="nav-link"><i class="fas fa-th-large"></i>Каталог</a></li>
+                    <li><a href="keycaps.html" class="nav-link"><i class="fas fa-keyboard"></i>Кейкапы<span class="beta-badge">Коллекция</span></a></li>
+                    <li><a href="pads.html" class="nav-link"><i class="fas fa-mouse-pointer"></i>Коврики<span class="beta-badge">Новинка</span></a></li>
+                    <li><a href="mb.html" class="nav-link active"><i class="fas fa-microchip"></i>MB<span class="beta-badge">Материнские платы</span></a></li>
+                    <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i>О нас</a></li>
+                    <li><a href="contacts.html" class="nav-link"><i class="fas fa-phone"></i>Контакты</a></li>
                 </ul>
             </nav>
+            
             <div class="header-actions">
-                <button class="tracking-btn-main" id="trackingBtn"><i class="fas fa-map-marker-alt"></i><span>Отследить заказ</span></button>
+                <button class="tracking-btn-main" id="trackingBtn">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Отследить</span>
+                </button>
             </div>
         </div>
     </header>
 
     <section class="mb-hero">
-        <h1><i class="fas fa-microchip"></i> Материнские платы</h1>
-        <p>Выберите идеальную основу для вашего ПК. Intel или AMD, любой форм-фактор и бюджет.</p>
+        <div class="container">
+            <h1><i class="fas fa-microchip"></i> Материнские платы</h1>
+            <p>Выберите идеальную основу для вашего ПК. Intel или AMD, любой форм-фактор и бюджет.</p>
+        </div>
     </section>
 
     <div class="catalog-layout">
@@ -381,33 +991,60 @@
             <div class="products-count" id="productsCount">Загрузка...</div>
             
             <div class="products-grid" id="productsGrid">
-                <div class="loader"><i class="fas fa-microchip fa-spin"></i><br><br>Загрузка материнских плат...</div>
+                <div class="loader"><i class="fas fa-microchip fa-spin"></i><br>Загрузка материнских плат...</div>
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GGPoint</h3>
+                <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
+                <div class="social-links">
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="keycaps.html">Кейкапы</a></li>
+                    <li><a href="pads.html">Коврики</a></li>
+                    <li><a href="mb.html">MB</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
+                    <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
 
     <div class="modal" id="adminLoginModal">
         <div class="modal-content">
             <button class="close-modal" id="closeAdminModal">&times;</button>
             <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
             <form id="adminLoginForm">
-                <div class="form-group"><label>Логин</label><input type="text" id="adminLogin" required></div>
-                <div class="form-group"><label>Пароль</label><input type="password" id="adminPassword" required></div>
-                <button type="submit" style="background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; padding: 0.8rem; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600;"><i class="fas fa-sign-in-alt"></i> Войти</button>
+                <div class="form-group"><label>Логин</label><input type="text" id="adminLogin" required placeholder="Введите логин"></div>
+                <div class="form-group"><label>Пароль</label><input type="password" id="adminPassword" required placeholder="Введите пароль"></div>
+                <button type="submit" style="background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; padding: 0.8rem; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 600;"><i class="fas fa-sign-in-alt"></i> Войти</button>
             </form>
         </div>
     </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section"><h3>GGPoint</h3><p>Ваш надежный магазин игровой периферии в Узбекистане.</p><div class="social-links"><a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a></div></div>
-            <div class="footer-section"><h4>Навигация</h4><ul><li><a href="index.html">Главная</a></li><li><a href="catalog.html">Каталог</a></li><li><a href="keycaps.html">Кейкапы</a></li><li><a href="pads.html">Коврики</a></li><li><a href="mb.html">MB</a></li><li><a href="about.html">О нас</a></li><li><a href="contacts.html">Контакты</a></li></ul></div>
-            <div class="footer-section"><h4>Контакты</h4><div class="contact-info"><div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div><div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div></div></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 GGPoint. Все права защищены.</p></div>
-    </footer>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
         const FIREBASE_URL = 'https://ggpoint-shop-default-rtdb.firebaseio.com/products.json';
@@ -504,7 +1141,7 @@
             }
             
             grid.innerHTML = '';
-            filteredProducts.forEach(product => {
+            filteredProducts.forEach((product, index) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 
@@ -570,7 +1207,7 @@
             
             const searchQuery = document.getElementById('searchInput')?.value;
             if (searchQuery) {
-                addFilterTag(container, searchQuery, () => {
+                addFilterTag(container, `Поиск: ${searchQuery}`, () => {
                     document.getElementById('searchInput').value = '';
                     applyFilters();
                 });
@@ -591,6 +1228,46 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(() => func.apply(this, arguments), wait);
             };
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+            document.getElementById('backToTop').classList.toggle('show', window.scrollY > 300);
+        });
+        
+        // Back to top
+        document.getElementById('backToTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // Mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navList = document.getElementById('navList');
+        let isMenuOpen = false;
+        
+        if (menuToggle && navList) {
+            menuToggle.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                navList.classList.toggle('show');
+                const icon = menuToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-bars', 'fa-times');
+                    icon.classList.add(isMenuOpen ? 'fa-times' : 'fa-bars');
+                }
+            });
+            
+            navList.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navList.classList.remove('show');
+                    isMenuOpen = false;
+                    const icon = menuToggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            });
         }
         
         fetch(FIREBASE_URL)
