@@ -2,54 +2,93 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
-    <!-- SEO -->
     <title>Контакты - GGPoint</title>
     <meta name="description" content="Свяжитесь с нами. Контакты магазина GGPoint в Ташкенте.">
+    <meta name="theme-color" content="#0f172a">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f172a;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0f1a;
             color: #fff;
-            line-height: 1.6;
+            line-height: 1.5;
+            overflow-x: hidden;
         }
         
-        :root {
-            --primary-blue: #2563eb;
-            --primary-purple: #7c3aed;
-            --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
-            --card-bg: #1e293b;
-            --dark-bg: #0f172a;
-            --text-light: #f1f5f9;
-            --text-gray: #94a3b8;
-            --success-green: #10b981;
-            --sale-red: #ef4444;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1), transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
         
-        /* Header */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        
         header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 15, 26, 0.8);
+            backdrop-filter: blur(20px);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0.7rem 2rem;
+            background: rgba(10, 15, 26, 0.95);
         }
         
         .header-container {
@@ -58,16 +97,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
         
         .logo a {
             font-size: 1.8rem;
             font-weight: 800;
             text-decoration: none;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            background: linear-gradient(135deg, #2563eb, #7c3aed, #a855f7);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
         }
         
         .nav-list {
@@ -77,29 +130,63 @@
         }
         
         .nav-link {
-            color: #fff;
+            color: #94a3b8;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
         }
         
         .nav-link:hover,
         .nav-link.active {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
         }
         
         .beta-badge {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            border-radius: 20px;
             margin-left: 0.3rem;
+        }
+        
+        .tracking-btn-main {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .tracking-btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
         .header-actions {
@@ -108,45 +195,32 @@
             gap: 12px;
         }
         
-        /* Единый стиль для кнопки отслеживания */
-        .tracking-btn-main {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-        
-        .tracking-btn-main:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        /* Page Header */
         .page-header {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
-            padding: 3rem 0;
+            padding: 4rem 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            z-index: -1;
         }
         
         .page-header h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.6s ease;
         }
         
         .breadcrumbs {
@@ -155,18 +229,20 @@
             justify-content: center;
             gap: 0.5rem;
             color: #94a3b8;
+            font-size: 0.9rem;
+            animation: fadeInUp 0.6s ease 0.1s backwards;
         }
         
         .breadcrumbs a {
             color: #60a5fa;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
         
         .breadcrumbs a:hover {
             color: #2563eb;
         }
         
-        /* Contact Section */
         .contact-section {
             padding: 4rem 0;
         }
@@ -179,11 +255,25 @@
         
         .contact-info-card,
         .contact-form-card {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.3);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
             border: 1px solid rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-info-card:hover,
+        .contact-form-card:hover {
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+        
+        .contact-info-card {
+            animation: fadeInLeft 0.8s ease;
+        }
+        
+        .contact-form-card {
+            animation: fadeInRight 0.8s ease;
         }
         
         .contact-info-card h2,
@@ -213,6 +303,14 @@
             display: flex;
             gap: 1rem;
             align-items: flex-start;
+            padding: 0.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-method:hover {
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateX(5px);
         }
         
         .method-icon {
@@ -224,6 +322,11 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-method:hover .method-icon {
+            transform: scale(1.05);
         }
         
         .method-icon i {
@@ -302,7 +405,6 @@
             box-shadow: 0 5px 15px rgba(131, 58, 180, 0.4);
         }
         
-        /* Form Styles */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -363,12 +465,14 @@
         .btn-large {
             padding: 1rem 2rem;
             font-size: 1.1rem;
+            width: 100%;
+            justify-content: center;
         }
         
-        /* Footer */
         footer {
-            background: #0f172a;
-            border-top: 1px solid rgba(37, 99, 235, 0.3);
+            background: #0a0f1a;
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+            margin-top: 3rem;
         }
         
         .footer-content {
@@ -381,17 +485,17 @@
         }
         
         .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, #2563eb, #7c3aed);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
         }
         
         .footer-section h4 {
+            font-size: 1rem;
             margin-bottom: 1rem;
-            color: #f1f5f9;
         }
         
         .footer-links {
@@ -410,6 +514,7 @@
         
         .footer-links a:hover {
             color: #60a5fa;
+            padding-left: 5px;
         }
         
         .contact-item {
@@ -418,15 +523,6 @@
             gap: 0.5rem;
             margin-bottom: 0.5rem;
             color: #94a3b8;
-        }
-        
-        .contact-item a {
-            color: #94a3b8;
-            text-decoration: none;
-        }
-        
-        .contact-item a:hover {
-            color: #60a5fa;
         }
         
         .social-links {
@@ -450,7 +546,7 @@
         
         .social-link:hover {
             background: linear-gradient(135deg, #2563eb, #7c3aed);
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotate(360deg);
         }
         
         .footer-bottom {
@@ -458,9 +554,9 @@
             padding: 1.5rem;
             border-top: 1px solid rgba(37, 99, 235, 0.2);
             color: #64748b;
+            font-size: 0.85rem;
         }
         
-        /* Back to top */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -477,18 +573,18 @@
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 100;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
         }
         
         .back-to-top.show {
             display: flex;
         }
         
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -498,16 +594,18 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
         
         .modal-content {
             background: #1e293b;
-            margin: 10% auto;
+            margin: 15% auto;
             padding: 2rem;
-            border-radius: 16px;
+            border-radius: 20px;
             width: 90%;
             max-width: 400px;
             border: 1px solid rgba(37, 99, 235, 0.3);
+            animation: scaleIn 0.3s ease;
         }
         
         .close-modal {
@@ -523,32 +621,37 @@
             color: #fff;
         }
         
-        /* Animation */
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-        
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-list {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 15, 26, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+                border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+                z-index: 99;
+            }
+            
+            .nav-list.show {
+                display: flex;
+            }
+            
             .contact-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
             
             .tracking-btn-main span {
@@ -556,84 +659,56 @@
             }
             
             .tracking-btn-main {
-                padding: 0.6rem 1rem;
-            }
-            
-            .nav-list {
-                gap: 1rem;
-            }
-            
-            .nav-text {
-                font-size: 0.9rem;
+                padding: 0.5rem 0.8rem;
             }
             
             .page-header h1 {
                 font-size: 2rem;
             }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="mainHeader">
         <div class="header-container">
             <div class="logo">
                 <a href="index.html">GGPoint</a>
             </div>
             
-            <nav id="mainNav">
-                <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="index.html" class="nav-link">
-                            <i class="fas fa-home"></i>
-                            <span class="nav-text">Главная</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="catalog.html" class="nav-link">
-                            <i class="fas fa-th-large"></i>
-                            <span class="nav-text">Каталог</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="keycaps.html" class="nav-link">
-                            <i class="fas fa-keyboard"></i>
-                            <span class="nav-text">Кейкапы</span>
-                            <span class="beta-badge">Коллекция</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pads.html" class="nav-link">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span class="nav-text">Коврики</span>
-                            <span class="beta-badge">Новинка</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="mb.html" class="nav-link">
-                            <i class="fas fa-microchip"></i>
-                            <span class="nav-text">MB</span>
-                            <span class="beta-badge">Материнские платы</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.html" class="nav-link">
-                            <i class="fas fa-info-circle"></i>
-                            <span class="nav-text">О нас</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contacts.html" class="nav-link active">
-                            <i class="fas fa-phone"></i>
-                            <span class="nav-text">Контакты</span>
-                        </a>
-                    </li>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul class="nav-list" id="navList">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i>Главная</a></li>
+                    <li><a href="catalog.html" class="nav-link"><i class="fas fa-th-large"></i>Каталог</a></li>
+                    <li><a href="keycaps.html" class="nav-link"><i class="fas fa-keyboard"></i>Кейкапы<span class="beta-badge">Коллекция</span></a></li>
+                    <li><a href="pads.html" class="nav-link"><i class="fas fa-mouse-pointer"></i>Коврики<span class="beta-badge">Новинка</span></a></li>
+                    <li><a href="mb.html" class="nav-link"><i class="fas fa-microchip"></i>MB<span class="beta-badge">Материнские платы</span></a></li>
+                    <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i>О нас</a></li>
+                    <li><a href="contacts.html" class="nav-link active"><i class="fas fa-phone"></i>Контакты</a></li>
                 </ul>
             </nav>
             
             <div class="header-actions">
                 <button class="tracking-btn-main" id="trackingBtn">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Отследить заказ</span>
+                    <span>Отследить</span>
                 </button>
             </div>
         </div>
@@ -676,8 +751,21 @@
                             <div class="method-details">
                                 <h3>Telegram</h3>
                                 <a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a>
+                                <span>Быстрый ответ в рабочее время</span>
                             </div>
-                        </div>                      
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Email</h3>
+                                <a href="mailto:info@ggpoint.store">info@ggpoint.store</a>
+                                <span>Ответ в течение 24 часов</span>
+                            </div>
+                        </div>
+                        
                         <div class="contact-method">
                             <div class="method-icon">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -685,6 +773,7 @@
                             <div class="method-details">
                                 <h3>Адрес</h3>
                                 <span>Ташкент, Узбекистан</span>
+                                <span>Доставка по всему Узбекистану</span>
                             </div>
                         </div>
                     </div>
@@ -718,6 +807,7 @@
                                 <option value="">Выберите способ связи</option>
                                 <option value="telegram">Telegram</option>
                                 <option value="phone">Телефон</option>
+                                <option value="email">Email</option>
                             </select>
                         </div>
                         
@@ -731,7 +821,7 @@
                             <textarea id="message" required placeholder="Опишите ваш вопрос или пожелание..."></textarea>
                         </div>
                         
-                        <button type="submit" class="btn-primary btn-large" style="width: 100%;">
+                        <button type="submit" class="btn-primary btn-large">
                             <i class="fas fa-paper-plane"></i>
                             Отправить сообщение
                         </button>
@@ -747,12 +837,9 @@
                 <h3>GGPoint</h3>
                 <p>Ваш надежный магазин игровой периферии в Узбекистане. Только оригинальные товары по лучшим ценам.</p>
                 <div class="social-links">
-                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+                    <a href="https://t.me/GGPointUz" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             
@@ -785,22 +872,10 @@
             <div class="footer-section">
                 <h4>Контакты</h4>
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+998 97 747 0157</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-telegram"></i>
-                        <span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Ташкент, Узбекистан</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <span>Ежедневно 10:00 - 22:00</span>
-                    </div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+998 97 747 0157</span></div>
+                    <div class="contact-item"><i class="fab fa-telegram"></i><span><a href="https://t.me/GGPointUz" target="_blank">@GGPointUz</a></span></div>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Ташкент, Узбекистан</span></div>
+                    <div class="contact-item"><i class="fas fa-clock"></i><span>Ежедневно 10:00 - 22:00</span></div>
                 </div>
             </div>
         </div>
@@ -820,11 +895,11 @@
             <h2 style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem;">Вход в админ-панель</h2>
             <form id="adminLoginForm">
                 <div class="form-group">
-                    <label for="adminLogin">Логин</label>
+                    <label>Логин</label>
                     <input type="text" id="adminLogin" required placeholder="Введите логин">
                 </div>
                 <div class="form-group">
-                    <label for="adminPassword">Пароль</label>
+                    <label>Пароль</label>
                     <input type="password" id="adminPassword" required placeholder="Введите пароль">
                 </div>
                 <button type="submit" class="btn-primary" style="width: 100%;">
@@ -870,11 +945,11 @@
                     status: 'new'
                 });
                 
-                showNotification('Спасибо! Мы свяжемся с вами в ближайшее время');
+                showNotification('✅ Спасибо! Мы свяжемся с вами в ближайшее время');
                 e.target.reset();
             } catch (error) {
                 console.error('Ошибка:', error);
-                showNotification('Произошла ошибка. Попробуйте позже', 'error');
+                showNotification('❌ Произошла ошибка. Попробуйте позже', 'error');
             }
         });
 
@@ -901,80 +976,79 @@
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
-
-        const trackingBtn = document.getElementById('trackingBtn');
-        if (trackingBtn) {
-            trackingBtn.addEventListener('click', () => {
-                window.location.href = 'tracking.html';
+    </script>
+    
+    <script>
+        // Header при скролле
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+        
+        // Мобильное меню
+        const menuToggle = document.getElementById('menuToggle');
+        const navList = document.getElementById('navList');
+        let isMenuOpen = false;
+        
+        if (menuToggle && navList) {
+            menuToggle.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                navList.classList.toggle('show');
+                const icon = menuToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-bars', 'fa-times');
+                    icon.classList.add(isMenuOpen ? 'fa-times' : 'fa-bars');
+                }
+            });
+            
+            navList.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navList.classList.remove('show');
+                    isMenuOpen = false;
+                    const icon = menuToggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
             });
         }
-
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Скрытый вход в админку (Ctrl + тройной клик)
-        let ctrlClickCount = 0;
-        let ctrlClickTimer = null;
         
+        // Кнопка отслеживания
+        document.getElementById('trackingBtn')?.addEventListener('click', () => window.location.href = 'tracking.html');
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 300));
+        backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // Скрытый вход в админку
+        let ctrlClickCount = 0, ctrlClickTimer = null;
         document.addEventListener('click', function(e) {
             if (e.ctrlKey) {
                 ctrlClickCount++;
                 clearTimeout(ctrlClickTimer);
-                ctrlClickTimer = setTimeout(() => {
-                    ctrlClickCount = 0;
-                }, 800);
-                
+                ctrlClickTimer = setTimeout(() => ctrlClickCount = 0, 800);
                 if (ctrlClickCount === 3) {
-                    const adminModal = document.getElementById('adminLoginModal');
-                    if (adminModal) {
-                        adminModal.style.display = 'block';
-                    }
+                    document.getElementById('adminLoginModal').style.display = 'block';
                     ctrlClickCount = 0;
-                    clearTimeout(ctrlClickTimer);
                 }
             }
         });
         
         const adminModal = document.getElementById('adminLoginModal');
         const closeAdminModal = document.getElementById('closeAdminModal');
+        closeAdminModal?.addEventListener('click', () => adminModal.style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target === adminModal) adminModal.style.display = 'none'; });
         
-        if (closeAdminModal) {
-            closeAdminModal.addEventListener('click', () => {
-                if (adminModal) adminModal.style.display = 'none';
-            });
-        }
-        
-        window.addEventListener('click', (e) => {
-            if (adminModal && e.target === adminModal) {
+        document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (document.getElementById('adminLogin').value === 'admin' && document.getElementById('adminPassword').value === 'admin') {
                 adminModal.style.display = 'none';
-            }
+                window.location.href = 'admin-panel.html';
+            } else alert('Неверный логин или пароль!');
         });
-        
-        const adminLoginForm = document.getElementById('adminLoginForm');
-        if (adminLoginForm) {
-            adminLoginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const login = document.getElementById('adminLogin').value;
-                const password = document.getElementById('adminPassword').value;
-                
-                if (login === 'admin' && password === 'admin') {
-                    if (adminModal) adminModal.style.display = 'none';
-                    window.location.href = 'admin-panel.html';
-                } else {
-                    alert('Неверный логин или пароль!');
-                }
-            });
-        }
     </script>
 </body>
 </html>
