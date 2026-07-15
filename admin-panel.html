@@ -322,7 +322,7 @@
                                                 <option value="4K">4K (3840x2160)</option>
                                                 <option value="2K">2K (2560x1440)</option>
                                                 <option value="FHD">FHD (1920x1080)</option>
-                                                <option value="UWHD">UWHD (2560x1080)</option>
+                                                <option value="UWHD"> (34400x1440)</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -338,7 +338,7 @@
                                                 <option value="4K">4K (3840x2160)</option>
                                                 <option value="2K">2K (2560x1440)</option>
                                                 <option value="FHD">FHD (1920x1080)</option>
-                                                <option value="UWHD">UWHD (2560x1080)</option>
+                                                <option value="UWHD">(34400x1440)</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -441,7 +441,7 @@
     <script>
         // Глобальные данные для мониторных кнопок (только матрица и разрешение, частота - текстовое поле)
         const panelTypes = ['IPS', 'Fast IPS', 'Mini LED', 'OLED', 'VA', 'Fast VA','TN'];
-        const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', 'UWHD (2560x1080)'];
+        const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', '(34400x1440)'];
         
         let currentPlatform = 'intel';
         let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], trackingOrders = {};
@@ -941,7 +941,7 @@
                                     <option value="4K" ${ms.dualMode?.mode1?.resolution === '4K' ? 'selected' : ''}>4K (3840x2160)</option>
                                     <option value="2K" ${ms.dualMode?.mode1?.resolution === '2K' ? 'selected' : ''}>2K (2560x1440)</option>
                                     <option value="FHD" ${ms.dualMode?.mode1?.resolution === 'FHD' ? 'selected' : ''}>FHD (1920x1080)</option>
-                                    <option value="UWHD" ${ms.dualMode?.mode1?.resolution === 'UWHD' ? 'selected' : ''}>UWHD (2560x1080)</option>
+                                    <option value="UWHD" ${ms.dualMode?.mode1?.resolution === 'UWHD' ? 'selected' : ''}>(34400x1440)</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -957,7 +957,7 @@
                                     <option value="4K" ${ms.dualMode?.mode2?.resolution === '4K' ? 'selected' : ''}>4K (3840x2160)</option>
                                     <option value="2K" ${ms.dualMode?.mode2?.resolution === '2K' ? 'selected' : ''}>2K (2560x1440)</option>
                                     <option value="FHD" ${ms.dualMode?.mode2?.resolution === 'FHD' ? 'selected' : ''}>FHD (1920x1080)</option>
-                                    <option value="UWHD" ${ms.dualMode?.mode2?.resolution === 'UWHD' ? 'selected' : ''}>UWHD (2560x1080)</option>
+                                    <option value="UWHD" ${ms.dualMode?.mode2?.resolution === 'UWHD' ? 'selected' : ''}>(34400x1440)</option>
                                 </select>
                             </div>
                             <div class="form-group">
