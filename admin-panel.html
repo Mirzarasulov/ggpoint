@@ -36,7 +36,7 @@
         }
         .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo a { font-size: 1.8rem; font-weight: 800; text-decoration: none; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-list { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; align-items: center; }
+        .nav-list { display: flex; gap: 1.5rem; list-style: none; }
         .nav-link { color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; font-weight: 500; }
         .nav-link:hover { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         
@@ -46,8 +46,6 @@
         .admin-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .admin-tab { padding: 0.8rem 1.5rem; background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
         .admin-tab:hover, .admin-tab.active { background: var(--primary-blue); color: white; }
-        .admin-tab.guest-tab { border-color: var(--success-green); color: var(--success-green); }
-        .admin-tab.guest-tab:hover, .admin-tab.guest-tab.active { background: var(--success-green); color: white; }
         .admin-content { background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 2px solid var(--primary-blue); }
         .admin-section { display: none; }
         .admin-section.active { display: block; }
@@ -73,13 +71,10 @@
         .admin-btn-small.delete:hover { background: var(--sale-red); color: white; }
         .admin-btn-small.view { border-color: var(--success-green); color: var(--success-green); }
         .admin-btn-small.view:hover { background: var(--success-green); color: white; }
-        .admin-btn-small.disabled { opacity: 0.4; cursor: not-allowed; }
-        .admin-btn-small.disabled:hover { background: transparent; color: inherit; }
         
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-light); font-weight: 600; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); font-size: 1rem; }
-        .form-group input:disabled, .form-group select:disabled, .form-group textarea:disabled { opacity: 0.5; cursor: not-allowed; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
         
         .specs-block { background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 1.5rem; margin: 1rem 0; border: 1px solid var(--primary-blue); }
@@ -93,8 +88,6 @@
         .monitor-spec-btn { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); padding: 0.4rem 1rem; border-radius: 30px; cursor: pointer; transition: all 0.2s ease; font-size: 0.85rem; }
         .monitor-spec-btn:hover { background: rgba(37, 99, 235, 0.2); }
         .monitor-spec-btn.active { background: var(--primary-blue); color: white; }
-        .monitor-spec-btn.disabled { opacity: 0.4; cursor: not-allowed; }
-        .monitor-spec-btn.disabled:hover { background: transparent; color: var(--primary-blue); }
         
         .dual-mode-fields { background: rgba(139, 92, 246, 0.1); border-radius: 12px; padding: 1rem; margin-top: 1rem; border: 1px solid #8b5cf6; }
         .dual-mode-badge { background: linear-gradient(135deg, #8b5cf6, #ec4899); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; display: inline-block; margin-left: 0.5rem; }
@@ -105,8 +98,6 @@
         .platform-btn.intel.active { background: var(--intel-blue); color: white; }
         .platform-btn.amd { border-color: var(--amd-orange); color: var(--amd-orange); }
         .platform-btn.amd.active { background: var(--amd-orange); color: white; }
-        .platform-btn.disabled { opacity: 0.4; cursor: not-allowed; }
-        .platform-btn.disabled:hover { background: transparent; }
         .platform-content { display: none; }
         .platform-content.active { display: block; }
         
@@ -114,19 +105,15 @@
         .feature-item input, .image-item input { flex: 1; }
         .remove-btn { background: var(--sale-red); color: white; border: none; width: 36px; height: 36px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .add-btn { background: var(--primary-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
-        .add-btn.disabled { opacity: 0.4; cursor: not-allowed; }
         .image-preview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
         .preview-img { width: 80px; height: 80px; object-fit: contain; background: white; border-radius: 4px; padding: 0.2rem; border: 2px solid var(--primary-blue); }
         
-        .login-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .login-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .login-box { background: var(--card-bg); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; border: 2px solid var(--primary-blue); text-align: center; }
         .login-box h2 { color: var(--primary-blue); margin-bottom: 2rem; font-size: 2rem; }
         .login-box input { width: 100%; padding: 1rem; margin-bottom: 1.5rem; background: var(--dark-bg); border: 2px solid #334155; border-radius: 8px; color: var(--text-light); font-size: 1.1rem; text-align: center; }
-        .login-box button { width: 100%; padding: 1rem; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-bottom: 0.5rem; }
-        .login-box .guest-btn { background: var(--success-green); }
-        .login-box .guest-btn:hover { background: #059669; }
+        .login-box button { width: 100%; padding: 1rem; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
         .error-message { color: var(--sale-red); margin-top: 1rem; font-size: 0.9rem; }
-        .login-mode-badge { font-size: 0.8rem; color: var(--text-gray); margin-top: 1rem; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
@@ -155,6 +142,7 @@
             100% { opacity: 0; bottom: 50px; visibility: hidden; }
         }
         
+        /* Стиль для поля ввода частоты */
         .refresh-input-field {
             width: 100%;
             padding: 0.8rem;
@@ -165,35 +153,11 @@
             font-size: 1rem;
         }
         
-        .guest-badge {
-            display: inline-block;
-            background: var(--success-green);
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .coming-soon-card {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(37, 99, 235, 0.1));
-            border-radius: 20px;
-            border: 2px dashed var(--success-green);
-        }
-        .coming-soon-card .icon { font-size: 4rem; color: var(--success-green); margin-bottom: 1.5rem; }
-        .coming-soon-card h2 { color: var(--text-light); font-size: 2rem; margin-bottom: 1rem; }
-        .coming-soon-card p { color: var(--text-gray); font-size: 1.1rem; max-width: 400px; margin: 0 auto; }
-        
         @media (max-width: 768px) {
             .admin-header { flex-direction: column; gap: 1rem; }
             .form-row { grid-template-columns: 1fr; }
             .specs-grid { grid-template-columns: 1fr; }
             .admin-tabs { justify-content: center; }
-            .login-box { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
@@ -202,40 +166,30 @@
         <div class="login-box">
             <h2><i class="fas fa-lock"></i> Вход в админку</h2>
             <input type="password" id="passwordInput" placeholder="Введите пароль" onkeypress="if(event.key==='Enter') checkPassword()">
-            <button onclick="checkPassword()"><i class="fas fa-sign-in-alt"></i> Войти как админ</button>
-            <button class="guest-btn" onclick="guestLogin()"><i class="fas fa-eye"></i> Гостевой просмотр</button>
+            <button onclick="checkPassword()">Войти</button>
             <div class="error-message" id="loginError"></div>
-            <div class="login-mode-badge">Админ: полный доступ | Гость: только просмотр</div>
         </div>
     </div>
 
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">GGPoint</a></div>
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> На сайт</a></li>
-                    <li><a href="#" class="nav-link" onclick="switchToGuestOrders()"><i class="fas fa-box"></i> Заказы</a></li>
-                </ul>
-            </nav>
-            <div>
-                <span id="userRoleBadge" style="display: none; margin-right: 1rem; color: var(--text-gray); font-size: 0.9rem;"></span>
-                <button class="admin-btn-small" id="logoutBtn" style="border-color: var(--sale-red); color: var(--sale-red); display: none;"><i class="fas fa-sign-out-alt"></i> Выход</button>
-            </div>
+            <nav><ul class="nav-list"><li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> На сайт</a></li></ul></nav>
+            <div><button class="admin-btn-small" id="logoutBtn" style="border-color: var(--sale-red); color: var(--sale-red); display: none;"><i class="fas fa-sign-out-alt"></i> Выход</button></div>
         </div>
     </header>
 
     <div class="admin-container" id="adminContent" style="display: none;">
         <div class="admin-header">
-            <h1><i class="fas fa-crown"></i> Админ-панель GGPoint <span id="roleBadge"></span></h1>
+            <h1><i class="fas fa-crown"></i> Админ-панель GGPoint</h1>
             <div class="admin-tabs" id="adminTabs">
                 <button class="admin-tab active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> Дашборд</button>
                 <button class="admin-tab" data-tab="products"><i class="fas fa-box"></i> Товары</button>
-                <button class="admin-tab" data-tab="add-product" id="addProductTab"><i class="fas fa-plus-circle"></i> Добавить</button>
+                <button class="admin-tab" data-tab="add-product"><i class="fas fa-plus-circle"></i> Добавить</button>
                 <button class="admin-tab" data-tab="brands"><i class="fas fa-tags"></i> Бренды</button>
                 <button class="admin-tab" data-tab="reviews"><i class="fas fa-star"></i> Отзывы</button>
                 <button class="admin-tab" data-tab="messages"><i class="fas fa-envelope"></i> Сообщения</button>
-                <button class="admin-tab guest-tab" data-tab="tracking"><i class="fas fa-map-marker-alt"></i> Заказы</button>
+                <button class="admin-tab" data-tab="tracking"><i class="fas fa-map-marker-alt"></i> Трекинг</button>
             </div>
         </div>
         
@@ -268,7 +222,7 @@
                         <option value="pads">Коврики</option>
                         <option value="mb">Материнские платы</option>
                     </select>
-                    <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); color: white;" id="addProductBtn"><i class="fas fa-plus"></i> Добавить</button>
+                    <button class="admin-tab" onclick="switchToAddProduct()" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить</button>
                 </div>
                 <table class="admin-table" id="productsTable"><thead><tr><th>ID</th><th>Фото</th><th>Название</th><th>Категория</th><th>Бренд</th><th>Цена</th><th>Скидка</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
@@ -422,7 +376,7 @@
                     <div class="form-group"><label>Фото (URL)</label><div id="imagesContainer"></div><button type="button" class="add-btn" onclick="addImage()">+ Добавить фото</button><div class="image-preview" id="imagePreview"></div></div>
                     <div class="form-group"><label><input type="checkbox" id="isHotPrice"> Скидка</label></div>
                     <div id="hotPriceFields" style="display:none;"><div class="form-group"><label>Причина скидки</label><input type="text" id="hotPriceReason"></div></div>
-                    <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;" id="submitProductBtn">Сохранить товар</button>
+                    <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить товар</button>
                 </form>
             </div>
             
@@ -435,7 +389,7 @@
                         <form id="addBrandForm">
                             <div class="form-group"><label>Название</label><input type="text" id="brandName" required></div>
                             <div class="form-group"><label>URL логотипа</label><input type="url" id="brandLogo" required></div>
-                            <button type="submit" class="admin-tab" style="background: var(--success-green); color: white;" id="submitBrandBtn"><i class="fas fa-plus"></i> Добавить бренд</button>
+                            <button type="submit" class="admin-tab" style="background: var(--success-green); color: white;"><i class="fas fa-plus"></i> Добавить бренд</button>
                         </form>
                     </div>
                     <div><h3>Существующие бренды</h3><table class="admin-table"><thead><tr><th>Лого</th><th>Название</th><th>Товаров</th><th>Действия</th></tr></thead><tbody id="brandsTable"></tbody></table></div>
@@ -462,10 +416,21 @@
                 <table class="admin-table" id="messagesTable"><thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Действия</th></tr></thead><tbody></tbody></table>
             </div>
             
-            <!-- ТРЕКИНГ / ЗАКАЗЫ -->
+            <!-- ТРЕКИНГ -->
             <div class="admin-section" id="tracking">
-                <div id="trackingContent">
-                    <!-- Сюда будет вставлен контент через JS -->
+                <h2>Трекинг заказов</h2>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 16px;">
+                        <h3>Добавить заказ</h3>
+                        <form id="addTrackingForm">
+                            <div class="form-group"><label>Трек-номер</label><input type="text" id="trackingNumber" required></div>
+                            <div class="form-group"><label>Телефон</label><input type="tel" id="trackingPhone" required></div>
+                            <div class="form-group"><label>Дата отправки</label><input type="date" id="trackingSendDate" required></div>
+                            <div class="form-group"><label>Тип доставки</label><select id="trackingDeliveryType"><option value="ground">Наземная</option><option value="air">Авиа</option></select></div>
+                            <button type="submit" class="admin-tab" style="background: var(--success-green); color: white;">Добавить</button>
+                        </form>
+                    </div>
+                    <div><h3>Список заказов</h3><input type="text" id="searchTracking" placeholder="Поиск..." style="width:100%; padding:0.5rem; margin-bottom:1rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;"><div id="trackingOrdersList"></div></div>
                 </div>
             </div>
         </div>
@@ -474,259 +439,62 @@
     <div class="modal" id="editModal"><div class="modal-content"><div class="modal-header"><h2>Редактирование товара</h2><span class="modal-close" onclick="closeEditModal()">&times;</span></div><div id="editFormContainer"></div></div></div>
 
     <script>
-        // ============================================================
-        //  ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
-        // ============================================================
-        let currentUserRole = 'guest'; // 'admin' | 'guest'
+        // Глобальные данные для мониторных кнопок (только матрица и разрешение, частота - текстовое поле)
+        const panelTypes = ['IPS', 'Fast IPS', 'Mini LED', 'OLED', 'VA', 'Fast VA','TN'];
+        const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', 'UWHD (2560x1080)'];
+        
+        let currentPlatform = 'intel';
         let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], trackingOrders = {};
         
         const ADMIN_PASSWORD = "Dilsh-221";
-        const GUEST_PASSWORD = "admin123";
         
-        // ============================================================
-        //  ВХОД
-        // ============================================================
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notify';
+            toast.style.background = isError ? '#ef4444' : '#10b981';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+        
         function checkPassword() {
-            const pass = document.getElementById('passwordInput').value;
-            if (pass === ADMIN_PASSWORD) {
-                currentUserRole = 'admin';
-                loginSuccess('Администратор');
-            } else if (pass === GUEST_PASSWORD) {
-                currentUserRole = 'guest';
-                loginSuccess('Гость (только просмотр)');
-            } else {
-                document.getElementById('loginError').textContent = '❌ Неверный пароль';
-            }
-        }
-        
-        function guestLogin() {
-            currentUserRole = 'guest';
-            loginSuccess('Гость (только просмотр)');
-        }
-        
-        function loginSuccess(roleName) {
-            document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('adminContent').style.display = 'block';
-            document.getElementById('logoutBtn').style.display = 'block';
-            document.getElementById('userRoleBadge').style.display = 'inline';
-            document.getElementById('userRoleBadge').textContent = '👤 ' + roleName;
-            document.getElementById('roleBadge').innerHTML = '<span class="guest-badge">' + (currentUserRole === 'admin' ? '👑 Админ' + (roleName) : '👁️ Гость (просмотр)') + '</span>';
-            
-            sessionStorage.setItem('adminLoggedIn', 'true');
-            sessionStorage.setItem('userRole', currentUserRole);
-            sessionStorage.setItem('activeTab', 'dashboard');
-            
-            if (typeof loadData === 'function') loadData();
-            applyGuestMode();
-            renderTrackingContent();
-        }
-        
-        // ============================================================
-        //  ГОСТЕВОЙ РЕЖИМ — БЛОКИРОВКА ДЕЙСТВИЙ
-        // ============================================================
-        function applyGuestMode() {
-            const isGuest = currentUserRole === 'guest';
-            
-            // Блокируем кнопки добавления/редактирования/удаления
-            document.querySelectorAll('.admin-btn-small.edit, .admin-btn-small.delete, .admin-btn-small.approve').forEach(btn => {
-                if (isGuest) {
-                    btn.classList.add('disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.title = 'Доступно только администратору';
-                } else {
-                    btn.classList.remove('disabled');
-                    btn.style.pointerEvents = '';
-                    btn.title = '';
-                }
-            });
-            
-            // Блокируем кнопки "Добавить" в разных разделах
-            const addButtons = ['addProductBtn', 'submitProductBtn', 'submitBrandBtn'];
-            addButtons.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    if (isGuest) {
-                        el.classList.add('disabled');
-                        el.style.pointerEvents = 'none';
-                        el.title = 'Доступно только администратору';
-                    } else {
-                        el.classList.remove('disabled');
-                        el.style.pointerEvents = '';
-                        el.title = '';
-                    }
-                }
-            });
-            
-            // Блокируем форму добавления товара
-            const addForm = document.getElementById('addProductForm');
-            if (addForm) {
-                addForm.querySelectorAll('input, select, textarea, button[type="submit"]').forEach(el => {
-                    if (isGuest) {
-                        el.disabled = true;
-                        el.style.opacity = '0.5';
-                        el.style.cursor = 'not-allowed';
-                    } else {
-                        el.disabled = false;
-                        el.style.opacity = '1';
-                        el.style.cursor = '';
-                    }
-                });
-            }
-            
-            // Блокируем форму добавления бренда
-            const brandForm = document.getElementById('addBrandForm');
-            if (brandForm) {
-                brandForm.querySelectorAll('input, button[type="submit"]').forEach(el => {
-                    if (isGuest) {
-                        el.disabled = true;
-                        el.style.opacity = '0.5';
-                        el.style.cursor = 'not-allowed';
-                    } else {
-                        el.disabled = false;
-                        el.style.opacity = '1';
-                        el.style.cursor = '';
-                    }
-                });
-            }
-            
-            // Блокируем кнопки "Добавить" в характеристиках и фото
-            document.querySelectorAll('.add-btn').forEach(btn => {
-                if (isGuest) {
-                    btn.classList.add('disabled');
-                    btn.style.pointerEvents = 'none';
-                } else {
-                    btn.classList.remove('disabled');
-                    btn.style.pointerEvents = '';
-                }
-            });
-            
-            // Блокируем кнопки платформ
-            document.querySelectorAll('.platform-btn').forEach(btn => {
-                if (isGuest) {
-                    btn.classList.add('disabled');
-                    btn.style.pointerEvents = 'none';
-                } else {
-                    btn.classList.remove('disabled');
-                    btn.style.pointerEvents = '';
-                }
-            });
-            
-            // Блокируем кнопки мониторных характеристик
-            document.querySelectorAll('.monitor-spec-btn').forEach(btn => {
-                if (isGuest) {
-                    btn.classList.add('disabled');
-                    btn.style.pointerEvents = 'none';
-                } else {
-                    btn.classList.remove('disabled');
-                    btn.style.pointerEvents = '';
-                }
-            });
-            
-            // Блокируем вкладку "Добавить"
-            const addTab = document.getElementById('addProductTab');
-            if (addTab) {
-                if (isGuest) {
-                    addTab.style.opacity = '0.5';
-                    addTab.style.cursor = 'not-allowed';
-                    addTab.title = 'Доступно только администратору';
-                } else {
-                    addTab.style.opacity = '1';
-                    addTab.style.cursor = 'pointer';
-                    addTab.title = '';
-                }
-            }
-        }
-        
-        // ============================================================
-        //  ВЫХОД
-        // ============================================================
-        document.getElementById('logoutBtn')?.addEventListener('click', () => { 
-            sessionStorage.removeItem('adminLoggedIn');
-            sessionStorage.removeItem('userRole');
-            sessionStorage.removeItem('activeTab');
-            location.reload(); 
-        });
-        
-        // ============================================================
-        //  ПРОВЕРКА СЕССИИ
-        // ============================================================
-        window.onload = () => {
-            const savedRole = sessionStorage.getItem('userRole');
-            if (sessionStorage.getItem('adminLoggedIn') === 'true' && savedRole) {
-                currentUserRole = savedRole;
+            if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
                 document.getElementById('loginModal').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
                 document.getElementById('logoutBtn').style.display = 'block';
-                document.getElementById('userRoleBadge').style.display = 'inline';
-                document.getElementById('userRoleBadge').textContent = '👤 ' + (currentUserRole === 'admin' ? 'Администратор' : 'Гость (просмотр)');
-                document.getElementById('roleBadge').innerHTML = '<span class="guest-badge">' + (currentUserRole === 'admin' ? '👑 Админ' : '👁️ Гость (просмотр)') + '</span>';
-                
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                sessionStorage.setItem('activeTab', 'dashboard');
                 if (typeof loadData === 'function') loadData();
-                applyGuestMode();
-                renderTrackingContent();
-                
-                const savedTab = sessionStorage.getItem('activeTab') || 'dashboard';
-                setTimeout(() => {
-                    const tabBtn = document.querySelector(`.admin-tab[data-tab="${savedTab}"]`);
-                    if (tabBtn) tabBtn.click();
-                }, 500);
+            } else { document.getElementById('loginError').textContent = '❌ Неверный пароль'; }
+        }
+        
+        window.onload = () => {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
+                if (typeof loadData === 'function') loadData();
             }
             initMonitorButtonsGroups();
+            
+            const savedTab = sessionStorage.getItem('activeTab') || 'dashboard';
+            setTimeout(() => {
+                const tabBtn = document.querySelector(`.admin-tab[data-tab="${savedTab}"]`);
+                if (tabBtn) tabBtn.click();
+            }, 500);
         };
-        
-        // ============================================================
-        //  ВКЛАДКА "ЗАКАЗЫ" — СООБЩЕНИЕ "СКОРО РЕЛИЗ"
-        // ============================================================
-        function renderTrackingContent() {
-            const container = document.getElementById('trackingContent');
-            if (!container) return;
-            
-            container.innerHTML = `
-                <div class="coming-soon-card">
-                    <div class="icon"><i class="fas fa-box-open"></i></div>
-                    <h2>🚀 Скоро релиз!</h2>
-                    <p>Раздел "Заказы" находится в разработке.<br>
-                    Следите за обновлениями на главном сайте.</p>
-                    <div style="margin-top: 2rem;">
-                        <a href="index.html" class="admin-tab" style="background: var(--primary-blue); color: white; text-decoration: none;">
-                            <i class="fas fa-home"></i> Перейти на главный сайт
-                        </a>
-                    </div>
-                    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-gray);">
-                        <i class="fas fa-code"></i> Разрабатывается командой GGPoint
-                    </div>
-                </div>
-            `;
-        }
-        
-        function switchToGuestOrders() {
-            // Переключаемся на вкладку "Заказы"
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-            const tab = document.querySelector('[data-tab="tracking"]');
-            if (tab) tab.classList.add('active');
-            const section = document.getElementById('tracking');
-            if (section) section.classList.add('active');
-            sessionStorage.setItem('activeTab', 'tracking');
-            
-            // Если пользователь не залогинен — показываем модалку входа
-            if (!sessionStorage.getItem('adminLoggedIn')) {
-                document.getElementById('loginModal').style.display = 'flex';
-            }
-        }
-        
-        // ============================================================
-        //  ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений)
-        // ============================================================
-        // ... (остальной код без изменений)
         
         function setActiveTab(tabId) {
             sessionStorage.setItem('activeTab', tabId);
         }
         
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { 
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('activeTab');
+            location.reload(); 
+        });
+        
         function initMonitorButtonsGroups() {
-            const panelTypes = ['IPS', 'Fast IPS', 'Mini LED', 'OLED', 'VA', 'Fast VA','TN'];
-            const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', 'UWHD (2560x1080)'];
             createButtonGroup('panelTypeGroup', panelTypes, 'monitorPanelType', false);
             createButtonGroup('resolutionGroup', resolutions, 'monitorResolution', false);
         }
@@ -742,7 +510,6 @@
                 btn.textContent = opt;
                 btn.dataset.value = opt;
                 btn.addEventListener('click', () => {
-                    if (currentUserRole === 'guest') return;
                     if (multiSelect) {
                         btn.classList.toggle('active');
                         const selected = Array.from(container.querySelectorAll('.monitor-spec-btn.active')).map(b => b.dataset.value);
@@ -773,8 +540,73 @@
             }
         };
         
+        function getMonitorSpecsFromForm() {
+            const isDual = document.getElementById('isDualMode').checked;
+            let refreshRate = '';
+            let dualMode = null;
+            
+            if (isDual) {
+                const res1 = document.getElementById('dualModeRes1').value;
+                const hz1 = document.getElementById('dualModeHz1').value;
+                const res2 = document.getElementById('dualModeRes2').value;
+                const hz2 = document.getElementById('dualModeHz2').value;
+                refreshRate = `${res1} ${hz1} / ${res2} ${hz2}`;
+                dualMode = { mode1: { resolution: res1, hz: hz1 }, mode2: { resolution: res2, hz: hz2 } };
+            } else {
+                refreshRate = document.getElementById('monitorRefreshRate').value;
+            }
+            
+            return {
+                panelType: document.getElementById('monitorPanelType')?.value || '',
+                resolution: document.getElementById('monitorResolution')?.value || '',
+                refreshRate: refreshRate,
+                dualMode: dualMode,
+                size: document.getElementById('monitorSize')?.value || '',
+                aspectRatio: document.getElementById('monitorAspectRatio')?.value || '',
+                brightness: document.getElementById('monitorBrightness')?.value || '',
+                contrast: document.getElementById('monitorContrast')?.value || '',
+                responseTime: document.getElementById('monitorResponseTime')?.value || '',
+                tech: document.getElementById('monitorTech')?.value || '',
+                ports: document.getElementById('monitorPorts')?.value || ''
+            };
+        }
+        
+        function setMonitorValuesFromSpecs(specs) {
+            if (!specs) return;
+            
+            if (specs.panelType) {
+                const btn = document.querySelector(`#panelTypeGroup .monitor-spec-btn[data-value="${specs.panelType}"]`);
+                if (btn) btn.click();
+            }
+            if (specs.resolution) {
+                const btn = document.querySelector(`#resolutionGroup .monitor-spec-btn[data-value="${specs.resolution}"]`);
+                if (btn) btn.click();
+            }
+            if (specs.dualMode) {
+                document.getElementById('isDualMode').checked = true;
+                toggleDualMode();
+                if (specs.dualMode.mode1) {
+                    document.getElementById('dualModeRes1').value = specs.dualMode.mode1.resolution || '';
+                    document.getElementById('dualModeHz1').value = specs.dualMode.mode1.hz || '';
+                }
+                if (specs.dualMode.mode2) {
+                    document.getElementById('dualModeRes2').value = specs.dualMode.mode2.resolution || '';
+                    document.getElementById('dualModeHz2').value = specs.dualMode.mode2.hz || '';
+                }
+            } else if (specs.refreshRate && !specs.dualMode) {
+                document.getElementById('monitorRefreshRate').value = specs.refreshRate;
+            }
+            
+            if (specs.size) document.getElementById('monitorSize').value = specs.size;
+            if (specs.aspectRatio) document.getElementById('monitorAspectRatio').value = specs.aspectRatio;
+            if (specs.brightness) document.getElementById('monitorBrightness').value = specs.brightness;
+            if (specs.contrast) document.getElementById('monitorContrast').value = specs.contrast;
+            if (specs.responseTime) document.getElementById('monitorResponseTime').value = specs.responseTime;
+            if (specs.tech) document.getElementById('monitorTech').value = specs.tech;
+            if (specs.ports) document.getElementById('monitorPorts').value = specs.ports;
+        }
+        
         window.setPlatform = function(p) { 
-            if (currentUserRole === 'guest') return;
             currentPlatform = p; 
             document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active')); 
             document.querySelector(`.platform-btn.${p}`).classList.add('active'); 
@@ -782,8 +614,17 @@
             document.getElementById('amdPlatform').classList.toggle('active', p === 'amd'); 
         };
         
+        window.setEditPlatform = function(p) { 
+            window.editPlatform = p; 
+            document.querySelectorAll('#editFormContainer .platform-btn').forEach(btn => btn.classList.remove('active')); 
+            document.querySelector(`#editFormContainer .platform-btn.${p}`).classList.add('active'); 
+            const intelDiv = document.getElementById('editIntelPlatform'); 
+            const amdDiv = document.getElementById('editAmdPlatform'); 
+            if (intelDiv) intelDiv.classList.toggle('active', p === 'intel'); 
+            if (amdDiv) amdDiv.classList.toggle('active', p === 'amd'); 
+        };
+        
         function addFeature() { 
-            if (currentUserRole === 'guest') return;
             const c = document.getElementById('featuresContainer'); 
             const d = document.createElement('div'); 
             d.className = 'feature-item'; 
@@ -792,7 +633,6 @@
         }
         
         function addImage() { 
-            if (currentUserRole === 'guest') return;
             const c = document.getElementById('imagesContainer'); 
             const d = document.createElement('div'); 
             d.className = 'image-item'; 
@@ -820,10 +660,6 @@
         window.updatePreview = updatePreview;
         window.closeEditModal = () => document.getElementById('editModal').classList.remove('active');
         window.switchToAddProduct = function() {
-            if (currentUserRole === 'guest') {
-                showToast('❌ Доступно только администратору', true);
-                return;
-            }
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
             const addTab = document.querySelector('[data-tab="add-product"]');
@@ -837,10 +673,6 @@
             tab.addEventListener('click', () => {
                 const tabId = tab.getAttribute('data-tab');
                 if (!tabId) return;
-                if (tabId === 'add-product' && currentUserRole === 'guest') {
-                    showToast('❌ Доступно только администратору', true);
-                    return;
-                }
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
                 tab.classList.add('active');
@@ -850,25 +682,24 @@
             });
         });
         
-        function showToast(message, isError = false) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-notify';
-            toast.style.background = isError ? '#ef4444' : '#10b981';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2500);
-        }
+        document.getElementById('productCategory')?.addEventListener('change', function() {
+            const mbBlock = document.getElementById('mbSpecsBlock');
+            const monitorBlock = document.getElementById('monitorSpecsBlock');
+            if (mbBlock) mbBlock.style.display = this.value === 'mb' ? 'block' : 'none';
+            if (monitorBlock) monitorBlock.style.display = this.value === 'монитор' ? 'block' : 'none';
+        });
         
-        // ============================================================
-        //  ЗАГРУЗКА ДАННЫХ
-        // ============================================================
-        window.loadData = loadData;
+        document.getElementById('isHotPrice')?.addEventListener('change', function() { 
+            document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none'; 
+        });
         
-        // Остальной код (Firebase, рендеринг) без изменений...
+        setTimeout(() => { 
+            if (document.getElementById('featuresContainer')?.children.length === 0) addFeature(); 
+            if (document.getElementById('imagesContainer')?.children.length === 0) addImage(); 
+        }, 500);
     </script>
 
     <script type="module">
-        // Импорт Firebase (без изменений)
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
         import { getDatabase, ref, onValue, set, remove, update } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
@@ -885,7 +716,7 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         
-        function escapeHtml(s) { if(!s) return ''; return String(s).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'>'); }
+        function escapeHtml(s) { if(!s) return ''; return String(s).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
         function getCategoryName(k) { const c={'мышь':'Мышь','клавиатура':'Клавиатура','наушники':'Наушники','монитор':'Монитор','keycaps':'Кейкапы','pads':'Коврик','mb':'Материнская плата'}; return c[k]||k; }
         
         function loadData() {
@@ -918,12 +749,7 @@
             const filter = document.getElementById('filterCategory')?.value || 'all';
             const filtered = products.filter(p => p.name.toLowerCase().includes(search) && (filter==='all' || p.category===filter));
             if(filtered.length===0){ tbody.innerHTML = '<tr><td colspan="8">Товаров не найдено</td></tr>'; return; }
-            const isGuest = currentUserRole === 'guest';
-            tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions">
-                <button class="admin-btn-small edit ${isGuest?'disabled':''}" onclick="${isGuest?'':'editProduct(\''+p.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}"><i class="fas fa-edit"></i></button>
-                <button class="admin-btn-small delete ${isGuest?'disabled':''}" onclick="${isGuest?'':'deleteProduct(\''+p.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}"><i class="fas fa-trash"></i></button>
-                <button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button>
-            </td></tr>`).join('');
+            tbody.innerHTML = filtered.map(p => `<table><td>${p.id}</td><td><img src="${p.images?.[0]||'https://via.placeholder.com/50'}" width="50"></td><td>${escapeHtml(p.name)}</td><td>${getCategoryName(p.category)}</td><td>${escapeHtml(p.brand||'-')}</td><td>${escapeHtml(p.price)}</td><td>${hotPrices[p.id]?'🔥 Да':'Нет'}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button><button class="admin-btn-small view" onclick="window.open('product.html?id=${p.id}','_blank')"><i class="fas fa-eye"></i></button></td></tr>`).join('');
         }
         
         function renderRecentProducts() {
@@ -936,12 +762,11 @@
         function renderBrands() {
             const tbody = document.getElementById('brandsTable'); if(!tbody) return;
             if(Object.keys(brands).length===0){ tbody.innerHTML = '<tr><td colspan="4">Нет брендов</td></tr>'; return; }
-            const isGuest = currentUserRole === 'guest';
-            tbody.innerHTML = Object.values(brands).map(b => `<tr><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain;" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions">
-                <button class="admin-btn-small edit ${isGuest?'disabled':''}" onclick="${isGuest?'':'editBrand(\''+b.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}"><i class="fas fa-edit"></i></button>
-                <button class="admin-btn-small delete ${isGuest?'disabled':''}" onclick="${isGuest?'':'deleteBrand(\''+b.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}"><i class="fas fa-trash"></i></button>
-            </td></tr>`).join('');
+            tbody.innerHTML = Object.values(brands).map(b => `<tr><td><img src="${b.icon}" style="width:40px; height:40px; object-fit:contain;" onerror="this.style.display='none'"></td><td>${escapeHtml(b.name)}</td><td>${products.filter(p=>p.brand===b.name).length}</td><td class="admin-actions"><button class="admin-btn-small edit" onclick="editBrand('${b.id}')"><i class="fas fa-edit"></i></button><button class="admin-btn-small delete" onclick="deleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
+        
+        window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
+        window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')){ await remove(ref(database,'brands/'+id)); showToast('✅ Бренд удален'); setTimeout(() => location.reload(), 500); } };
         
         function updateBrandSelect() {
             const select = document.getElementById('productBrand'); if(!select) return;
@@ -951,12 +776,10 @@
         function renderMessages() {
             const tbody = document.querySelector('#messagesTable tbody'); if(!tbody) return;
             if(messages.length===0){ tbody.innerHTML = '<tr><td colspan="5">Нет сообщений</td></tr>'; return; }
-            const isGuest = currentUserRole === 'guest';
-            tbody.innerHTML = messages.map(m => `<tr><td>${new Date(m.date).toLocaleString()}</td><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.contact||m.method)}</td><td>${escapeHtml(m.message.substring(0,50))}...</td><td class="admin-actions">
-                <button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\\nКонтакт: ${escapeHtml(m.contact||m.method)}\\n\\nСообщение:\\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button>
-                <button class="admin-btn-small delete ${isGuest?'disabled':''}" onclick="${isGuest?'':'deleteMessage(\''+m.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}"><i class="fas fa-trash"></i></button>
-            </td></tr>`).join('');
+            tbody.innerHTML = messages.map(m => `<tr><td>${new Date(m.date).toLocaleString()}</td><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.contact||m.method)}</td><td>${escapeHtml(m.message.substring(0,50))}...</td><td class="admin-actions"><button class="admin-btn-small view" onclick="alert('От: ${escapeHtml(m.name)}\\nКонтакт: ${escapeHtml(m.contact||m.method)}\\n\\nСообщение:\\n${escapeHtml(m.message)}')"><i class="fas fa-eye"></i></button><button class="admin-btn-small delete" onclick="deleteMessage('${m.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
+        
+        window.deleteMessage = async (id) => { if(confirm('Удалить сообщение?')){ await remove(ref(database,'messages/'+id)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
         
         function renderReviews() {
             const container = document.getElementById('reviewsContainer'); if(!container) return;
@@ -966,74 +789,345 @@
             if(status !== 'all') filtered = filtered.filter(r => r.status === status);
             if(search) filtered = filtered.filter(r => (r.author||'').toLowerCase().includes(search) || (r.text||'').toLowerCase().includes(search));
             if(filtered.length === 0){ container.innerHTML = '<p>Отзывов пока нет</p>'; return; }
-            const isGuest = currentUserRole === 'guest';
-            container.innerHTML = filtered.map(r => { const p = products.find(pr => pr.id == r.productId); return `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;"><div><strong>${escapeHtml(r.author)||'Аноним'}</strong> <small>${new Date(r.date).toLocaleString()}</small></div><div style="color:#ffd700;">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div></div><div><strong>Товар:</strong> ${escapeHtml(p?.name||'Неизвестный')}</div><div>${escapeHtml(r.text)}</div>${r.adminReply ? `<div style="background:rgba(37,99,235,0.2); padding:0.5rem; margin-top:0.5rem; border-radius:8px;"><strong>Ответ:</strong> ${escapeHtml(r.adminReply)}</div>` : ''}<div style="margin-top:0.5rem;">${r.status !== 'approved' ? `<button class="admin-btn-small approve ${isGuest?'disabled':''}" onclick="${isGuest?'':'approveReview(\''+r.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}">Одобрить</button>` : ''}<button class="admin-btn-small delete ${isGuest?'disabled':''}" onclick="${isGuest?'':'deleteReview(\''+r.id+'\')'}" ${isGuest?'disabled style="pointer-events:none; opacity:0.4;"':''} title="${isGuest?'Доступно только администратору':''}">Удалить</button></div></div>`; }).join('');
+            container.innerHTML = filtered.map(r => { const p = products.find(pr => pr.id == r.productId); return `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;"><div><strong>${escapeHtml(r.author)||'Аноним'}</strong> <small>${new Date(r.date).toLocaleString()}</small></div><div style="color:#ffd700;">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div></div><div><strong>Товар:</strong> ${escapeHtml(p?.name||'Неизвестный')}</div><div>${escapeHtml(r.text)}</div>${r.adminReply ? `<div style="background:rgba(37,99,235,0.2); padding:0.5rem; margin-top:0.5rem; border-radius:8px;"><strong>Ответ:</strong> ${escapeHtml(r.adminReply)}</div>` : ''}<div style="margin-top:0.5rem;">${r.status !== 'approved' ? `<button class="admin-btn-small approve" onclick="approveReview('${r.id}')">Одобрить</button>` : ''}<button class="admin-btn-small delete" onclick="deleteReview('${r.id}')">Удалить</button></div></div>`; }).join('');
         }
         
+        window.approveReview = async (id) => { await update(ref(database,'reviews/'+id),{status:'approved'}); showToast('✅ Одобрено'); setTimeout(() => location.reload(), 500); };
+        window.deleteReview = async (id) => { if(confirm('Удалить отзыв?')){ await remove(ref(database,'reviews/'+id)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
+        
         function renderTrackingOrders() {
-            // Для гостей показываем сообщение о разработке
-            const container = document.getElementById('trackingOrdersList');
-            if (!container) return;
-            
-            if (currentUserRole === 'guest') {
-                container.innerHTML = `
-                    <div class="coming-soon-card" style="padding: 2rem;">
-                        <div class="icon"><i class="fas fa-box-open"></i></div>
-                        <h3 style="color: var(--text-light);">🚀 Скоро релиз!</h3>
-                        <p style="color: var(--text-gray);">Раздел заказов в разработке</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Для админа — полный список
+            const container = document.getElementById('trackingOrdersList'); if(!container) return;
             const search = document.getElementById('searchTracking')?.value.toLowerCase() || '';
             const orders = Object.entries(trackingOrders).map(([track,data])=> ({ tracking:track, ...data })).filter(o => o.tracking.toLowerCase().includes(search) || (o.phone || '').includes(search)).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
             if(orders.length === 0){ container.innerHTML = '<p>Заказов пока нет</p>'; return; }
             container.innerHTML = orders.map(o => `<div style="background:rgba(0,0,0,0.2); border-radius:12px; padding:1rem; margin-bottom:1rem;"><div><strong>${o.tracking}</strong> <span style="display:inline-block; padding:0.2rem 0.5rem; border-radius:20px; font-size:0.8rem; background:${o.isClosed?'#10b981':'#f59e0b'};">${o.isClosed?'Закрыт':'Активен'}</span></div><p><i class="fas fa-phone"></i> ${o.phone}<br><i class="fas fa-${o.deliveryType==='air'?'plane':'truck'}"></i> ${o.deliveryType==='air'?'Авиа':'Наземный'}<br>📅 ${o.sendDate}</p><div>${!o.isClosed ? `<button class="admin-btn-small approve" onclick="closeTrackingOrder('${o.tracking}')">Закрыть</button>` : ''}<button class="admin-btn-small delete" onclick="deleteTrackingOrder('${o.tracking}')">Удалить</button></div></div>`).join('');
         }
         
-        // ============================================================
-        //  ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений)
-        // ============================================================
-        
-        window.deleteMessage = async (id) => { if(confirm('Удалить сообщение?')){ await remove(ref(database,'messages/'+id)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
-        window.approveReview = async (id) => { await update(ref(database,'reviews/'+id),{status:'approved'}); showToast('✅ Одобрено'); setTimeout(() => location.reload(), 500); };
-        window.deleteReview = async (id) => { if(confirm('Удалить отзыв?')){ await remove(ref(database,'reviews/'+id)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
-        window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
-        window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')){ await remove(ref(database,'brands/'+id)); showToast('✅ Бренд удален'); setTimeout(() => location.reload(), 500); } };
         window.closeTrackingOrder = async (track) => { if(confirm('Закрыть заказ?')){ await update(ref(database,'tracking_orders/'+track),{isClosed:true,closedAt:new Date().toISOString()}); showToast('✅ Закрыт'); setTimeout(() => location.reload(), 500); } };
         window.deleteTrackingOrder = async (track) => { if(confirm('Удалить заказ?')){ await remove(ref(database,'tracking_orders/'+track)); showToast('✅ Удалено'); setTimeout(() => location.reload(), 500); } };
         
-        // Формы
         document.getElementById('addProductForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (currentUserRole === 'guest') { showToast('❌ Доступно только администратору', true); return; }
-            // ... (остальной код без изменений)
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const brand = document.getElementById('productBrand').value;
+            const price = document.getElementById('productPrice').value;
+            const description = document.getElementById('productDescription').value;
+            const video = document.getElementById('productVideo').value;
+            const isHot = document.getElementById('isHotPrice').checked;
+            const hotReason = document.getElementById('hotPriceReason').value;
+            const features = Array.from(document.querySelectorAll('.feature-input')).map(i=>i.value).filter(v=>v);
+            const images = Array.from(document.querySelectorAll('.image-input')).map(i=>i.value).filter(v=>v);
+            if(!name||!category||!brand||!price||!description||images.length===0){ showToast('❌ Заполните все поля', true); return; }
+            const newId = Date.now();
+            const newProduct = { id:newId, name, category, brand, price, description, video:video||'', features, images, dateAdded:new Date().toISOString() };
+            
+            if(category === 'mb'){
+                newProduct.mbSpecs = { platform:currentPlatform, socket:currentPlatform==='intel'?document.getElementById('mbSocketIntel')?.value:document.getElementById('mbSocketAmd')?.value, chipset:currentPlatform==='intel'?document.getElementById('mbChipsetIntel')?.value:document.getElementById('mbChipsetAmd')?.value, formFactor:currentPlatform==='intel'?document.getElementById('mbFormFactor')?.value:document.getElementById('mbFormFactorAmd')?.value, ramSlots:currentPlatform==='intel'?document.getElementById('mbRamSlots')?.value:document.getElementById('mbRamSlotsAmd')?.value, pcieSlots:currentPlatform==='intel'?document.getElementById('mbPcieSlots')?.value:document.getElementById('mbPcieSlotsAmd')?.value, m2Slots:currentPlatform==='intel'?document.getElementById('mbM2Slots')?.value:document.getElementById('mbM2SlotsAmd')?.value, sataPorts:currentPlatform==='intel'?document.getElementById('mbSataPorts')?.value:document.getElementById('mbSataPortsAmd')?.value, usbPorts:currentPlatform==='intel'?document.getElementById('mbUsbPorts')?.value:document.getElementById('mbUsbPortsAmd')?.value, lan:currentPlatform==='intel'?document.getElementById('mbLan')?.value:document.getElementById('mbLanAmd')?.value, audio:currentPlatform==='intel'?document.getElementById('mbAudio')?.value:document.getElementById('mbAudioAmd')?.value };
+            }
+            if(category === 'монитор'){
+                newProduct.monitorSpecs = getMonitorSpecsFromForm();
+            }
+            try {
+                await set(ref(database,'products/'+newId), newProduct);
+                if(isHot && hotReason) await set(ref(database,'hotPrices/'+newId), { reason:hotReason, added:new Date().toISOString() });
+                showToast('✅ Товар добавлен');
+                document.getElementById('addProductForm').reset();
+                document.getElementById('imagesContainer').innerHTML = '';
+                document.getElementById('featuresContainer').innerHTML = '';
+                addFeature(); addImage();
+                const addTab = document.querySelector('[data-tab="add-product"]');
+                if (addTab) addTab.click();
+            } catch(error){ showToast('❌ Ошибка: '+error.message, true); }
         });
         
         document.getElementById('addBrandForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (currentUserRole === 'guest') { showToast('❌ Доступно только администратору', true); return; }
-            // ... (остальной код без изменений)
+            const name = document.getElementById('brandName').value.trim();
+            const icon = document.getElementById('brandLogo').value.trim();
+            if(!name||!icon){ showToast('Заполните поля', true); return; }
+            const id = name.toUpperCase().replace(/\s+/g,'_');
+            try {
+                if(window.editingBrandId && window.editingBrandId !== id){ await set(ref(database,'brands/'+id),{name,icon,id}); await remove(ref(database,'brands/'+window.editingBrandId)); }
+                else { await set(ref(database,'brands/'+id),{name,icon,id}); }
+                showToast('✅ Бренд сохранен');
+                document.getElementById('brandName').value = '';
+                document.getElementById('brandLogo').value = '';
+                window.editingBrandId = null;
+                setTimeout(() => location.reload(), 500);
+            } catch(error){ showToast('❌ Ошибка', true); }
         });
         
         document.getElementById('addTrackingForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (currentUserRole === 'guest') { showToast('❌ Доступно только администратору', true); return; }
-            // ... (остальной код без изменений)
+            const track = document.getElementById('trackingNumber').value.trim().toUpperCase();
+            const phone = document.getElementById('trackingPhone').value.trim();
+            const date = document.getElementById('trackingSendDate').value;
+            const type = document.getElementById('trackingDeliveryType').value;
+            if(!track||!phone||!date){ showToast('Заполните все поля', true); return; }
+            try{ await set(ref(database,'tracking_orders/'+track),{ phone, sendDate:date, deliveryType:type, isClosed:false, createdAt:new Date().toISOString() }); showToast('✅ Заказ добавлен'); e.target.reset(); setTimeout(() => location.reload(), 500); } catch(e){ showToast('❌ Ошибка', true); }
         });
         
-        // Поиск и фильтры
+        window.deleteProduct = async (id) => { if(confirm('Удалить товар?')){ await remove(ref(database,'products/'+id)); if(hotPrices[id]) await remove(ref(database,'hotPrices/'+id)); showToast('✅ Товар удален'); setTimeout(() => location.reload(), 500); } };
+        
+        window.editProduct = (id) => {
+            const p = products.find(pr=>pr.id==id); if(!p) return;
+            const modal = document.getElementById('editModal'); 
+            const cont = document.getElementById('editFormContainer');
+            const isMB = p.category === 'mb';
+            const platform = p.mbSpecs?.platform || 'intel';
+            const isMonitor = p.category === 'монитор';
+            const ms = p.monitorSpecs || {};
+            
+            let mbSpecsHtml = '';
+            if (isMB) {
+                mbSpecsHtml = `<div class="specs-block"><h3 class="specs-title">Характеристики MB</h3>
+                <div class="platform-selector">
+                    <button type="button" class="platform-btn intel ${platform==='intel'?'active':''}" onclick="setEditPlatform('intel')">Intel</button>
+                    <button type="button" class="platform-btn amd ${platform==='amd'?'active':''}" onclick="setEditPlatform('amd')">AMD</button>
+                </div>
+                <div id="editIntelPlatform" class="platform-content ${platform==='intel'?'active':''}">
+                    <div class="specs-grid">
+                        <div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketIntel" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div>
+                        <div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetIntel" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div>
+                        <div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactor" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div>
+                        <div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlots" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div>
+                        <div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlots" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div>
+                        <div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2Slots" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div>
+                        <div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPorts" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div>
+                        <div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPorts" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div>
+                        <div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLan" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div>
+                        <div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudio" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div>
+                    </div>
+                </div>
+                <div id="editAmdPlatform" class="platform-content ${platform==='amd'?'active':''}">
+                    <div class="specs-grid">
+                        <div class="spec-item"><label>Сокет</label><input type="text" id="editMBSocketAmd" value="${escapeHtml(p.mbSpecs?.socket||'')}"></div>
+                        <div class="spec-item"><label>Чипсет</label><input type="text" id="editMBChipsetAmd" value="${escapeHtml(p.mbSpecs?.chipset||'')}"></div>
+                        <div class="spec-item"><label>Форм-фактор</label><input type="text" id="editMBFormFactorAmd" value="${escapeHtml(p.mbSpecs?.formFactor||'')}"></div>
+                        <div class="spec-item"><label>Слоты памяти</label><input type="text" id="editMBRamSlotsAmd" value="${escapeHtml(p.mbSpecs?.ramSlots||'')}"></div>
+                        <div class="spec-item"><label>PCIe слоты</label><input type="text" id="editMBPcieSlotsAmd" value="${escapeHtml(p.mbSpecs?.pcieSlots||'')}"></div>
+                        <div class="spec-item"><label>M.2 слоты</label><input type="text" id="editMBM2SlotsAmd" value="${escapeHtml(p.mbSpecs?.m2Slots||'')}"></div>
+                        <div class="spec-item"><label>SATA порты</label><input type="text" id="editMBSataPortsAmd" value="${escapeHtml(p.mbSpecs?.sataPorts||'')}"></div>
+                        <div class="spec-item"><label>USB порты</label><input type="text" id="editMBUsbPortsAmd" value="${escapeHtml(p.mbSpecs?.usbPorts||'')}"></div>
+                        <div class="spec-item"><label>Сетевая карта</label><input type="text" id="editMBLanAmd" value="${escapeHtml(p.mbSpecs?.lan||'')}"></div>
+                        <div class="spec-item"><label>Аудио</label><input type="text" id="editMBAudioAmd" value="${escapeHtml(p.mbSpecs?.audio||'')}"></div>
+                    </div>
+                </div>
+                </div>`;
+            }
+            
+            let monitorSpecsHtml = '';
+            if (isMonitor) {
+                const isDual = ms.dualMode ? true : false;
+                monitorSpecsHtml = `<div class="specs-block"><h3 class="specs-title">Характеристики монитора</h3>
+                <div class="form-group"><label>Тип матрицы</label><div class="monitor-buttons-group" id="editPanelTypeGroup"></div><input type="hidden" id="editMonitorPanelType"></div>
+                <div class="form-group"><label>Разрешение</label><div class="monitor-buttons-group" id="editResolutionGroup"></div><input type="hidden" id="editMonitorResolution"></div>
+                <div class="form-group">
+                    <label>Частота обновления (Гц) *можно ввести любую*</label>
+                    <input type="text" id="editMonitorRefreshRate" class="refresh-input-field" value="${escapeHtml(ms.refreshRate || '')}" placeholder="Например: 165Hz, 240Hz, 360Hz">
+                    <div style="margin-top: 12px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="editIsDualMode" ${isDual ? 'checked' : ''} onchange="toggleEditDualMode()"> 
+                            <span>🎮 Dual Mode</span>
+                        </label>
+                    </div>
+                    <div id="editDualModeFields" style="display: ${isDual ? 'block' : 'none'};" class="dual-mode-fields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Режим 1 (Разрешение)</label>
+                                <select id="editDualModeRes1">
+                                    <option value="">Выберите</option>
+                                    <option value="4K" ${ms.dualMode?.mode1?.resolution === '4K' ? 'selected' : ''}>4K (3840x2160)</option>
+                                    <option value="2K" ${ms.dualMode?.mode1?.resolution === '2K' ? 'selected' : ''}>2K (2560x1440)</option>
+                                    <option value="FHD" ${ms.dualMode?.mode1?.resolution === 'FHD' ? 'selected' : ''}>FHD (1920x1080)</option>
+                                    <option value="UWHD" ${ms.dualMode?.mode1?.resolution === 'UWHD' ? 'selected' : ''}>UWHD (2560x1080)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Частота 1 (Гц)</label>
+                                <input type="text" id="editDualModeHz1" value="${escapeHtml(ms.dualMode?.mode1?.hz || '')}" placeholder="120Hz">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Режим 2 (Разрешение)</label>
+                                <select id="editDualModeRes2">
+                                    <option value="">Выберите</option>
+                                    <option value="4K" ${ms.dualMode?.mode2?.resolution === '4K' ? 'selected' : ''}>4K (3840x2160)</option>
+                                    <option value="2K" ${ms.dualMode?.mode2?.resolution === '2K' ? 'selected' : ''}>2K (2560x1440)</option>
+                                    <option value="FHD" ${ms.dualMode?.mode2?.resolution === 'FHD' ? 'selected' : ''}>FHD (1920x1080)</option>
+                                    <option value="UWHD" ${ms.dualMode?.mode2?.resolution === 'UWHD' ? 'selected' : ''}>UWHD (2560x1080)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Частота 2 (Гц)</label>
+                                <input type="text" id="editDualModeHz2" value="${escapeHtml(ms.dualMode?.mode2?.hz || '')}" placeholder="300Hz">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Диагональ</label><input type="text" id="editMonitorSize" value="${escapeHtml(ms.size||'')}"></div>
+                    <div class="form-group"><label>Соотношение сторон</label><select id="editMonitorAspectRatio"><option value="">Выберите</option><option ${ms.aspectRatio==='16:9'?'selected':''}>16:9</option><option ${ms.aspectRatio==='16:10'?'selected':''}>16:10</option><option ${ms.aspectRatio==='21:9'?'selected':''}>21:9</option><option ${ms.aspectRatio==='32:9'?'selected':''}>32:9</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Яркость</label><input type="text" id="editMonitorBrightness" value="${escapeHtml(ms.brightness||'')}"></div>
+                    <div class="form-group"><label>Контрастность</label><input type="text" id="editMonitorContrast" value="${escapeHtml(ms.contrast||'')}"></div>
+                </div>
+                <div class="form-group"><label>Время отклика</label><input type="text" id="editMonitorResponseTime" value="${escapeHtml(ms.responseTime||'')}"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Технологии</label><input type="text" id="editMonitorTech" value="${escapeHtml(ms.tech||'')}"></div>
+                    <div class="form-group"><label>Разъёмы</label><input type="text" id="editMonitorPorts" value="${escapeHtml(ms.ports||'')}"></div>
+                </div>
+                </div>`;
+            }
+            
+            cont.innerHTML = `<form id="editProductForm"><input type="hidden" id="editId" value="${p.id}">
+                <div class="form-group"><label>Название</label><input type="text" id="editName" value="${escapeHtml(p.name)}" required></div>
+                <div class="form-row"><div class="form-group"><label>Категория</label><select id="editCategory"><option value="мышь" ${p.category==='мышь'?'selected':''}>Мышь</option><option value="клавиатура" ${p.category==='клавиатура'?'selected':''}>Клавиатура</option><option value="наушники" ${p.category==='наушники'?'selected':''}>Наушники</option><option value="монитор" ${p.category==='монитор'?'selected':''}>Монитор</option><option value="keycaps" ${p.category==='keycaps'?'selected':''}>Кейкапы</option><option value="pads" ${p.category==='pads'?'selected':''}>Коврик</option><option value="mb" ${p.category==='mb'?'selected':''}>Материнская плата</option></select></div>
+                <div class="form-group"><label>Бренд</label><select id="editBrand">${Object.values(brands).map(b=>`<option value="${b.name}" ${p.brand===b.name?'selected':''}>${escapeHtml(b.name)}</option>`).join('')}</select></div></div>
+                <div class="form-group"><label>Цена</label><input type="text" id="editPrice" value="${escapeHtml(p.price)}" required></div>
+                <div class="form-group"><label>Описание</label><textarea id="editDesc" rows="4">${escapeHtml(p.description)}</textarea></div>
+                <div class="form-group"><label>YouTube видео</label><input type="url" id="editVideo" value="${p.video||''}"></div>
+                ${mbSpecsHtml}
+                ${monitorSpecsHtml}
+                <div class="form-group"><label>Характеристики</label><div id="editFeatures">${p.features?.map(f=>`<div class="feature-item"><input type="text" value="${escapeHtml(f)}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditFeature()">+ Добавить</button></div>
+                <div class="form-group"><label>Фото</label><div id="editImages">${p.images?.map(img=>`<div class="image-item"><input type="url" value="${img}"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>`).join('')||''}</div><button type="button" class="add-btn" onclick="addEditImage()">+ Добавить</button></div>
+                <div class="form-group"><label><input type="checkbox" id="editHot" ${hotPrices[p.id]?'checked':''}> Скидка</label></div>
+                <div id="editHotFields" style="display:${hotPrices[p.id]?'block':'none'}"><div class="form-group"><label>Причина скидки</label><input type="text" id="editHotReason" value="${escapeHtml(hotPrices[p.id]?.reason||'')}"></div></div>
+                <button type="submit" class="admin-tab" style="background:var(--success-green); color:white;">Сохранить изменения</button>
+            </form>`;
+            
+            modal.classList.add('active');
+            
+            if (isMonitor) {
+                createEditButtonGroup('editPanelTypeGroup', panelTypes, 'editMonitorPanelType', false, ms.panelType);
+                createEditButtonGroup('editResolutionGroup', resolutions, 'editMonitorResolution', false, ms.resolution);
+            }
+            
+            window.toggleEditDualMode = function() {
+                const isChecked = document.getElementById('editIsDualMode').checked;
+                const dualFields = document.getElementById('editDualModeFields');
+                const refreshInput = document.getElementById('editMonitorRefreshRate');
+                if (isChecked) {
+                    dualFields.style.display = 'block';
+                    refreshInput.disabled = true;
+                    refreshInput.style.opacity = '0.5';
+                } else {
+                    dualFields.style.display = 'none';
+                    refreshInput.disabled = false;
+                    refreshInput.style.opacity = '1';
+                }
+            };
+            
+            document.getElementById('editHot')?.addEventListener('change', function(){ document.getElementById('editHotFields').style.display = this.checked ? 'block' : 'none'; });
+            
+            document.getElementById('editProductForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const updated = { 
+                    ...p, 
+                    name: document.getElementById('editName').value,
+                    category: document.getElementById('editCategory').value,
+                    brand: document.getElementById('editBrand').value,
+                    price: document.getElementById('editPrice').value,
+                    description: document.getElementById('editDesc').value,
+                    video: document.getElementById('editVideo').value || '',
+                    features: Array.from(document.querySelectorAll('#editFeatures .feature-item input')).map(i=>i.value).filter(v=>v),
+                    images: Array.from(document.querySelectorAll('#editImages .image-item input')).map(i=>i.value).filter(v=>v),
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                if (updated.category === 'mb') {
+                    const platform = window.editPlatform || 'intel';
+                    updated.mbSpecs = { platform, socket:platform==='intel'?document.getElementById('editMBSocketIntel')?.value:document.getElementById('editMBSocketAmd')?.value, chipset:platform==='intel'?document.getElementById('editMBChipsetIntel')?.value:document.getElementById('editMBChipsetAmd')?.value, formFactor:platform==='intel'?document.getElementById('editMBFormFactor')?.value:document.getElementById('editMBFormFactorAmd')?.value, ramSlots:platform==='intel'?document.getElementById('editMBRamSlots')?.value:document.getElementById('editMBRamSlotsAmd')?.value, pcieSlots:platform==='intel'?document.getElementById('editMBPcieSlots')?.value:document.getElementById('editMBPcieSlotsAmd')?.value, m2Slots:platform==='intel'?document.getElementById('editMBM2Slots')?.value:document.getElementById('editMBM2SlotsAmd')?.value, sataPorts:platform==='intel'?document.getElementById('editMBSataPorts')?.value:document.getElementById('editMBSataPortsAmd')?.value, usbPorts:platform==='intel'?document.getElementById('editMBUsbPorts')?.value:document.getElementById('editMBUsbPortsAmd')?.value, lan:platform==='intel'?document.getElementById('editMBLan')?.value:document.getElementById('editMBLanAmd')?.value, audio:platform==='intel'?document.getElementById('editMBAudio')?.value:document.getElementById('editMBAudioAmd')?.value };
+                }
+                
+                if (updated.category === 'монитор') {
+                    const isDual = document.getElementById('editIsDualMode')?.checked || false;
+                    let refreshRate = '';
+                    let dualMode = null;
+                    
+                    if (isDual) {
+                        const res1 = document.getElementById('editDualModeRes1')?.value || '';
+                        const hz1 = document.getElementById('editDualModeHz1')?.value || '';
+                        const res2 = document.getElementById('editDualModeRes2')?.value || '';
+                        const hz2 = document.getElementById('editDualModeHz2')?.value || '';
+                        refreshRate = `${res1} ${hz1} / ${res2} ${hz2}`;
+                        dualMode = { mode1: { resolution: res1, hz: hz1 }, mode2: { resolution: res2, hz: hz2 } };
+                    } else {
+                        refreshRate = document.getElementById('editMonitorRefreshRate')?.value || '';
+                    }
+                    
+                    updated.monitorSpecs = {
+                        panelType: document.getElementById('editMonitorPanelType')?.value || '',
+                        resolution: document.getElementById('editMonitorResolution')?.value || '',
+                        refreshRate: refreshRate,
+                        dualMode: dualMode,
+                        size: document.getElementById('editMonitorSize')?.value || '',
+                        aspectRatio: document.getElementById('editMonitorAspectRatio')?.value || '',
+                        brightness: document.getElementById('editMonitorBrightness')?.value || '',
+                        contrast: document.getElementById('editMonitorContrast')?.value || '',
+                        responseTime: document.getElementById('editMonitorResponseTime')?.value || '',
+                        tech: document.getElementById('editMonitorTech')?.value || '',
+                        ports: document.getElementById('editMonitorPorts')?.value || ''
+                    };
+                }
+                
+                try {
+                    await update(ref(database,'products/'+p.id), updated);
+                    const isHot = document.getElementById('editHot').checked;
+                    const hotReason = document.getElementById('editHotReason').value;
+                    if(isHot && hotReason) await set(ref(database,'hotPrices/'+p.id),{ reason:hotReason, updated:new Date().toISOString() });
+                    else if(!isHot && hotPrices[p.id]) await remove(ref(database,'hotPrices/'+p.id));
+                    showToast('✅ Товар обновлен');
+                    closeEditModal();
+                    setTimeout(() => location.reload(), 500);
+                } catch(e){ showToast('❌ Ошибка: '+e.message, true); }
+            });
+        };
+        
+        function createEditButtonGroup(containerId, options, hiddenInputId, multiSelect, currentValue) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'monitor-spec-btn';
+                btn.textContent = opt;
+                btn.dataset.value = opt;
+                if (multiSelect && currentValue && currentValue.split(',').map(v=>v.trim()).includes(opt)) btn.classList.add('active');
+                if (!multiSelect && currentValue === opt) btn.classList.add('active');
+                btn.addEventListener('click', () => {
+                    if (multiSelect) {
+                        btn.classList.toggle('active');
+                        const selected = Array.from(container.querySelectorAll('.monitor-spec-btn.active')).map(b => b.dataset.value);
+                        document.getElementById(hiddenInputId).value = selected.join(', ');
+                    } else {
+                        container.querySelectorAll('.monitor-spec-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.getElementById(hiddenInputId).value = opt;
+                    }
+                });
+                container.appendChild(btn);
+            });
+            if (currentValue && !multiSelect) document.getElementById(hiddenInputId).value = currentValue;
+            if (currentValue && multiSelect) document.getElementById(hiddenInputId).value = currentValue;
+        }
+        
+        window.addEditFeature = () => { const c = document.getElementById('editFeatures'); const d = document.createElement('div'); d.className = 'feature-item'; d.innerHTML = `<input type="text" placeholder="Характеристика"><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
+        window.addEditImage = () => { const c = document.getElementById('editImages'); const d = document.createElement('div'); d.className = 'image-item'; d.innerHTML = `<input type="url" placeholder="https://..."><button type="button" class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`; c.appendChild(d); };
+        
         document.getElementById('searchProducts')?.addEventListener('input', renderProducts);
         document.getElementById('filterCategory')?.addEventListener('change', renderProducts);
         document.getElementById('searchTracking')?.addEventListener('input', renderTrackingOrders);
         document.getElementById('searchReviews')?.addEventListener('input', renderReviews);
         document.getElementById('reviewStatus')?.addEventListener('change', renderReviews);
         
-        // Инициализация
         window.loadData = loadData;
         loadData();
     </script>
 </body>
 </html>
+
