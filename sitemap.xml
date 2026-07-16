@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ggpoint.store/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://ggpoint.store/catalog.html</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://ggpoint.store/keycaps.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ggpoint.store/pads.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ggpoint.store/mb.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ggpoint.store/about.html</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://ggpoint.store/contacts.html</loc>
-    <priority>0.7</priority>
-  </url>
+    <!-- Главные страницы -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/</loc><priority>1.0</priority></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/catalog.html</loc><priority>0.9</priority></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/about.html</loc><priority>0.8</priority></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/contacts.html</loc><priority>0.8</priority></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/keycaps.html</loc><priority>0.8</priority></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/pads.html</loc><priority>0.8</priority></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/mb.html</loc><priority>0.8</priority></url>
+    
+    <!-- ====== ВСЕ ТОВАРЫ ====== -->
+    <!-- Наушники -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=1764197483466</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=1764197483467</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+    
+    <!-- Клавиатуры -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=ВАШ_ID_КЛАВИАТУРЫ</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+    
+    <!-- Мыши -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=ВАШ_ID_МЫШИ</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+    
+    <!-- Кейкапы -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=ВАШ_ID_КЕЙКАПОВ</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+    
+    <!-- Коврики -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=ВАШ_ID_КОВРИКА</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+    
+    <!-- Материнские платы -->
+    <url><loc>https://mirzarasulov.github.io/ggpoint/product.html?id=ВАШ_ID_MB</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
 </urlset>
