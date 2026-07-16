@@ -4,66 +4,117 @@
     <meta charset="UTF-8">
     <title>Генератор Sitemap</title>
     <style>
-        body { background: #0a0f1a; color: #fff; font-family: system-ui; padding: 2rem; }
+        body { background: #0a0f1a; color: #fff; font-family: system-ui; padding: 2rem; max-width: 800px; margin: 0 auto; }
+        h1 { color: #2563eb; }
         button { background: #2563eb; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; }
         button:hover { background: #1d4ed8; }
-        pre { background: #1e293b; padding: 1rem; border-radius: 10px; overflow: auto; max-height: 500px; white-space: pre-wrap; }
+        pre { background: #1e293b; padding: 1rem; border-radius: 10px; overflow: auto; max-height: 400px; white-space: pre-wrap; font-size: 0.8rem; }
         .success { color: #10b981; }
         .error { color: #ef4444; }
+        .info { color: #60a5fa; }
+        .download-btn { background: #10b981; margin-top: 1rem; }
+        .download-btn:hover { background: #059669; }
     </style>
 </head>
 <body>
     <h1>🚀 Генератор Sitemap</h1>
     <p>Нажмите кнопку, чтобы создать sitemap для всех товаров</p>
     <button onclick="generateSitemap()">📄 Создать Sitemap</button>
-    <div id="result"></div>
+    <div id="result" style="margin-top: 2rem;"></div>
 
     <script>
         async function generateSitemap() {
             const result = document.getElementById('result');
-            result.innerHTML = '<p>⏳ Загрузка товаров...</p>';
+            result.innerHTML = '<p class="info">⏳ Загрузка товаров...</p>';
             
             try {
                 const response = await fetch('data/products.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} - файл не найден`);
+                }
                 const data = await response.json();
-                const baseUrl = 'https://mirzarasulov.github.io/ggpoint';
                 
+                // Универсальный поиск массива товаров
+                let products = [];
+                if (Array.isArray(data)) {
+                    products = data;
+                } else if (data.products && Array.isArray(data.products)) {
+                    products = data.products;
+                } else if (data.data && Array.isArray(data.data)) {
+                    products = data.data;
+                } else if (data.items && Array.isArray(data.items)) {
+                    products = data.items;
+                } else {
+                    // Ищем любой массив в объекте
+                    for (let key in data) {
+                        if (Array.isArray(data[key]) && data[key].length > 0) {
+                            products = data[key];
+                            break;
+                        }
+                    }
+                }
+                
+                if (products.length === 0) {
+                    result.innerHTML = `
+                        <p class="error">❌ Не найден массив с товарами!</p>
+                        <p>Структура вашего JSON:</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                    return;
+                }
+                
+                const baseUrl = 'https://mirzarasulov.github.io/ggpoint';
                 let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url><loc>${baseUrl}/</loc><priority>1.0</priority></url>
     <url><loc>${baseUrl}/catalog.html</loc><priority>0.9</priority></url>
     <url><loc>${baseUrl}/about.html</loc><priority>0.8</priority></url>
-    <url><loc>${baseUrl}/contacts.html</loc><priority>0.8</priority></url>`;
+    <url><loc>${baseUrl}/contacts.html</loc><priority>0.8</priority></url>
+    <url><loc>${baseUrl}/keycaps.html</loc><priority>0.8</priority></url>
+    <url><loc>${baseUrl}/pads.html</loc><priority>0.8</priority></url>
+    <url><loc>${baseUrl}/mb.html</loc><priority>0.8</priority></url>`;
                 
-                data.products.forEach(p => {
-                    sitemap += `
-    <url><loc>${baseUrl}/product.html?id=${p.id}</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>`;
+                let added = 0;
+                products.forEach(p => {
+                    const id = p.id || p.ID || p._id || p.productId || p.sku || '';
+                    if (id) {
+                        sitemap += `
+    <url><loc>${baseUrl}/product.html?id=${id}</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>`;
+                        added++;
+                    }
                 });
                 
                 sitemap += `
 </urlset>`;
                 
-                // Показываем результат
-                result.innerHTML = `
-                    <p class="success">✅ Sitemap создан! Найдено товаров: ${data.products.length}</p>
-                    <pre>${sitemap}</pre>
-                    <button onclick="downloadSitemap()" style="margin-top:1rem;">⬇️ Скачать sitemap.xml</button>
-                `;
-                
                 // Сохраняем в переменную для скачивания
                 window.sitemapContent = sitemap;
                 
+                result.innerHTML = `
+                    <p class="success">✅ Sitemap создан!</p>
+                    <p>📊 Найдено товаров: ${products.length}</p>
+                    <p>✅ Добавлено в sitemap: ${added}</p>
+                    <button class="download-btn" onclick="downloadSitemap()">⬇️ Скачать sitemap.xml</button>
+                    <pre>${sitemap}</pre>
+                `;
+                
             } catch (error) {
-                result.innerHTML = `<p class="error">❌ Ошибка: ${error.message}</p>`;
+                result.innerHTML = `
+                    <p class="error">❌ Ошибка: ${error.message}</p>
+                    <p>Проверьте, что файл data/products.json существует и доступен</p>
+                `;
             }
         }
         
         function downloadSitemap() {
-            const blob = new Blob([window.sitemapContent], {type: 'application/xml'});
+            if (!window.sitemapContent) return;
+            const blob = new Blob([window.sitemapContent], {type: 'application/xml;charset=utf-8'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'sitemap.xml';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
