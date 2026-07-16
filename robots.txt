@@ -1,18 +1,18 @@
-# robots.txt для GGPoint на GitHub Pages
+# robots.txt для GGPoint
 User-agent: *
 Allow: /
 
-# Запрещаем админку и служебные страницы
+# Запрещаем служебные страницы
 Disallow: /admin-panel.html
+Disallow: /admin/
 Disallow: /checkout.html
 Disallow: /cart.html
-Disallow: /admin/
 
-# Разрешаем все товары (важно для SEO!)
+# Разрешаем все товары (ВАЖНО для SEO!)
 Allow: /product.html?id=*
 
-# Sitemap (правильный URL!)
+# Sitemap
 Sitemap: https://mirzarasulov.github.io/ggpoint/sitemap.xml
 
-# Crawl delay для бережного сканирования
+# Бережное сканирование
 Crawl-delay: 1
