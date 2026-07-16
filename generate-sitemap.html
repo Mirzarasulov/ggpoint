@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Генератор Sitemap</title>
+    <style>
+        body { background: #0a0f1a; color: #fff; font-family: system-ui; padding: 2rem; }
+        button { background: #2563eb; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; }
+        button:hover { background: #1d4ed8; }
+        pre { background: #1e293b; padding: 1rem; border-radius: 10px; overflow: auto; max-height: 500px; white-space: pre-wrap; }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Генератор Sitemap</h1>
+    <p>Нажмите кнопку, чтобы создать sitemap для всех товаров</p>
+    <button onclick="generateSitemap()">📄 Создать Sitemap</button>
+    <div id="result"></div>
+
+    <script>
+        async function generateSitemap() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>⏳ Загрузка товаров...</p>';
+            
+            try {
+                const response = await fetch('data/products.json');
+                const data = await response.json();
+                const baseUrl = 'https://mirzarasulov.github.io/ggpoint';
+                
+                let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url><loc>${baseUrl}/</loc><priority>1.0</priority></url>
+    <url><loc>${baseUrl}/catalog.html</loc><priority>0.9</priority></url>
+    <url><loc>${baseUrl}/about.html</loc><priority>0.8</priority></url>
+    <url><loc>${baseUrl}/contacts.html</loc><priority>0.8</priority></url>`;
+                
+                data.products.forEach(p => {
+                    sitemap += `
+    <url><loc>${baseUrl}/product.html?id=${p.id}</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>`;
+                });
+                
+                sitemap += `
+</urlset>`;
+                
+                // Показываем результат
+                result.innerHTML = `
+                    <p class="success">✅ Sitemap создан! Найдено товаров: ${data.products.length}</p>
+                    <pre>${sitemap}</pre>
+                    <button onclick="downloadSitemap()" style="margin-top:1rem;">⬇️ Скачать sitemap.xml</button>
+                `;
+                
+                // Сохраняем в переменную для скачивания
+                window.sitemapContent = sitemap;
+                
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Ошибка: ${error.message}</p>`;
+            }
+        }
+        
+        function downloadSitemap() {
+            const blob = new Blob([window.sitemapContent], {type: 'application/xml'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'sitemap.xml';
+            link.click();
+        }
+    </script>
+</body>
+</html>
