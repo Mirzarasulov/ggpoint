@@ -75,6 +75,10 @@
         .admin-btn-small.download:hover { background: var(--warning-yellow); color: #0f172a; }
         .admin-btn-small.primary { border-color: var(--primary-blue); color: var(--primary-blue); }
         .admin-btn-small.primary:hover { background: var(--primary-blue); color: white; }
+        .admin-btn-small.approve { border-color: var(--success-green); color: var(--success-green); }
+        .admin-btn-small.approve:hover { background: var(--success-green); color: white; }
+        .admin-btn-small.reject { border-color: var(--sale-red); color: var(--sale-red); }
+        .admin-btn-small.reject:hover { background: var(--sale-red); color: white; }
         
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-light); font-weight: 600; }
@@ -156,30 +160,30 @@
             font-size: 1rem;
         }
         
-        .order-card {
+        .order-card, .design-card {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1rem;
             border-left: 4px solid var(--primary-blue);
         }
-        .order-card .order-header {
+        .order-card .order-header, .design-card .design-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             margin-bottom: 0.5rem;
         }
-        .order-card .order-number {
+        .order-card .order-number, .design-card .design-id {
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-light);
         }
-        .order-card .order-date {
+        .order-card .order-date, .design-card .design-date {
             color: var(--text-gray);
             font-size: 0.85rem;
         }
-        .order-card .order-status {
+        .order-card .order-status, .design-card .design-status {
             display: inline-block;
             padding: 0.2rem 0.8rem;
             border-radius: 20px;
@@ -190,30 +194,57 @@
         .order-status.approved { background: var(--success-green); color: white; }
         .order-status.rejected { background: var(--sale-red); color: white; }
         
-        .order-card .order-details {
+        .design-status.pending { background: var(--warning-yellow); color: #0f172a; }
+        .design-status.approved { background: var(--success-green); color: white; }
+        .design-status.rejected { background: var(--sale-red); color: white; }
+        
+        .order-card .order-details, .design-card .design-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.5rem 1.5rem;
             margin: 0.8rem 0;
             font-size: 0.9rem;
         }
-        .order-card .order-details .label { color: var(--text-gray); }
-        .order-card .order-details .value { color: var(--text-light); }
+        .order-card .order-details .label, .design-card .design-details .label { color: var(--text-gray); }
+        .order-card .order-details .value, .design-card .design-details .value { color: var(--text-light); }
         
-        .order-card .order-actions {
+        .order-card .order-actions, .design-card .design-actions {
             display: flex;
             gap: 0.5rem;
             margin-top: 0.8rem;
             flex-wrap: wrap;
         }
         
-        .order-preview-img {
-            max-width: 200px;
-            max-height: 150px;
+        .order-preview-img, .design-preview-img {
+            max-width: 300px;
+            max-height: 200px;
             object-fit: contain;
-            background: rgba(255,255,255,0.1);
             border-radius: 8px;
-            padding: 0.3rem;
+            display: block;
+        }
+        
+        /* ⭐ ГЛАВНОЕ ИСПРАВЛЕНИЕ — КОНТЕЙНЕР ДЛЯ ПРЕВЬЮ С БЕЛЫМ ФОНОМ */
+        .preview-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 12px;
+            display: inline-block;
+            border: 2px solid var(--primary-blue);
+            margin: 0.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            min-width: 200px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-container img {
+            max-width: 300px;
+            max-height: 200px;
+            object-fit: contain;
+            display: block;
+            border-radius: 4px;
+            background: #ffffff;
         }
         
         .empty-state {
@@ -227,12 +258,17 @@
             opacity: 0.5;
         }
         
+        .design-card.pending-design { border-left-color: var(--warning-yellow); }
+        .design-card.approved-design { border-left-color: var(--success-green); }
+        .design-card.rejected-design { border-left-color: var(--sale-red); }
+        
         @media (max-width: 768px) {
             .admin-header { flex-direction: column; gap: 1rem; }
             .form-row { grid-template-columns: 1fr; }
             .specs-grid { grid-template-columns: 1fr; }
             .admin-tabs { justify-content: center; }
-            .order-card .order-details { grid-template-columns: 1fr; }
+            .order-card .order-details, .design-card .design-details { grid-template-columns: 1fr; }
+            .preview-container img { max-width: 200px; max-height: 150px; }
         }
     </style>
 </head>
@@ -260,6 +296,7 @@
             <div class="admin-tabs" id="adminTabs">
                 <button class="admin-tab active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> Дашборд</button>
                 <button class="admin-tab" data-tab="orders"><i class="fas fa-shopping-cart"></i> Заказы</button>
+                <button class="admin-tab" data-tab="designs"><i class="fas fa-paint-brush"></i> Дизайны</button>
                 <button class="admin-tab" data-tab="products"><i class="fas fa-box"></i> Товары</button>
                 <button class="admin-tab" data-tab="add-product"><i class="fas fa-plus-circle"></i> Добавить</button>
                 <button class="admin-tab" data-tab="brands"><i class="fas fa-tags"></i> Бренды</button>
@@ -276,7 +313,7 @@
                 <div class="stats-grid">
                     <div class="stat-card"><i class="fas fa-box"></i><div class="stat-value" id="totalProducts">0</div><div class="stat-label">Всего товаров</div></div>
                     <div class="stat-card"><i class="fas fa-shopping-cart"></i><div class="stat-value" id="totalOrders">0</div><div class="stat-label">Всего заказов</div></div>
-                    <div class="stat-card"><i class="fas fa-fire"></i><div class="stat-value" id="totalHotPrices">0</div><div class="stat-label">Со скидкой</div></div>
+                    <div class="stat-card"><i class="fas fa-paint-brush"></i><div class="stat-value" id="totalDesigns">0</div><div class="stat-label">Дизайнов на модерации</div></div>
                     <div class="stat-card"><i class="fas fa-star"></i><div class="stat-value" id="totalReviews">0</div><div class="stat-label">Отзывов</div></div>
                 </div>
                 <h3>Последние товары</h3>
@@ -303,6 +340,24 @@
                     </select>
                 </div>
                 <div id="ordersContainer"></div>
+            </div>
+
+            <!-- ДИЗАЙНЫ (МОДЕРАЦИЯ) - ИСПРАВЛЕННАЯ ВЕРСИЯ -->
+            <div class="admin-section" id="designs">
+                <h2 style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <span><i class="fas fa-paint-brush"></i> Дизайны на модерацию</span>
+                    <button class="admin-btn-small primary" onclick="refreshDesigns()"><i class="fas fa-sync"></i> Обновить</button>
+                </h2>
+                <div style="margin: 1rem 0; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <input type="text" id="searchDesigns" placeholder="Поиск по ID..." style="flex:1; padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                    <select id="filterDesignStatus" style="padding:0.5rem; background:var(--dark-bg); border:1px solid #334155; border-radius:6px; color:white;">
+                        <option value="all">Все статусы</option>
+                        <option value="pending">На модерации</option>
+                        <option value="approved">Одобрены</option>
+                        <option value="rejected">Отклонены</option>
+                    </select>
+                </div>
+                <div id="designsContainer"></div>
             </div>
 
             <!-- ТОВАРЫ -->
@@ -539,13 +594,16 @@
     <!-- Модалка просмотра заказа -->
     <div class="modal" id="orderViewModal"><div class="modal-content" style="max-width: 700px;"><div class="modal-header"><h2><i class="fas fa-shopping-cart"></i> Детали заказа</h2><span class="modal-close" onclick="document.getElementById('orderViewModal').classList.remove('active')">&times;</span></div><div id="orderViewContent"></div></div></div>
 
+    <!-- Модалка просмотра дизайна -->
+    <div class="modal" id="designViewModal"><div class="modal-content" style="max-width: 700px;"><div class="modal-header"><h2><i class="fas fa-paint-brush"></i> Детали дизайна</h2><span class="modal-close" onclick="document.getElementById('designViewModal').classList.remove('active')">&times;</span></div><div id="designViewContent"></div></div></div>
+
     <script>
-        // Глобальные данные для мониторных кнопок (только матрица и разрешение, частота - текстовое поле)
+        // Глобальные данные для мониторных кнопок
         const panelTypes = ['IPS', 'Fast IPS', 'Mini LED', 'OLED', 'VA', 'Fast VA','TN'];
         const resolutions = ['FHD (1920x1080)', '2K (2560x1440)', '4K (3840x2160)', '(34400x1440)'];
         
         let currentPlatform = 'intel';
-        let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], trackingOrders = {}, orders = [];
+        let products = [], hotPrices = {}, brands = {}, messages = [], reviews = [], trackingOrders = {}, orders = [], designs = [];
         
         const ADMIN_PASSWORD = "Dilsh-221";
         
@@ -566,6 +624,7 @@
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 sessionStorage.setItem('activeTab', 'dashboard');
                 if (typeof loadData === 'function') loadData();
+                loadDesigns();
             } else { document.getElementById('loginError').textContent = '❌ Неверный пароль'; }
         }
         
@@ -575,6 +634,7 @@
                 document.getElementById('adminContent').style.display = 'block';
                 document.getElementById('logoutBtn').style.display = 'block';
                 if (typeof loadData === 'function') loadData();
+                loadDesigns();
             }
             initMonitorButtonsGroups();
             
@@ -794,7 +854,238 @@
             document.getElementById('hotPriceFields').style.display = this.checked ? 'block' : 'none'; 
         });
         
-        // --- ЭКСПОРТ ЗАКАЗОВ ---
+        // ==================== ЗАГРУЗКА ДИЗАЙНОВ ====================
+        function loadDesigns() {
+            try {
+                const stored = localStorage.getItem('ggpoint_designs');
+                if (stored) {
+                    designs = JSON.parse(stored);
+                } else {
+                    designs = [];
+                }
+                renderDesigns();
+                updateDashboardStats();
+            } catch (e) {
+                console.error('Ошибка загрузки дизайнов:', e);
+                designs = [];
+                renderDesigns();
+            }
+        }
+        
+        // ⭐ ГЛАВНОЕ ИСПРАВЛЕНИЕ — функция отображения дизайнов с белым фоном
+        function renderDesigns() {
+            const container = document.getElementById('designsContainer');
+            if (!container) return;
+            
+            const search = document.getElementById('searchDesigns')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('filterDesignStatus')?.value || 'all';
+            
+            let filtered = [...designs];
+            if (search) {
+                filtered = filtered.filter(d => (d.id || '').toLowerCase().includes(search));
+            }
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(d => (d.status || 'pending') === statusFilter);
+            }
+            
+            filtered.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Нет дизайнов</h3>
+                        <p style="color: var(--text-gray);">Дизайны от пользователей будут появляться здесь</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filtered.map(d => {
+                const status = d.status || 'pending';
+                const statusMap = {
+                    'pending': { label: '⏳ На модерации', class: 'pending' },
+                    'approved': { label: '✅ Одобрен', class: 'approved' },
+                    'rejected': { label: '❌ Отклонен', class: 'rejected' }
+                };
+                const statusInfo = statusMap[status] || statusMap.pending;
+                
+                // ⭐ ДЛЯ КАЖДОГО ДИЗАЙНА СОЗДАЕМ ОТДЕЛЬНЫЙ ЭЛЕМЕНТ С БЕЛЫМ ФОНОМ
+                const previewHtml = d.designPreview ? `
+                    <div class="preview-container">
+                        <img src="${d.designPreview}" 
+                             alt="Превью дизайна" 
+                             onerror="this.parentElement.innerHTML='<span style=\\'color:#666;font-size:0.9rem;\\'>❌ Ошибка загрузки изображения</span>'"
+                             style="max-width:300px; max-height:200px; object-fit:contain; display:block; border-radius:4px; background:#ffffff;">
+                    </div>
+                ` : '<div style="color:#64748b;font-size:0.8rem;margin:0.5rem 0;">❌ Нет превью</div>';
+                
+                return `
+                    <div class="design-card ${status}-design">
+                        <div class="design-header">
+                            <span class="design-id">🎨 ${d.id || 'Без ID'}</span>
+                            <span class="design-date">${d.timestamp ? new Date(d.timestamp).toLocaleString() : 'Нет даты'}</span>
+                            <span class="design-status ${statusInfo.class}">${statusInfo.label}</span>
+                        </div>
+                        <div class="design-details">
+                            <div><span class="label">👤 Автор:</span> <span class="value">${d.author || 'Аноним'}</span></div>
+                            <div><span class="label">📱 Контакт:</span> <span class="value">${d.contact || '-'}</span></div>
+                            <div><span class="label">📐 Размер:</span> <span class="value">${d.size || '-'}</span></div>
+                            <div><span class="label">💰 Вознаграждение:</span> <span class="value" style="color: var(--warning-yellow);">${d.commission || 'от 10.000 — 100.000 UZS'}</span></div>
+                        </div>
+                        ${previewHtml}
+                        <div class="design-actions">
+                            <button class="admin-btn-small view" onclick="viewDesign('${d.id || ''}')"><i class="fas fa-eye"></i> Детали</button>
+                            ${status === 'pending' ? `
+                                <button class="admin-btn-small approve" onclick="approveDesign('${d.id || ''}')"><i class="fas fa-check"></i> Одобрить</button>
+                                <button class="admin-btn-small reject" onclick="rejectDesign('${d.id || ''}')"><i class="fas fa-times"></i> Отклонить</button>
+                            ` : ''}
+                            <button class="admin-btn-small delete" onclick="deleteDesign('${d.id || ''}')"><i class="fas fa-trash"></i> Удалить</button>
+                            ${d.designPreview ? `<button class="admin-btn-small download" onclick="downloadDesignImage('${d.id || ''}')"><i class="fas fa-download"></i> Скачать</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        window.viewDesign = function(id) {
+            const design = designs.find(d => d.id === id);
+            if (!design) {
+                showToast('❌ Дизайн не найден', true);
+                return;
+            }
+            const modal = document.getElementById('designViewModal');
+            const content = document.getElementById('designViewContent');
+            const status = design.status || 'pending';
+            const statusMap = {
+                'pending': '⏳ На модерации',
+                'approved': '✅ Одобрен',
+                'rejected': '❌ Отклонен'
+            };
+            
+            const previewHtml = design.designPreview ? `
+                <div style="padding: 0.5rem 0;">
+                    <strong>🖼️ Превью дизайна</strong>
+                    <div style="margin-top: 0.5rem; background: #ffffff; border-radius: 12px; padding: 12px; border: 2px solid var(--primary-blue); display: flex; align-items: center; justify-content: center;">
+                        <img src="${design.designPreview}" 
+                             alt="Дизайн коврика" 
+                             onerror="this.parentElement.innerHTML='<span style=\\'color:#666;\\'>❌ Ошибка загрузки</span>'"
+                             style="max-width: 100%; max-height: 300px; object-fit: contain; border-radius: 4px; background: #ffffff;">
+                    </div>
+                </div>
+            ` : '';
+            
+            content.innerHTML = `
+                <div style="display: grid; gap: 0.5rem; font-size: 0.95rem;">
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>ID дизайна</strong>
+                        <span>${design.id || '-'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>Дата</strong>
+                        <span>${design.timestamp ? new Date(design.timestamp).toLocaleString() : '-'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>Статус</strong>
+                        <span>${statusMap[status] || status}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>Автор</strong>
+                        <span>${design.author || 'Аноним'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>Контакт</strong>
+                        <span>${design.contact || '-'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>Размер</strong>
+                        <span>${design.size || '-'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #334155;">
+                        <strong>Вознаграждение</strong>
+                        <span style="color: var(--warning-yellow);">${design.commission || 'от 10.000 — 100.000 UZS'}</span>
+                    </div>
+                    ${previewHtml}
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        ${status === 'pending' ? `
+                            <button class="admin-btn-small approve" onclick="approveDesign('${design.id || ''}'); document.getElementById('designViewModal').classList.remove('active');"><i class="fas fa-check"></i> Одобрить</button>
+                            <button class="admin-btn-small reject" onclick="rejectDesign('${design.id || ''}'); document.getElementById('designViewModal').classList.remove('active');"><i class="fas fa-times"></i> Отклонить</button>
+                        ` : ''}
+                        ${design.designPreview ? `<button class="admin-btn-small download" onclick="downloadDesignImage('${design.id || ''}')"><i class="fas fa-download"></i> Скачать дизайн</button>` : ''}
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+        };
+        
+        window.approveDesign = function(id) {
+            const design = designs.find(d => d.id === id);
+            if (!design) {
+                showToast('❌ Дизайн не найден', true);
+                return;
+            }
+            design.status = 'approved';
+            localStorage.setItem('ggpoint_designs', JSON.stringify(designs));
+            
+            let pads = JSON.parse(localStorage.getItem('ggpoint_pads') || '[]');
+            pads.push({
+                id: design.id,
+                name: '🎨 Дизайн от пользователя',
+                price: 'Цена от производителя',
+                images: [design.designPreview],
+                description: 'Уникальный дизайн от пользователя. При заказе этого коврика автор получит вознаграждение!',
+                isUserDesign: true,
+                commission: design.commission || 'от 10.000 — 100.000 UZS',
+                designId: design.id
+            });
+            localStorage.setItem('ggpoint_pads', JSON.stringify(pads));
+            
+            renderDesigns();
+            updateDashboardStats();
+            showToast('✅ Дизайн одобрен и опубликован на сайте!');
+        };
+        
+        window.rejectDesign = function(id) {
+            const design = designs.find(d => d.id === id);
+            if (!design) {
+                showToast('❌ Дизайн не найден', true);
+                return;
+            }
+            design.status = 'rejected';
+            localStorage.setItem('ggpoint_designs', JSON.stringify(designs));
+            renderDesigns();
+            updateDashboardStats();
+            showToast('❌ Дизайн отклонен');
+        };
+        
+        window.deleteDesign = function(id) {
+            if (!confirm(`Удалить дизайн ${id}?`)) return;
+            designs = designs.filter(d => d.id !== id);
+            localStorage.setItem('ggpoint_designs', JSON.stringify(designs));
+            renderDesigns();
+            updateDashboardStats();
+            showToast('✅ Дизайн удален');
+        };
+        
+        window.downloadDesignImage = function(id) {
+            const design = designs.find(d => d.id === id);
+            if (!design || !design.designPreview) {
+                showToast('❌ Изображение не найдено', true);
+                return;
+            }
+            const link = document.createElement('a');
+            link.download = `design_${id}.png`;
+            link.href = design.designPreview;
+            link.click();
+            showToast('✅ Изображение скачивается');
+        };
+        
+        window.refreshDesigns = function() {
+            loadDesigns();
+            showToast('🔄 Дизайны обновлены');
+        };
+        
+        // ==================== ЗАКАЗЫ ====================
         window.exportOrdersJSON = function() {
             if (orders.length === 0) {
                 showToast('❌ Нет заказов для экспорта', true);
@@ -816,7 +1107,6 @@
                 showToast('❌ Нет заказов для экспорта', true);
                 return;
             }
-            // Заголовки CSV
             const headers = ['Номер заказа', 'Дата', 'Имя', 'Телефон', 'Адрес', 'Размер', 'Цена', 'Предоплата', 'Статус'];
             const rows = orders.map(o => [
                 o.orderNumber || '',
@@ -846,13 +1136,11 @@
             showToast('🔄 Заказы обновлены');
         };
         
-        // --- ЗАГРУЗКА ЗАКАЗОВ ИЗ LOCALSTORAGE ---
         function loadOrders() {
             try {
                 const stored = localStorage.getItem('ggpoint_orders');
                 if (stored) {
                     orders = JSON.parse(stored);
-                    // Добавляем статус если его нет
                     orders = orders.map(o => ({ ...o, status: o.status || 'pending' }));
                 } else {
                     orders = [];
@@ -885,7 +1173,6 @@
                 filtered = filtered.filter(o => (o.status || 'pending') === statusFilter);
             }
             
-            // Сортируем по дате (сначала новые)
             filtered.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
             
             if (filtered.length === 0) {
@@ -909,6 +1196,17 @@
                 const statusInfo = statusMap[status] || statusMap.pending;
                 const prepay = o.product?.prepay || Math.round((o.product?.price || 0) * 0.3);
                 
+                const orderPreviewHtml = o.designPreview ? `
+                    <div style="margin: 0.5rem 0;">
+                        <div class="preview-container">
+                            <img src="${o.designPreview}" 
+                                 alt="Превью коврика" 
+                                 onerror="this.parentElement.innerHTML='<span style=\\'color:#666;\\'>❌ Ошибка</span>'"
+                                 class="order-preview-img">
+                        </div>
+                    </div>
+                ` : '';
+                
                 return `
                     <div class="order-card">
                         <div class="order-header">
@@ -925,7 +1223,7 @@
                             <div><span class="label">💳 Предоплата:</span> <span class="value" style="color: var(--warning-yellow);">${prepay.toLocaleString()} UZS</span></div>
                             ${o.customer?.comment ? `<div style="grid-column: 1 / -1;"><span class="label">💬 Комментарий:</span> <span class="value">${escapeHtml(o.customer.comment)}</span></div>` : ''}
                         </div>
-                        ${o.designPreview ? `<div style="margin: 0.5rem 0;"><img src="${o.designPreview}" alt="Превью коврика" class="order-preview-img"></div>` : ''}
+                        ${orderPreviewHtml}
                         <div class="order-actions">
                             <button class="admin-btn-small view" onclick="viewOrder('${o.orderNumber || ''}')"><i class="fas fa-eye"></i> Детали</button>
                             <button class="admin-btn-small edit" onclick="updateOrderStatus('${o.orderNumber || ''}', 'approved')"><i class="fas fa-check"></i> Подтвердить</button>
@@ -952,6 +1250,18 @@
             const modal = document.getElementById('orderViewModal');
             const content = document.getElementById('orderViewContent');
             const prepay = order.product?.prepay || Math.round((order.product?.price || 0) * 0.3);
+            
+            const orderPreviewHtml = order.designPreview ? `
+                <div style="padding: 0.5rem 0;">
+                    <strong>🖼️ Превью дизайна</strong>
+                    <div style="margin-top: 0.5rem; background: #ffffff; border-radius: 12px; padding: 12px; border: 2px solid var(--primary-blue); display: flex; align-items: center; justify-content: center;">
+                        <img src="${order.designPreview}" 
+                             alt="Дизайн коврика" 
+                             onerror="this.parentElement.innerHTML='<span style=\\'color:#666;\\'>❌ Ошибка загрузки</span>'"
+                             style="max-width: 100%; max-height: 300px; object-fit: contain; border-radius: 4px; background: #ffffff;">
+                    </div>
+                </div>
+            ` : '';
             
             content.innerHTML = `
                 <div style="display: grid; gap: 0.5rem; font-size: 0.95rem;">
@@ -996,13 +1306,7 @@
                         <strong>💬 Комментарий</strong>
                         <p style="margin-top: 0.3rem; color: var(--text-gray);">${escapeHtml(order.customer.comment)}</p>
                     </div>` : ''}
-                    ${order.designPreview ? `
-                    <div style="padding: 0.5rem 0;">
-                        <strong>🖼️ Превью дизайна</strong>
-                        <div style="margin-top: 0.5rem; text-align: center;">
-                            <img src="${order.designPreview}" alt="Дизайн коврика" style="max-width: 100%; max-height: 300px; border-radius: 8px; background: rgba(255,255,255,0.05);">
-                        </div>
-                    </div>` : ''}
+                    ${orderPreviewHtml}
                     <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button class="admin-btn-small edit" onclick="updateOrderStatus('${order.orderNumber || ''}', 'approved'); document.getElementById('orderViewModal').classList.remove('active');"><i class="fas fa-check"></i> Подтвердить</button>
                         <button class="admin-btn-small delete" onclick="updateOrderStatus('${order.orderNumber || ''}', 'rejected'); document.getElementById('orderViewModal').classList.remove('active');"><i class="fas fa-times"></i> Отклонить</button>
@@ -1050,24 +1354,24 @@
         
         function updateDashboardStats() {
             document.getElementById('totalOrders').textContent = orders.length;
-            const pending = orders.filter(o => (o.status || 'pending') === 'pending').length;
-            // Можно добавить дополнительную статистику
+            const pendingDesigns = designs.filter(d => (d.status || 'pending') === 'pending').length;
+            document.getElementById('totalDesigns').textContent = pendingDesigns;
         }
         
-        // --- ОСНОВНАЯ ЗАГРУЗКА ДАННЫХ ---
+        // ==================== ПОДКЛЮЧЕНИЕ СОБЫТИЙ ====================
         document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем заказы
             loadOrders();
+            loadDesigns();
             
-            // Подключаем поиск и фильтр
             document.getElementById('searchOrders')?.addEventListener('input', renderOrders);
             document.getElementById('filterOrderStatus')?.addEventListener('change', renderOrders);
+            document.getElementById('searchDesigns')?.addEventListener('input', renderDesigns);
+            document.getElementById('filterDesignStatus')?.addEventListener('change', renderDesigns);
         });
         
-        // --- ЗАГРУЗКА ТОВАРОВ ИЗ FIREBASE ---
+        // ==================== FIREBASE ЗАГРУЗКА ====================
         (function() {
             if (typeof initializeApp === 'undefined') {
-                // Если Firebase не загружен, загружаем его
                 const script = document.createElement('script');
                 script.type = 'module';
                 script.innerHTML = `
