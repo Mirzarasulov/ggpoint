@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редактор ковриков PRO - GGPoint</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0f1a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            background: linear-gradient(135deg, #2563eb, #7150c8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .back-link {
+            color: #94a3b8;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #60a5fa; }
+        
+        .editor-wrapper {
+            max-width: 1400px;
+            margin: 1.5rem auto 0;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 280px 1fr 260px;
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 1100px) {
+            .editor-wrapper { grid-template-columns: 1fr; }
+            .panel { order: 2; }
+            .canvas-wrapper { order: 1; }
+            .right-panel { order: 3; }
+        }
+        
+        .panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .panel::-webkit-scrollbar { width: 4px; }
+        .panel::-webkit-scrollbar-track { background: transparent; }
+        .panel::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 4px; }
+        
+        .panel-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .panel-title i { color: #2563eb; }
+        
+        .tool-group {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.08);
+        }
+        .tool-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .tool-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+        .tool-group label i { width: 18px; }
+        
+        .size-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .size-select:focus { border-color: #2563eb; outline: none; }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.4rem;
+        }
+        .color-swatch {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .color-swatch:hover { transform: scale(1.1); z-index: 2; }
+        .color-swatch.active {
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        
+        .text-color-row {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .text-color-row .color-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .text-color-row .color-dot:hover { transform: scale(1.15); }
+        .text-color-row .color-dot.active {
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+        .text-color-row input[type="color"] {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #334155;
+            border-radius: 50%;
+            cursor: pointer;
+            background: none;
+            padding: 2px;
+        }
+        .text-color-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        .text-color-row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+        
+        .btn-tool {
+            padding: 0.5rem 0.8rem;
+            background: rgba(37, 99, 235, 0.12);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-tool:hover {
+            background: rgba(37, 99, 235, 0.25);
+            border-color: #2563eb;
+        }
+        .btn-tool.primary {
+            background: linear-gradient(135deg, #2563eb, #7150c8);
+            border-color: transparent;
+        }
+        .btn-tool.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+        .btn-tool.danger {
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        .btn-tool.danger:hover { background: rgba(239, 68, 68, 0.15); }
+        .btn-tool.success {
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+        .btn-tool.success:hover { background: rgba(34, 197, 94, 0.15); }
+        .btn-tool.warning {
+            border-color: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+        }
+        .btn-tool.warning:hover { background: rgba(251, 191, 36, 0.15); }
+        .btn-tool.purple {
+            border-color: rgba(139, 92, 246, 0.3);
+            color: #a78bfa;
+        }
+        .btn-tool.purple:hover { background: rgba(139, 92, 246, 0.15); }
+        
+        .btn-group {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .btn-group .btn-tool { flex: 1; justify-content: center; }
+        
+        .file-input-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .file-input-wrap input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .canvas-wrapper {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            position: relative;
+        }
+        .canvas-wrapper canvas {
+            filter: saturate(0.82) contrast(0.96) brightness(0.98);
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(37, 99, 235, 0.1);
+        }
+        .canvas-hint {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #64748b;
+            font-size: 0.75rem;
+            background: rgba(0,0,0,0.7);
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .layer-list {
+            max-height: 120px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .layer-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.75rem;
+            border: 1px solid transparent;
+        }
+        .layer-item:hover { background: rgba(37, 99, 235, 0.15); }
+        .layer-item.active {
+            border-color: #2563eb;
+            background: rgba(37, 99, 235, 0.15);
+        }
+        .layer-item .layer-icon { width: 20px; color: #64748b; }
+        .layer-item .layer-name { flex: 1; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .layer-item .layer-vis { cursor: pointer; color: #64748b; transition: color 0.2s; }
+        .layer-item .layer-vis:hover { color: #fff; }
+        .layer-item .layer-del { cursor: pointer; color: #64748b; transition: color 0.2s; font-size: 0.7rem; }
+        .layer-item .layer-del:hover { color: #ef4444; }
+        
+        .right-panel .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .right-panel .tool-grid .btn-tool {
+            justify-content: center;
+            padding: 0.6rem 0.4rem;
+            font-size: 0.75rem;
+            flex-direction: column;
+            gap: 0.2rem;
+            border-radius: 10px;
+        }
+        .right-panel .tool-grid .btn-tool i {
+            font-size: 1.3rem;
+        }
+        .right-panel .tool-grid .btn-tool.active-tool {
+            background: rgba(37, 99, 235, 0.3);
+            border-color: #2563eb;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-done {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+        .btn-done:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+        }
+        
+        .btn-publish {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+        .btn-publish:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+        }
+        .btn-publish .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: help;
+        }
+        .btn-publish .tooltip-text {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            border: 1px solid #8b5cf6;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            width: 320px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #f1f5f9;
+            z-index: 10;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .btn-publish .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #1e293b;
+        }
+        .btn-publish:hover .tooltip-text {
+            display: block;
+        }
+        .btn-publish .tooltip-text .highlight {
+            color: #fbbf24;
+            font-weight: 700;
+        }
+        
+        /* МОДАЛКИ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        
+        .modal-box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 92%;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            animation: scaleIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-box::-webkit-scrollbar { width: 4px; }
+        .modal-box::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 4px; }
+        
+        .modal-box h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .modal-box h2 i { -webkit-text-fill-color: initial; color: #2563eb; margin-right: 0.5rem; }
+        
+        .modal-box .order-summary-mini {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-box .order-summary-mini .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            font-size: 0.85rem;
+        }
+        .modal-box .order-summary-mini .row .label { color: #94a3b8; }
+        .modal-box .order-summary-mini .row .value { color: #f1f5f9; font-weight: 500; }
+        .modal-box .order-summary-mini .total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fbbf24;
+            text-align: right;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(37,99,235,0.1);
+            margin-top: 0.3rem;
+        }
+        
+        .modal-box .form-group {
+            margin-bottom: 0.8rem;
+        }
+        .modal-box .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.2rem;
+        }
+        .modal-box .form-group input,
+        .modal-box .form-group textarea {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            transition: border-color 0.3s;
+        }
+        .modal-box .form-group input:focus,
+        .modal-box .form-group textarea:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
+        .modal-box .form-group textarea { resize: vertical; min-height: 50px; }
+        
+        .payment-details {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border: 2px solid rgba(37, 99, 235, 0.3);
+            text-align: center;
+        }
+        .payment-details .card-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+            letter-spacing: 2px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .payment-details .card-owner {
+            font-size: 1rem;
+            color: #f1f5f9;
+            margin-top: 0.3rem;
+        }
+        .payment-details .card-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .payment-details .prepay-amount {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-top: 0.5rem;
+        }
+        
+        .screenshot-upload {
+            border: 2px dashed #334155;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .screenshot-upload:hover {
+            border-color: #2563eb;
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .screenshot-upload .icon {
+            font-size: 2.5rem;
+            color: #64748b;
+        }
+        .screenshot-upload .text {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+        .screenshot-upload input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .screenshot-preview {
+            display: none;
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            max-height: 150px;
+            overflow: hidden;
+        }
+        .screenshot-preview img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #0f172a;
+        }
+        .screenshot-preview.active { display: block; }
+        
+        .modal-box .btn-order {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: none;
+            border-radius: 10px;
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .modal-box .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(251, 191, 36, 0.35);
+        }
+        .modal-box .btn-order:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .modal-box .btn-close-modal {
+            width: 100%;
+            padding: 0.6rem;
+            background: transparent;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        .modal-box .btn-close-modal:hover {
+            border-color: #64748b;
+            color: #fff;
+        }
+        
+        .modal-box .publish-reward {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            text-align: center;
+        }
+        .modal-box .publish-reward .reward-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .modal-box.success .icon-big { font-size: 3.5rem; color: #22c55e; text-align: center; margin-bottom: 0.5rem; }
+        .modal-box.success h2 { -webkit-text-fill-color: #22c55e; }
+        .modal-box.success .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #7150c8);
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .modal-box.success .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(37,99,235,0.4); }
+        
+        .footer {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(37, 99, 235, 0.1);
+            margin-top: 1.5rem;
+        }
+        .footer .contacts {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .footer .contacts a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer .contacts a:hover { color: #60a5fa; }
+        .footer .contacts .tg-link {
+            color: #26A5E4;
+            font-weight: 600;
+        }
+        .footer .contacts .tg-link:hover { color: #3b9fd4; }
+        .footer .divider { color: #334155; }
+        
+        @media (max-width: 768px) {
+            .editor-wrapper { padding: 0 0.8rem; }
+            .panel { padding: 0.8rem; max-height: none; }
+            .color-grid { grid-template-columns: repeat(6, 1fr); }
+            .canvas-wrapper { min-height: 280px; padding: 0.5rem; }
+            .canvas-hint { display: none; }
+            .header-container { flex-wrap: wrap; gap: 0.5rem; }
+            .back-link span { display: none; }
+            .right-panel .tool-grid { grid-template-columns: repeat(3, 1fr); }
+            .modal-box { padding: 1.5rem; }
+            .payment-details .card-number { font-size: 1.2rem; }
+            .footer .contacts { gap: 1rem; font-size: 0.8rem; flex-direction: column; }
+            .btn-publish .tooltip-text { width: 250px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="logo"><a href="index.html">GGPoint</a></div>
+        <a href="pads.html" class="back-link"><i class="fas fa-arrow-left"></i> <span>Назад в каталог</span></a>
+    </div>
+</header>
+
+<div class="editor-wrapper">
+
+    <div class="panel">
+        <div class="panel-title"><i class="fas fa-paint-brush"></i> Редактор</div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-expand-alt"></i> Размер коврика</label>
+            <select class="size-select" id="sizeSelect">
+                <option value="300x250">300 × 250 мм (малый)</option>
+                <option value="400x350">400 × 350 мм (средний)</option>
+                <option value="500x450">500 × 450 мм (большой)</option>
+                <option value="600x500">600 × 500 мм (XL)</option>
+                <option value="700x500">700 × 500 мм (XXL)</option>
+                <option value="800x450">800 × 450 мм (широкий)</option>
+                <option value="900x450" selected>900 × 450 мм (ультра)</option>
+                <option value="1000x500">1000 × 500 мм (гигант)</option>
+                <option value="1200x600">1200 × 600 мм (макс)</option>
+                <option value="1400x700">1400 × 700 мм (про)</option>
+            </select>
+        </div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-palette"></i> Цвет фона</label>
+            <div class="color-grid" id="bgColorGrid">
+                <div class="color-swatch active" style="background:#25273a;" data-color="#25273a"></div>
+                <div class="color-swatch" style="background:#d84a4a;" data-color="#d84a4a"></div>
+                <div class="color-swatch" style="background:#d67a2f;" data-color="#d67a2f"></div>
+                <div class="color-swatch" style="background:#d8bf4a;" data-color="#d8bf4a"></div>
+                <div class="color-swatch" style="background:#42c96b;" data-color="#42c96b"></div>
+                <div class="color-swatch" style="background:#39b8d8;" data-color="#39b8d8"></div>
+                <div class="color-swatch" style="background:#3d7cd6;" data-color="#3d7cd6"></div>
+                <div class="color-swatch" style="background:#7150c8;" data-color="#7150c8"></div>
+                <div class="color-swatch" style="background:#d75d9d;" data-color="#d75d9d"></div>
+                <div class="color-swatch" style="background:#d96b47;" data-color="#d96b47"></div>
+                <div class="color-swatch" style="background:#48c88d;" data-color="#48c88d"></div>
+                <div class="color-swatch" style="background:#ffffff;" data-color="#ffffff"></div>
+                <div class="color-swatch" style="background:#cb5dc4;" data-color="#cb5dc4"></div>
+                <div class="color-swatch" style="background:#ff6600;" data-color="#ff6600"></div>
+                <div class="color-swatch" style="background:#42af6f;" data-color="#42af6f"></div>
+                <div class="color-swatch" style="background:#ae5dd6;" data-color="#ae5dd6"></div>
+                <div class="color-swatch" style="background:#d8b84a;" data-color="#d8b84a"></div>
+                <div class="color-swatch" style="background:#d65f7d;" data-color="#d65f7d"></div>
+            </div>
+        </div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-font"></i> Текст / Логотип</label>
+            <div style="display:flex; gap:0.4rem; margin-bottom:0.5rem;">
+                <input type="text" id="textInput" placeholder="Введите текст..." style="flex:1; padding:0.4rem 0.6rem; background:#0f172a; border:2px solid #334155; border-radius:8px; color:#fff; font-size:0.85rem;">
+                <button class="btn-tool" id="addTextBtn" style="padding:0.4rem 0.8rem;"><i class="fas fa-plus"></i></button>
+            </div>
+            
+            <div class="text-color-row" id="textColorRow">
+                <div class="color-dot active" style="background:#ffffff;" data-color="#ffffff"></div>
+                <div class="color-dot" style="background:#ff0000;" data-color="#ff0000"></div>
+                <div class="color-dot" style="background:#d67a2f;" data-color="#d67a2f"></div>
+                <div class="color-dot" style="background:#d8bf4a;" data-color="#d8bf4a"></div>
+                <div class="color-dot" style="background:#42c96b;" data-color="#42c96b"></div>
+                <div class="color-dot" style="background:#39b8d8;" data-color="#39b8d8"></div>
+                <div class="color-dot" style="background:#3d7cd6;" data-color="#3d7cd6"></div>
+                <div class="color-dot" style="background:#7150c8;" data-color="#7150c8"></div>
+                <div class="color-dot" style="background:#d75d9d;" data-color="#d75d9d"></div>
+                <div class="color-dot" style="background:#d96b47;" data-color="#d96b47"></div>
+                <div class="color-dot" style="background:#000000;" data-color="#000000"></div>
+                <input type="color" id="textColorPicker" value="#ffffff" title="Свой цвет" />
+            </div>
+            
+            <div class="btn-group" style="margin-top:0.4rem;">
+                <button class="btn-tool" id="textSizeUp"><i class="fas fa-plus"></i></button>
+                <button class="btn-tool" id="textSizeDown"><i class="fas fa-minus"></i></button>
+                <button class="btn-tool" id="textBoldBtn"><i class="fas fa-bold"></i></button>
+                <button class="btn-tool" id="textItalicBtn"><i class="fas fa-italic"></i></button>
+                <button class="btn-tool" id="textUnderlineBtn"><i class="fas fa-underline"></i></button>
+                <button class="btn-tool" id="textShadowBtn"><i class="fas fa-eye"></i></button>
+            </div>
+        </div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-image"></i> Загрузить изображение</label>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                <div class="file-input-wrap" style="flex:1;">
+                    <button class="btn-tool primary" style="width:100%;"><i class="fas fa-upload"></i> Выбрать фото</button>
+                    <input type="file" id="imageUpload" accept="image/*" />
+                </div>
+                <button class="btn-tool warning" id="fitImageBtn"><i class="fas fa-arrows-alt"></i> Подогнать</button>
+            </div>
+            <div style="display:flex; gap:0.4rem; margin-top:0.4rem; align-items:center;">
+                <label style="font-size:0.7rem; color:#64748b; margin:0;">Прозрачность:</label>
+                <input type="range" id="imageOpacity" min="10" max="100" value="100" style="flex:1; height:4px; -webkit-appearance:none; background:#334155; border-radius:4px;">
+                <span class="range-value" id="imageOpacityVal" style="min-width:35px;text-align:center;font-size:0.8rem;color:#94a3b8;font-weight:600;">100%</span>
+            </div>
+        </div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-layer-group"></i> Слои</label>
+            <div class="layer-list" id="layerList">
+                <div style="color:#64748b;font-size:0.7rem;text-align:center;padding:0.5rem;">Нет элементов</div>
+            </div>
+        </div>
+        
+        <div class="tool-group" style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn-tool danger" id="clearCanvasBtn" style="flex:1;"><i class="fas fa-trash"></i> Очистить</button>
+            <button class="btn-tool success" id="exportPreviewBtn" style="flex:1;"><i class="fas fa-download"></i> Превью</button>
+            <button class="btn-tool" id="undoBtn" style="flex:0.5;"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+
+    <div class="canvas-wrapper">
+        <canvas id="editorCanvas" width="800" height="400"></canvas>
+        <div class="canvas-hint"><i class="fas fa-mouse-pointer"></i> Перетаскивайте · Кликните для выделения · Delete для удаления</div>
+    </div>
+
+    <div class="panel right-panel">
+        <div class="panel-title"><i class="fas fa-tools"></i> Инструменты</div>
+        
+        <div class="tool-group">
+            <div class="tool-grid">
+                <button class="btn-tool active-tool" id="toolSelect" data-tool="select">
+                    <i class="fas fa-mouse-pointer"></i> Выбрать
+                </button>
+                <button class="btn-tool" id="toolText" data-tool="text">
+                    <i class="fas fa-font"></i> Текст
+                </button>
+                <button class="btn-tool" id="toolImage" data-tool="image">
+                    <i class="fas fa-image"></i> Принт
+                </button>
+                <button class="btn-tool" id="toolCircle" data-tool="circle">
+                    <i class="fas fa-circle"></i> Овал
+                </button>
+                <button class="btn-tool" id="toolRect" data-tool="rect">
+                    <i class="fas fa-square"></i> Прямоуг.
+                </button>
+                <button class="btn-tool" id="toolLine" data-tool="line">
+                    <i class="fas fa-minus"></i> Линия
+                </button>
+                <button class="btn-tool" id="toolDelete" data-tool="delete">
+                    <i class="fas fa-eraser"></i> Удалить
+                </button>
+                <button class="btn-tool" id="toolColorPicker" data-tool="color">
+                    <i class="fas fa-palette"></i> Цвет
+                    <input type="color" id="drawColor" value="#ffffff" style="width:24px;height:24px;border:none;background:transparent;cursor:pointer;padding:0;margin:0;">
+                </button>
+            </div>
+        </div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-sliders-h"></i> Толщина линии</label>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+                <input type="range" id="lineWidth" min="1" max="20" value="3" style="flex:1; height:4px; -webkit-appearance:none; background:#334155; border-radius:4px;">
+                <span class="range-value" id="lineWidthVal" style="min-width:30px;text-align:center;font-size:0.8rem;color:#94a3b8;font-weight:600;">3</span>
+            </div>
+        </div>
+        
+        <div class="tool-group">
+            <label><i class="fas fa-fill-drip"></i> Заливка фигур</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+                <button class="btn-tool" id="toggleFill" style="flex:1; justify-content:center;">
+                    <i class="fas fa-square"></i> Заливка: <span id="fillStatus">Выкл</span>
+                </button>
+                <input type="color" id="fillColor" value="#2563eb" style="width:36px;height:36px;border:2px solid #334155;border-radius:8px;background:none;padding:2px;cursor:pointer;">
+            </div>
+        </div>
+        
+        <button class="btn-publish" id="publishBtn">
+            <i class="fas fa-globe"></i> Поставить на сайт
+            <span class="info-icon">i</span>
+            <span class="tooltip-text">
+                <i class="fas fa-lightbulb" style="color:#fbbf24;"></i><br>
+                Вы можете добавить на сайт ваш дизайн. Если ваш дизайн выберут — вы получите процент от продажи!<br>
+                <span class="highlight">от 10.000 — 100.000 за 1 заказ</span>
+            </span>
+        </button>
+        
+        <button class="btn-done" id="doneBtn">
+            <i class="fas fa-check-circle"></i> ГОТОВО
+        </button>
+        <p style="font-size:0.65rem; color:#64748b; text-align:center; margin-top:0.4rem;">
+            <i class="fas fa-info-circle"></i> Нажмите "Готово" для оформления заказа
+        </p>
+    </div>
+</div>
+
+<!-- ФУТЕР -->
+<div class="footer">
+    <div class="contacts">
+        <span><i class="fas fa-envelope"></i> support@ggpoint.uz</span>
+        <span class="divider">|</span>
+        <a href="https://t.me/Dma12r" target="_blank" class="tg-link">
+            <i class="fab fa-telegram"></i> @Dma12r
+        </a>
+        <span class="divider">|</span>
+        <span><i class="fas fa-phone"></i> +998 99 123 45 67</span>
+    </div>
+</div>
+
+<!-- МОДАЛКА ОФОРМЛЕНИЯ ЗАКАЗА -->
+<div class="modal-overlay" id="orderModal">
+    <div class="modal-box">
+        <h2><i class="fas fa-shopping-cart"></i> Оформление заказа</h2>
+        
+        <div class="order-summary-mini">
+            <div class="row"><span class="label">Размер</span><span class="value" id="modalSize">900 × 450 мм</span></div>
+            <div class="row"><span class="label">Стоимость</span><span class="value" id="modalPrice">150 000 UZS</span></div>
+            <div class="row"><span class="label">Предоплата (30%)</span><span class="value" id="modalPrepay" style="color:#fbbf24;">45 000 UZS</span></div>
+            <div class="total" id="modalTotal">Итого к оплате: 45 000 UZS</div>
+        </div>
+        
+        <form id="orderForm">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Ваше имя *</label>
+                <input type="text" id="customerName" placeholder="Иван Иванов" required />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Телефон *</label>
+                <input type="tel" id="customerPhone" placeholder="+998 99 123 45 67" required />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Адрес доставки *</label>
+                <textarea id="customerAddress" placeholder="Город, улица, дом, квартира" required></textarea>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-comment"></i> Комментарий</label>
+                <textarea id="customerComment" placeholder="Дополнительные пожелания..."></textarea>
+            </div>
+            
+            <div class="payment-details">
+                <div class="card-label"><i class="fas fa-credit-card"></i> Реквизиты для оплаты</div>
+                <div class="card-number">9860 1766 1414 7336</div>
+                <div class="card-owner">Мирзо Абдулкодир</div>
+                <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #94a3b8;">
+                    <i class="fas fa-info-circle"></i> Сумма предоплаты: 
+                    <span class="prepay-amount" id="paymentPrepayAmount">45 000 UZS</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-paperclip"></i> Прикрепить скриншот оплаты *</label>
+                <div class="screenshot-upload" id="screenshotUpload">
+                    <div class="icon"><i class="fas fa-camera"></i></div>
+                    <div class="text">Нажмите для загрузки скриншота</div>
+                    <input type="file" id="screenshotInput" accept="image/*" required />
+                </div>
+                <div class="screenshot-preview" id="screenshotPreview">
+                    <img id="screenshotImg" src="" alt="Скриншот оплаты" />
+                    <button type="button" class="btn-tool danger" style="margin-top:0.3rem; width:100%; justify-content:center;" onclick="removeScreenshot()">
+                        <i class="fas fa-times"></i> Удалить
+                    </button>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-order" id="orderBtn">
+                <i class="fas fa-lock"></i> Оплатить предоплату 45 000 UZS
+            </button>
+            <button type="button" class="btn-close-modal" id="closeOrderModal"><i class="fas fa-times"></i> Закрыть</button>
+        </form>
+    </div>
+</div>
+
+<!-- МОДАЛКА ДЛЯ КОНТАКТОВ (ПОСТАВИТЬ НА САЙТ) -->
+<div class="modal-overlay" id="publishContactModal">
+    <div class="modal-box">
+        <h2><i class="fas fa-globe"></i> Поставить на сайт</h2>
+        
+        <div class="publish-reward">
+            <div style="font-size: 0.9rem; color: #94a3b8;">💰 Ваше вознаграждение при заказе:</div>
+            <div class="reward-amount">от 10.000 — 100.000 UZS</div>
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.3rem;">за каждый заказ вашего дизайна</div>
+        </div>
+        
+        <p style="text-align:center; color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">
+            Укажите ваши контакты для получения вознаграждения, если ваш дизайн выберут
+        </p>
+        
+        <form id="publishContactForm">
+            <div class="form-group">
+                <label><i class="fab fa-telegram"></i> Telegram (@username) *</label>
+                <input type="text" id="publishTelegram" placeholder="@username" required />
+                <div style="font-size:0.7rem; color:#64748b; margin-top:0.2rem;">Например: @Dma12r</div>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Номер телефона *</label>
+                <input type="tel" id="publishPhone" placeholder="+998 99 123 45 67" required />
+            </div>
+            
+            <button type="submit" class="btn-order" id="publishContactBtn" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white;">
+                <i class="fas fa-paper-plane"></i> Отправить на модерацию
+            </button>
+            <button type="button" class="btn-close-modal" id="closePublishModal"><i class="fas fa-times"></i> Закрыть</button>
+        </form>
+    </div>
+</div>
+
+<!-- МОДАЛКА УСПЕХА (ПУБЛИКАЦИЯ) -->
+<div class="modal-overlay" id="publishSuccessModal">
+    <div class="modal-box success">
+        <div class="icon-big"><i class="fas fa-check-circle"></i></div>
+        <h2>✅ Дизайн отправлен на модерацию!</h2>
+        
+        <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 12px; padding: 1.2rem; margin: 1rem 0; border: 1px solid rgba(251, 191, 36, 0.2); text-align: center;">
+            <div style="font-size: 0.9rem; color: #f1f5f9; margin-bottom: 0.3rem;">
+                <i class="fas fa-heart" style="color: #ef4444;"></i>
+                Спасибо, что сделали дизайн!
+            </div>
+            <div style="font-size: 0.95rem; color: #fbbf24; font-weight: 600;">
+                Если покупатель выберет ваш дизайн — вы получите бонус за труд
+            </div>
+            <div style="font-size: 1.3rem; font-weight: 700; color: #fbbf24; margin-top: 0.3rem;">
+                от 10.000 — 100.000 UZS
+            </div>
+        </div>
+        
+        <p style="text-align:center;color:#94a3b8;font-size:0.85rem;margin-top:0.5rem;">
+            <i class="fas fa-info-circle"></i> Администратор свяжется с вами для уточнения деталей
+        </p>
+        <div style="text-align:center;margin-top:1.5rem;">
+            <button class="btn-primary" id="publishSuccessOkBtn"><i class="fas fa-check"></i> Отлично!</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛКА УСПЕХА (ЗАКАЗ) -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal-box success">
+        <div class="icon-big"><i class="fas fa-check-circle"></i></div>
+        <h2>✅ Заказ принят!</h2>
+        <p style="text-align:center;color:#94a3b8;margin-bottom:1.2rem;">Мы получили ваш заказ. Администратор свяжется с вами в ближайшее время.</p>
+        <p style="text-align:center;font-size:0.8rem;color:#64748b;margin-bottom:1.2rem;">Номер заказа: <strong id="orderNumberDisplay" style="color:#fbbf24;">—</strong></p>
+        <div style="text-align:center;">
+            <button class="btn-primary" id="modalOkBtn"><i class="fas fa-check"></i> Отлично!</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛКА ОШИБКИ -->
+<div class="modal-overlay" id="errorModal">
+    <div class="modal-box">
+        <h2 style="color:#ef4444;text-align:center;"><i class="fas fa-exclamation-circle"></i> Ошибка</h2>
+        <p style="text-align:center;color:#94a3b8;margin-bottom:1.2rem;" id="errorMessage">Произошла ошибка. Попробуйте ещё раз.</p>
+        <div style="text-align:center;">
+            <button class="btn-primary" id="errorModalBtn" style="background:#ef4444;"><i class="fas fa-times"></i> Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+    
+    const canvasEl = document.getElementById('editorCanvas');
+    const sizeSelect = document.getElementById('sizeSelect');
+    const bgColorGrid = document.getElementById('bgColorGrid');
+    const textInput = document.getElementById('textInput');
+    const addTextBtn = document.getElementById('addTextBtn');
+    const textColorRow = document.getElementById('textColorRow');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const textSizeUp = document.getElementById('textSizeUp');
+    const textSizeDown = document.getElementById('textSizeDown');
+    const textBoldBtn = document.getElementById('textBoldBtn');
+    const textItalicBtn = document.getElementById('textItalicBtn');
+    const textUnderlineBtn = document.getElementById('textUnderlineBtn');
+    const textShadowBtn = document.getElementById('textShadowBtn');
+    const imageUpload = document.getElementById('imageUpload');
+    const fitImageBtn = document.getElementById('fitImageBtn');
+    const imageOpacity = document.getElementById('imageOpacity');
+    const imageOpacityVal = document.getElementById('imageOpacityVal');
+    const layerList = document.getElementById('layerList');
+    const clearCanvasBtn = document.getElementById('clearCanvasBtn');
+    const exportPreviewBtn = document.getElementById('exportPreviewBtn');
+    const undoBtn = document.getElementById('undoBtn');
+    const doneBtn = document.getElementById('doneBtn');
+    const publishBtn = document.getElementById('publishBtn');
+    
+    const toolSelect = document.getElementById('toolSelect');
+    const toolText = document.getElementById('toolText');
+    const toolImage = document.getElementById('toolImage');
+    const toolCircle = document.getElementById('toolCircle');
+    const toolRect = document.getElementById('toolRect');
+    const toolLine = document.getElementById('toolLine');
+    const toolDelete = document.getElementById('toolDelete');
+    const drawColor = document.getElementById('drawColor');
+    const lineWidth = document.getElementById('lineWidth');
+    const lineWidthVal = document.getElementById('lineWidthVal');
+    const toggleFill = document.getElementById('toggleFill');
+    const fillColor = document.getElementById('fillColor');
+    const fillStatus = document.getElementById('fillStatus');
+    
+    const orderModal = document.getElementById('orderModal');
+    const closeOrderModal = document.getElementById('closeOrderModal');
+    const orderForm = document.getElementById('orderForm');
+    const orderBtn = document.getElementById('orderBtn');
+    const successModal = document.getElementById('successModal');
+    const errorModal = document.getElementById('errorModal');
+    const errorMessage = document.getElementById('errorMessage');
+    const modalOkBtn = document.getElementById('modalOkBtn');
+    const errorModalBtn = document.getElementById('errorModalBtn');
+    const orderNumberDisplay = document.getElementById('orderNumberDisplay');
+    const modalSize = document.getElementById('modalSize');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalPrepay = document.getElementById('modalPrepay');
+    const modalTotal = document.getElementById('modalTotal');
+    const paymentPrepayAmount = document.getElementById('paymentPrepayAmount');
+    
+    // Публикация
+    const publishContactModal = document.getElementById('publishContactModal');
+    const publishContactForm = document.getElementById('publishContactForm');
+    const closePublishModal = document.getElementById('closePublishModal');
+    const publishSuccessModal = document.getElementById('publishSuccessModal');
+    const publishSuccessOkBtn = document.getElementById('publishSuccessOkBtn');
+    const publishTelegram = document.getElementById('publishTelegram');
+    const publishPhone = document.getElementById('publishPhone');
+    
+    const screenshotInput = document.getElementById('screenshotInput');
+    const screenshotPreview = document.getElementById('screenshotPreview');
+    const screenshotImg = document.getElementById('screenshotImg');
+    let screenshotData = null;
+    
+    const prices = {
+        '300x250': 50000, '400x350': 70000, '500x450': 90000,
+        '600x500': 110000, '700x500': 130000, '800x450': 140000,
+        '900x450': 150000, '1000x500': 180000, '1200x600': 220000,
+        '1400x700': 280000
+    };
+    const PREPAY_PERCENT = 0.30;
+    let history = [];
+    let currentTool = 'select';
+    let isDrawing = false;
+    let startPoint = null;
+    let fillEnabled = false;
+    
+    const canvas = new fabric.Canvas(canvasEl, {
+        backgroundColor: '#25273a',
+        selection: true,
+        preserveObjectStacking: true,
+    });
+    
+    function addBackgroundRect(color) {
+        const rect = new fabric.Rect({
+            left: 0, top: 0,
+            width: canvas.width, height: canvas.height,
+            fill: color,
+            selectable: false, evented: false,
+            excludeFromExport: true,
+        });
+        canvas.add(rect);
+        rect.sendToBack();
+        canvas.renderAll();
+    }
+    addBackgroundRect('#25273a');
+    
+    function saveHistory() {
+        history.push(JSON.stringify(canvas.toJSON()));
+        if (history.length > 30) history.shift();
+    }
+    
+    function undo() {
+        if (history.length <= 1) return;
+        history.pop();
+        const state = JSON.parse(history[history.length - 1]);
+        canvas.loadFromJSON(state, function() {
+            canvas.renderAll();
+            updateLayers();
+        });
+    }
+    
+    function updateCanvasSize(sizeKey) {
+        const [w, h] = sizeKey.split('x').map(Number);
+        const maxW = 800, maxH = 500;
+        let scale = 1;
+        if (w > maxW || h > maxH) scale = Math.min(maxW / w, maxH / h);
+        const newW = Math.round(w * scale);
+        const newH = Math.round(h * scale);
+        
+        canvas.setWidth(newW);
+        canvas.setHeight(newH);
+        
+        const bg = canvas.getObjects().find(o => o.excludeFromExport);
+        if (bg) { bg.set({ width: newW, height: newH }); bg.sendToBack(); }
+        
+        canvas.getObjects().forEach(obj => {
+            if (!obj.excludeFromExport) {
+                obj.set({
+                    left: Math.min(Math.max(obj.left || 0, 10), newW - 20),
+                    top: Math.min(Math.max(obj.top || 0, 10), newH - 20),
+                });
+            }
+        });
+        canvas.renderAll();
+        saveHistory();
+        updateLayers();
+    }
+    
+    sizeSelect.addEventListener('change', function() {
+        updateCanvasSize(this.value);
+        updateModalSummary(this.value);
+    });
+    
+    bgColorGrid.addEventListener('click', function(e) {
+        const swatch = e.target.closest('.color-swatch');
+        if (!swatch) return;
+        bgColorGrid.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('active'));
+        swatch.classList.add('active');
+        const bg = canvas.getObjects().find(o => o.excludeFromExport);
+        if (bg) bg.set('fill', swatch.dataset.color);
+        canvas.renderAll();
+        saveHistory();
+    });
+    
+    function getActiveText() {
+        const active = canvas.getActiveObject();
+        if (!active || active.type !== 'text') return null;
+        return active;
+    }
+    
+    function addText(text) {
+        if (!text || !text.trim()) return;
+        const textObj = new fabric.Text(text.trim(), {
+            left: canvas.width / 2 - 50,
+            top: canvas.height / 2 - 20,
+            fontSize: 40,
+            fill: '#ffffff',
+            fontFamily: 'Arial, sans-serif',
+            fontWeight: 'bold',
+            originX: 'center', originY: 'center',
+            selectable: true,
+            stroke: 'rgba(0,0,0,0.2)',
+            strokeWidth: 1,
+        });
+        canvas.add(textObj);
+        canvas.setActiveObject(textObj);
+        canvas.renderAll();
+        textInput.value = '';
+        saveHistory();
+        updateLayers();
+        setTool('select');
+    }
+    
+    addTextBtn.addEventListener('click', function() { addText(textInput.value); });
+    textInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addText(this.value); });
+    
+    textColorRow.addEventListener('click', function(e) {
+        const dot = e.target.closest('.color-dot');
+        if (!dot) return;
+        textColorRow.querySelectorAll('.color-dot').forEach(el => el.classList.remove('active'));
+        dot.classList.add('active');
+        const color = dot.dataset.color;
+        textColorPicker.value = color;
+        const obj = getActiveText();
+        if (obj) { obj.set('fill', color); canvas.renderAll(); saveHistory(); }
+    });
+    
+    textColorPicker.addEventListener('input', function() {
+        textColorRow.querySelectorAll('.color-dot').forEach(el => el.classList.remove('active'));
+        const obj = getActiveText();
+        if (obj) { obj.set('fill', this.value); canvas.renderAll(); saveHistory(); }
+    });
+    
+    textSizeUp.addEventListener('click', function() {
+        const obj = getActiveText();
+        if (obj) { obj.set('fontSize', (obj.fontSize || 40) + 4); canvas.renderAll(); saveHistory(); }
+    });
+    textSizeDown.addEventListener('click', function() {
+        const obj = getActiveText();
+        if (obj && obj.fontSize > 8) { obj.set('fontSize', obj.fontSize - 4); canvas.renderAll(); saveHistory(); }
+    });
+    textBoldBtn.addEventListener('click', function() {
+        const obj = getActiveText();
+        if (obj) { obj.set('fontWeight', obj.fontWeight === 'bold' ? 'normal' : 'bold'); canvas.renderAll(); saveHistory(); }
+    });
+    textItalicBtn.addEventListener('click', function() {
+        const obj = getActiveText();
+        if (obj) { obj.set('fontStyle', obj.fontStyle === 'italic' ? 'normal' : 'italic'); canvas.renderAll(); saveHistory(); }
+    });
+    textUnderlineBtn.addEventListener('click', function() {
+        const obj = getActiveText();
+        if (obj) { obj.set('underline', !obj.underline); canvas.renderAll(); saveHistory(); }
+    });
+    textShadowBtn.addEventListener('click', function() {
+        const obj = getActiveText();
+        if (obj) {
+            const hasShadow = obj.shadow;
+            obj.set('shadow', hasShadow ? null : new fabric.Shadow({ color: 'rgba(0,0,0,0.5)', blur: 8, offsetX: 3, offsetY: 3 }));
+            canvas.renderAll();
+            saveHistory();
+        }
+    });
+    
+    function fitImageToCanvas(img) {
+        const cW = canvas.width;
+        const cH = canvas.height;
+        let imgW = img.width * (img.scaleX || 1);
+        let imgH = img.height * (img.scaleY || 1);
+        const scaleX = cW / imgW;
+        const scaleY = cH / imgH;
+        const scale = Math.min(scaleX, scaleY) * 0.92;
+        img.scale(scale);
+        img.set({
+            left: (cW - img.width * scale) / 2,
+            top: (cH - img.height * scale) / 2,
+        });
+        canvas.renderAll();
+        saveHistory();
+        updateLayers();
+    }
+    
+    imageUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            fabric.Image.fromURL(ev.target.result, function(img) {
+                const cW = canvas.width;
+                const cH = canvas.height;
+                const scale = Math.min(cW / img.width, cH / img.height) * 0.92;
+                img.scale(scale);
+                img.set({
+                    left: (cW - img.width * scale) / 2,
+                    top: (cH - img.height * scale) / 2,
+                    selectable: true,
+                });
+                canvas.add(img);
+                canvas.setActiveObject(img);
+                canvas.renderAll();
+                saveHistory();
+                updateLayers();
+                lastUploadedImage = img;
+                setTool('select');
+            });
+        };
+        reader.readAsDataURL(file);
+        this.value = '';
+    });
+    
+    let lastUploadedImage = null;
+    
+    fitImageBtn.addEventListener('click', function() {
+        const active = canvas.getActiveObject();
+        let imgToFit = null;
+        if (active && active.type === 'image') {
+            imgToFit = active;
+        } else {
+            const imgs = canvas.getObjects().filter(o => o.type === 'image');
+            if (imgs.length > 0) {
+                imgToFit = imgs[imgs.length - 1];
+                canvas.setActiveObject(imgToFit);
+            } else {
+                alert('Сначала загрузите изображение!');
+                return;
+            }
+        }
+        if (imgToFit) {
+            fitImageToCanvas(imgToFit);
+        }
+    });
+    
+    imageOpacity.addEventListener('input', function() {
+        const val = this.value;
+        imageOpacityVal.textContent = val + '%';
+        const active = canvas.getActiveObject();
+        if (active && active.type === 'image') {
+            active.set('opacity', val / 100);
+            canvas.renderAll();
+            saveHistory();
+        }
+    });
+    
+    toggleFill.addEventListener('click', function() {
+        fillEnabled = !fillEnabled;
+        fillStatus.textContent = fillEnabled ? 'Вкл' : 'Выкл';
+        this.style.borderColor = fillEnabled ? '#22c55e' : 'rgba(37, 99, 235, 0.2)';
+    });
+    
+    function setTool(tool) {
+        currentTool = tool;
+        document.querySelectorAll('.right-panel .tool-grid .btn-tool').forEach(el => {
+            el.classList.remove('active-tool');
+        });
+        
+        if (tool === 'select') toolSelect.classList.add('active-tool');
+        else if (tool === 'text') toolText.classList.add('active-tool');
+        else if (tool === 'image') toolImage.classList.add('active-tool');
+        else if (tool === 'circle') toolCircle.classList.add('active-tool');
+        else if (tool === 'rect') toolRect.classList.add('active-tool');
+        else if (tool === 'line') toolLine.classList.add('active-tool');
+        else if (tool === 'delete') toolDelete.classList.add('active-tool');
+        
+        if (tool === 'select') {
+            canvas.selection = true;
+            canvas.defaultCursor = 'default';
+            canvas.forEachObject(obj => {
+                if (!obj.excludeFromExport) obj.selectable = true;
+            });
+        } else {
+            canvas.selection = false;
+            canvas.defaultCursor = 'crosshair';
+            canvas.forEachObject(obj => {
+                if (!obj.excludeFromExport) obj.selectable = false;
+            });
+            canvas.discardActiveObject();
+        }
+        
+        canvas.renderAll();
+    }
+    
+    toolSelect.addEventListener('click', function() { setTool('select'); });
+    toolText.addEventListener('click', function() { setTool('text'); });
+    toolImage.addEventListener('click', function() { setTool('image'); });
+    toolCircle.addEventListener('click', function() { setTool('circle'); });
+    toolRect.addEventListener('click', function() { setTool('rect'); });
+    toolLine.addEventListener('click', function() { setTool('line'); });
+    toolDelete.addEventListener('click', function() { setTool('delete'); });
+    
+    lineWidth.addEventListener('input', function() {
+        lineWidthVal.textContent = this.value;
+    });
+    
+    canvas.on('mouse:down', function(opt) {
+        if (currentTool === 'select') return;
+        if (currentTool === 'delete') {
+            const target = opt.target;
+            if (target && !target.excludeFromExport) {
+                canvas.remove(target);
+                canvas.renderAll();
+                saveHistory();
+                updateLayers();
+            }
+            return;
+        }
+        if (currentTool === 'text') {
+            const text = prompt('Введите текст:', 'Текст');
+            if (text && text.trim()) {
+                const pointer = canvas.getPointer(opt.e);
+                const textObj = new fabric.Text(text.trim(), {
+                    left: pointer.x,
+                    top: pointer.y,
+                    fontSize: 40,
+                    fill: drawColor.value,
+                    fontFamily: 'Arial, sans-serif',
+                    fontWeight: 'bold',
+                    selectable: true,
+                });
+                canvas.add(textObj);
+                canvas.setActiveObject(textObj);
+                canvas.renderAll();
+                saveHistory();
+                updateLayers();
+                setTool('select');
+            }
+            return;
+        }
+        if (currentTool === 'image') {
+            document.getElementById('imageUpload').click();
+            return;
+        }
+        
+        isDrawing = true;
+        const pointer = canvas.getPointer(opt.e);
+        startPoint = { x: pointer.x, y: pointer.y };
+    });
+    
+    canvas.on('mouse:move', function(opt) {
+        if (!isDrawing || currentTool === 'select' || currentTool === 'delete' || 
+            currentTool === 'text' || currentTool === 'image') return;
+        
+        const pointer = canvas.getPointer(opt.e);
+        const width = Math.abs(pointer.x - startPoint.x);
+        const height = Math.abs(pointer.y - startPoint.y);
+        const left = Math.min(startPoint.x, pointer.x);
+        const top = Math.min(startPoint.y, pointer.y);
+        
+        const tempObj = canvas.getObjects().find(o => o.temp);
+        if (tempObj) canvas.remove(tempObj);
+        
+        let shape;
+        const color = drawColor.value;
+        const size = parseInt(lineWidth.value);
+        const fill = fillEnabled ? fillColor.value : 'transparent';
+        
+        if (currentTool === 'circle') {
+            shape = new fabric.Ellipse({
+                left: left + width / 2,
+                top: top + height / 2,
+                rx: width / 2,
+                ry: height / 2,
+                fill: fill,
+                stroke: color,
+                strokeWidth: size,
+                selectable: true,
+                temp: true,
+            });
+        } else if (currentTool === 'rect') {
+            shape = new fabric.Rect({
+                left: left,
+                top: top,
+                width: width,
+                height: height,
+                fill: fill,
+                stroke: color,
+                strokeWidth: size,
+                selectable: true,
+                temp: true,
+            });
+        } else if (currentTool === 'line') {
+            shape = new fabric.Line([startPoint.x, startPoint.y, pointer.x, pointer.y], {
+                stroke: color,
+                strokeWidth: size,
+                selectable: true,
+                temp: true,
+            });
+        }
+        
+        if (shape) {
+            canvas.add(shape);
+            canvas.renderAll();
+        }
+    });
+    
+    canvas.on('mouse:up', function(opt) {
+        if (!isDrawing || currentTool === 'select' || currentTool === 'delete' ||
+            currentTool === 'text' || currentTool === 'image') {
+            isDrawing = false;
+            return;
+        }
+        
+        isDrawing = false;
+        const tempObj = canvas.getObjects().find(o => o.temp);
+        if (tempObj) {
+            tempObj.temp = false;
+            tempObj.selectable = true;
+            canvas.renderAll();
+            saveHistory();
+            updateLayers();
+        }
+    });
+    
+    function updateLayers() {
+        const objects = canvas.getObjects().filter(o => !o.excludeFromExport);
+        layerList.innerHTML = '';
+        if (objects.length === 0) {
+            layerList.innerHTML = '<div style="color:#64748b;font-size:0.7rem;text-align:center;padding:0.5rem;">Нет элементов</div>';
+            return;
+        }
+        objects.slice().reverse().forEach((obj, idx) => {
+            const realIdx = objects.length - 1 - idx;
+            const div = document.createElement('div');
+            div.className = 'layer-item' + (canvas.getActiveObject() === obj ? ' active' : '');
+            let icon = 'fa-circle';
+            let name = 'Элемент';
+            if (obj.type === 'text') { icon = 'fa-font'; name = (obj.text || 'Текст').substring(0, 15); }
+            else if (obj.type === 'image') { icon = 'fa-image'; name = 'Изображение'; }
+            else if (obj.type === 'rect') { icon = 'fa-square'; name = 'Прямоугольник'; }
+            else if (obj.type === 'ellipse') { icon = 'fa-circle'; name = 'Овал'; }
+            else if (obj.type === 'line') { icon = 'fa-minus'; name = 'Линия'; }
+            
+            div.innerHTML = `
+                <span class="layer-icon"><i class="fas ${icon}"></i></span>
+                <span class="layer-name">${name}</span>
+                <span class="layer-vis" data-idx="${realIdx}"><i class="fas ${obj.visible ? 'fa-eye' : 'fa-eye-slash'}"></i></span>
+                <span class="layer-del" data-idx="${realIdx}"><i class="fas fa-times"></i></span>
+            `;
+            div.addEventListener('click', function(e) {
+                if (e.target.closest('.layer-del') || e.target.closest('.layer-vis')) return;
+                if (currentTool === 'select') {
+                    canvas.setActiveObject(obj);
+                    canvas.renderAll();
+                    updateLayers();
+                }
+            });
+            div.querySelector('.layer-vis').addEventListener('click', function(e) {
+                e.stopPropagation();
+                obj.set('visible', !obj.visible);
+                canvas.renderAll();
+                updateLayers();
+            });
+            div.querySelector('.layer-del').addEventListener('click', function(e) {
+                e.stopPropagation();
+                canvas.remove(obj);
+                canvas.renderAll();
+                saveHistory();
+                updateLayers();
+            });
+            layerList.appendChild(div);
+        });
+    }
+    
+    canvas.on('selection:created', updateLayers);
+    canvas.on('selection:cleared', updateLayers);
+    canvas.on('object:added', function() { saveHistory(); updateLayers(); });
+    canvas.on('object:removed', function() { saveHistory(); updateLayers(); });
+    canvas.on('object:modified', function() { saveHistory(); updateLayers(); });
+    
+    clearCanvasBtn.addEventListener('click', function() {
+        if (!confirm('Удалить все элементы с коврика?')) return;
+        const toRemove = canvas.getObjects().filter(o => !o.excludeFromExport);
+        toRemove.forEach(o => canvas.remove(o));
+        canvas.renderAll();
+        saveHistory();
+        updateLayers();
+    });
+    
+    exportPreviewBtn.addEventListener('click', function() {
+        const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
+        const link = document.createElement('a');
+        link.download = 'kovrik-preview.png';
+        link.href = dataURL;
+        link.click();
+    });
+    
+    undoBtn.addEventListener('click', undo);
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+            e.preventDefault();
+            undo();
+        }
+        if (e.key === 'Delete' || e.key === 'Backspace') {
+            const active = canvas.getActiveObject();
+            if (active && !active.excludeFromExport) {
+                canvas.remove(active);
+                canvas.renderAll();
+                saveHistory();
+                updateLayers();
+                e.preventDefault();
+            }
+        }
+        if (e.key === 'Escape') {
+            canvas.discardActiveObject();
+            canvas.renderAll();
+            updateLayers();
+        }
+    });
+    
+    // Скриншот
+    screenshotInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            screenshotData = ev.target.result;
+            screenshotImg.src = screenshotData;
+            screenshotPreview.classList.add('active');
+            screenshotInput.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    });
+    
+    window.removeScreenshot = function() {
+        screenshotData = null;
+        screenshotImg.src = '';
+        screenshotPreview.classList.remove('active');
+        screenshotInput.style.display = 'block';
+        screenshotInput.value = '';
+    };
+    
+    function updateModalSummary(sizeKey) {
+        const price = prices[sizeKey] || 150000;
+        const prepay = Math.round(price * PREPAY_PERCENT / 1000) * 1000;
+        modalSize.textContent = sizeKey.replace('x', ' × ') + ' мм';
+        modalPrice.textContent = price.toLocaleString() + ' UZS';
+        modalPrepay.textContent = prepay.toLocaleString() + ' UZS';
+        modalTotal.textContent = 'Итого к оплате: ' + prepay.toLocaleString() + ' UZS';
+        paymentPrepayAmount.textContent = prepay.toLocaleString() + ' UZS';
+        orderBtn.innerHTML = `<i class="fas fa-lock"></i> Оплатить предоплату ${prepay.toLocaleString()} UZS`;
+    }
+    
+    // Кнопка "Поставить на сайт"
+    publishBtn.addEventListener('click', function() {
+        const objects = canvas.getObjects().filter(o => !o.excludeFromExport);
+        if (objects.length === 0) {
+            alert('Сначала создайте дизайн на коврике!');
+            return;
+        }
+        publishContactModal.classList.add('active');
+    });
+    
+    publishContactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const telegram = publishTelegram.value.trim();
+        const phone = publishPhone.value.trim();
+        
+        if (!telegram || !phone) {
+            alert('Пожалуйста, заполните все поля');
+            return;
+        }
+        
+        const designData = {
+            id: 'design_' + Date.now(),
+            author: 'Пользователь',
+            contact: telegram,
+            phone: phone,
+            size: sizeSelect.value,
+            commission: 'от 10.000 — 100.000 UZS',
+            designPreview: canvas.toDataURL({ format: 'png', quality: 0.9 }),
+            timestamp: new Date().toISOString(),
+            status: 'pending'
+        };
+        
+        let existingDesigns = JSON.parse(localStorage.getItem('ggpoint_designs') || '[]');
+        existingDesigns.push(designData);
+        localStorage.setItem('ggpoint_designs', JSON.stringify(existingDesigns));
+        
+        publishContactModal.classList.remove('active');
+        publishContactForm.reset();
+        publishSuccessModal.classList.add('active');
+    });
+    
+    publishSuccessOkBtn.addEventListener('click', function() {
+        publishSuccessModal.classList.remove('active');
+    });
+    publishSuccessModal.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+    
+    closePublishModal.addEventListener('click', function() {
+        publishContactModal.classList.remove('active');
+        publishContactForm.reset();
+    });
+    publishContactModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            publishContactForm.reset();
+        }
+    });
+    
+    // Кнопка "Готово"
+    doneBtn.addEventListener('click', function() {
+        const objects = canvas.getObjects().filter(o => !o.excludeFromExport);
+        if (objects.length === 0) {
+            alert('Добавьте текст, изображение или фигуру на коврик!');
+            return;
+        }
+        const size = sizeSelect.value;
+        updateModalSummary(size);
+        orderModal.classList.add('active');
+    });
+    
+    closeOrderModal.addEventListener('click', function() {
+        orderModal.classList.remove('active');
+        removeScreenshot();
+    });
+    orderModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            removeScreenshot();
+        }
+    });
+    
+    function getCanvasData() {
+        const objects = canvas.getObjects().filter(o => !o.excludeFromExport);
+        return {
+            version: '1.0',
+            size: sizeSelect.value,
+            backgroundColor: canvas.backgroundColor,
+            objects: objects.map(o => o.toJSON(['id'])),
+        };
+    }
+    
+    function getDesignPreview() {
+        return canvas.toDataURL({ format: 'png', quality: 0.9 });
+    }
+    
+    function generateOrderNumber() {
+        const now = new Date();
+        const date = now.getFullYear().toString().slice(2) +
+                     String(now.getMonth() + 1).padStart(2, '0') +
+                     String(now.getDate()).padStart(2, '0');
+        const rand = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        return 'GG-' + date + '-' + rand;
+    }
+    
+    async function sendOrderToAdmin(orderData) {
+        let orders = JSON.parse(localStorage.getItem('ggpoint_orders') || '[]');
+        orders.push(orderData);
+        localStorage.setItem('ggpoint_orders', JSON.stringify(orders));
+        console.log('📦 Заказ сохранён:', orderData);
+        return true;
+    }
+    
+    orderForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('customerName').value.trim();
+        const phone = document.getElementById('customerPhone').value.trim();
+        const address = document.getElementById('customerAddress').value.trim();
+        
+        if (!name || !phone || !address) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        
+        if (!screenshotData) {
+            alert('Пожалуйста, прикрепите скриншот оплаты');
+            return;
+        }
+        
+        orderBtn.disabled = true;
+        orderBtn.innerHTML = '<span class="spinner"></span> Отправка...';
+        
+        try {
+            const size = sizeSelect.value;
+            const price = prices[size] || 150000;
+            const prepay = Math.round(price * PREPAY_PERCENT / 1000) * 1000;
+            const orderNumber = generateOrderNumber();
+            
+            const orderData = {
+                orderNumber: orderNumber,
+                customer: {
+                    name: name,
+                    phone: phone,
+                    address: address,
+                    comment: document.getElementById('customerComment').value.trim(),
+                },
+                product: {
+                    type: 'kovrik',
+                    size: size,
+                    price: price,
+                    prepay: prepay,
+                },
+                design: getCanvasData(),
+                designPreview: getDesignPreview(),
+                paymentScreenshot: screenshotData,
+                timestamp: new Date().toISOString(),
+                status: 'pending',
+            };
+            
+            await sendOrderToAdmin(orderData);
+            
+            orderModal.classList.remove('active');
+            orderNumberDisplay.textContent = orderNumber;
+            successModal.classList.add('active');
+            
+            orderForm.reset();
+            removeScreenshot();
+            const toRemove = canvas.getObjects().filter(o => !o.excludeFromExport);
+            toRemove.forEach(o => canvas.remove(o));
+            canvas.renderAll();
+            sizeSelect.value = '900x450';
+            updateCanvasSize('900x450');
+            updateLayers();
+            
+        } catch (error) {
+            console.error('Ошибка:', error);
+            errorMessage.textContent = error.message || 'Произошла ошибка. Попробуйте ещё раз.';
+            errorModal.classList.add('active');
+        } finally {
+            orderBtn.disabled = false;
+            const prepay = Math.round((prices[sizeSelect.value] || 150000) * PREPAY_PERCENT / 1000) * 1000;
+            orderBtn.innerHTML = `<i class="fas fa-lock"></i> Оплатить предоплату ${prepay.toLocaleString()} UZS`;
+        }
+    });
+    
+    modalOkBtn.addEventListener('click', function() { successModal.classList.remove('active'); });
+    successModal.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
+    errorModalBtn.addEventListener('click', function() { errorModal.classList.remove('active'); });
+    errorModal.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
+    
+    updateCanvasSize('900x450');
+    updateLayers();
+    setTool('select');
+    
+    console.log('🎨 Редактор ковриков загружен!');
+    console.log('💳 Карта: 9860 1766 1414 7336 | Мирзо Абдулкодир');
+    console.log('📞 Обратная связь: @Dma12r');
+});
+</script>
+
+</body>
+</html>
