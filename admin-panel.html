@@ -223,7 +223,6 @@
             display: block;
         }
         
-        /* ⭐ ГЛАВНОЕ ИСПРАВЛЕНИЕ — КОНТЕЙНЕР ДЛЯ ПРЕВЬЮ С БЕЛЫМ ФОНОМ */
         .preview-container {
             background: #ffffff;
             border-radius: 12px;
@@ -342,7 +341,7 @@
                 <div id="ordersContainer"></div>
             </div>
 
-            <!-- ДИЗАЙНЫ (МОДЕРАЦИЯ) - ИСПРАВЛЕННАЯ ВЕРСИЯ -->
+            <!-- ДИЗАЙНЫ -->
             <div class="admin-section" id="designs">
                 <h2 style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                     <span><i class="fas fa-paint-brush"></i> Дизайны на модерацию</span>
@@ -396,7 +395,9 @@
                             <option value="pads">Коврик</option>
                             <option value="mb">Материнская плата</option>
                         </select></div>
-                        <div class="form-group"><label>Бренд *</label><select id="productBrand" required><option value="">Выберите</option></select></div>
+                        <div class="form-group"><label>Бренд *</label><select id="productBrand" required>
+                            <option value="">Выберите бренд</option>
+                        </select></div>
                     </div>
                     <div class="form-row"><div class="form-group"><label>Цена *</label><input type="text" id="productPrice" required></div><div class="form-group"><label>Кол-во</label><input type="number" id="productStock" value="10"></div></div>
                     <div class="form-group"><label>Описание *</label><textarea id="productDescription" rows="4" required></textarea></div>
@@ -872,7 +873,6 @@
             }
         }
         
-        // ⭐ ГЛАВНОЕ ИСПРАВЛЕНИЕ — функция отображения дизайнов с белым фоном
         function renderDesigns() {
             const container = document.getElementById('designsContainer');
             if (!container) return;
@@ -910,7 +910,6 @@
                 };
                 const statusInfo = statusMap[status] || statusMap.pending;
                 
-                // ⭐ ДЛЯ КАЖДОГО ДИЗАЙНА СОЗДАЕМ ОТДЕЛЬНЫЙ ЭЛЕМЕНТ С БЕЛЫМ ФОНОМ
                 const previewHtml = d.designPreview ? `
                     <div class="preview-container">
                         <img src="${d.designPreview}" 
@@ -1401,6 +1400,35 @@
                     function escapeHtml(s) { if(!s) return ''; return String(s).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
                     function getCategoryName(k) { const c={'мышь':'Мышь','клавиатура':'Клавиатура','наушники':'Наушники','монитор':'Монитор','keycaps':'Кейкапы','pads':'Коврик','mb':'Материнская плата'}; return c[k]||k; }
                     
+                    // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ updateBrandSelect ==========
+                    function updateBrandSelect() {
+                        const select = document.getElementById('productBrand');
+                        if (!select) return;
+                        
+                        // Очищаем список
+                        select.innerHTML = '<option value="">Выберите бренд</option>';
+                        
+                        // Проверяем, есть ли бренды
+                        if (brands && Object.keys(brands).length > 0) {
+                            // Сортируем бренды по имени
+                            const sortedBrands = Object.values(brands).sort((a, b) => a.name.localeCompare(b.name));
+                            sortedBrands.forEach(b => {
+                                const option = document.createElement('option');
+                                option.value = b.name;
+                                option.textContent = b.name;
+                                select.appendChild(option);
+                            });
+                        } else {
+                            // Если брендов нет, добавляем заглушку
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = '❌ Нет брендов, добавьте сначала';
+                            option.disabled = true;
+                            select.appendChild(option);
+                            showToast('⚠️ Сначала добавьте бренды в разделе "Бренды"', true);
+                        }
+                    }
+                    
                     function loadData() {
                         window.__onValue(window.__ref(window.__db,'products'), (s) => { 
                             const data = s.val(); 
@@ -1412,17 +1440,27 @@
                             updateBrandSelect(); 
                         });
                         window.__onValue(window.__ref(window.__db,'hotPrices'), (s) => { hotPrices = s.val() || {}; updateDashboard(); renderProducts(); });
-                        window.__onValue(window.__ref(window.__db,'brands'), (s) => { brands = s.val() || {}; updateDashboard(); renderBrands(); updateBrandSelect(); });
+                        window.__onValue(window.__ref(window.__db,'brands'), (s) => { 
+                            brands = s.val() || {}; 
+                            updateDashboard(); 
+                            renderBrands(); 
+                            updateBrandSelect(); // ← ОБЯЗАТЕЛЬНО обновляем список брендов
+                        });
                         window.__onValue(window.__ref(window.__db,'messages'), (s) => { const d=s.val(); messages = d ? Object.entries(d).map(([id,msg])=>({id,...msg})) : []; renderMessages(); });
                         window.__onValue(window.__ref(window.__db,'reviews'), (s) => { const d=s.val(); reviews = d ? Object.entries(d).map(([id,r])=>({id,...r})) : []; updateDashboard(); renderReviews(); });
                         window.__onValue(window.__ref(window.__db,'tracking_orders'), (s) => { trackingOrders = s.val() || {}; renderTrackingOrders(); });
                     }
                     
                     function updateDashboard() {
-                        document.getElementById('totalProducts').textContent = products.length;
-                        document.getElementById('totalMB').textContent = products.filter(p=>p.category==='mb').length;
-                        document.getElementById('totalHotPrices').textContent = Object.keys(hotPrices).length;
-                        document.getElementById('totalReviews').textContent = reviews.length;
+                        const totalProductsEl = document.getElementById('totalProducts');
+                        const totalMBEl = document.getElementById('totalMB');
+                        const totalHotPricesEl = document.getElementById('totalHotPrices');
+                        const totalReviewsEl = document.getElementById('totalReviews');
+                        
+                        if (totalProductsEl) totalProductsEl.textContent = products.length;
+                        if (totalMBEl) totalMBEl.textContent = products.filter(p=>p.category==='mb').length;
+                        if (totalHotPricesEl) totalHotPricesEl.textContent = Object.keys(hotPrices).length;
+                        if (totalReviewsEl) totalReviewsEl.textContent = reviews.length;
                     }
                     
                     function renderProducts() {
@@ -1449,11 +1487,6 @@
                     
                     window.editBrand = (id) => { const b = brands[id]; if(b){ document.getElementById('brandName').value = b.name; document.getElementById('brandLogo').value = b.icon; window.editingBrandId = id; alert('Теперь отредактируйте и нажмите "Добавить бренд"'); } };
                     window.deleteBrand = async (id) => { if(confirm('Удалить бренд?')){ await window.__remove(window.__ref(window.__db,'brands/'+id)); showToast('✅ Бренд удален'); setTimeout(() => location.reload(), 500); } };
-                    
-                    function updateBrandSelect() {
-                        const select = document.getElementById('productBrand'); if(!select) return;
-                        select.innerHTML = '<option value="">Выберите бренд</option>' + Object.values(brands).sort((a,b)=>a.name.localeCompare(b.name)).map(b => \`<option value="\${escapeHtml(b.name)}">\${escapeHtml(b.name)}</option>\`).join('');
-                    }
                     
                     function renderMessages() {
                         const tbody = document.querySelector('#messagesTable tbody'); if(!tbody) return;
