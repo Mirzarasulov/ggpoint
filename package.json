@@ -1,0 +1,10 @@
+{
+    "name": "ggpoint-generator",
+    "version": "1.0.0",
+    "scripts": {
+        "generate": "node generate-all-pages.js"
+    },
+    "dependencies": {
+        "firebase": "^10.0.0"
+    }
+}
